@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Ontwerpen nieuwe website – Autoservice Barneveld</title>
+<link rel="stylesheet" href="assets/brand.css">
+<style>
+  body { background: #f4f5f7; }
+  header { background: var(--wit); border-bottom: 1px solid var(--grijs-20); }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  header .wrap { display: flex; align-items: center; gap: 32px; padding-top: 24px; padding-bottom: 24px; }
+  header img { width: 200px; }
+  header h1 { font: 400 40px/1 var(--kop); letter-spacing: .02em; color: var(--grijs); margin: 0; }
+  header p { margin: 4px 0 0; font-size: 14px; color: var(--grijs-80); }
+  main.wrap { padding-top: 40px; padding-bottom: 80px; }
+  .raster { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px; list-style: none; margin: 0; padding: 0; }
+  .ontwerp a { display: block; height: 100%; background: var(--wit); border-radius: 14px; overflow: hidden; text-decoration: none; box-shadow: 0 1px 2px #0001, 0 8px 24px #0a467f12; transition: transform .2s, box-shadow .2s; }
+  .ontwerp a:hover, .ontwerp a:focus-visible { transform: translateY(-3px); box-shadow: 0 2px 4px #0001, 0 16px 40px #0a467f26; }
+  .ontwerp a:focus-visible { outline: 3px solid var(--blauw); outline-offset: 3px; }
+  .voorbeeld { aspect-ratio: 16 / 10; overflow: hidden; background: var(--grijs-20); position: relative; }
+  .voorbeeld iframe { position: absolute; top: 0; left: 0; width: 1440px; height: 900px; border: 0; transform-origin: 0 0; pointer-events: none; }
+  .tekst { padding: 18px 20px 22px; }
+  .nr { font: 400 15px/1 var(--kop); letter-spacing: .08em; color: var(--blauw); }
+  .ontwerp h2 { font: 700 19px/1.2 var(--tekst); color: var(--grijs); margin: 6px 0; }
+  .ontwerp p { font-size: 14px; color: var(--grijs-80); margin: 0; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <img src="assets/logo.svg" alt="Autoservice Barneveld">
+    <div>
+      <h1>Ontwerpen nieuwe website</h1>
+      <p>Tien richtingen op basis van het merkboek. Klik een ontwerp aan om het te bekijken.</p>
+    </div>
+  </div>
+</header>
+<main class="wrap">
+  <ul class="raster">
+    <li class="ontwerp"><a href="01-strak/"><div class="voorbeeld"><iframe src="01-strak/" title="Voorbeeld ontwerp 1" loading="lazy" tabindex="-1"></iframe></div><div class="tekst"><span class="nr">Ontwerp 01</span><h2>Strak &amp; licht</h2><p>Wit en ruim, blauw als accent, grote duotoonfoto. De klassieke, betrouwbare keuze.</p></div></a></li>
+    <li class="ontwerp"><a href="02-nacht/"><div class="voorbeeld"><iframe src="02-nacht/" title="Voorbeeld ontwerp 2" loading="lazy" tabindex="-1"></iframe></div><div class="tekst"><span class="nr">Ontwerp 02</span><h2>Nachtblauw</h2><p>Donker en premium, grote koppen, blauwe accenten. Technisch, met een EV-gevoel.</p></div></a></li>
+    <li class="ontwerp"><a href="03-split/"><div class="voorbeeld"><iframe src="03-split/" title="Voorbeeld ontwerp 3" loading="lazy" tabindex="-1"></iframe></div><div class="tekst"><span class="nr">Ontwerp 03</span><h2>Gesplitst</h2><p>Blauw vlak naast een foto, afwisselend tekst en beeld. Duidelijk en gestructureerd.</p></div></a></li>
+    <li class="ontwerp"><a href="04-editorial/"><div class="voorbeeld"><iframe src="04-editorial/" title="Voorbeeld ontwerp 4" loading="lazy" tabindex="-1"></iframe></div><div class="tekst"><span class="nr">Ontwerp 04</span><h2>Redactioneel</h2><p>Minimalistisch als een magazine: veel witruimte, grote letters, zwart-witfoto's.</p></div></a></li>
+    <li class="ontwerp"><a href="05-strepen/"><div class="voorbeeld"><iframe src="05-strepen/" title="Voorbeeld ontwerp 5" loading="lazy" tabindex="-1"></iframe></div><div class="tekst"><span class="nr">Ontwerp 05</span><h2>Strepen</h2><p>De schuine blauwe strepen van het drukwerk als terugkerend element. Fris en herkenbaar.</p></div></a></li>
+    <li class="ontwerp"><a href="06-kenteken/"><div class="voorbeeld"><iframe src="06-kenteken/" title="Voorbeeld ontwerp 6" loading="lazy" tabindex="-1"></iframe></div><div class="tekst"><span class="nr">Ontwerp 06</span><h2>Afspraak eerst</h2><p>Kenteken invullen en direct een afspraak plannen. Gericht op nieuwe klanten.</p></div></a></li>
+    <li class="ontwerp"><a href="07-bento/"><div class="voorbeeld"><iframe src="07-bento/" title="Voorbeeld ontwerp 7" loading="lazy" tabindex="-1"></iframe></div><div class="tekst"><span class="nr">Ontwerp 07</span><h2>Bento</h2><p>Alles in afgeronde tegels, zoals een app. Modern en overzichtelijk.</p></div></a></li>
+    <li class="ontwerp"><a href="08-zijbalk/"><div class="voorbeeld"><iframe src="08-zijbalk/" title="Voorbeeld ontwerp 8" loading="lazy" tabindex="-1"></iframe></div><div class="tekst"><span class="nr">Ontwerp 08</span><h2>Zijbalk</h2><p>Vaste grijze menubalk links, ruime inhoud rechts. Rustig en zakelijk.</p></div></a></li>
+    <li class="ontwerp"><a href="09-werkplaats/"><div class="voorbeeld"><iframe src="09-werkplaats/" title="Voorbeeld ontwerp 9" loading="lazy" tabindex="-1"></iframe></div><div class="tekst"><span class="nr">Ontwerp 09</span><h2>Werkplaats</h2><p>Stoer en industrieel, grijs met blauw, hoofdletters en technische labels.</p></div></a></li>
+    <li class="ontwerp"><a href="10-panorama/"><div class="voorbeeld"><iframe src="10-panorama/" title="Voorbeeld ontwerp 10" loading="lazy" tabindex="-1"></iframe></div><div class="tekst"><span class="nr">Ontwerp 10</span><h2>Panorama</h2><p>Elk scherm een grote foto met weinig tekst. Filmisch en indrukwekkend.</p></div></a></li>
+  </ul>
+</main>
+<script>
+  // Schaal de live voorbeelden (1440x900) passend in hun kaart.
+  const schaal = () => document.querySelectorAll('.voorbeeld').forEach(v => {
+    v.querySelector('iframe').style.transform = `scale(${v.clientWidth / 1440})`;
+  });
+  addEventListener('resize', schaal); schaal();
+</script>
+</body>
+</html>

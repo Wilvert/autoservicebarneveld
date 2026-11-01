@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Ontwerp 03 · Gesplitst – Autoservice Barneveld</title>
+<link rel="stylesheet" href="../assets/brand.css">
+<style>
+  :root { --kopHoogte: 76px; }
+  :focus-visible { outline: 3px solid var(--oranje); outline-offset: 3px; }
+  .verborgen { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* ---------- kop ---------- */
+  .kop { position: sticky; top: 0; z-index: 50; background: var(--wit); border-bottom: 1px solid var(--grijs-20); height: var(--kopHoogte); }
+  .kop-in { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 clamp(20px, 4vw, 56px); }
+  .kop-logo img { height: 46px; width: auto; }
+  .menu { display: flex; align-items: center; gap: 4px; list-style: none; margin: 0; padding: 0; }
+  .menu a { display: block; padding: 10px 14px; font-weight: 600; font-size: 14px; text-decoration: none; color: var(--grijs); border-radius: 2px; }
+  .menu a:hover { color: var(--blauw); }
+  .menu .menu-bel a { background: var(--blauw); color: var(--wit); margin-left: 10px; padding: 11px 18px; }
+  .menu .menu-bel a:hover { background: var(--nacht); color: var(--wit); }
+  .menu-knop { display: none; background: none; border: 0; padding: 10px; cursor: pointer; color: var(--grijs); }
+  .menu-knop svg { width: 28px; height: 28px; }
+
+  /* ---------- algemene split ---------- */
+  .split { display: grid; grid-template-columns: 1fr 1fr; }
+  .split > * { min-width: 0; }
+  .vlak { padding: clamp(48px, 7vw, 120px) clamp(24px, 6vw, 104px); display: flex; flex-direction: column; justify-content: center; }
+  .foto { position: relative; min-height: 420px; overflow: hidden; }
+  .foto > img, .foto.duotoon > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .blauw { background: var(--blauw); color: var(--wit); }
+  .lichtgrijs { background: #f4f5f7; }
+  .label { display: inline-flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--blauw); margin-bottom: 18px; }
+  .label::before { content: ""; width: 32px; height: 3px; background: currentColor; }
+  .blauw .label { color: var(--blauw-20); }
+  h2 { font-family: var(--kop); font-weight: 400; font-size: clamp(44px, 5vw, 72px); line-height: .95; letter-spacing: .01em; color: var(--blauw); }
+  .blauw h2 { color: var(--wit); }
+  h3 { font-size: 19px; font-weight: 700; color: var(--grijs); margin-bottom: .35em; }
+  .lead { font-size: 18px; max-width: 34em; }
+
+  .knop { display: inline-flex; align-items: center; gap: 10px; padding: 16px 26px; font: 700 15px/1 var(--tekst); text-decoration: none; border: 2px solid transparent; border-radius: 2px; cursor: pointer; }
+  .knop svg { width: 18px; height: 18px; flex: none; }
+  .knop-wit { background: var(--wit); color: var(--blauw); }
+  .knop-wit:hover { background: var(--blauw-20); }
+  .knop-rand { border-color: rgba(255,255,255,.7); color: var(--wit); }
+  .knop-rand:hover { background: rgba(255,255,255,.12); border-color: var(--wit); }
+  .knop-blauw { background: var(--blauw); color: var(--wit); }
+  .knop-blauw:hover { background: var(--nacht); }
+
+  /* ---------- hero ---------- */
+  .hero { min-height: min(calc(100vh - var(--kopHoogte)), 980px); min-height: min(calc(100svh - var(--kopHoogte)), 980px); }
+  .hero .vlak { position: relative; overflow: hidden; }
+  .hero .vlak::after { /* schuine strepen uit het drukwerk, heel subtiel */
+    content: ""; position: absolute; right: -60px; bottom: -60px; width: 340px; height: 340px; pointer-events: none;
+    background: repeating-linear-gradient(-55deg, rgba(255,255,255,.09) 0 14px, transparent 14px 34px);
+    -webkit-mask: linear-gradient(135deg, transparent 30%, #000 75%); mask: linear-gradient(135deg, transparent 30%, #000 75%);
+  }
+  .hero h1 { font-family: var(--kop); font-weight: 400; font-size: clamp(56px, 6.6vw, 112px); line-height: .9; letter-spacing: .005em; margin: 0 0 28px; }
+  .hero .lead { color: var(--blauw-20); margin-bottom: 36px; }
+  .hero .lead strong { color: var(--wit); font-weight: 600; }
+  .knoppen { display: flex; flex-wrap: wrap; gap: 14px; }
+  .hero-feit { margin-top: 56px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.25); display: flex; flex-wrap: wrap; gap: 10px 36px; font-size: 14px; color: var(--blauw-20); }
+  .hero-feit span { display: inline-flex; align-items: center; gap: 9px; }
+  .hero-feit svg { width: 18px; height: 18px; color: var(--wit); }
+  .hero .foto > img { object-position: 30% 50%; }
+
+  /* ---------- diensten ---------- */
+  .diensten { grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--grijs-20); }
+  .diensten .intro { position: relative; justify-content: flex-start; }
+  .diensten .intro-in { position: sticky; top: calc(var(--kopHoogte) + 48px); }
+  .strepen { height: 64px; margin-top: 40px; max-width: 260px; background: repeating-linear-gradient(-55deg, var(--blauw) 0 10px, transparent 10px 26px); opacity: .9; }
+  .lijst { list-style: none; margin: 0; padding: clamp(48px, 7vw, 120px) clamp(24px, 6vw, 104px) clamp(48px, 7vw, 120px) clamp(24px, 4vw, 64px); counter-reset: dienst; }
+  .lijst li { display: grid; grid-template-columns: 56px 128px 1fr; gap: 24px; align-items: start; padding: 30px 0; border-top: 1px solid var(--grijs-20); }
+  .lijst li:first-child { border-top: 0; }
+  .lijst .nr { font-family: var(--kop); font-size: 64px; line-height: .8; color: var(--blauw); }
+  .lijst .klein { aspect-ratio: 3 / 2; overflow: hidden; }
+  .lijst .klein img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+  .lijst li:hover .klein img { transform: scale(1.06); }
+  .lijst p { margin-bottom: .6em; font-size: 15px; }
+  .pijl { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; color: var(--blauw); text-decoration: none; }
+  .pijl svg { width: 16px; height: 16px; transition: transform .2s; }
+  .pijl:hover svg { transform: translateX(4px); }
+
+  /* ---------- over ons ---------- */
+  .over .foto { min-height: 640px; }
+  .over .foto > img { object-position: 50% 45%; filter: grayscale(1) contrast(.95) brightness(2.1); opacity: 1; }
+  .punten { display: grid; gap: 28px; margin-top: 16px; }
+  .punt { display: grid; grid-template-columns: 48px 1fr; gap: 18px; }
+  .punt .ico { width: 48px; height: 48px; display: grid; place-items: center; background: var(--blauw-20); color: var(--blauw); }
+  .punt .ico svg { width: 24px; height: 24px; }
+  .punt p { margin: 0; font-size: 15px; }
+
+  /* ---------- vervangend vervoer ---------- */
+  .vervoer .foto > img { object-position: 50% 50%; }
+  .auto-kaarten { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 8px 0 32px; }
+  .auto-kaart { background: var(--wit); padding: 22px 22px 20px; border-top: 4px solid var(--blauw); }
+  .auto-kaart .voor { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--grijs-80); }
+  .auto-kaart h3 { font-family: var(--kop); font-weight: 400; font-size: 32px; color: var(--blauw); margin: 6px 0 8px; line-height: 1; }
+  .auto-kaart p { font-size: 14px; margin: 0; }
+  .extra { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 18px 28px; }
+  .extra li { display: grid; grid-template-columns: 28px 1fr; gap: 12px; font-size: 14px; }
+  .extra svg { width: 26px; height: 26px; color: var(--blauw); }
+  .extra strong { display: block; color: var(--grijs); font-size: 15px; }
+
+  /* ---------- review ---------- */
+  .review { grid-template-columns: 1fr 1fr; }
+  .review .vlak:first-child { background: var(--wit); }
+  .review blockquote { margin: 0; position: relative; }
+  .review blockquote svg { width: 64px; height: 64px; color: var(--blauw-60); margin-bottom: 18px; }
+  .review blockquote p { font-size: clamp(20px, 1.9vw, 27px); font-weight: 500; line-height: 1.45; color: var(--wit); margin-bottom: 26px; }
+  .review cite { font-style: normal; font-size: 14px; color: var(--blauw-20); letter-spacing: .04em; }
+  .sterren { display: flex; gap: 4px; margin-bottom: 20px; color: var(--wit); }
+  .sterren svg { width: 20px; height: 20px; }
+
+  /* ---------- contact ---------- */
+  .contact { grid-template-columns: 1fr 1fr; }
+  .contact .blauw { justify-content: flex-start; }
+  .gegevens { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 22px; }
+  .gegevens li { display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start; }
+  .gegevens .ico { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.35); }
+  .gegevens svg { width: 20px; height: 20px; }
+  .gegevens small { display: block; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--blauw-20); font-weight: 600; }
+  .gegevens a, .gegevens span { color: var(--wit); font-weight: 600; font-size: 17px; text-decoration: none; }
+  .gegevens a:hover { text-decoration: underline; }
+  .afspraak { margin-top: 36px; padding: 18px 20px; background: rgba(255,255,255,.1); border-left: 4px solid var(--wit); font-weight: 600; }
+  .contact-foto { margin-top: 40px; height: 220px; }
+  .contact-foto img { width: 100%; height: 100%; object-fit: cover; }
+
+  form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 22px; max-width: 680px; }
+  .veld { display: grid; gap: 7px; }
+  .veld.breed, .akkoord, form .knop { grid-column: 1 / -1; }
+  label { font-size: 14px; font-weight: 600; color: var(--grijs); }
+  input[type=text], input[type=email], input[type=tel], textarea { width: 100%; font: 400 16px/1.4 var(--tekst); color: var(--grijs); padding: 14px 16px; border: 1px solid var(--grijs-40); background: var(--wit); border-radius: 2px; }
+  input:focus-visible, textarea:focus-visible { outline: 3px solid var(--blauw); outline-offset: 0; border-color: var(--blauw); }
+  textarea { min-height: 150px; resize: vertical; }
+  .akkoord { display: grid; grid-template-columns: 22px 1fr; gap: 12px; font-size: 13px; font-weight: 400; line-height: 1.5; color: var(--grijs-80); }
+  .akkoord input { width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--blauw); }
+  form .knop { justify-self: start; }
+
+  /* ---------- voet ---------- */
+  .voet { background: var(--grijs); color: #e6e6e7; }
+  .voet-in { display: grid; grid-template-columns: auto 1fr auto; gap: 40px; align-items: center; padding: 44px clamp(20px, 4vw, 56px); }
+  .voet-in > img:first-child { height: 52px; width: auto; }
+  .voet-nav { display: flex; flex-wrap: wrap; gap: 6px 26px; justify-content: center; font-size: 14px; }
+  .voet-nav a { text-decoration: none; color: #e6e6e7; }
+  .voet-nav a:hover { color: var(--wit); text-decoration: underline; }
+  .rdw { background: var(--wit); padding: 6px; border-radius: 2px; }
+  .rdw img { height: 56px; width: auto; }
+  .voet-onder { border-top: 1px solid rgba(255,255,255,.15); padding: 18px clamp(20px, 4vw, 56px); font-size: 13px; color: var(--grijs-40); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+
+  /* ---------- responsief ---------- */
+  @media (max-width: 1100px) {
+    .lijst li { grid-template-columns: 52px 1fr; gap: 20px; }
+    .lijst .klein { display: none; }
+    .lijst .nr { font-size: 52px; }
+    .auto-kaarten, .extra { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 900px) {
+    :root { --kopHoogte: 68px; }
+    .kop-logo img { height: 40px; }
+    .menu-knop { display: block; }
+    .menu { display: none; position: absolute; top: var(--kopHoogte); left: 0; right: 0; flex-direction: column; align-items: stretch; background: var(--wit); border-bottom: 1px solid var(--grijs-20); padding: 8px 20px 20px; box-shadow: 0 12px 24px rgba(14,28,44,.12); }
+    .menu.open { display: flex; }
+    .menu a { padding: 14px 4px; font-size: 16px; border-bottom: 1px solid var(--grijs-20); }
+    .menu .menu-bel a { margin: 14px 0 0; text-align: center; border: 0; }
+    .split, .diensten, .contact { grid-template-columns: 1fr; }
+    .hero { min-height: 0; }
+    .hero .foto { min-height: 0; aspect-ratio: 4 / 3; order: 2; }
+    .foto { min-height: 0; aspect-ratio: 4 / 3; }
+    .over .foto { min-height: 0; aspect-ratio: 4 / 5; }
+    .over .vlak, .contact .vlak:last-child { order: 2; }
+    .vervoer .foto { order: 2; }
+    .diensten .intro-in { position: static; }
+    .diensten .intro { padding-bottom: 8px; }
+    .lijst { padding: 0 24px 48px; }
+    .lijst li { grid-template-columns: 64px 150px 1fr; }
+    .lijst .klein { display: block; }
+    .auto-kaarten, .extra { grid-template-columns: 1fr 1fr; }
+    .review .blauw { background: #f4f5f7; color: var(--grijs); }
+    .review .vlak:first-child { padding-bottom: 24px; }
+    .review .blauw { padding-top: 40px; }
+    .review blockquote p { color: var(--blauw); }
+    .review .sterren { color: var(--blauw); }
+    .review cite { color: var(--grijs-80); }
+    .voet-in { grid-template-columns: 1fr; justify-items: start; gap: 28px; }
+    .voet-nav { justify-content: flex-start; }
+  }
+  @media (max-width: 560px) {
+    .lijst li { grid-template-columns: 1fr 112px; gap: 16px; padding: 26px 0; align-items: end; }
+    .lijst .nr { font-size: 56px; }
+    .lijst li > div:last-child { grid-column: 1 / -1; }
+    .auto-kaarten, .extra { grid-template-columns: 1fr; }
+    form { grid-template-columns: 1fr; }
+    .gegevens a, .gegevens span { font-size: 15px; overflow-wrap: anywhere; }
+    .knoppen .knop { flex: 1 1 100%; justify-content: center; }
+    .hero-feit { margin-top: 40px; }
+    .strepen { display: none; }
+  }
+</style>
+</head>
+<body>
+<a class="mockup-balk" href="../">← Alle ontwerpen</a>
+
+<header class="kop">
+  <div class="kop-in">
+    <a class="kop-logo" href="#top" aria-label="Autoservice Barneveld, naar boven"><img src="../assets/logo.svg" alt="Autoservice Barneveld" width="229" height="95"></a>
+    <nav aria-label="Hoofdmenu">
+      <button class="menu-knop" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menu openen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <ul class="menu" id="menu">
+        <li><a href="#diensten">Diensten</a></li>
+        <li><a href="#over-ons">Over ons</a></li>
+        <li><a href="#vervangend-vervoer">Vervangend vervoer</a></li>
+        <li><a href="#review">Ervaringen</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li class="menu-bel"><a href="tel:0342234003">Bel 0342-234003</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="split hero" aria-labelledby="hero-kop">
+    <div class="vlak blauw">
+      <p class="label">Garage in Barneveld</p>
+      <h1 id="hero-kop">Vakkundig onderhoud voor uw auto in Barneveld</h1>
+      <p class="lead"><strong>Professioneel onderhoud en reparaties.</strong> Een moderne, universele garage voor onderhoud, reparaties, APK, diagnose, banden- en aircoservice. Met professionele apparatuur, duidelijke communicatie en heldere tarieven.</p>
+      <div class="knoppen">
+        <a class="knop knop-wit" href="#contact">Plan afspraak
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="knop knop-rand" href="tel:0342234003">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+          0342-234003</a>
+      </div>
+      <div class="hero-feit">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Wij werken uitsluitend op afspraak</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Alle merken, ook elektrisch</span>
+      </div>
+    </div>
+    <div class="foto">
+      <img src="../../img/hero-home.webp" alt="Monteur van Autoservice Barneveld draait de wielmoeren van een auto op de brug vast" width="1848" height="1232">
+    </div>
+  </section>
+
+  <!-- DIENSTEN -->
+  <section class="split diensten" id="diensten" aria-labelledby="diensten-kop">
+    <div class="vlak lichtgrijs intro">
+      <div class="intro-in">
+        <p class="label">Diensten</p>
+        <h2 id="diensten-kop">Alles voor uw auto onder één dak</h2>
+        <p class="lead">Onderhoud en reparatie van alle merken, ook elektrische auto’s. Persoonlijke aandacht, goede service en vakmanschap staan centraal in onze werkplaats.</p>
+        <a class="knop knop-blauw" href="#contact">Plan afspraak</a>
+        <div class="strepen" aria-hidden="true"></div>
+      </div>
+    </div>
+    <ol class="lijst">
+      <li>
+        <span class="nr" aria-hidden="true">01</span>
+        <div class="klein"><img src="../../img/dienst-onderhoud.webp" alt="" width="960" height="640"></div>
+        <div>
+          <h3>Onderhoud &amp; reparatie</h3>
+          <p>Of het nu gaat om een grote of kleine onderhoudsbeurt, of het vervangen van een lampje: wij zorgen dat jouw auto veilig, betrouwbaar en in topconditie blijft.</p>
+          <a class="pijl" href="#contact">Meer over onderhoud <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </li>
+      <li>
+        <span class="nr" aria-hidden="true">02</span>
+        <div class="klein"><img src="../../img/dienst-apk.webp" alt="" width="960" height="639"></div>
+        <div>
+          <h3>APK-keuring</h3>
+          <p>Een verplichte keuring voor de verkeersveiligheid en milieuvriendelijkheid van je auto. Wij voeren deze keuring voor alle merken zorgvuldig uit, zodat je veilig en volgens de wettelijke eisen de weg op gaat.</p>
+          <a class="pijl" href="#contact">Meer over de APK <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </li>
+      <li>
+        <span class="nr" aria-hidden="true">03</span>
+        <div class="klein"><img src="../../img/dienst-diagnose.webp" alt="" width="960" height="639"></div>
+        <div>
+          <h3>Diagnose</h3>
+          <p>Met moderne (uitlees)apparatuur detecteren en verhelpen wij storingen en elektronische problemen aan jouw auto snel.</p>
+          <a class="pijl" href="#contact">Meer over diagnose <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </li>
+      <li>
+        <span class="nr" aria-hidden="true">04</span>
+        <div class="klein"><img src="../../img/dienst-banden.webp" alt="" width="960" height="639"></div>
+        <div>
+          <h3>Bandenservice</h3>
+          <p>Montage, balanceren en (seizoens)wissel van jouw banden, snel en vakkundig, zodat jouw auto altijd de juiste grip houdt. Ook voor elektrische auto’s.</p>
+          <a class="pijl" href="#contact">Meer over banden <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </li>
+      <li>
+        <span class="nr" aria-hidden="true">05</span>
+        <div class="klein"><img src="../../img/dienst-airco.webp" alt="" width="960" height="639"></div>
+        <div>
+          <h3>Aircoservice</h3>
+          <p>Vullen, controleren, lekdetectie en reparaties van alle merken aircosystemen. Zo blijft jouw auto koel in de zomer en helder in de winter.</p>
+          <a class="pijl" href="#contact">Meer over aircoservice <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- OVER ONS: foto links, tekst rechts -->
+  <section class="split over" id="over-ons" aria-labelledby="over-kop">
+    <div class="foto duotoon">
+      <img src="../../img/hero-over-ons.webp" alt="Monteur van Autoservice Barneveld met een slagmoersleutel naast de gele leenauto in de werkplaats" width="1232" height="1848">
+    </div>
+    <div class="vlak">
+      <p class="label">Over ons</p>
+      <h2 id="over-kop">Kwaliteit en service staan voorop</h2>
+      <p class="lead">Bij Autoservice Barneveld draait alles om vakmanschap, transparantie en persoonlijk contact. Als zelfstandige monteur werk ik rechtstreeks met mijn klanten samen, zonder tussenpersonen of ingewikkelde processen. Zo weet je altijd precies wie er aan jouw auto werkt.</p>
+      <div class="punten">
+        <div class="punt">
+          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/></svg></span>
+          <div><h3>Moderne werkplaats, alle merken</h3><p>Uitgerust met de nieuwste apparatuur, voor regulier onderhoud én complexe diagnoses. Inclusief het reguliere onderhoud van elektrische auto’s.</p></div>
+        </div>
+        <div class="punt">
+          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.2A8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5z"/></svg></span>
+          <div><h3>Heldere communicatie</h3><p>Alle kosten worden vooraf besproken. Ontdekken we iets onverwachts? Dan hoor je het direct via WhatsApp, met foto’s, korte filmpjes of een duidelijke toelichting.</p></div>
+        </div>
+        <div class="punt">
+          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></span>
+          <div><h3>Persoonlijk contact</h3><p>Je werkt rechtstreeks met de monteur, zonder tussenpersonen of ingewikkelde processen. Zo weet je altijd wat er gaat gebeuren.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VERVANGEND VERVOER: tekst links, foto rechts -->
+  <section class="split vervoer" id="vervangend-vervoer" aria-labelledby="vervoer-kop">
+    <div class="vlak lichtgrijs">
+      <p class="label">Vervangend vervoer</p>
+      <h2 id="vervoer-kop">Altijd mobiel, ook als uw auto bij ons staat</h2>
+      <p class="lead">Bij Autoservice Barneveld zorgen we ervoor dat je nooit stil hoeft te staan. Terwijl jouw auto in onderhoud of reparatie is, zet je je dag zorgeloos voort.</p>
+      <div class="auto-kaarten">
+        <div class="auto-kaart">
+          <span class="voor">Voor particulieren</span>
+          <h3>Renault 5 elektrisch</h3>
+          <p>Een moderne, duurzame en comfortabele leenauto waarmee je direct verder kunt rijden.</p>
+        </div>
+        <div class="auto-kaart">
+          <span class="voor">Voor zakelijke klanten</span>
+          <h3>Volkswagen Caddy</h3>
+          <p>Praktisch en ruim, ideaal voor ondernemers die hun werk niet kunnen onderbreken.</p>
+        </div>
+      </div>
+      <ul class="extra" aria-label="Extra gemak">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 17H3v-5l2-5h10l4 5h2v5h-2"/><circle cx="7.5" cy="17.5" r="2"/><circle cx="16.5" cy="17.5" r="2"/><path d="M9.5 17.5h5"/></svg><span><strong>Haal- en brengservice</strong>In Barneveld en Voorthuizen, zodat je geen tijd verliest.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.5" cy="17" r="3.5"/><circle cx="18.5" cy="17" r="3.5"/><path d="M5.5 17 9 9h6l3.5 8M9 9 7.5 6H6M15 9l-3 8H5.5"/></svg><span><strong>Leenfiets</strong>Perfect voor korte ritten of een milieuvriendelijke oplossing.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M9 21l-2 0M8 17l-2 4M16 17l2 4M9 14h.01M15 14h.01"/></svg><span><strong>Station op vijf minuten</strong>Handig als je liever met het openbaar vervoer reist.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 8h1a4 4 0 0 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"/><path d="M6 2v2M10 2v2M14 2v2"/></svg><span><strong>Werkplek met koffie en wifi</strong>Een bureau om productief te blijven terwijl je wacht.</span></li>
+      </ul>
+    </div>
+    <div class="foto">
+      <img src="../../img/hero-vervangend-vervoer.webp" alt="De leenauto van Autoservice Barneveld" width="1848" height="1232">
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section class="split review" id="review" aria-labelledby="review-kop">
+    <div class="vlak">
+      <p class="label">Ervaringen</p>
+      <h2 id="review-kop">Kwaliteit en klant&shy;tevredenheid staan voorop</h2>
+      <p class="lead">Klanten waarderen vooral de combinatie van deskundigheid, duidelijke communicatie en een nuchtere aanpak. Zo weet je zeker dat jouw auto in goede handen is.</p>
+    </div>
+    <div class="vlak blauw">
+      <figure style="margin:0">
+        <div class="sterren" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
+        </div>
+        <blockquote>
+          <p>“Autoservice Barneveld heeft onlangs de draagarmen van mijn Tesla vervangen. Tijdens de werkzaamheden hield Matthijs me goed op de hoogte. Het vervangend vervoer was perfect geregeld. Top service!”</p>
+        </blockquote>
+        <figcaption><cite>Klant van Autoservice Barneveld</cite></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="split contact" id="contact" aria-labelledby="contact-kop">
+    <div class="vlak blauw">
+      <p class="label">Contact</p>
+      <h2 id="contact-kop">Neem vandaag nog contact op</h2>
+      <p class="lead" style="color:var(--blauw-20)">Vragen over onze diensten of een afspraak maken? Bel, mail of laat een bericht achter.</p>
+      <ul class="gegevens">
+        <li><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></span><div><small>Telefoon</small><a href="tel:0342234003">0342-234003</a></div></li>
+        <li><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></span><div><small>E-mail</small><a href="mailto:contact@autoservicebarneveld.nl">contact@autoservicebarneveld.nl</a></div></li>
+        <li><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></span><div><small>Adres</small><span>Verlengde Parallelweg 4-10<br>3771 LP Barneveld</span></div></li>
+      </ul>
+      <p class="afspraak">Wij werken uitsluitend op afspraak.</p>
+    </div>
+    <div class="vlak">
+      <p class="label">Stuur een bericht</p>
+      <form action="#" method="post">
+        <div class="veld"><label for="naam">Naam *</label><input id="naam" name="naam" type="text" autocomplete="name" required></div>
+        <div class="veld"><label for="email">E-mail *</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+        <div class="veld breed"><label for="tel">Telefoonnummer</label><input id="tel" name="tel" type="tel" autocomplete="tel"></div>
+        <div class="veld breed"><label for="bericht">Bericht *</label><textarea id="bericht" name="bericht" required></textarea></div>
+        <label class="akkoord"><input type="checkbox" name="akkoord" required> <span>Ik ga ermee akkoord dat deze gegevens worden opgeslagen en verwerkt met het doel contact op te nemen. Ik ben me ervan bewust dat ik mijn toestemming op elk moment kan intrekken. *</span></label>
+        <button class="knop knop-blauw" type="submit">Versturen
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="voet">
+  <div class="voet-in">
+    <img src="../assets/logo-wit.svg" alt="Autoservice Barneveld" width="229" height="95">
+    <nav class="voet-nav" aria-label="Voetmenu">
+      <a href="#diensten">Diensten</a><a href="#over-ons">Over ons</a><a href="#vervangend-vervoer">Vervangend vervoer</a><a href="#contact">Contact</a><a href="#top">Privacyverklaring</a>
+    </nav>
+    <div class="rdw"><img src="../../img/rdw-erkend.webp" alt="RDW erkend" width="469" height="274"></div>
+  </div>
+  <div class="voet-onder">
+    <span>© Autoservice Barneveld. Alle rechten voorbehouden.</span>
+    <span>Verlengde Parallelweg 4-10, 3771 LP Barneveld · 0342-234003</span>
+  </div>
+</footer>
+
+<script>
+  var knop = document.querySelector('.menu-knop'), menu = document.getElementById('menu');
+  knop.addEventListener('click', function () { var open = menu.classList.toggle('open'); knop.setAttribute('aria-expanded', open); knop.setAttribute('aria-label', open ? 'Menu sluiten' : 'Menu openen'); });
+  menu.addEventListener('click', function (e) { if (e.target.tagName === 'A') { menu.classList.remove('open'); knop.setAttribute('aria-expanded', 'false'); } });
+</script>
+</body>
+</html>
