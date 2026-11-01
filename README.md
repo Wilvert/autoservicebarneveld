@@ -8,16 +8,27 @@ opmaak, kleuren en foto's, maar als gewone HTML en één CSS-bestand.
 
 ```
 index.html                 Home
+apk-keuring/               Dienstpagina's (elk een index.html)
+onderhoud-reparatie/
+diagnose/
+bandenservice/
+airco-service/
+elektrische-auto/
 over-ons/index.html        Over Ons
 vervangend-vervoer/        Vervangend Vervoer
 contact/index.html         Contact
+privacy/index.html         Privacyverklaring
+404.html                   Foutpagina (absolute paden, noindex)
+robots.txt, sitemap.xml    Voor zoekmachines; nieuwe pagina's ook in sitemap.xml zetten
 css/style.css              Alle opmaak (kleuren staan bovenaan in :root)
 img/                       Foto's, logo, favicon
 fonts/                     Nunito, Nunito Sans, Merriweather (zelf gehost)
 ```
 
 Geen JavaScript, geen cookies, geen externe lettertypes. De kop en voet
-staan in elke pagina; pas ze bij een wijziging in alle vier aan.
+staan in elke pagina; pas ze bij een wijziging in alle pagina's aan. Dat geldt
+ook voor het JSON-LD-blok (`AutoRepair`) in de `<head>`: bedrijfsgegevens
+zoals adres, telefoon en (later) openingstijden staan daar.
 
 ## Bekijken
 
@@ -28,3 +39,7 @@ Lokaal: `python3 -m http.server` in deze map en open http://localhost:8000.
 - Het contactformulier opent nu het mailprogramma van de bezoeker
   (`mailto:`). Vervangen door een formulierdienst als dat gewenst is.
 - De kaart op de contactpagina komt van OpenStreetMap (geen cookies).
+- Openingstijden ontbreken nog op de site en in het JSON-LD-blok
+  (`openingHoursSpecification`); invullen zodra ze bekend zijn.
+- Foto's zijn WebP; `img/deelafbeelding.jpg` (1200x630) is de preview bij
+  delen via WhatsApp/Facebook.

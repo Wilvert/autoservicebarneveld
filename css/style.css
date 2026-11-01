@@ -171,3 +171,12 @@ a.tel { color: inherit; text-decoration: none; }
   .diensten { margin-top: -200px; }
   .formulier { padding: 0; }
 }
+
+/* ---------- Dienstpagina's en links ---------- */
+.kaart .meer { display: inline-block; margin-top: .4em; font-weight: 700; }
+.inhoud blockquote { margin: 0 0 1em; padding-left: 16px; border-left: 4px solid var(--blauw); font-style: italic; }
+.inhoud .cta { margin-top: 2.4em; }
+.andere-diensten { padding-left: 1.2em; }
+.contactblok a:not(.knop) { color: var(--licht); }
+.voet .nap, .voet .voet-links { font-family: "Nunito", Arial, sans-serif; margin-bottom: 1em; }
+.voet-links { font-size: 15px; }
