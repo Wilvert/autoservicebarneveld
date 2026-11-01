@@ -115,6 +115,8 @@ a.tel { color: inherit; text-decoration: none; }
 }
 .contactblok .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
 .contactblok h2 { color: var(--blauw-licht); }
+.contactblok .rdw { display: flex; align-items: center; justify-content: center; }
+.contactblok .rdw img { width: 240px; }
 .contactblok .kaart-osm { width: 100%; height: 320px; border: 0; border-radius: 16px; background: #fff; }
 
 .voet {
