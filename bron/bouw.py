@@ -80,10 +80,10 @@ DIENSTEN = [
      "Vullen, controleren, lekdetectie en reparaties. Koel in de zomer en helder zicht in de winter.",
      "Plan airco"),
     ("elektrische-auto", "Elektrische auto",
-     "Onderhoud elektrische auto & Tesla | Autoservice Barneveld",
-     "Ook een elektrische auto heeft onderhoud nodig. Banden, remmen, ophanging, airco en APK voor alle merken, ook Tesla. Autoservice Barneveld.",
+     "Onderhoud elektrische auto | Autoservice Barneveld",
+     "Ook een elektrische auto heeft onderhoud nodig. Banden, remmen, ophanging, airco en APK voor alle merken. Autoservice Barneveld.",
      "Onderhoud van uw elektrische auto", "dienst-onderhoud", "Monteur werkt aan de wielophanging van een auto",
-     "Het reguliere onderhoud, banden, airco en APK van elektrische auto's van alle merken, ook Tesla.",
+     "Het reguliere onderhoud, banden, airco en APK van elektrische auto's van alle merken.",
      "Plan onderhoud"),
 ]
 DIENST_OPTIES = [d[1] for d in DIENSTEN]
@@ -153,12 +153,12 @@ TEKST = {
 <p>Een aircoservice laat zich goed combineren met een <a href="{r}onderhoud-reparatie/">onderhoudsbeurt</a> of uw <a href="{r}apk-keuring/">APK</a>.</p>
 """,
 "elektrische-auto": """
-<p>Een elektrische auto heeft geen olie te verversen, maar onderhoud is nog steeds nodig. Bij Autoservice Barneveld kunt u terecht voor het reguliere onderhoud van elektrische auto's van alle merken, ook Tesla. U hoeft daarvoor niet naar de dealer.</p>
+<p>Een elektrische auto heeft geen olie te verversen, maar onderhoud is nog steeds nodig. Bij Autoservice Barneveld kunt u terecht voor het reguliere onderhoud van elektrische auto's van alle merken. U hoeft daarvoor niet naar de dealer.</p>
 
 <h2>Wat onderhouden we aan een elektrische auto?</h2>
 <p>Elektrische auto's zijn zwaarder dan auto's met een brandstofmotor. Daardoor vragen vooral <a href="{r}bandenservice/">banden</a>, wielophanging en draagarmen extra aandacht. Daarnaast controleren we remmen en remvloeistof, verlichting, ruitenwissers, het interieurfilter, de <a href="{r}airco-service/">airco</a> en de 12-voltaccu.</p>
 
-<h2>Ervaring van een Tesla-rijder</h2>
+<h2>Ervaring van een klant</h2>
 <blockquote>"Autoservice Barneveld heeft onlangs de draagarmen van mijn Tesla vervangen. Tijdens de werkzaamheden hield Matthijs me goed op de hoogte. Het vervangend vervoer was perfect geregeld. Top service!"</blockquote>
 
 <h2>APK en diagnose</h2>
@@ -395,6 +395,60 @@ def schrijf(pad, inhoud):
     print("geschreven", pad)
 
 
+# ------------------------------------------------------------------ reviews
+# Overgenomen van het Google Bedrijfsprofiel (november 2026). Namen ingekort
+# tot voornaam en voorletter. Reviews zonder tekst staan er niet in.
+REVIEWS = [
+    ("Jan W.", "Autoservice Barneveld heeft onlangs de draagarmen van mijn Tesla vervangen. Tijdens de werkzaamheden hield Matthijs me goed op de hoogte. Het vervangend vervoer was perfect geregeld. Top service!"),
+    ("Griselda M.", "Wat een topservice van Matthijs! Helemaal blij ermee, ik reed weer weg in een nieuwe auto! Tot de volgende keer. 😊"),
+    ("Erik", "Kon snel terecht en communicatie verliep soepel. Netjes vooraf verteld wat het ging kosten. Leenauto ook erg handig!"),
+    ("John V.", "Top service, kon snel terecht en mijn auto was ook snel weer klaar. Vriendelijk geholpen door Matthijs!"),
+    ("Jens G.", "Auto bij Matthijs gebracht voor een servicebeurt. Goede communicatie, snelle service en ook nog eens de auto gewassen!"),
+    ("D. B.", "Super service! Zeker aan te raden"),
+    ("Mario", "Matthijs is heel vriendelijk en neemt de tijd voor je om alles uit te leggen. Denkt met je mee en is helder in wat je kunt verwachten. Tot de volgende keer!"),
+    ("Diederick B.", "Kwam voor wat onderhoud maar door proactief even een check te doen ontdekte Matthijs meer problemen die eerst werden gedeeld voordat er werd gerepareerd. …"),
+    ("Jaap V.", "Transparant, goede service en prima communicatie. Zeer tevreden met deze autogarage"),
+    ("Marjolyntje K.", "Matthijs, wat een vakman! Ik ben heel blij met jou. Dat je zo snel en vakkundig mijn slepende problemen direct hebt gevonden en opgelost. Ik heb iedere keer weer een grote grijns op mijn gezicht zodra ik weer in mijn auto rond zoef en vlotjes kan inhalen :-)"),
+    ("Martijn C.", "Goede service, een betrouwbare knul."),
+    ("André W.", "Fijne garage dat goed meedenkt!"),
+    ("Herwin H.", "Top service en lekker snel!"),
+]
+
+
+def review_sectie():
+    google = dict(PROFIELEN)["Google"]
+    dia = []
+    for i, (naam, tekst) in enumerate(REVIEWS):
+        actief = ' actief' if i == 0 else ''
+        verborgen = '' if i == 0 else ' aria-hidden="true"'
+        dia.append(f"""          <figure class="review-dia{actief}" role="group" aria-roledescription="review" aria-label="{i + 1} van {len(REVIEWS)}"{verborgen}>
+            <div class="sterren" role="img" aria-label="Vijf sterren">{I_STER * 5}</div>
+            <blockquote><p>{e(tekst)}</p></blockquote>
+            <figcaption>{e(naam)} · Google-review</figcaption>
+          </figure>""")
+    dias = "\n".join(dia)
+    return f"""  <section class="review" aria-labelledby="review-titel">
+    <div class="wrap">
+      <div class="review-kaart" aria-roledescription="carrousel" aria-labelledby="review-titel">
+        <svg class="quote" viewBox="0 0 48 48" aria-hidden="true"><path fill="currentColor" d="M6 38V26C6 15 11 9 20 7l2 4c-5 2-8 6-8 11h7v16zm24 0V26c0-11 5-17 14-19l2 4c-5 2-8 6-8 11h7v16z"/></svg>
+        <div>
+          <h2 class="sr-only" id="review-titel">Wat klanten zeggen</h2>
+          <div class="review-dias" aria-live="off">
+{dias}
+          </div>
+          <div class="review-bediening" hidden>
+            <button type="button" class="review-vorige" aria-label="Vorige review"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6"/></svg></button>
+            <span class="review-teller" aria-hidden="true">1 / {len(REVIEWS)}</span>
+            <button type="button" class="review-volgende" aria-label="Volgende review"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6"/></svg></button>
+            <button type="button" class="review-pauze" aria-label="Pauzeren"><svg class="ico-pauze" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg><svg class="ico-speel" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4l13 8-13 8z"/></svg></button>
+            <a class="review-alle" href="{google}" rel="noopener">Alle reviews op Google</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>"""
+
+
 # ------------------------------------------------------------------ homepage
 def homepage():
     r = ""
@@ -408,7 +462,6 @@ def homepage():
           <a class="plan" href="contact/" data-afspraak data-dienst="{e(naam)}">{knop} <span aria-hidden="true">→</span></a>
         </li>""")
     diensten = "\n".join(lijst)
-    sterren = I_STER * 5
     main = f"""  <section class="hero" id="afspraak" aria-labelledby="hero-titel">
     <div class="hero-foto"><img src="img/hero-home.webp" alt="" width="1848" height="1232" fetchpriority="high"></div>
     <div class="wrap">
@@ -442,7 +495,7 @@ def homepage():
     <ul>
       <li><img class="rdw-mini" src="img/rdw-erkend.webp" alt="" width="62" height="36"><span><strong>RDW erkend</strong>APK voor alle merken</span></li>
       <li><span class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M3 16V11l2-5h14l2 5v5M3 16h18M3 16v2h3v-2m12 0v2h3v-2M5 11h14"/></svg></span><span><strong>Alle merken</strong>Onderhoud en reparatie</span></li>
-      <li><span class="ico" aria-hidden="true">{I_BLIKSEM.format(s=24)}</span><span><strong>Ook elektrisch</strong>Ook Tesla</span></li>
+      <li><span class="ico" aria-hidden="true">{I_BLIKSEM.format(s=24)}</span><span><strong>Ook elektrisch</strong>Onderhoud van e-auto's</span></li>
       <li><span class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></g></svg></span><span><strong>Vervangend vervoer</strong>Leenauto, fiets of haal- en brengservice</span></li>
     </ul>
   </section>
@@ -457,7 +510,7 @@ def homepage():
       <ul class="diensten">
 {diensten}
       </ul>
-      <p class="ev">{I_BLIKSEM.format(s=24)}<span>Ook een elektrische auto heeft onderhoud nodig. Wij verzorgen het reguliere onderhoud, banden, airco en APK van elektrische auto's van alle merken, ook Tesla. <a href="elektrische-auto/">Meer over elektrische auto's</a></span></p>
+      <p class="ev">{I_BLIKSEM.format(s=24)}<span>Ook een elektrische auto heeft onderhoud nodig. Wij verzorgen het reguliere onderhoud, banden, airco en APK van elektrische auto's van alle merken. <a href="elektrische-auto/">Meer over elektrische auto's</a></span></p>
     </div>
   </section>
 
@@ -481,21 +534,7 @@ def homepage():
 
 {vervoer_sectie("")}
 
-  <section class="review" aria-labelledby="review-titel">
-    <div class="wrap">
-      <div class="review-kaart">
-        <svg class="quote" viewBox="0 0 48 48" aria-hidden="true"><path fill="currentColor" d="M6 38V26C6 15 11 9 20 7l2 4c-5 2-8 6-8 11h7v16zm24 0V26c0-11 5-17 14-19l2 4c-5 2-8 6-8 11h7v16z"/></svg>
-        <div>
-          <h2 class="sr-only" id="review-titel">Klantreview</h2>
-          <div class="sterren" role="img" aria-label="Vijf sterren">{sterren}</div>
-          <blockquote>
-            <p>Autoservice Barneveld heeft onlangs de draagarmen van mijn Tesla vervangen. Tijdens de werkzaamheden hield Matthijs me goed op de hoogte. Het vervangend vervoer was perfect geregeld. Top service!</p>
-            <cite>Klantreview · Kwaliteit en klanttevredenheid staan voorop</cite>
-          </blockquote>
-        </div>
-      </div>
-    </div>
-  </section>
+{review_sectie()}
 
 {contact_sectie("", kaart=False)}"""
     schrijf("index.html", pagina(
@@ -729,7 +768,7 @@ def sitemap_en_llms():
     profielen = "\n".join(f"- [{n}]({u})" for n, u in PROFIELEN)
     schrijf("llms.txt", f"""# Autoservice Barneveld
 
-> Zelfstandige, universele garage in Barneveld (Gelderland) voor APK, onderhoud, reparatie, diagnose, banden en aircoservice. Alle merken, ook elektrische auto's en Tesla. RDW-erkend. Afspraak maken kan via het formulier op de website (opent WhatsApp), telefonisch of per e-mail.
+> Zelfstandige, universele garage in Barneveld (Gelderland) voor APK, onderhoud, reparatie, diagnose, banden en aircoservice. Alle merken, ook elektrische auto's. RDW-erkend. Afspraak maken kan via het formulier op de website (opent WhatsApp), telefonisch of per e-mail.
 
 - Adres: {ADRES}, {POSTCODE_PLAATS}
 - Telefoon en WhatsApp: {TEL}

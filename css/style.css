@@ -167,9 +167,24 @@ h2.groot, h1.groot { font-family: var(--kop); font-weight: 400; font-size: clamp
 .review-kaart { position: relative; background: var(--blauw); color: var(--wit); border-radius: 14px; padding: clamp(32px, 6vw, 64px); display: grid; grid-template-columns: auto 1fr; gap: 36px; align-items: start; }
 .review-kaart .quote { width: 72px; height: 72px; color: var(--blauw-60); }
 .review blockquote { margin: 0; }
-.review blockquote p { font-size: clamp(20px, 2.3vw, 28px); font-weight: 500; line-height: 1.45; margin-bottom: 18px; }
-.sterren { display: flex; gap: 4px; color: var(--oranje); margin-bottom: 14px; }
-.review cite { font-style: normal; font-size: 14px; font-weight: 700; color: var(--blauw-20); }
+.review blockquote p { font-size: clamp(18px, 2vw, 24px); font-weight: 500; line-height: 1.5; margin-bottom: 18px; }
+.sterren { display: flex; gap: 4px; color: #062a50; margin-bottom: 14px; }
+.review figure { margin: 0; }
+.review figcaption { font-size: 14px; font-weight: 700; color: var(--blauw-20); }
+
+/* Carrousel: alle reviews in dezelfde cel, zodat de hoogte niet verspringt */
+.review-dias { display: grid; }
+.review-dia { grid-area: 1 / 1; align-self: center; opacity: 0; visibility: hidden; transition: opacity .8s ease, visibility 0s linear .8s; }
+.review-dia.actief { opacity: 1; visibility: visible; transition: opacity .8s ease; }
+.review-bediening { display: flex; align-items: center; gap: 10px; margin-top: 26px; flex-wrap: wrap; }
+.review-bediening[hidden] { display: none; }
+.review-bediening button { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #ffffff66; background: transparent; color: var(--wit); cursor: pointer; display: grid; place-items: center; }
+.review-bediening button:hover { background: #ffffff26; }
+.review-teller { min-width: 56px; text-align: center; font-size: 14px; font-weight: 700; color: var(--blauw-20); }
+.review-pauze .ico-speel, .review-pauze.gepauzeerd .ico-pauze { display: none; }
+.review-pauze.gepauzeerd .ico-speel { display: block; }
+.review-alle { margin-left: auto; color: var(--wit); font-weight: 700; font-size: 14px; }
+@media (prefers-reduced-motion: reduce) { .review-dia, .review-dia.actief { transition: none; } }
 
 /* Contact */
 .contact { background: var(--grijs); color: var(--wit); }

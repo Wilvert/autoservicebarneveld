@@ -115,3 +115,55 @@
     if (tab) { tab.opener = null; } else { window.location.href = url; }
   });
 }());
+
+/* ---------- Reviewcarrousel ---------- */
+(function () {
+  'use strict';
+  var kaart = document.querySelector('.review-kaart');
+  if (!kaart) return;
+  var dias = kaart.querySelectorAll('.review-dia');
+  var bediening = kaart.querySelector('.review-bediening');
+  if (dias.length < 2 || !bediening) return;
+
+  var teller = kaart.querySelector('.review-teller');
+  var pauzeKnop = kaart.querySelector('.review-pauze');
+  var INTERVAL = 8000;
+  var huidig = 0, timer = null;
+  var gepauzeerd = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var erboven = false;
+
+  bediening.hidden = false;
+
+  function toon(n) {
+    dias[huidig].classList.remove('actief');
+    dias[huidig].setAttribute('aria-hidden', 'true');
+    huidig = (n + dias.length) % dias.length;
+    dias[huidig].classList.add('actief');
+    dias[huidig].removeAttribute('aria-hidden');
+    teller.textContent = (huidig + 1) + ' / ' + dias.length;
+  }
+  function start() {
+    stop();
+    if (!gepauzeerd && !erboven) timer = setInterval(function () { toon(huidig + 1); }, INTERVAL);
+  }
+  function stop() { if (timer) { clearInterval(timer); timer = null; } }
+  function zetPauze(aan) {
+    gepauzeerd = aan;
+    pauzeKnop.classList.toggle('gepauzeerd', aan);
+    pauzeKnop.setAttribute('aria-label', aan ? 'Afspelen' : 'Pauzeren');
+    start();
+  }
+
+  kaart.querySelector('.review-vorige').addEventListener('click', function () { toon(huidig - 1); start(); });
+  kaart.querySelector('.review-volgende').addEventListener('click', function () { toon(huidig + 1); start(); });
+  pauzeKnop.addEventListener('click', function () { zetPauze(!gepauzeerd); });
+
+  // Stilhouden zolang de muis erop staat of de focus erin zit
+  kaart.addEventListener('mouseenter', function () { erboven = true; stop(); });
+  kaart.addEventListener('mouseleave', function () { erboven = false; start(); });
+  kaart.addEventListener('focusin', function () { erboven = true; stop(); });
+  kaart.addEventListener('focusout', function (e) { if (!kaart.contains(e.relatedTarget)) { erboven = false; start(); } });
+  document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); else start(); });
+
+  zetPauze(gepauzeerd);
+}());
