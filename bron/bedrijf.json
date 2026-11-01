@@ -1,0 +1,164 @@
+{
+ "@context": "https://schema.org",
+ "@type": "AutoRepair",
+ "@id": "https://www.autoservicebarneveld.nl/#bedrijf",
+ "name": "Autoservice Barneveld",
+ "url": "https://www.autoservicebarneveld.nl/",
+ "logo": "https://www.autoservicebarneveld.nl/img/logo.png",
+ "image": "https://www.autoservicebarneveld.nl/img/deelafbeelding.webp",
+ "telephone": "+31342234003",
+ "email": "contact@autoservicebarneveld.nl",
+ "address": {
+  "@type": "PostalAddress",
+  "streetAddress": "Verlengde Parallelweg 4-10",
+  "postalCode": "3771 LP",
+  "addressLocality": "Barneveld",
+  "addressRegion": "Gelderland",
+  "addressCountry": "NL"
+ },
+ "geo": {
+  "@type": "GeoCoordinates",
+  "latitude": 52.16313,
+  "longitude": 5.60113
+ },
+ "hasMap": "https://www.google.com/maps/dir/?api=1&destination=Verlengde+Parallelweg+4-10%2C+3771LP+Barneveld",
+ "areaServed": [
+  {
+   "@type": "City",
+   "name": "Barneveld"
+  },
+  {
+   "@type": "City",
+   "name": "Voorthuizen"
+  },
+  {
+   "@type": "City",
+   "name": "Kootwijkerbroek"
+  },
+  {
+   "@type": "City",
+   "name": "Terschuur"
+  },
+  {
+   "@type": "City",
+   "name": "Zwartebroek"
+  },
+  {
+   "@type": "City",
+   "name": "Garderen"
+  },
+  {
+   "@type": "City",
+   "name": "Stroe"
+  },
+  {
+   "@type": "City",
+   "name": "De Glind"
+  },
+  {
+   "@type": "City",
+   "name": "Lunteren"
+  }
+ ],
+ "knowsAbout": [
+  "APK-keuring",
+  "Auto-onderhoud",
+  "Autodiagnose",
+  "Bandenservice",
+  "Aircoservice",
+  "Onderhoud elektrische auto's"
+ ],
+ "hasOfferCatalog": {
+  "@type": "OfferCatalog",
+  "name": "Diensten",
+  "itemListElement": [
+   {
+    "@type": "Offer",
+    "itemOffered": {
+     "@type": "Service",
+     "name": "APK-keuring",
+     "url": "https://www.autoservicebarneveld.nl/apk-keuring/",
+     "description": "RDW-erkende APK-keuring in Barneveld voor alle merken, ook elektrische auto's. Kosten vooraf duidelijk"
+    }
+   },
+   {
+    "@type": "Offer",
+    "itemOffered": {
+     "@type": "Service",
+     "name": "Onderhoud & reparatie",
+     "url": "https://www.autoservicebarneveld.nl/onderhoud-reparatie/",
+     "description": "Kleine of grote beurt en reparaties voor alle merken in Barneveld. Vooraf duidelijke kosten en updates via WhatsApp"
+    }
+   },
+   {
+    "@type": "Offer",
+    "itemOffered": {
+     "@type": "Service",
+     "name": "Diagnose",
+     "url": "https://www.autoservicebarneveld.nl/diagnose/",
+     "description": "Brandt er een storingslampje? Wij lezen je auto uit met moderne diagnoseapparatuur en lossen de storing op. Alle merken, in Barneveld."
+    }
+   },
+   {
+    "@type": "Offer",
+    "itemOffered": {
+     "@type": "Service",
+     "name": "Bandenservice",
+     "url": "https://www.autoservicebarneveld.nl/bandenservice/",
+     "description": "Montage, balanceren en seizoenswissel van zomer- en winterbanden in Barneveld. Banden voor alle merken, ook elektrische auto's."
+    }
+   },
+   {
+    "@type": "Offer",
+    "itemOffered": {
+     "@type": "Service",
+     "name": "Aircoservice",
+     "url": "https://www.autoservicebarneveld.nl/airco-service/",
+     "description": "Auto-airco vullen, controleren, lekdetectie en reparatie voor alle merken in Barneveld. Koel in de zomer, heldere ruiten in de winter."
+    }
+   },
+   {
+    "@type": "Offer",
+    "itemOffered": {
+     "@type": "Service",
+     "name": "Elektrische auto",
+     "url": "https://www.autoservicebarneveld.nl/elektrische-auto/",
+     "description": "Ook een elektrische auto heeft onderhoud nodig. Banden, remmen, ophanging, airco en APK voor alle merken, ook Tesla. Autoservice Barneveld."
+    }
+   }
+  ]
+ },
+ "openingHoursSpecification": [
+  {
+   "@type": "OpeningHoursSpecification",
+   "dayOfWeek": [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday"
+   ],
+   "opens": "08:00",
+   "closes": "17:00"
+  }
+ ],
+ "identifier": {
+  "@type": "PropertyValue",
+  "propertyID": "KvK",
+  "value": "61874744"
+ },
+ "contactPoint": {
+  "@type": "ContactPoint",
+  "contactType": "klantenservice",
+  "telephone": "+31342234003",
+  "url": "https://wa.me/31342234003",
+  "availableLanguage": "nl"
+ },
+ "vatID": "NL005077005B42",
+ "sameAs": [
+  "https://www.google.com/search?kgmid=/g/11yr0bc7f6",
+  "https://www.facebook.com/p/Autoservice-Barneveld-61586756678035/",
+  "https://www.instagram.com/autoservicebarneveld/",
+  "https://nl.linkedin.com/company/autoservice-barneveld"
+ ]
+}

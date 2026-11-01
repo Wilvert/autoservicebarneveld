@@ -1,45 +1,47 @@
 # Autoservice Barneveld
 
-Statische website van [autoservicebarneveld.nl](https://autoservicebarneveld.nl).
-Overgenomen van de oude IONOS/Strato-site (november 2026): dezelfde teksten,
-opmaak, kleuren en foto's, maar als gewone HTML en één CSS-bestand.
+Statische website van [autoservicebarneveld.nl](https://www.autoservicebarneveld.nl),
+gehost op GitHub Pages. Ontwerp: mock-up 06 "Afspraak eerst" (november 2026),
+kleuren en lettertypes uit het merkboek.
+
+## Pagina's aanpassen
+
+De HTML wordt gemaakt door een klein bouwscript. **Pas de teksten aan in
+`bron/bouw.py`, niet in de HTML-bestanden**, en bouw daarna opnieuw:
+
+```
+python bron/bouw.py
+```
+
+Alleen de Python-standaardbibliotheek is nodig. Kop, voet, afspraakvenster,
+openingstijden, telefoon, KvK en btw staan bovenin `bron/bouw.py`. De
+bedrijfsgegevens voor Google (schema.org JSON-LD) staan in `bron/bedrijf.json`.
 
 ## Opbouw
 
 ```
-index.html                 Home
-apk-keuring/               Dienstpagina's (elk een index.html)
-onderhoud-reparatie/
-diagnose/
-bandenservice/
-airco-service/
-elektrische-auto/
-over-ons/index.html        Over Ons
-vervangend-vervoer/        Vervangend Vervoer
-contact/index.html         Contact
-privacy/index.html         Privacyverklaring
+index.html                 Home (afspraakblok, diensten, over ons, vervoer, contact)
+apk-keuring/ ...           Zes dienstpagina's
+over-ons/, vervangend-vervoer/, contact/, privacy/
 404.html                   Foutpagina (absolute paden, noindex)
-robots.txt, sitemap.xml    Voor zoekmachines; nieuwe pagina's ook in sitemap.xml zetten
-css/style.css              Alle opmaak (kleuren staan bovenaan in :root)
-img/                       Foto's, logo, favicon
-fonts/                     Nunito, Nunito Sans, Merriweather (zelf gehost)
+css/style.css              Alle opmaak (kleuren bovenin :root)
+js/site.js                 Mobiel menu en het afspraakvenster
+fonts/                     Montserrat en Bebas Neue (zelf gehost)
+img/                       Foto's (WebP), logo's (SVG), deelafbeelding.jpg
+robots.txt, sitemap.xml, llms.txt, .well-known/security.txt
+mockups/                   De tien ontwerpvoorstellen (noindex)
 ```
 
-Geen JavaScript, geen cookies, geen externe lettertypes. De kop en voet
-staan in elke pagina; pas ze bij een wijziging in alle pagina's aan. Dat geldt
-ook voor het JSON-LD-blok (`AutoRepair`) in de `<head>`: bedrijfsgegevens
-zoals adres, telefoon en (later) openingstijden staan daar.
+## Afspraak plannen
 
-## Bekijken
+"Plan afspraak" opent een venster met kenteken, dienst, kilometerstand en
+e-mailadres. Bij versturen opent WhatsApp (`wa.me/31342234003`) met een
+ingevuld bericht dat de bezoeker zelf verstuurt; de site slaat niets op.
+Zonder JavaScript gaan de knoppen naar de contactpagina.
 
-Lokaal: `python3 -m http.server` in deze map en open http://localhost:8000.
+## Beveiliging
 
-## Open punten
-
-- Het contactformulier opent nu het mailprogramma van de bezoeker
-  (`mailto:`). Vervangen door een formulierdienst als dat gewenst is.
-- De kaart op de contactpagina komt van OpenStreetMap (geen cookies).
-- Openingstijden staan op de contactpagina, in de voet en in het JSON-LD-blok
-  (`openingHoursSpecification`, alleen ma–vr; zaterdag is op afspraak).
-- Foto's zijn WebP; `img/deelafbeelding.jpg` (1200x630) is de preview bij
-  delen via WhatsApp/Facebook.
+Geen cookies, geen trackers, geen externe scripts of lettertypes. Een
+Content-Security-Policy staat als meta-tag in elke pagina (GitHub Pages laat
+geen eigen headers toe). Het contactformulier opent het mailprogramma
+(`mailto:`).
