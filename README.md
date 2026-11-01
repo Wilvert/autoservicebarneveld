@@ -39,7 +39,7 @@ Lokaal: `python3 -m http.server` in deze map en open http://localhost:8000.
 - Het contactformulier opent nu het mailprogramma van de bezoeker
   (`mailto:`). Vervangen door een formulierdienst als dat gewenst is.
 - De kaart op de contactpagina komt van OpenStreetMap (geen cookies).
-- Openingstijden ontbreken nog op de site en in het JSON-LD-blok
-  (`openingHoursSpecification`); invullen zodra ze bekend zijn.
+- Openingstijden staan op de contactpagina, in de voet en in het JSON-LD-blok
+  (`openingHoursSpecification`, alleen ma–vr; zaterdag is op afspraak).
 - Foto's zijn WebP; `img/deelafbeelding.jpg` (1200x630) is de preview bij
   delen via WhatsApp/Facebook.
