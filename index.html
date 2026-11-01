@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; frame-src https://www.openstreetmap.org; form-action 'self' mailto:; base-uri 'self'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; frame-src https://www.openstreetmap.org; connect-src 'self' https://formsubmit.co; form-action 'self' mailto: https://formsubmit.co; base-uri 'self'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Garage Barneveld: APK &amp; onderhoud | Autoservice Barneveld</title>
 <meta name="description" content="Universele garage in Barneveld voor APK, onderhoud, reparatie, diagnose, banden en airco. Alle merken, ook elektrisch. Bel 0342-234003.">
@@ -521,15 +521,19 @@
         </ul>
         <div class="tijden-bord"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></g></svg><span>Maandag t/m vrijdag 08:00–17:00<br>Zaterdag op afspraak<br>Zondag gesloten</span></div>
       </div>
-      <form class="formulier" action="mailto:contact@autoservicebarneveld.nl" method="post" enctype="text/plain" aria-label="Contactformulier">
+      <form class="formulier" action="https://formsubmit.co/contact@autoservicebarneveld.nl" method="post" aria-label="Contactformulier">
+        <input type="hidden" name="_subject" value="Nieuw bericht via de website">
+        <input type="hidden" name="_template" value="table">
+        <input type="text" name="_honey" class="honing" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="rij">
           <div class="veld"><label for="naam">Naam *</label><input class="invoer" id="naam" name="Naam" autocomplete="name" required></div>
           <div class="veld"><label for="tel">Telefoonnummer</label><input class="invoer" id="tel" name="Telefoonnummer" type="tel" autocomplete="tel"></div>
         </div>
-        <div class="veld"><label for="mail">E-mail *</label><input class="invoer" id="mail" name="E-mail" type="email" autocomplete="email" required></div>
+        <div class="veld"><label for="mail">E-mail *</label><input class="invoer" id="mail" name="email" type="email" autocomplete="email" required></div>
         <div class="veld"><label for="bericht">Bericht *</label><textarea id="bericht" name="Bericht" required></textarea></div>
         <label class="akkoord"><input type="checkbox" required> Ik ga ermee akkoord dat deze gegevens worden opgeslagen en verwerkt met het doel contact op te nemen. Ik kan mijn toestemming op elk moment intrekken. *</label>
         <button class="knop blauw" type="submit">Versturen</button>
+        <p class="formulier-melding" role="status" hidden></p>
       </form>
     </div>
   </section>

@@ -131,3 +131,46 @@
     knop.setAttribute('aria-pressed', gepauzeerd);
   });
 }());
+
+/* ---------- Contactformulier: versturen via FormSubmit ---------- */
+(function () {
+  'use strict';
+  Array.prototype.forEach.call(document.querySelectorAll('form.formulier'), function (form) {
+    if (!window.fetch || !window.FormData) return; // zonder fetch: gewoon posten
+    var knop = form.querySelector('button[type="submit"]');
+    var melding = form.querySelector('.formulier-melding');
+    var knopTekst = knop.textContent;
+
+    function toon(tekst, fout) {
+      melding.innerHTML = tekst;
+      melding.classList.toggle('fout', !!fout);
+      melding.hidden = false;
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      var data = {};
+      new FormData(form).forEach(function (waarde, naam) { data[naam] = waarde; });
+      if (data._honey) return; // spam
+      knop.disabled = true;
+      knop.textContent = 'Bezig met versturen…';
+      melding.hidden = true;
+
+      fetch(form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data)
+      }).then(function (r) { return r.json(); }).then(function (antwoord) {
+        if (String(antwoord.success) !== 'true') throw new Error(antwoord.message);
+        form.reset();
+        toon('Bedankt voor uw bericht! We nemen zo snel mogelijk contact met u op.');
+      }).catch(function () {
+        toon('Versturen is niet gelukt. Mail ons op <a href="mailto:contact@autoservicebarneveld.nl">contact@autoservicebarneveld.nl</a> of bel <a href="tel:+31342234003">0342-234003</a>.', true);
+      }).then(function () {
+        knop.disabled = false;
+        knop.textContent = knopTekst;
+      });
+    });
+  });
+}());
