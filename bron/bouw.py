@@ -294,6 +294,11 @@ def venster(r):
             <input class="invoer" id="v-mail" name="email" type="email" autocomplete="email" placeholder="naam@voorbeeld.nl" required>
           </div>
         </div>
+        <label class="schakel" for="v-leenauto">
+          <span class="schakel-tekst"><strong>Leenauto nodig?</strong><span>Vervangend vervoer terwijl uw auto bij ons staat.</span></span>
+          <input type="checkbox" id="v-leenauto" name="leenauto" role="switch">
+          <span class="schakel-baan" aria-hidden="true"><span class="ja">Ja</span><span class="nee">Nee</span></span>
+        </label>
         <button class="knop wa" type="submit">{I_WA} Verstuur via WhatsApp</button>
         <p class="klein">Uw gegevens gaan alleen naar ons via WhatsApp. Zie de <a href="{r}privacy/">privacyverklaring</a>. Liever bellen? <a href="{TEL_LINK}">{TEL}</a></p>
       </form>

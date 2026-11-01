@@ -102,6 +102,7 @@
       'Dienst: ' + veld('dienst').value,
       'Kenteken: ' + veld('kenteken').value.trim(),
       'Kilometerstand: ' + veld('kilometerstand').value + ' km',
+      'Leenauto nodig: ' + (veld('leenauto').checked ? 'Ja' : 'Nee'),
       'E-mail: ' + veld('email').value.trim()
     ].join('\n');
     var url = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(bericht);

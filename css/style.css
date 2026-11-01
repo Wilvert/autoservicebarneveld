@@ -130,7 +130,7 @@ h2.groot, h1.groot { font-family: var(--kop); font-weight: 400; font-size: clamp
 .dienst h3 a:hover { text-decoration: underline; }
 .dienst p { margin: 0; font-size: 15px; max-width: 62ch; }
 .dienst .meer { display: inline-block; margin-top: 6px; font-size: 14px; font-weight: 700; color: var(--blauw); }
-.dienst .plan { white-space: nowrap; color: var(--blauw); font-weight: 700; font-size: 15px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; padding: 12px 16px; border: 2px solid var(--blauw); border-radius: 6px; }
+.dienst .plan { width: 190px; justify-content: center; white-space: nowrap; color: var(--blauw); font-weight: 700; font-size: 15px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; padding: 12px 16px; border: 2px solid var(--blauw); border-radius: 6px; }
 .dienst .plan:hover { background: var(--blauw); color: var(--wit); }
 .ev { margin-top: 24px; display: flex; gap: 14px; align-items: center; font-size: 15px; background: var(--blauw-20); color: var(--nacht); border-radius: 10px; padding: 18px 22px; }
 .ev svg { flex: none; color: var(--blauw); }
@@ -280,7 +280,7 @@ textarea { min-height: 120px; resize: vertical; }
   .dienst { grid-template-columns: 1fr; }
   .dienst img { width: 100%; height: 180px; grid-row: auto; }
   .dienst > div { padding: 0 20px; }
-  .dienst .plan { margin: 0 20px 20px; }
+  .dienst .plan { margin: 0 20px 20px; width: auto; justify-self: stretch; }
   .vervoer-raster, .extra, .formulier .rij, .venster .rij { grid-template-columns: 1fr; }
   .review-kaart { grid-template-columns: 1fr; gap: 12px; }
   .review-kaart .quote { width: 48px; height: 48px; }
@@ -288,3 +288,21 @@ textarea { min-height: 120px; resize: vertical; }
   .topbalk .rechts { gap: 14px; font-size: 12px; }
   .topbalk .mail { display: none; }
 }
+
+/* ---------- Schakelaar leenauto ---------- */
+.schakel { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0 0 18px; padding: 14px 16px; border: 1.5px solid var(--grijs-40); border-radius: 6px; cursor: pointer; font-weight: 500; }
+.schakel-tekst { display: flex; flex-direction: column; gap: 2px; font-size: 13px; }
+.schakel-tekst strong { font-size: 14px; color: var(--grijs); }
+.schakel input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.schakel-baan { position: relative; flex: none; display: grid; grid-template-columns: 1fr 1fr; width: 104px; height: 40px; border-radius: 99px; background: #e9eef3; font: 700 13px/40px var(--tekst); text-align: center; color: var(--grijs-80); }
+.schakel-baan::before { content: ""; position: absolute; top: 3px; left: 3px; width: 49px; height: 34px; border-radius: 99px; background: var(--wit); box-shadow: 0 2px 6px #0e1c2c33; transition: transform .2s; }
+.schakel-baan span { position: relative; z-index: 1; }
+.schakel-baan .ja { order: 2; }
+.schakel-baan .nee { order: 1; color: var(--grijs); }
+.schakel input:checked + .schakel-baan { background: var(--blauw); color: #ffffffb3; }
+.schakel input:checked + .schakel-baan::before { transform: translateX(49px); }
+.schakel input:checked + .schakel-baan .ja { color: var(--blauw); }
+.schakel input:checked + .schakel-baan .nee { color: #ffffffb3; }
+.schakel:has(input:checked) { border-color: var(--blauw); background: #f4f8fc; }
+.schakel input:focus-visible + .schakel-baan { outline: 3px solid var(--oranje); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .schakel-baan::before { transition: none; } }
