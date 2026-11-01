@@ -417,33 +417,35 @@ REVIEWS = [
 
 def review_sectie():
     google = dict(PROFIELEN)["Google"]
-    dia = []
-    for i, (naam, tekst) in enumerate(REVIEWS):
-        actief = ' actief' if i == 0 else ''
-        verborgen = '' if i == 0 else ' aria-hidden="true"'
-        dia.append(f"""          <figure class="review-dia{actief}" role="group" aria-roledescription="review" aria-label="{i + 1} van {len(REVIEWS)}"{verborgen}>
+
+    def kaartjes(kopie):
+        uit = []
+        for naam, tekst in REVIEWS:
+            verborgen = ' aria-hidden="true"' if kopie else ""
+            uit.append(f"""          <figure class="review-kaartje"{verborgen}>
             <div class="sterren" role="img" aria-label="Vijf sterren">{I_STER * 5}</div>
             <blockquote><p>{e(tekst)}</p></blockquote>
             <figcaption>{e(naam)} · Google-review</figcaption>
           </figure>""")
-    dias = "\n".join(dia)
+        return "\n".join(uit)
+
     return f"""  <section class="review" aria-labelledby="review-titel">
     <div class="wrap">
-      <div class="review-kaart" aria-roledescription="carrousel" aria-labelledby="review-titel">
-        <svg class="quote" viewBox="0 0 48 48" aria-hidden="true"><path fill="currentColor" d="M6 38V26C6 15 11 9 20 7l2 4c-5 2-8 6-8 11h7v16zm24 0V26c0-11 5-17 14-19l2 4c-5 2-8 6-8 11h7v16z"/></svg>
+      <div class="kopje">
         <div>
-          <h2 class="sr-only" id="review-titel">Wat klanten zeggen</h2>
-          <div class="review-dias" aria-live="off">
-{dias}
-          </div>
-          <div class="review-bediening" hidden>
-            <button type="button" class="review-vorige" aria-label="Vorige review"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6"/></svg></button>
-            <span class="review-teller" aria-hidden="true">1 / {len(REVIEWS)}</span>
-            <button type="button" class="review-volgende" aria-label="Volgende review"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6"/></svg></button>
-            <button type="button" class="review-pauze" aria-label="Pauzeren"><svg class="ico-pauze" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg><svg class="ico-speel" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4l13 8-13 8z"/></svg></button>
-            <a class="review-alle" href="{google}" rel="noopener">Alle reviews op Google</a>
-          </div>
+          <span class="label">Reviews</span>
+          <h2 class="groot" id="review-titel">Wat klanten zeggen</h2>
         </div>
+        <div class="review-acties">
+          <a class="review-alle" href="{google}" rel="noopener">Alle reviews op Google</a>
+          <button type="button" class="review-pauze" aria-label="Reviews stilzetten" aria-pressed="false" hidden><svg class="ico-pauze" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg><svg class="ico-speel" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4l13 8-13 8z"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="review-band">
+      <div class="review-spoor">
+{kaartjes(False)}
+{kaartjes(True)}
       </div>
     </div>
   </section>"""

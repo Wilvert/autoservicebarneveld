@@ -163,28 +163,36 @@ h2.groot, h1.groot { font-family: var(--kop); font-weight: 400; font-size: clamp
 .extra strong { display: block; color: var(--grijs); }
 
 /* Review */
-.review { padding: 0 0 96px; }
-.review-kaart { position: relative; background: var(--blauw); color: var(--wit); border-radius: 14px; padding: clamp(32px, 6vw, 64px); display: grid; grid-template-columns: auto 1fr; gap: 36px; align-items: start; }
-.review-kaart .quote { width: 72px; height: 72px; color: var(--blauw-60); }
-.review blockquote { margin: 0; }
-.review blockquote p { font-size: clamp(18px, 2vw, 24px); font-weight: 500; line-height: 1.5; margin-bottom: 18px; }
-.sterren { display: flex; gap: 4px; color: #062a50; margin-bottom: 14px; }
-.review figure { margin: 0; }
-.review figcaption { font-size: 14px; font-weight: 700; color: var(--blauw-20); }
-
-/* Carrousel: alle reviews in dezelfde cel, zodat de hoogte niet verspringt */
-.review-dias { display: grid; }
-.review-dia { grid-area: 1 / 1; align-self: center; opacity: 0; visibility: hidden; transition: opacity .8s ease, visibility 0s linear .8s; }
-.review-dia.actief { opacity: 1; visibility: visible; transition: opacity .8s ease; }
-.review-bediening { display: flex; align-items: center; gap: 10px; margin-top: 26px; flex-wrap: wrap; }
-.review-bediening[hidden] { display: none; }
-.review-bediening button { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #ffffff66; background: transparent; color: var(--wit); cursor: pointer; display: grid; place-items: center; }
-.review-bediening button:hover { background: #ffffff26; }
-.review-teller { min-width: 56px; text-align: center; font-size: 14px; font-weight: 700; color: var(--blauw-20); }
+.review { padding: 0 0 96px; overflow: hidden; }
+.review .kopje { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; max-width: none; margin-bottom: 32px; }
+.review .kopje h2 { margin: 0; }
+.review-acties { display: flex; align-items: center; gap: 16px; }
+.review-alle { color: var(--blauw); font-weight: 700; font-size: 15px; }
+.review-pauze { width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--blauw-40); background: var(--wit); color: var(--blauw); cursor: pointer; display: grid; place-items: center; }
+.review-pauze[hidden] { display: none; }
+.review-pauze:hover { background: var(--blauw-20); }
 .review-pauze .ico-speel, .review-pauze.gepauzeerd .ico-pauze { display: none; }
 .review-pauze.gepauzeerd .ico-speel { display: block; }
-.review-alle { margin-left: auto; color: var(--wit); font-weight: 700; font-size: 14px; }
-@media (prefers-reduced-motion: reduce) { .review-dia, .review-dia.actief { transition: none; } }
+
+/* Band met reviews die langzaam van rechts naar links schuift. De reeks staat er
+   twee keer in; na de helft begint de animatie naadloos opnieuw. */
+.review-band { -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); }
+.review-spoor { display: flex; gap: 20px; width: max-content; padding: 6px 0 12px; animation: reviews-schuif 140s linear infinite; }
+.review-band:hover .review-spoor, .review-band:focus-within .review-spoor, .review.gepauzeerd .review-spoor { animation-play-state: paused; }
+@keyframes reviews-schuif { from { transform: translateX(0); } to { transform: translateX(calc(-50% - 10px)); } }
+.review-kaartje { flex: none; width: 340px; margin: 0; display: flex; flex-direction: column; background: var(--blauw); color: var(--wit); border-radius: 12px; padding: 24px 24px 22px; box-shadow: 0 10px 24px #0a467f26; }
+.review-kaartje blockquote { margin: 0 0 16px; flex: 1; }
+.review-kaartje blockquote p { margin: 0; font-size: 15px; line-height: 1.55; }
+.review-kaartje figcaption { font-size: 13px; font-weight: 700; color: var(--blauw-20); }
+.sterren { display: flex; gap: 4px; color: #062a50; margin-bottom: 14px; }
+.review-kaartje .sterren svg { width: 18px; height: 18px; }
+@media (max-width: 600px) { .review-kaartje { width: 280px; } }
+@media (prefers-reduced-motion: reduce) {
+  .review-band { overflow-x: auto; scroll-snap-type: x mandatory; -webkit-mask-image: none; mask-image: none; }
+  .review-spoor { animation: none; padding-left: var(--rand); padding-right: var(--rand); }
+  .review-kaartje { scroll-snap-align: start; }
+  .review-kaartje[aria-hidden="true"] { display: none; }
+}
 
 /* Contact */
 .contact { background: var(--grijs); color: var(--wit); }
