@@ -301,9 +301,10 @@ def venster(r):
         </label>
         <fieldset class="vervoer-keuze" id="v-vervoer-keuze" hidden>
           <legend class="sr-only">Kies uw vervangend vervoer</legend>
-          <label><input type="radio" name="vervoermiddel" value="Renault 5 (elektrisch)"><span><strong>Renault 5 <svg class="blad" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20 3C10 3 4 8 4 15c0 1.6.4 3 1 4.2C7 14 11 10.5 16 8.5c-4 2.6-7.4 6.4-9.3 11.3 1.3.8 2.8 1.2 4.3 1.2C18 21 21 13 20 3z"/></svg><span class="sr-only"> (milieuvriendelijk)</span></strong><small>Elektrisch</small></span></label>
-          <label><input type="radio" name="vervoermiddel" value="Volkswagen Caddy"><span><strong>Volkswagen Caddy</strong><small>Voor zakelijk</small></span></label>
-          <label><input type="radio" name="vervoermiddel" value="Leenfiets"><span><strong>Leenfiets <svg class="blad" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20 3C10 3 4 8 4 15c0 1.6.4 3 1 4.2C7 14 11 10.5 16 8.5c-4 2.6-7.4 6.4-9.3 11.3 1.3.8 2.8 1.2 4.3 1.2C18 21 21 13 20 3z"/></svg><span class="sr-only"> (milieuvriendelijk)</span></strong><small>Korte ritten</small></span></label>
+          <label><input type="radio" name="vervoermiddel" value="Renault 5 (elektrisch)"><span><strong>Renault 5 <svg class="blad" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20 3C10 3 4 8 4 15c0 1.6.4 3 1 4.2C7 14 11 10.5 16 8.5c-4 2.6-7.4 6.4-9.3 11.3 1.3.8 2.8 1.2 4.3 1.2C18 21 21 13 20 3z"/></svg><span class="sr-only"> (milieuvriendelijk)</span></strong><small>€ 34,70 p/d</small></span></label>
+          <label><input type="radio" name="vervoermiddel" value="Volkswagen Caddy"><span><strong>Volkswagen Caddy</strong><small>€ 23,60 p/d</small></span></label>
+          <label><input type="radio" name="vervoermiddel" value="Leenfiets"><span><strong>Leenfiets <svg class="blad" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20 3C10 3 4 8 4 15c0 1.6.4 3 1 4.2C7 14 11 10.5 16 8.5c-4 2.6-7.4 6.4-9.3 11.3 1.3.8 2.8 1.2 4.3 1.2C18 21 21 13 20 3z"/></svg><span class="sr-only"> (milieuvriendelijk)</span></strong><small>Gratis</small></span></label>
+          <p class="vervoer-btw">Prijzen incl. btw.</p>
         </fieldset>
         <button class="knop wa" type="submit">{I_WA} Verstuur via WhatsApp</button>
         <p class="klein">Uw gegevens gaan alleen naar ons via WhatsApp. Zie de <a href="{r}privacy/">privacyverklaring</a>. Liever bellen? <a href="{TEL_LINK}">{TEL}</a></p>
@@ -564,20 +565,20 @@ def vervoer_sectie(r, titel_h="h2", link=True):
 {kopje}      <div class="vervoer-raster">
         <article class="optie">
           <span class="ico" aria-hidden="true">{I_BLIKSEM.format(s=26)}</span>
-          <small>Voor particulieren</small>
+          <small>€ 34,70 per dag incl. btw</small>
           <h3>Elektrische Renault 5</h3>
           <p>Een moderne, duurzame en comfortabele leenauto waarmee u direct verder kunt rijden.</p>
         </article>
         <article class="optie">
           <span class="ico" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M8 7V5h8v2"/></g></svg></span>
-          <small>Voor zakelijke klanten</small>
+          <small>€ 23,60 per dag incl. btw</small>
           <h3>Volkswagen Caddy</h3>
-          <p>Praktisch en ruim, ideaal voor ondernemers die hun werk niet kunnen onderbreken.</p>
+          <p>Praktisch en ruim, handig als u spullen moet vervoeren of uw werk door moet gaan.</p>
         </article>
         <div class="optie foto"><img src="{r}img/hero-vervangend-vervoer.webp" alt="Leenauto van Autoservice Barneveld in de werkplaats" width="1848" height="1232" loading="lazy"></div>
       </div>
       <ul class="extra">
-        <li>{I_VINK}<span><strong>Leenfiets</strong>Voor korte ritten.</span></li>
+        <li>{I_VINK}<span><strong>Leenfiets</strong>Gratis, voor korte ritten.</span></li>
         <li>{I_VINK}<span><strong>Station op 5 minuten</strong>Lopen vanaf de garage.</span></li>
         <li>{I_VINK}<span><strong>Wachtruimte</strong>Met koffie en wifi, als u even wacht.</span></li>
       </ul>{verder}
@@ -692,9 +693,9 @@ def vervangend_vervoer():
   <section class="sectie zonder-boven">
     <div class="wrap artikel">
       <div class="tekst">
-        <h2>Voor particulieren en zakelijke klanten</h2>
-        <p>Particulieren rijden in onze elektrische Renault 5. Zakelijke klanten kunnen de Volkswagen Caddy gebruiken, zodat het werk gewoon door kan gaan.</p>
-        <p>Of u nu particulier of zakelijk klant bent, wij zorgen dat u mobiel blijft. Geef bij het plannen van uw afspraak aan welke optie u wilt gebruiken.</p>
+        <h2>Voor iedereen, particulier of zakelijk</h2>
+        <p>Kies de elektrische Renault 5 (€ 34,70 per dag), de ruime Volkswagen Caddy (€ 23,60 per dag) of een gratis leenfiets. Prijzen zijn inclusief btw.</p>
+        <p>Geef bij het plannen van uw afspraak aan welke optie u wilt gebruiken.</p>
       </div>
       {zijkaart(r)}
     </div>
@@ -788,7 +789,7 @@ def sitemap_en_llms():
 - KvK: {KVK}
 - Btw: {BTW}
 - Werkgebied: Barneveld, Voorthuizen, Kootwijkerbroek, Terschuur, Zwartebroek, Garderen, Stroe, De Glind, Lunteren
-- Vervangend vervoer: elektrische Renault 5 (particulier), VW Caddy (zakelijk), leenfiets; wachtruimte met koffie en wifi; station op vijf minuten lopen
+- Vervangend vervoer: elektrische Renault 5 (€ 34,70 per dag), VW Caddy (€ 23,60 per dag), gratis leenfiets (prijzen incl. btw); wachtruimte met koffie en wifi; station op vijf minuten lopen
 
 ## Diensten
 
