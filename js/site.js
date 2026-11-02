@@ -154,6 +154,11 @@
     (leeg || veld('kenteken')).focus();
   }
 
+  // Link met #plan-afspraak (bijv. vanuit Google) opent meteen de planner
+  if (location.hash === '#plan-afspraak') {
+    window.addEventListener('load', function () { open({}); });
+  }
+
   // Stap 1 op de homepage: kenteken + dienst, daarna het venster
   var snel = document.getElementById('afspraak-snel');
   if (snel) {
