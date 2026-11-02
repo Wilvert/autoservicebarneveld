@@ -89,6 +89,21 @@
     this.value = cijfers ? Number(cijfers).toLocaleString('nl-NL') : '';
   });
 
+  // Vervangend vervoer: bij "Ja" de keuze tonen en verplicht maken
+  var vervoerKeuze = venster.querySelector('.vervoer-keuze');
+  var radios = vervoerKeuze.querySelectorAll('input[type="radio"]');
+  function zetVervoer() {
+    var aan = veld('vervoer').checked;
+    vervoerKeuze.hidden = !aan;
+    radios[0].required = aan;
+    if (!aan) Array.prototype.forEach.call(radios, function (r) { r.checked = false; });
+  }
+  function keuzeVervoer() {
+    var gekozen = vervoerKeuze.querySelector('input:checked');
+    return gekozen ? gekozen.value : 'Ja';
+  }
+  veld('vervoer').addEventListener('change', zetVervoer);
+
   formulier.addEventListener('submit', function (e) {
     e.preventDefault();
     controleerKenteken(veld('kenteken'));
@@ -102,7 +117,7 @@
       'Dienst: ' + veld('dienst').value,
       'Kenteken: ' + veld('kenteken').value.trim(),
       'Kilometerstand: ' + veld('kilometerstand').value + ' km',
-      'Leenauto nodig: ' + (veld('leenauto').checked ? 'Ja' : 'Nee'),
+      'Vervangend vervoer: ' + (veld('vervoer').checked ? keuzeVervoer() : 'Nee'),
       'E-mail: ' + veld('email').value.trim()
     ].join('\n');
     var url = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(bericht);

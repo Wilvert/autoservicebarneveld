@@ -294,11 +294,17 @@ def venster(r):
             <input class="invoer" id="v-mail" name="email" type="email" autocomplete="email" placeholder="naam@voorbeeld.nl" required>
           </div>
         </div>
-        <label class="schakel" for="v-leenauto">
-          <span class="schakel-tekst"><strong>Leenauto nodig?</strong><span>Vervangend vervoer terwijl uw auto bij ons staat.</span></span>
-          <input type="checkbox" id="v-leenauto" name="leenauto" role="switch">
+        <label class="schakel" for="v-vervoer">
+          <span class="schakel-tekst"><strong>Vervangend vervoer nodig?</strong><span>Terwijl uw auto bij ons staat.</span></span>
+          <input type="checkbox" id="v-vervoer" name="vervoer" role="switch" aria-controls="v-vervoer-keuze">
           <span class="schakel-baan" aria-hidden="true"><span class="ja">Ja</span><span class="nee">Nee</span></span>
         </label>
+        <fieldset class="vervoer-keuze" id="v-vervoer-keuze" hidden>
+          <legend class="sr-only">Kies uw vervangend vervoer</legend>
+          <label><input type="radio" name="vervoermiddel" value="Renault 5 (elektrisch)"><span><strong>Renault 5 <svg class="blad" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20 3C10 3 4 8 4 15c0 1.6.4 3 1 4.2C7 14 11 10.5 16 8.5c-4 2.6-7.4 6.4-9.3 11.3 1.3.8 2.8 1.2 4.3 1.2C18 21 21 13 20 3z"/></svg><span class="sr-only"> (milieuvriendelijk)</span></strong><small>Elektrisch</small></span></label>
+          <label><input type="radio" name="vervoermiddel" value="Volkswagen Caddy"><span><strong>Volkswagen Caddy</strong><small>Voor zakelijk</small></span></label>
+          <label><input type="radio" name="vervoermiddel" value="Leenfiets"><span><strong>Leenfiets <svg class="blad" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20 3C10 3 4 8 4 15c0 1.6.4 3 1 4.2C7 14 11 10.5 16 8.5c-4 2.6-7.4 6.4-9.3 11.3 1.3.8 2.8 1.2 4.3 1.2C18 21 21 13 20 3z"/></svg><span class="sr-only"> (milieuvriendelijk)</span></strong><small>Korte ritten</small></span></label>
+        </fieldset>
         <button class="knop wa" type="submit">{I_WA} Verstuur via WhatsApp</button>
         <p class="klein">Uw gegevens gaan alleen naar ons via WhatsApp. Zie de <a href="{r}privacy/">privacyverklaring</a>. Liever bellen? <a href="{TEL_LINK}">{TEL}</a></p>
       </form>

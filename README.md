@@ -34,8 +34,9 @@ mockups/                   De tien ontwerpvoorstellen (noindex)
 
 ## Afspraak plannen
 
-"Plan afspraak" opent een venster met kenteken, dienst, kilometerstand en
-e-mailadres. Bij versturen opent WhatsApp (`wa.me/31342234003`) met een
+"Plan afspraak" opent een venster met kenteken, dienst, kilometerstand,
+e-mailadres en eventueel vervangend vervoer (Renault 5, VW Caddy of leenfiets).
+Bij versturen opent WhatsApp (`wa.me/31342234003`) met een
 ingevuld bericht dat de bezoeker zelf verstuurt; de site slaat niets op.
 Zonder JavaScript gaan de knoppen naar de contactpagina.
 
@@ -43,5 +44,5 @@ Zonder JavaScript gaan de knoppen naar de contactpagina.
 
 Geen cookies, geen trackers, geen externe scripts of lettertypes. Een
 Content-Security-Policy staat als meta-tag in elke pagina (GitHub Pages laat
-geen eigen headers toe). Het contactformulier opent het mailprogramma
-(`mailto:`).
+geen eigen headers toe). Het contactformulier verstuurt via FormSubmit
+(formsubmit.co) een e-mail naar contact@autoservicebarneveld.nl.
