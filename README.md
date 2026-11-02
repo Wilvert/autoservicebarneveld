@@ -21,6 +21,7 @@ bedrijfsgegevens voor Google (schema.org JSON-LD) staan in `bron/bedrijf.json`.
 
 ```
 index.html                 Home (afspraakblok, diensten, over ons, vervoer, contact)
+merken/, werkgebied/, veelgestelde-vragen/   Vindbaarheid: merken, plaatsen, FAQ (met FAQ-schema)
 apk-keuring/ ...           Zes dienstpagina's
 over-ons/, vervangend-vervoer/, contact/, privacy/
 404.html                   Foutpagina (absolute paden, noindex)

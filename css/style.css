@@ -425,3 +425,17 @@ svg.blad { display: inline-block; flex: none; margin-top: 0; color: #2f9e5f; ver
 .mail-melding { margin: 10px 0 0; padding: 10px 12px; border-radius: 6px; background: #fdecec; color: #8a1c1c; font-size: 13px; font-weight: 600; }
 .mail-melding a { color: inherit; }
 .mail-melding[hidden] { display: none; }
+/* ---------- Merken, werkgebied, veelgestelde vragen ---------- */
+.merken-lijst { list-style: none; padding: 0; margin: 12px 0 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+.merken-lijst li { padding: 10px 12px; border: 1px solid var(--grijs-20); border-radius: 6px; background: #f7f9fb; font-weight: 600; font-size: 15px; color: var(--grijs); }
+.klein-noot { margin-top: 28px; font-size: 13px; color: var(--grijs-80); }
+.vragen .vraag { border-bottom: 1px solid var(--grijs-20); }
+.vragen .vraag:first-child { border-top: 1px solid var(--grijs-20); }
+.vragen summary { position: relative; padding: 18px 40px 18px 0; font-weight: 700; font-size: 17px; color: var(--blauw); cursor: pointer; list-style: none; }
+.vragen summary::-webkit-details-marker { display: none; }
+.vragen summary::after { content: "+"; position: absolute; right: 6px; top: 50%; transform: translateY(-50%); font-size: 26px; font-weight: 400; line-height: 1; }
+.vragen details[open] summary::after { content: "–"; }
+.vragen .vraag p { margin: 0 0 18px; }
+.voet-sub { margin-top: 22px; }
+.vertrouwen strong a { color: inherit; text-decoration: none; }
+.vertrouwen strong a:hover { text-decoration: underline; }

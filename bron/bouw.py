@@ -58,7 +58,7 @@ I_STER = '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><pa
 # slug, naam, title (max 60), description, kopregel, foto, alt, korte tekst (homepage), knoptekst
 DIENSTEN = [
     ("onderhoud-reparatie", "Onderhoud & reparatie",
-     "Onderhoud en reparatie | Autoservice Barneveld",
+     "Onderhoud en reparatie Barneveld | Autoservice Barneveld",
      "Kleine of grote beurt en reparaties voor alle merken in Barneveld. Kosten vooraf duidelijk en updates via WhatsApp. Bel 0342-234003.",
      "Onderhoud en reparatie in Barneveld", "dienst-onderhoud", "Monteur aan het werk bij een wiel",
      "Grote of kleine onderhoudsbeurt, of het vervangen van een lampje: wij zorgen dat uw auto veilig, betrouwbaar en in topconditie blijft.",
@@ -70,13 +70,13 @@ DIENSTEN = [
      "De verplichte keuring voor verkeersveiligheid en milieu, zorgvuldig uitgevoerd voor alle merken.",
      "Plan APK"),
     ("diagnose", "Diagnose",
-     "Auto uitlezen en diagnose | Autoservice Barneveld",
+     "Auto uitlezen en diagnose Barneveld | Autoservice Barneveld",
      "Brandt er een storingslampje? Wij lezen uw auto uit met moderne diagnoseapparatuur en verhelpen de storing. Alle merken, in Barneveld.",
      "Diagnose en storingen verhelpen", "dienst-diagnose", "Uitleesapparatuur bij een auto",
      "Met moderne (uitlees)apparatuur sporen wij storingen en elektronische problemen snel op en verhelpen ze.",
      "Plan diagnose"),
     ("bandenservice", "Bandenservice & uitlijnen",
-     "Banden wisselen en uitlijnen | Autoservice Barneveld",
+     "Banden en uitlijnen Barneveld | Autoservice Barneveld",
      "Montage, balanceren, seizoenswissel en uitlijnen in Barneveld. Zomer-, winter- en all-seasonbanden voor alle merken, ook elektrische auto's.",
      "Bandenservice en uitlijnen in Barneveld", "dienst-banden", "Band op de bandenmontagemachine",
      "Montage, balanceren, (seizoens)wissel en uitlijnen. Snel en vakkundig, voor alle merken, ook elektrische auto's.",
@@ -88,7 +88,7 @@ DIENSTEN = [
      "Vullen, controleren, lekdetectie en reparaties. Koel in de zomer en helder zicht in de winter.",
      "Plan airco"),
     ("elektrische-auto", "Elektrische auto",
-     "Onderhoud elektrische auto | Autoservice Barneveld",
+     "Onderhoud elektrische auto Barneveld | Autoservice Barneveld",
      "Ook een elektrische auto heeft onderhoud nodig. Banden, remmen, ophanging, airco en APK voor alle merken. Autoservice Barneveld.",
      "Onderhoud van uw elektrische auto", "dienst-onderhoud", "Monteur werkt aan de wielophanging van een auto",
      "Het reguliere onderhoud, banden, airco en APK van elektrische auto's van alle merken.",
@@ -417,6 +417,8 @@ def voet(r):
     <div>
       <h3>Diensten</h3>
       <ul>{diensten}<li><a href="{r}vervangend-vervoer/">Vervangend vervoer</a></li></ul>
+      <h3 class="voet-sub">Meer</h3>
+      <ul><li><a href="{r}merken/">Alle merken</a></li><li><a href="{r}werkgebied/">Werkgebied</a></li><li><a href="{r}veelgestelde-vragen/">Veelgestelde vragen</a></li></ul>
     </div>
     <p class="onder">© 2026 Autoservice Barneveld · KvK {KVK} · btw {BTW} · <a href="{r}privacy/">Privacyverklaring</a> · Volg ons: {profielen}</p>
   </div>
@@ -590,7 +592,7 @@ def homepage():
   <section class="vertrouwen" aria-label="Waarom Autoservice Barneveld">
     <ul>
       <li><img class="rdw-mini" src="img/rdw-erkend.webp" alt="" width="62" height="36"><span><strong>APK</strong>RDW erkend</span></li>
-      <li><span class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M3 16V11l2-5h14l2 5v5M3 16h18M3 16v2h3v-2m12 0v2h3v-2M5 11h14"/></svg></span><span><strong>Alle merken <span class="geen-breuk">(ook EV's)</span></strong>Onderhoud en reparatie</span></li>
+      <li><span class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M3 16V11l2-5h14l2 5v5M3 16h18M3 16v2h3v-2m12 0v2h3v-2M5 11h14"/></svg></span><span><strong><a href="merken/">Alle merken <span class="geen-breuk">(ook EV's)</span></a></strong>Onderhoud en reparatie</span></li>
       <li><span class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span><span><strong>Alles onder één dak</strong>Alle zorg voor uw auto</span></li>
       <li><span class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></g></svg></span><span><strong>Vervangend vervoer</strong>Leenauto of leenfiets</span></li>
     </ul>
@@ -788,7 +790,7 @@ def vervangend_vervoer():
     </div>
   </section>"""
     schrijf("vervangend-vervoer/index.html", pagina(
-        r, "vervangend-vervoer/", "Vervangend vervoer | Autoservice Barneveld",
+        r, "vervangend-vervoer/", "Vervangend vervoer en leenauto Barneveld | Autoservice Barneveld",
         "Leenauto (elektrische Renault 5 of VW Caddy) of leenfiets terwijl uw auto bij ons in Barneveld staat.",
         "vervangend-vervoer", main))
 
@@ -797,7 +799,7 @@ def contact():
     r = "../"
     main = contact_sectie(r, kaart=True, titel="Contact en route", h="h1")
     schrijf("contact/index.html", pagina(
-        r, "contact/", "Contact en route | Autoservice Barneveld",
+        r, "contact/", "Contact en route Barneveld | Autoservice Barneveld",
         "Maak een afspraak bij Autoservice Barneveld: Verlengde Parallelweg 4-10, 3771 LP Barneveld. Bel of app 0342-234003 of mail contact@autoservicebarneveld.nl.",
         "contact", main))
 
@@ -856,8 +858,136 @@ def niet_gevonden():
                                "Deze pagina bestaat niet.", None, main, noindex=True))
 
 
+# ------------------------------------------------------------------ merken, werkgebied, vragen
+MERKEN = ["Volkswagen", "Toyota", "Kia", "Peugeot", "Renault", "Opel", "Ford", "Škoda",
+          "Hyundai", "Volvo", "Audi", "BMW", "Mercedes-Benz", "Citroën", "Seat", "Nissan",
+          "Mazda", "Suzuki", "Fiat", "Dacia", "Tesla", "MG", "BYD", "Polestar"]
+
+PLAATSEN = [
+    ("Barneveld", "Onze werkplaats staat aan de Verlengde Parallelweg. Brengt u uw auto, dan loopt u in vijf minuten naar het station."),
+    ("Voorthuizen", "Vanuit Voorthuizen bent u zo bij ons. Moet uw auto langer blijven, dan rijdt u verder in een leenauto of op een leenfiets."),
+    ("Kootwijkerbroek", "Voor onderhoud, APK of banden hoeft u vanuit Kootwijkerbroek niet ver te rijden."),
+    ("Terschuur en Zwartebroek", "Ook vanuit Terschuur en Zwartebroek komen klanten bij ons voor onderhoud, reparatie en APK."),
+    ("Garderen en Stroe", "Woont u in Garderen of Stroe? Plan uw afspraak online en gebruik ons vervangend vervoer als dat handig is."),
+    ("De Glind en Lunteren", "Ook voor klanten uit De Glind en Lunteren verzorgen we onderhoud, diagnose, banden en aircoservice."),
+]
+
+VRAGEN = [
+    ("Hoe maak ik een afspraak?",
+     "Via de knop Plan afspraak op deze website. U vult uw kenteken (of merk en model), de werkzaamheden en uw gegevens in en verstuurt de aanvraag via WhatsApp of per e-mail. Bellen kan ook: {tel}."),
+    ("Is een aanvraag via de website meteen een afspraak?",
+     "Nee. U geeft uw voorkeur door en wij nemen contact op om de afspraak te bevestigen. Heeft u haast, bel dan {tel}."),
+    ("Onderhouden jullie alle merken?",
+     "Ja. Wij zijn een universele, zelfstandige garage en werken aan alle merken en modellen, ook aan elektrische en hybride auto's. Zie ook <a href=\"{r}merken/\">alle merken</a>."),
+    ("Blijft mijn fabrieksgarantie geldig als ik bij jullie onderhoud laat doen?",
+     "Ja, zolang het onderhoud volgens de voorschriften van de fabrikant wordt uitgevoerd met geschikte onderdelen. Dat is in de Europese regels vastgelegd. Wij werken volgens het onderhoudsschema van uw auto."),
+    ("Doen jullie ook elektrische auto's?",
+     "Ja. Ook een elektrische auto heeft onderhoud nodig: banden, remmen, ophanging, airco en APK. Lees meer over <a href=\"{r}elektrische-auto/\">onderhoud van elektrische auto's</a>."),
+    ("Wanneer verloopt mijn APK?",
+     "Vul uw kenteken in bij Plan afspraak; we tonen dan direct de APK-vervaldatum uit de gegevens van de RDW. U kunt de keuring tot twee maanden vóór die datum laten doen zonder dat u er tijd mee verliest."),
+    ("Krijg ik vooraf te horen wat het kost?",
+     "Ja. We bespreken de kosten vooraf. Komen we tijdens het werk iets onverwachts tegen, dan hoort u dat direct via WhatsApp voordat we verdergaan."),
+    ("Kan ik wachten terwijl mijn auto wordt gemaakt?",
+     "Ja, voor kortere klussen kunt u wachten in onze wachtruimte met koffie en wifi."),
+    ("Wat als mijn auto langer moet blijven?",
+     "Dan kunt u gebruikmaken van een elektrische Renault 5, een Volkswagen Caddy of een leenfiets. U kiest dit bij het plannen van uw afspraak. Zie <a href=\"{r}vervangend-vervoer/\">vervangend vervoer</a>."),
+    ("Wat zijn jullie openingstijden?",
+     "Maandag tot en met vrijdag van 08:00 tot 17:00. Zaterdag op afspraak, zondag gesloten."),
+    ("Waar zitten jullie?",
+     "Aan de {adres}, {postcode}. Het station ligt op vijf minuten lopen. Zie <a href=\"{r}contact/\">contact en route</a>."),
+]
+
+
+def merken():
+    r = "../"
+    lijst = "\n".join(f"          <li>{e(m)}</li>" for m in MERKEN)
+    main = f"""{pagina_kop(r, "Onderhoud en APK voor alle automerken", "hero-home", "Alle merken", "Of u nu in een Volkswagen, Toyota, Kia of Tesla rijdt: bij Autoservice Barneveld bent u voor onderhoud, reparatie en APK aan het juiste adres.")}
+
+  <section class="sectie">
+    <div class="wrap artikel">
+      <div class="tekst">
+        <h2>Universele garage in Barneveld</h2>
+        <p>Als zelfstandige, universele garage werken we aan alle merken en modellen: benzine, diesel, hybride en volledig elektrisch. Met moderne diagnoseapparatuur lezen we ook nieuwere auto's goed uit, en we werken volgens het onderhoudsschema van de fabrikant.</p>
+
+        <h2>Merken die we vaak onderhouden</h2>
+        <ul class="merken-lijst" aria-label="Automerken">
+{lijst}
+        </ul>
+        <p>Staat uw merk er niet bij? Dan helpen we u net zo goed. Neem gerust <a href="{r}contact/">contact</a> op.</p>
+
+        <h2>Uw fabrieksgarantie blijft geldig</h2>
+        <p>U hoeft niet naar de dealer om uw garantie te behouden. Wordt het onderhoud uitgevoerd volgens de voorschriften van de fabrikant, met geschikte onderdelen, dan blijft uw fabrieksgarantie gewoon geldig. Dat is in de Europese regels vastgelegd.</p>
+
+        <h2>Wat we voor elk merk doen</h2>
+        <p><a href="{r}onderhoud-reparatie/">Onderhoud en reparatie</a>, <a href="{r}apk-keuring/">APK-keuring</a>, <a href="{r}diagnose/">diagnose</a>, <a href="{r}bandenservice/">banden en uitlijnen</a>, <a href="{r}airco-service/">aircoservice</a> en het onderhoud van <a href="{r}elektrische-auto/">elektrische auto's</a>.</p>
+
+        <p class="klein-noot">Autoservice Barneveld is een onafhankelijke garage en geen officieel dealer van de genoemde merken. Merknamen zijn eigendom van hun respectieve eigenaren.</p>
+      </div>
+      {zijkaart(r)}
+    </div>
+  </section>"""
+    schrijf("merken/index.html", pagina(
+        r, "merken/", "Onderhoud alle automerken Barneveld | Autoservice Barneveld",
+        "Onderhoud, reparatie en APK voor alle merken in Barneveld: Volkswagen, Toyota, Kia, Peugeot, Renault, Tesla en meer. Fabrieksgarantie blijft geldig.",
+        None, main))
+
+
+def werkgebied():
+    r = "../"
+    blokken = "\n\n".join(f"        <h2>Garage voor {e(n)}</h2>\n        <p>{e(tk)}</p>" for n, tk in PLAATSEN)
+    main = f"""{pagina_kop(r, "Garage voor Barneveld en omgeving", "hero-contact", "Werkgebied", "Vanuit onze werkplaats in Barneveld helpen we klanten uit de hele omgeving met onderhoud, APK, diagnose, banden, uitlijnen en airco.")}
+
+  <section class="sectie">
+    <div class="wrap artikel">
+      <div class="tekst">
+{blokken}
+
+        <h2>Altijd mobiel</h2>
+        <p>Moet uw auto langer bij ons blijven? Dan rijdt u verder in een elektrische Renault 5 of een Volkswagen Caddy, of pakt u een leenfiets. Wachten kan ook, met koffie en wifi. Zie <a href="{r}vervangend-vervoer/">vervangend vervoer</a>.</p>
+      </div>
+      {zijkaart(r)}
+    </div>
+  </section>"""
+    schrijf("werkgebied/index.html", pagina(
+        r, "werkgebied/", "Garage Barneveld, Voorthuizen en omgeving | Autoservice Barneveld",
+        "Garage voor Barneveld, Voorthuizen, Kootwijkerbroek, Terschuur, Zwartebroek, Garderen, Stroe, De Glind en Lunteren. Onderhoud, APK en banden.",
+        None, main))
+
+
+def vragen():
+    r = "../"
+    def a(tekst):
+        return tekst.format(r=r, tel=f'<a href="{TEL_LINK}">{TEL}</a>', adres=ADRES, postcode=POSTCODE_PLAATS)
+    items = "\n".join(f"""        <details class="vraag">
+          <summary>{e(v)}</summary>
+          <p>{a(ant)}</p>
+        </details>""" for v, ant in VRAGEN)
+    import re as _re
+    faq = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+        {"@type": "Question", "name": v,
+         "acceptedAnswer": {"@type": "Answer", "text": _re.sub(r"<[^>]+>", "", a(ant))}}
+        for v, ant in VRAGEN]}
+    main = f"""{pagina_kop(r, "Veelgestelde vragen", "hero-vervangend-vervoer", "Vragen", "Antwoorden op de vragen die we het vaakst krijgen. Staat uw vraag er niet bij? Bel of app ons gerust.")}
+
+  <section class="sectie">
+    <div class="wrap artikel">
+      <div class="tekst vragen">
+{items}
+      </div>
+      {zijkaart(r)}
+    </div>
+  </section>
+  <script type="application/ld+json">
+{json.dumps(faq, ensure_ascii=False, indent=1)}
+  </script>"""
+    schrijf("veelgestelde-vragen/index.html", pagina(
+        r, "veelgestelde-vragen/", "Veelgestelde vragen | Autoservice Barneveld",
+        "Antwoorden over afspraak maken, APK, fabrieksgarantie, elektrische auto's, vervangend vervoer en openingstijden bij Autoservice Barneveld.",
+        None, main))
+
+
 def sitemap_en_llms():
-    paden = ["", *[d[0] + "/" for d in DIENSTEN], "vervangend-vervoer/", "over-ons/", "contact/", "privacy/"]
+    paden = ["", *[d[0] + "/" for d in DIENSTEN], "vervangend-vervoer/", "merken/", "werkgebied/", "veelgestelde-vragen/", "over-ons/", "contact/", "privacy/"]
     schrijf("sitemap.xml",
             '<?xml version="1.0" encoding="UTF-8"?>\n'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -886,6 +1016,9 @@ def sitemap_en_llms():
 ## Meer
 
 - [Vervangend vervoer]({SITE}/vervangend-vervoer/)
+- [Alle merken]({SITE}/merken/)
+- [Werkgebied]({SITE}/werkgebied/)
+- [Veelgestelde vragen]({SITE}/veelgestelde-vragen/)
 - [Over ons]({SITE}/over-ons/)
 - [Contact en route]({SITE}/contact/)
 {profielen}
@@ -898,6 +1031,9 @@ if __name__ == "__main__":
         dienstpagina(d)
     over_ons()
     vervangend_vervoer()
+    merken()
+    werkgebied()
+    vragen()
     contact()
     privacy()
     niet_gevonden()
