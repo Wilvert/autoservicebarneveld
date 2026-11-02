@@ -74,11 +74,11 @@ DIENSTEN = [
      "Diagnose en storingen verhelpen", "dienst-diagnose", "Uitleesapparatuur bij een auto",
      "Met moderne (uitlees)apparatuur sporen wij storingen en elektronische problemen snel op en verhelpen ze.",
      "Plan diagnose"),
-    ("bandenservice", "Bandenservice",
-     "Banden en winterbanden wisselen | Autoservice Barneveld",
-     "Montage, balanceren en seizoenswissel van zomer- en winterbanden in Barneveld. Banden voor alle merken, ook elektrische auto's.",
-     "Bandenservice in Barneveld", "dienst-banden", "Band op de bandenmontagemachine",
-     "Montage, balanceren en (seizoens)wissel. Snel en vakkundig, voor alle merken, ook elektrische auto's.",
+    ("bandenservice", "Bandenservice & uitlijnen",
+     "Banden wisselen en uitlijnen | Autoservice Barneveld",
+     "Montage, balanceren, seizoenswissel en uitlijnen in Barneveld. Zomer-, winter- en all-seasonbanden voor alle merken, ook elektrische auto's.",
+     "Bandenservice en uitlijnen in Barneveld", "dienst-banden", "Band op de bandenmontagemachine",
+     "Montage, balanceren, (seizoens)wissel en uitlijnen. Snel en vakkundig, voor alle merken, ook elektrische auto's.",
      "Plan banden"),
     ("airco-service", "Aircoservice",
      "Airco-service auto in Barneveld | Autoservice Barneveld",
@@ -136,7 +136,7 @@ TEKST = {
 <p>Is de storing gevonden, dan kunnen we de <a href="{r}onderhoud-reparatie/">reparatie</a> meestal direct inplannen. U blijft mobiel met ons <a href="{r}vervangend-vervoer/">vervangend vervoer</a>.</p>
 """,
 "bandenservice": """
-<p>Goede banden zijn belangrijk voor uw veiligheid, uw remweg en uw verbruik. Wij verzorgen montage, balanceren en de seizoenswissel van uw banden. We werken snel en vakkundig, zodat uw auto altijd de juiste grip houdt.</p>
+<p>Goede banden zijn belangrijk voor uw veiligheid, uw remweg en uw verbruik. Wij verzorgen montage, balanceren, de seizoenswissel en het uitlijnen van uw wielen. We werken snel en vakkundig, zodat uw auto altijd de juiste grip houdt.</p>
 
 <h2>Zomer- en winterbanden wisselen</h2>
 <p>Rijdt u in de winter op winterbanden, dan wisselen we ze in het najaar en voorjaar voor u om. We controleren daarbij meteen het profiel, de bandenspanning en eventuele schade.</p>
@@ -146,6 +146,10 @@ TEKST = {
 
 <h2>Balanceren</h2>
 <p>Trilt uw stuur bij een bepaalde snelheid? Dan zijn uw wielen mogelijk uit balans. Met balanceren rijdt uw auto weer rustig en slijten uw banden gelijkmatiger.</p>
+
+<h2>Uitlijnen</h2>
+<p>Trekt uw auto naar links of rechts, staat uw stuur scheef terwijl u rechtdoor rijdt, of slijten uw banden aan de binnen- of buitenkant? Dan staan uw wielen waarschijnlijk niet meer goed. Bij het uitlijnen meten we de stand van uw wielen nauwkeurig op en stellen we die af volgens de voorschriften van de fabrikant.</p>
+<p>Laat uw auto in elk geval nakijken na een flinke klap tegen een stoeprand of door een diepe kuil, en na vervanging van onderdelen van de wielophanging of besturing. Goed uitgelijnde wielen zorgen voor een auto die recht en stabiel rijdt, banden die langer meegaan en een lager verbruik.</p>
 """,
 "airco-service": """
 <p>Voor een goed werkende airco bent u bij ons aan het juiste adres. Wij verzorgen het vullen, controleren, lekdetectie en reparaties van aircosystemen van alle merken. Zo blijft uw auto koel in de zomer en blijven uw ruiten helder in de winter.</p>
@@ -395,7 +399,7 @@ def voet(r):
   <div class="wrap">
     <div>
       <a href="{home}"><img class="logo" src="{r}img/logo-wit.svg" alt="Autoservice Barneveld" width="160" height="66"></a>
-      <p>Universele garage in Barneveld voor onderhoud, reparatie, APK, diagnose, banden en airco. Alle merken, ook elektrisch.</p>
+      <p>Universele garage in Barneveld voor onderhoud, reparatie, APK, diagnose, banden, uitlijnen en airco. Alle merken, ook elektrisch.</p>
       <img class="rdw" src="{r}img/rdw-erkend.webp" alt="RDW erkend" width="132" height="77" loading="lazy">
     </div>
     <div>
@@ -545,7 +549,7 @@ def homepage():
     <div class="wrap">
       <div class="hero-tekst">
         <h1 id="hero-titel">Vakkundig onderhoud voor uw auto in Barneveld</h1>
-        <p>Onderhoud, reparatie, APK, diagnose, banden en airco. Vul uw kenteken in, kies een dienst en verstuur uw aanvraag via WhatsApp.</p>
+        <p>Onderhoud, reparatie, APK, diagnose, banden, uitlijnen en airco. Vul uw kenteken in, kies een dienst en verstuur uw aanvraag via WhatsApp.</p>
         <a class="hero-bel" href="{TEL_LINK}"><span aria-hidden="true">{I_TEL.format(s=20)}</span>Liever bellen? {TEL}</a>
       </div>
 
@@ -580,9 +584,9 @@ def homepage():
 
   <section class="vertrouwen" aria-label="Waarom Autoservice Barneveld">
     <ul>
-      <li><img class="rdw-mini" src="img/rdw-erkend.webp" alt="" width="62" height="36"><span><strong>RDW erkend</strong>APK voor alle merken</span></li>
+      <li><img class="rdw-mini" src="img/rdw-erkend.webp" alt="" width="62" height="36"><span><strong>APK voor alle merken</strong>RDW erkend</span></li>
       <li><span class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M3 16V11l2-5h14l2 5v5M3 16h18M3 16v2h3v-2m12 0v2h3v-2M5 11h14"/></svg></span><span><strong>Alle merken</strong>Onderhoud en reparatie</span></li>
-      <li><span class="ico" aria-hidden="true">{I_BLIKSEM.format(s=24)}</span><span><strong>Ook elektrisch</strong>Onderhoud van e-auto's</span></li>
+      <li><span class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span><span><strong>Alles onder één dak</strong>Alle zorg voor uw auto</span></li>
       <li><span class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></g></svg></span><span><strong>Vervangend vervoer</strong>Leenauto of leenfiets</span></li>
     </ul>
   </section>
@@ -626,7 +630,7 @@ def homepage():
 {contact_sectie("", kaart=False)}"""
     schrijf("index.html", pagina(
         "", "", "Garage Barneveld: APK & onderhoud | Autoservice Barneveld",
-        "Universele garage in Barneveld voor APK, onderhoud, reparatie, diagnose, banden en airco. Alle merken, ook elektrisch. Bel 0342-234003.",
+        "Universele garage in Barneveld voor APK, onderhoud, reparatie, diagnose, banden, uitlijnen en airco. Alle merken, ook elektrisch. Bel 0342-234003.",
         "home", main))
 
 
@@ -859,7 +863,7 @@ def sitemap_en_llms():
     profielen = "\n".join(f"- [{n}]({u})" for n, u in PROFIELEN)
     schrijf("llms.txt", f"""# Autoservice Barneveld
 
-> Zelfstandige, universele garage in Barneveld (Gelderland) voor APK, onderhoud, reparatie, diagnose, banden en aircoservice. Alle merken, ook elektrische auto's. RDW-erkend. Afspraak maken kan via het formulier op de website (opent WhatsApp), telefonisch of per e-mail.
+> Zelfstandige, universele garage in Barneveld (Gelderland) voor APK, onderhoud, reparatie, diagnose, banden, uitlijnen en aircoservice. Alle merken, ook elektrische auto's. RDW-erkend. Afspraak maken kan via het formulier op de website (opent WhatsApp), telefonisch of per e-mail.
 
 - Adres: {ADRES}, {POSTCODE_PLAATS}
 - Telefoon en WhatsApp: {TEL}
@@ -868,6 +872,7 @@ def sitemap_en_llms():
 - KvK: {KVK}
 - Btw: {BTW}
 - Werkgebied: Barneveld, Voorthuizen, Kootwijkerbroek, Terschuur, Zwartebroek, Garderen, Stroe, De Glind, Lunteren
+- Uitlijnen: onderdeel van de bandenservice
 - Vervangend vervoer: elektrische Renault 5 (particulier), VW Caddy (zakelijk), leenfiets; wachtruimte met koffie en wifi; station op vijf minuten lopen
 
 ## Diensten

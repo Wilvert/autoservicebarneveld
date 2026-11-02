@@ -65,6 +65,7 @@
   "Auto-onderhoud",
   "Autodiagnose",
   "Bandenservice",
+  "Uitlijnen",
   "Aircoservice",
   "Onderhoud elektrische auto's"
  ],
@@ -103,9 +104,9 @@
     "@type": "Offer",
     "itemOffered": {
      "@type": "Service",
-     "name": "Bandenservice",
+     "name": "Bandenservice en uitlijnen",
      "url": "https://www.autoservicebarneveld.nl/bandenservice/",
-     "description": "Montage, balanceren en seizoenswissel van zomer- en winterbanden in Barneveld. Banden voor alle merken, ook elektrische auto's."
+     "description": "Montage, balanceren, seizoenswissel en uitlijnen in Barneveld. Zomer-, winter- en all-seasonbanden voor alle merken, ook elektrische auto's."
     }
    },
    {
