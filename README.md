@@ -34,7 +34,9 @@ mockups/                   De tien ontwerpvoorstellen (noindex)
 
 ## Afspraak plannen
 
-"Plan afspraak" opent een venster met kenteken, dienst, kilometerstand,
+"Plan afspraak" opent een venster met kenteken (of merk en model), een of meer
+diensten, kilometerstand, adres (postcode + huisnummer; straat en plaats via
+PDOK),
 e-mailadres en eventueel vervangend vervoer (Renault 5, VW Caddy of leenfiets).
 Optioneel kiest de bezoeker twee voorkeursdata in een kalender (minimaal twee
 weken vooruit, geen weekend). Dagen blokkeren doe je bovenin het

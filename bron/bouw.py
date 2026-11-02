@@ -31,7 +31,7 @@ PROFIELEN = [
 ]
 
 CSP = ("default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; "
-       "frame-src https://www.openstreetmap.org; connect-src 'self' https://formsubmit.co; form-action 'self' mailto: https://formsubmit.co; "
+       "frame-src https://www.openstreetmap.org; connect-src 'self' https://formsubmit.co https://api.pdok.nl; form-action 'self' mailto: https://formsubmit.co; "
        "base-uri 'self'; object-src 'none'")
 
 # ------------------------------------------------------------------ iconen
@@ -258,13 +258,19 @@ def dienst_select(id_, verplicht=True, leeg="Kies een dienst"):
             f'            <option value="">{leeg}</option>\n{opties}\n          </select>')
 
 
-def kenteken_veld(id_):
+def diensten_vinkjes():
+    return "\n".join(
+        f'            <label><input type="checkbox" name="diensten" value="{e(o)}"><span>{e(o)}</span></label>'
+        for o in DIENST_OPTIES)
+
+
+def kenteken_veld(id_, verplicht=True):
     return f"""<div class="kenteken">
             <span class="nl" aria-hidden="true">
               {I_NL}
               NL
             </span>
-            <input id="{id_}" name="kenteken" placeholder="AB-123-C" maxlength="8" autocomplete="off" spellcheck="false" autocapitalize="characters" required>
+            <input id="{id_}" name="kenteken" placeholder="AB-123-C" maxlength="8" autocomplete="off" spellcheck="false" autocapitalize="characters"{" required" if verplicht else ""}>
           </div>"""
 
 
@@ -276,14 +282,24 @@ def venster(r):
       <h2 id="venster-titel">Plan uw afspraak</h2>
       <p class="uitleg">Vul uw gegevens in. Daarna opent WhatsApp met uw aanvraag al klaar; u verstuurt hem zelf.</p>
       <form method="dialog" novalidate>
-        <div class="veld">
+        <div class="veld kenteken-blok">
           <label for="v-kenteken">Kenteken</label>
           {kenteken_veld("v-kenteken")}
+          <button type="button" class="link-klein kenteken-onbekend">Ik weet mijn kenteken niet</button>
         </div>
-        <div class="veld">
-          <label for="v-dienst">Wat mogen we voor u doen?</label>
-          {dienst_select("v-dienst")}
+        <div class="merk-model" hidden>
+          <div class="rij">
+            <div class="veld"><label for="v-merk">Merk</label><input class="invoer" id="v-merk" name="merk" autocomplete="off" placeholder="bijv. Volkswagen"></div>
+            <div class="veld"><label for="v-model">Model</label><input class="invoer" id="v-model" name="model" autocomplete="off" placeholder="bijv. Golf"></div>
+          </div>
+          <button type="button" class="link-klein kenteken-bekend">Toch kenteken invullen</button>
         </div>
+        <fieldset class="veld diensten-keuze">
+          <legend>Wat mogen we voor u doen? <small>Meerdere mogelijk</small></legend>
+          <div class="diensten-raster">
+{diensten_vinkjes()}
+          </div>
+        </fieldset>
         <div class="veld omschrijving" hidden>
           <label for="v-omschrijving">Korte omschrijving</label>
           <textarea class="invoer" id="v-omschrijving" name="omschrijving" rows="3" maxlength="300" placeholder="Bijv. piepende remmen of een lampje op het dashboard"></textarea>
@@ -298,6 +314,17 @@ def venster(r):
             <input class="invoer" id="v-mail" name="email" type="email" autocomplete="email" placeholder="naam@voorbeeld.nl" required>
           </div>
         </div>
+        <div class="rij adres">
+          <div class="veld">
+            <label for="v-postcode">Postcode</label>
+            <input class="invoer" id="v-postcode" name="postcode" autocomplete="postal-code" placeholder="1234 AB" maxlength="7" required>
+          </div>
+          <div class="veld">
+            <label for="v-huisnummer">Huisnummer</label>
+            <input class="invoer" id="v-huisnummer" name="huisnummer" autocomplete="off" placeholder="bijv. 12A" maxlength="10" required>
+          </div>
+        </div>
+        <p class="adres-gevonden" aria-live="polite" hidden></p>
         <label class="schakel" for="v-vervoer">
           <span class="schakel-tekst"><strong>Vervangend vervoer nodig?</strong><span>Terwijl uw auto bij ons staat.</span></span>
           <input type="checkbox" id="v-vervoer" name="vervoer" role="switch" aria-controls="v-vervoer-keuze">
@@ -509,7 +536,7 @@ def homepage():
         <p>In twee stappen geregeld via WhatsApp.</p>
         <div class="veld">
           <label for="kenteken">Kenteken</label>
-          {kenteken_veld("kenteken")}
+          {kenteken_veld("kenteken", verplicht=False)}
         </div>
         <div class="veld">
           <label for="dienst">Wat mogen we voor u doen?</label>
@@ -754,7 +781,7 @@ def privacy():
         <p>Bij een APK-keuring zijn we wettelijk verplicht de uitslag aan de RDW door te geven. Facturen bewaren we zolang de fiscale bewaarplicht dat vereist.</p>
 
         <h2>Afspraak plannen via WhatsApp</h2>
-        <p>Het afspraakformulier op deze website slaat niets op en verstuurt niets zelf. Het zet uw kenteken, dienst, kilometerstand en e-mailadres in een WhatsApp-bericht, dat u daarna zelf verstuurt. Voor dat bericht gelden ook de voorwaarden van WhatsApp (Meta).</p>
+        <p>Het afspraakformulier op deze website slaat niets op en verstuurt niets zelf. Het zet uw kenteken (of merk en model), de gekozen werkzaamheden, kilometerstand, adres, e-mailadres en eventuele voorkeursdata in een WhatsApp-bericht, dat u daarna zelf verstuurt. Voor dat bericht gelden ook de voorwaarden van WhatsApp (Meta). Om uw straat en woonplaats bij uw postcode en huisnummer te vinden, vraagt het formulier die op bij de Basisregistratie Adressen via PDOK (Kadaster); daarbij wordt niets opgeslagen.</p>
 
         <h2>Deze website</h2>
         <p>Deze website gebruikt geen cookies, geen analyse- of advertentiediensten en laadt geen externe lettertypes. De website wordt gehost via GitHub Pages; GitHub kan daarbij technische gegevens zoals uw IP-adres verwerken om de site te leveren en te beveiligen. De kaart op de contactpagina wordt geladen van OpenStreetMap.</p>

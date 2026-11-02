@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; frame-src https://www.openstreetmap.org; connect-src 'self' https://formsubmit.co; form-action 'self' mailto: https://formsubmit.co; base-uri 'self'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; frame-src https://www.openstreetmap.org; connect-src 'self' https://formsubmit.co https://api.pdok.nl; form-action 'self' mailto: https://formsubmit.co; base-uri 'self'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Pagina niet gevonden | Autoservice Barneveld</title>
 <meta name="description" content="Deze pagina bestaat niet.">
@@ -107,7 +107,7 @@
       <h2 id="venster-titel">Plan uw afspraak</h2>
       <p class="uitleg">Vul uw gegevens in. Daarna opent WhatsApp met uw aanvraag al klaar; u verstuurt hem zelf.</p>
       <form method="dialog" novalidate>
-        <div class="veld">
+        <div class="veld kenteken-blok">
           <label for="v-kenteken">Kenteken</label>
           <div class="kenteken">
             <span class="nl" aria-hidden="true">
@@ -116,19 +116,26 @@
             </span>
             <input id="v-kenteken" name="kenteken" placeholder="AB-123-C" maxlength="8" autocomplete="off" spellcheck="false" autocapitalize="characters" required>
           </div>
+          <button type="button" class="link-klein kenteken-onbekend">Ik weet mijn kenteken niet</button>
         </div>
-        <div class="veld">
-          <label for="v-dienst">Wat mogen we voor u doen?</label>
-          <select id="v-dienst" name="dienst" required>
-            <option value="">Kies een dienst</option>
-            <option>Onderhoud &amp; reparatie</option>
-            <option>APK-keuring</option>
-            <option>Diagnose</option>
-            <option>Bandenservice</option>
-            <option>Aircoservice</option>
-            <option>Overig</option>
-          </select>
+        <div class="merk-model" hidden>
+          <div class="rij">
+            <div class="veld"><label for="v-merk">Merk</label><input class="invoer" id="v-merk" name="merk" autocomplete="off" placeholder="bijv. Volkswagen"></div>
+            <div class="veld"><label for="v-model">Model</label><input class="invoer" id="v-model" name="model" autocomplete="off" placeholder="bijv. Golf"></div>
+          </div>
+          <button type="button" class="link-klein kenteken-bekend">Toch kenteken invullen</button>
         </div>
+        <fieldset class="veld diensten-keuze">
+          <legend>Wat mogen we voor u doen? <small>Meerdere mogelijk</small></legend>
+          <div class="diensten-raster">
+            <label><input type="checkbox" name="diensten" value="Onderhoud &amp; reparatie"><span>Onderhoud &amp; reparatie</span></label>
+            <label><input type="checkbox" name="diensten" value="APK-keuring"><span>APK-keuring</span></label>
+            <label><input type="checkbox" name="diensten" value="Diagnose"><span>Diagnose</span></label>
+            <label><input type="checkbox" name="diensten" value="Bandenservice"><span>Bandenservice</span></label>
+            <label><input type="checkbox" name="diensten" value="Aircoservice"><span>Aircoservice</span></label>
+            <label><input type="checkbox" name="diensten" value="Overig"><span>Overig</span></label>
+          </div>
+        </fieldset>
         <div class="veld omschrijving" hidden>
           <label for="v-omschrijving">Korte omschrijving</label>
           <textarea class="invoer" id="v-omschrijving" name="omschrijving" rows="3" maxlength="300" placeholder="Bijv. piepende remmen of een lampje op het dashboard"></textarea>
@@ -143,6 +150,17 @@
             <input class="invoer" id="v-mail" name="email" type="email" autocomplete="email" placeholder="naam@voorbeeld.nl" required>
           </div>
         </div>
+        <div class="rij adres">
+          <div class="veld">
+            <label for="v-postcode">Postcode</label>
+            <input class="invoer" id="v-postcode" name="postcode" autocomplete="postal-code" placeholder="1234 AB" maxlength="7" required>
+          </div>
+          <div class="veld">
+            <label for="v-huisnummer">Huisnummer</label>
+            <input class="invoer" id="v-huisnummer" name="huisnummer" autocomplete="off" placeholder="bijv. 12A" maxlength="10" required>
+          </div>
+        </div>
+        <p class="adres-gevonden" aria-live="polite" hidden></p>
         <label class="schakel" for="v-vervoer">
           <span class="schakel-tekst"><strong>Vervangend vervoer nodig?</strong><span>Terwijl uw auto bij ons staat.</span></span>
           <input type="checkbox" id="v-vervoer" name="vervoer" role="switch" aria-controls="v-vervoer-keuze">

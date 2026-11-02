@@ -48,19 +48,20 @@
   var stapInvullen = venster.querySelector('.venster-invullen');
   var stapKlaar = venster.querySelector('.venster-klaar');
   var linkOpnieuw = venster.querySelector('.wa-opnieuw');
-  var velden = ['kenteken', 'dienst', 'kilometerstand', 'email'];
+  var velden = ['kenteken', 'kilometerstand', 'email', 'postcode', 'huisnummer'];
   function veld(naam) { return formulier.elements[naam]; }
 
   function open(waarden) {
     stapInvullen.hidden = false;
     stapKlaar.hidden = true;
-    Object.keys(waarden).forEach(function (naam) {
-      if (waarden[naam]) veld(naam).value = waarden[naam];
-    });
+    if (waarden.kenteken) veld('kenteken').value = waarden.kenteken;
+    if (waarden.dienst) {
+      Array.prototype.forEach.call(dienstVinkjes, function (v) { if (v.value === waarden.dienst) v.checked = true; });
+    }
     controleerKenteken(veld('kenteken'));
     zetOmschrijving();
     venster.showModal();
-    var leeg = velden.map(veld).filter(function (v) { return !v.value; })[0];
+    var leeg = velden.map(veld).filter(function (v) { return !v.value && !v.closest('[hidden]'); })[0];
     (leeg || veld('kenteken')).focus();
   }
 
@@ -216,28 +217,96 @@
     datumKnop.focus();
   });
 
-  // Dienst "Overig": vak voor een korte omschrijving
+  // Diensten: meerdere aanvinken; bij "Overig" een vak voor een korte omschrijving
+  var dienstVinkjes = formulier.querySelectorAll('input[name="diensten"]');
   var omschrijving = venster.querySelector('.omschrijving');
+  function gekozenDiensten() {
+    return Array.prototype.filter.call(dienstVinkjes, function (v) { return v.checked; })
+      .map(function (v) { return v.value; });
+  }
+  function controleerDiensten() {
+    dienstVinkjes[0].setCustomValidity(gekozenDiensten().length ? '' : 'Kies minimaal één onderdeel.');
+  }
   function zetOmschrijving() {
-    var overig = veld('dienst').value === 'Overig';
+    var overig = gekozenDiensten().indexOf('Overig') !== -1;
     omschrijving.hidden = !overig;
     veld('omschrijving').required = overig;
+    controleerDiensten();
   }
-  veld('dienst').addEventListener('change', function () {
-    zetOmschrijving();
-    if (!omschrijving.hidden) veld('omschrijving').focus();
+  Array.prototype.forEach.call(dienstVinkjes, function (v) {
+    v.addEventListener('change', function () {
+      zetOmschrijving();
+      if (v.value === 'Overig' && v.checked) veld('omschrijving').focus();
+    });
   });
+
+  // Kenteken onbekend: merk en model invullen
+  var kentekenBlok = venster.querySelector('.kenteken-blok');
+  var merkModel = venster.querySelector('.merk-model');
+  function zetKentekenOnbekend(onbekend) {
+    kentekenBlok.hidden = onbekend;
+    merkModel.hidden = !onbekend;
+    veld('kenteken').required = !onbekend;
+    veld('merk').required = onbekend;
+    veld('model').required = onbekend;
+    if (onbekend) { veld('kenteken').value = ''; veld('kenteken').setCustomValidity(''); veld('merk').focus(); }
+    else { veld('merk').value = ''; veld('model').value = ''; veld('kenteken').focus(); }
+  }
+  venster.querySelector('.kenteken-onbekend').addEventListener('click', function () { zetKentekenOnbekend(true); });
+  venster.querySelector('.kenteken-bekend').addEventListener('click', function () { zetKentekenOnbekend(false); });
+
+  // Adres: postcode + huisnummer; straat en plaats via PDOK (Basisregistratie Adressen)
+  var adresGevonden = venster.querySelector('.adres-gevonden');
+  var adres = null, adresVraag = 0;
+  function postcodeNet(v) { return v.replace(/\s+/g, '').toUpperCase(); }
+  function controleerPostcode() {
+    var pc = postcodeNet(veld('postcode').value);
+    veld('postcode').setCustomValidity(pc && !/^[1-9][0-9]{3}[A-Z]{2}$/.test(pc) ? 'Vul een geldige postcode in, bijvoorbeeld 3771 LP.' : '');
+    return pc;
+  }
+  function zoekAdres() {
+    adres = null;
+    var pc = controleerPostcode();
+    if (/^[1-9][0-9]{3}[A-Z]{2}$/.test(pc)) veld('postcode').value = pc.slice(0, 4) + ' ' + pc.slice(4);
+    var nr = veld('huisnummer').value.trim();
+    var cijfers = (nr.match(/^\d+/) || [])[0];
+    if (!/^[1-9][0-9]{3}[A-Z]{2}$/.test(pc) || !cijfers || !window.fetch) { adresGevonden.hidden = true; return; }
+    var vraag = ++adresVraag;
+    fetch('https://api.pdok.nl/bzk/locatieserver/search/v3_1/free?q=*&fq=type:adres&fq=postcode:' + pc +
+      '&fq=huisnummer:' + cijfers + '&fl=straatnaam,woonplaatsnaam&rows=1')
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (vraag !== adresVraag) return;
+        var d = data.response && data.response.docs[0];
+        adresGevonden.hidden = false;
+        if (d) {
+          adres = d.straatnaam + ' ' + nr + ', ' + pc.slice(0, 4) + ' ' + pc.slice(4) + ' ' + d.woonplaatsnaam;
+          adresGevonden.className = 'adres-gevonden';
+          adresGevonden.textContent = '✓ ' + adres;
+        } else {
+          adresGevonden.className = 'adres-gevonden fout';
+          adresGevonden.textContent = 'Dit adres vinden we niet. Controleer uw postcode en huisnummer.';
+        }
+      })
+      .catch(function () { if (vraag === adresVraag) adresGevonden.hidden = true; });
+  }
+  veld('postcode').addEventListener('change', zoekAdres);
+  veld('huisnummer').addEventListener('change', zoekAdres);
+  veld('postcode').addEventListener('input', function () { adresGevonden.hidden = true; adres = null; });
+  veld('huisnummer').addEventListener('input', function () { adresGevonden.hidden = true; adres = null; });
 
   formulier.addEventListener('submit', function (e) {
     e.preventDefault();
-    controleerKenteken(veld('kenteken'));
+    if (!kentekenBlok.hidden) controleerKenteken(veld('kenteken'));
+    controleerDiensten();
+    controleerPostcode();
     if (!formulier.reportValidity() || !datumsOk()) return;
 
     // WhatsApp-bericht: kopjes met ▸ en *vet*, regels met •.
     // Geen emoji: de doorstuurpagina van WhatsApp maakt die kapot (�).
     function kop(t) { return '▸ *' + t + '*'; }
     function regel(t) { return '• ' + t; }
-    var werk = [regel(veld('dienst').value)];
+    var werk = gekozenDiensten().map(regel);
     if (!omschrijving.hidden && veld('omschrijving').value.trim()) {
       werk.push(regel('Omschrijving: ' + veld('omschrijving').value.trim().replace(/\s+/g, ' ')));
     }
@@ -250,7 +319,9 @@
     ].concat(werk, [
       '',
       kop('Voertuig'),
-      regel('Kenteken: ' + veld('kenteken').value.trim().toUpperCase()),
+      kentekenBlok.hidden
+        ? regel('Kenteken: onbekend') + '\n' + regel('Merk en model: ' + veld('merk').value.trim() + ' ' + veld('model').value.trim())
+        : regel('Kenteken: ' + veld('kenteken').value.trim().toUpperCase()),
       regel('Kilometerstand: ' + veld('kilometerstand').value + ' km'),
       '',
       kop('Vervangend vervoer'),
@@ -265,6 +336,7 @@
     }
     bericht.push('',
       kop('Contact'),
+      regel('Adres: ' + (adres || (postcodeNet(veld('postcode').value).replace(/^(\d{4})/, '$1 ') + ', huisnummer ' + veld('huisnummer').value.trim()))),
       regel('E-mail: ' + veld('email').value.trim()),
       '',
       'Met vriendelijke groet');
