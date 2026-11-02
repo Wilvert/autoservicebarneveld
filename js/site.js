@@ -233,36 +233,39 @@
     controleerKenteken(veld('kenteken'));
     if (!formulier.reportValidity() || !datumsOk()) return;
 
-    // WhatsApp-bericht: kopjes met *vet* (WhatsApp-opmaak).
+    // WhatsApp-bericht: kopjes met ▸ en *vet*, regels met •.
     // Geen emoji: de doorstuurpagina van WhatsApp maakt die kapot (�).
+    function kop(t) { return '▸ *' + t + '*'; }
+    function regel(t) { return '• ' + t; }
+    var werk = [regel(veld('dienst').value)];
+    if (!omschrijving.hidden && veld('omschrijving').value.trim()) {
+      werk.push(regel('Omschrijving: ' + veld('omschrijving').value.trim().replace(/\s+/g, ' ')));
+    }
     var bericht = [
       'Hallo Autoservice Barneveld,',
       '',
       'Graag maak ik een afspraak. Hieronder mijn gegevens.',
       '',
-      '*Werkzaamheden*',
-      veld('dienst').value,
+      kop('Werkzaamheden')
+    ].concat(werk, [
       '',
-      '*Voertuig*',
-      'Kenteken: ' + veld('kenteken').value.trim().toUpperCase(),
-      'Kilometerstand: ' + veld('kilometerstand').value + ' km',
+      kop('Voertuig'),
+      regel('Kenteken: ' + veld('kenteken').value.trim().toUpperCase()),
+      regel('Kilometerstand: ' + veld('kilometerstand').value + ' km'),
       '',
-      '*Vervangend vervoer*',
-      veld('vervoer').checked ? keuzeVervoer() : 'Niet nodig'
-    ];
-    if (!omschrijving.hidden && veld('omschrijving').value.trim()) {
-      bericht.splice(6, 0, 'Omschrijving: ' + veld('omschrijving').value.trim().replace(/\s+/g, ' '));
-    }
+      kop('Vervangend vervoer'),
+      regel(veld('vervoer').checked ? keuzeVervoer() : 'Niet nodig')
+    ]);
     if (!datumKeuze.hidden) {
       bericht.push('',
-        '*Voorkeursdata*',
-        '1e keuze: ' + mooiDatum(gekozen[0]),
-        '2e keuze: ' + mooiDatum(gekozen[1]),
+        kop('Voorkeursdata'),
+        regel('1e keuze: ' + mooiDatum(gekozen[0])),
+        regel('2e keuze: ' + mooiDatum(gekozen[1])),
         '_Ik hoor graag welke datum u kunt bevestigen._');
     }
     bericht.push('',
-      '*Contact*',
-      'E-mail: ' + veld('email').value.trim(),
+      kop('Contact'),
+      regel('E-mail: ' + veld('email').value.trim()),
       '',
       'Met vriendelijke groet');
     bericht = bericht.join('\n');
