@@ -58,6 +58,7 @@
       if (waarden[naam]) veld(naam).value = waarden[naam];
     });
     controleerKenteken(veld('kenteken'));
+    zetOmschrijving();
     venster.showModal();
     var leeg = velden.map(veld).filter(function (v) { return !v.value; })[0];
     (leeg || veld('kenteken')).focus();
@@ -215,6 +216,18 @@
     datumKnop.focus();
   });
 
+  // Dienst "Overig": vak voor een korte omschrijving
+  var omschrijving = venster.querySelector('.omschrijving');
+  function zetOmschrijving() {
+    var overig = veld('dienst').value === 'Overig';
+    omschrijving.hidden = !overig;
+    veld('omschrijving').required = overig;
+  }
+  veld('dienst').addEventListener('change', function () {
+    zetOmschrijving();
+    if (!omschrijving.hidden) veld('omschrijving').focus();
+  });
+
   formulier.addEventListener('submit', function (e) {
     e.preventDefault();
     controleerKenteken(veld('kenteken'));
@@ -236,6 +249,9 @@
       '🔑 *Vervangend vervoer*',
       veld('vervoer').checked ? keuzeVervoer() : 'Niet nodig'
     ];
+    if (!omschrijving.hidden && veld('omschrijving').value.trim()) {
+      bericht.splice(6, 0, 'Omschrijving: ' + veld('omschrijving').value.trim().replace(/\s+/g, ' '));
+    }
     if (!datumKeuze.hidden) {
       bericht.push('',
         '📅 *Voorkeursdata*',

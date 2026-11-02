@@ -375,3 +375,8 @@ svg.blad { display: inline-block; flex: none; margin-top: 0; color: #2f9e5f; ver
 .datum-gekozen { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0 0 10px; font-size: 13px; }
 .datum-gekozen.fout { color: #a12020; font-weight: 600; }
 .geen-breuk { white-space: nowrap; }
+.omschrijving[hidden] { display: none; }
+.omschrijving textarea { min-height: 76px; resize: vertical; font: inherit; }
+.datum-haast { display: flex; gap: 10px; align-items: flex-start; margin: 0 0 8px; padding: 10px 12px; border-radius: 4px; background: #eef6f1; border-left: 3px solid #2f9e5f; font-size: 13px; line-height: 1.45; }
+.datum-haast svg { flex: none; margin-top: 2px; color: #2f9e5f; }
+.datum-haast a { color: var(--blauw); font-weight: 700; white-space: nowrap; }

@@ -284,6 +284,10 @@ def venster(r):
           <label for="v-dienst">Wat mogen we voor u doen?</label>
           {dienst_select("v-dienst")}
         </div>
+        <div class="veld omschrijving" hidden>
+          <label for="v-omschrijving">Korte omschrijving</label>
+          <textarea class="invoer" id="v-omschrijving" name="omschrijving" rows="3" maxlength="300" placeholder="Bijv. piepende remmen of een lampje op het dashboard"></textarea>
+        </div>
         <div class="rij">
           <div class="veld">
             <label for="v-km">Kilometerstand</label>
@@ -321,6 +325,7 @@ def venster(r):
           <p class="datum-gekozen" aria-live="polite"></p>
           <input type="hidden" name="datum1"><input type="hidden" name="datum2">
           <p class="datum-let-op"><strong>Let op: dit is nog geen afspraak.</strong> Wij bekijken uw voorkeur en bevestigen de afspraak daarna.</p>
+          <p class="datum-haast">{I_TEL.format(s=18)}<span><strong>Haast of eerder geholpen worden?</strong> Bel even <a href="{TEL_LINK}">{TEL}</a>. U heeft dan direct contact met ons en we helpen u meteen verder.</span></p>
           <button type="button" class="datum-weg">Geen voorkeursdatum</button>
         </fieldset>
         <button class="knop wa" type="submit">{I_WA} Verstuur via WhatsApp</button>
