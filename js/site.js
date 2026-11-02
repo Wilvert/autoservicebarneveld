@@ -36,8 +36,64 @@
     invoer.setCustomValidity(invoer.value && !kentekenOk(invoer.value)
       ? 'Vul een Nederlands kenteken in, bijvoorbeeld AB-123-C.' : '');
   }
+  /* ---------- Kenteken: merk, model en APK-datum uit de open data van de RDW ---------- */
+  function netjes(tekst) {
+    return tekst.toLowerCase().split(' ').map(function (w) {
+      return w.length <= 3 && /[a-z]/.test(w) ? w.toUpperCase()
+        : w.replace(/(^|-)([a-z])/g, function (m, a, b) { return a + b.toUpperCase(); });
+    }).join(' ');
+  }
+  // Kenteken in de gangbare notatie met streepjes (bijv. GSF11S -> GSF-11-S)
+  function kentekenNetjes(waarde) {
+    var kaal = waarde.replace(/[\s-]/g, '').toUpperCase();
+    var delen = kaal.match(/[A-Z]+|[0-9]+/g) || [kaal];
+    if (delen.length === 2) {
+      var lang = delen[0].length === 4 ? 0 : 1;
+      delen.splice(lang, 1, delen[lang].slice(0, 2), delen[lang].slice(2));
+    }
+    return delen.length === 3 ? delen.join('-') : kaal;
+  }
+  function datumNL(jjjjmmdd) {
+    var d = new Date(+jjjjmmdd.slice(0, 4), +jjjjmmdd.slice(4, 6) - 1, +jjjjmmdd.slice(6, 8));
+    return { datum: d, tekst: d.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' }) };
+  }
+  function zoekRdw(invoer) {
+    var info = invoer.closest('.veld').querySelector('.rdw-info');
+    invoer.rdw = null;
+    clearTimeout(invoer.rdwWacht);
+    if (!info) return;
+    if (!kentekenOk(invoer.value) || !window.fetch) { info.hidden = true; return; }
+    var kaal = invoer.value.replace(/[\s-]/g, '').toUpperCase();
+    invoer.rdwWacht = setTimeout(function () {
+      fetch('https://opendata.rdw.nl/resource/m9d7-ebf2.json?kenteken=' + kaal +
+        '&$select=merk,handelsbenaming,vervaldatum_apk')
+        .then(function (r) { return r.json(); })
+        .then(function (rijen) {
+          if (invoer.value.replace(/[\s-]/g, '').toUpperCase() !== kaal) return;
+          var auto = rijen && rijen[0];
+          info.hidden = false;
+          info.className = 'rdw-info';
+          if (!auto) { info.textContent = 'Dit kenteken vinden we niet bij de RDW. Klopt het?'; info.classList.add('let-op'); return; }
+          var merk = netjes(auto.merk || ''), type = netjes(auto.handelsbenaming || '');
+          var naam = type.toLowerCase().indexOf(merk.toLowerCase()) === 0 ? type : (merk + ' ' + type).trim();
+          var apk = auto.vervaldatum_apk ? datumNL(auto.vervaldatum_apk) : null;
+          invoer.rdw = { auto: naam, apk: apk ? apk.tekst : '' };
+          var regel = '<strong>' + naam + '</strong>';
+          if (!apk) {
+            regel += '<span>Geen APK-datum bekend bij de RDW</span>';
+          } else {
+            var dagen = (apk.datum - new Date()) / 864e5;
+            if (dagen < 0) { info.classList.add('verlopen'); regel += '<span>APK verlopen op ' + apk.tekst + '</span>'; }
+            else if (dagen < 61) { info.classList.add('let-op'); regel += '<span>APK verloopt op ' + apk.tekst + ', plan uw keuring</span>'; }
+            else regel += '<span>APK geldig tot ' + apk.tekst + '</span>';
+          }
+          info.innerHTML = regel;
+        })
+        .catch(function () { info.hidden = true; });
+    }, 350);
+  }
   Array.prototype.forEach.call(document.querySelectorAll('input[name="kenteken"]'), function (invoer) {
-    invoer.addEventListener('input', function () { controleerKenteken(invoer); });
+    invoer.addEventListener('input', function () { controleerKenteken(invoer); zoekRdw(invoer); });
   });
 
   /* ---------- Kenteken onbekend: merk en model invullen ---------- */
@@ -50,7 +106,7 @@
     mm.hidden = !onbekend;
     kenteken.required = verplicht && !onbekend;
     merk.required = model.required = verplicht && onbekend;
-    if (onbekend) { kenteken.value = ''; kenteken.setCustomValidity(''); if (focus) merk.focus(); }
+    if (onbekend) { kenteken.value = ''; kenteken.setCustomValidity(''); zoekRdw(kenteken); if (focus) merk.focus(); }
     else { merk.value = ''; model.value = ''; if (focus) kenteken.focus(); }
   }
   Array.prototype.forEach.call(document.querySelectorAll('form'), function (form) {
@@ -80,6 +136,7 @@
     } else if (waarden.kenteken) {
       kentekenOnbekend(formulier, false, false);
       veld('kenteken').value = waarden.kenteken;
+      zoekRdw(veld('kenteken'));
     }
     var diensten = waarden.diensten || (waarden.dienst ? [waarden.dienst] : []);
     if (diensten.length) {
@@ -343,7 +400,9 @@
       kop('Voertuig'),
       kentekenBlok.hidden
         ? regel('Kenteken: onbekend') + '\n' + regel('Merk en model: ' + veld('merk').value.trim() + ' ' + veld('model').value.trim())
-        : regel('Kenteken: ' + veld('kenteken').value.trim().toUpperCase()),
+        : [regel('Kenteken: ' + kentekenNetjes(veld('kenteken').value))].concat(
+            veld('kenteken').rdw ? [regel('Auto: ' + veld('kenteken').rdw.auto)].concat(
+              veld('kenteken').rdw.apk ? [regel('APK geldig tot: ' + veld('kenteken').rdw.apk)] : []) : []).join('\n'),
       regel('Kilometerstand: ' + veld('kilometerstand').value + ' km'),
       '',
       kop('Vervangend vervoer'),

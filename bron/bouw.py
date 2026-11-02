@@ -38,7 +38,7 @@ PROFIELEN = [
 ]
 
 CSP = ("default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; "
-       "frame-src https://www.openstreetmap.org; connect-src 'self' https://formsubmit.co https://api.pdok.nl; form-action 'self' mailto: https://formsubmit.co; "
+       "frame-src https://www.openstreetmap.org; connect-src 'self' https://formsubmit.co https://api.pdok.nl https://opendata.rdw.nl; form-action 'self' mailto: https://formsubmit.co; "
        "base-uri 'self'; object-src 'none'")
 
 # ------------------------------------------------------------------ iconen
@@ -278,7 +278,8 @@ def kenteken_veld(id_, verplicht=True):
               NL
             </span>
             <input id="{id_}" name="kenteken" placeholder="AB-123-C" maxlength="8" autocomplete="off" spellcheck="false" autocapitalize="characters"{" required" if verplicht else ""}>
-          </div>"""
+          </div>
+          <p class="rdw-info" aria-live="polite" hidden></p>"""
 
 
 def venster(r):
@@ -798,7 +799,7 @@ def privacy():
         <p>Bij een APK-keuring zijn we wettelijk verplicht de uitslag aan de RDW door te geven. Facturen bewaren we zolang de fiscale bewaarplicht dat vereist.</p>
 
         <h2>Afspraak plannen via WhatsApp</h2>
-        <p>Het afspraakformulier op deze website slaat niets op en verstuurt niets zelf. Het zet uw kenteken (of merk en model), de gekozen werkzaamheden, kilometerstand, adres, e-mailadres en eventuele voorkeursdata in een WhatsApp-bericht, dat u daarna zelf verstuurt. Voor dat bericht gelden ook de voorwaarden van WhatsApp (Meta). Om uw straat en woonplaats bij uw postcode en huisnummer te vinden, vraagt het formulier die op bij de Basisregistratie Adressen via PDOK (Kadaster); daarbij wordt niets opgeslagen.</p>
+        <p>Het afspraakformulier op deze website slaat niets op en verstuurt niets zelf. Het zet uw kenteken (of merk en model), de gekozen werkzaamheden, kilometerstand, adres, e-mailadres en eventuele voorkeursdata in een WhatsApp-bericht, dat u daarna zelf verstuurt. Voor dat bericht gelden ook de voorwaarden van WhatsApp (Meta). Om uw straat en woonplaats bij uw postcode en huisnummer te vinden, vraagt het formulier die op bij de Basisregistratie Adressen via PDOK (Kadaster). Bij een ingevuld kenteken haalt het formulier het merk, model en de APK-vervaldatum op uit de openbare gegevens van de RDW. Bij beide wordt niets opgeslagen.</p>
 
         <h2>Deze website</h2>
         <p>Deze website gebruikt geen cookies, geen analyse- of advertentiediensten en laadt geen externe lettertypes. De website wordt gehost via GitHub Pages; GitHub kan daarbij technische gegevens zoals uw IP-adres verwerken om de site te leveren en te beveiligen. De kaart op de contactpagina wordt geladen van OpenStreetMap.</p>

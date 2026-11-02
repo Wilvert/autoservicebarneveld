@@ -404,3 +404,12 @@ svg.blad { display: inline-block; flex: none; margin-top: 0; color: #2f9e5f; ver
 .afspraak .diensten-raster { grid-template-columns: 1fr 1fr; }
 .afspraak .diensten-keuze { margin-bottom: 18px; }
 .afspraak .merk-model .rij { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+/* ---------- RDW-gegevens onder het kenteken ---------- */
+.rdw-info { display: flex; flex-wrap: wrap; gap: 2px 10px; margin: 2px 0 0; padding: 8px 10px; border-radius: 6px; background: #eef6f1; border-left: 3px solid #2f9e5f; font-size: 13px; line-height: 1.4; color: var(--grijs); }
+.rdw-info[hidden] { display: none; }
+.rdw-info strong { color: var(--grijs); }
+.rdw-info span { color: #1f7a45; font-weight: 600; }
+.rdw-info.let-op { background: #fff4ec; border-left-color: var(--oranje); }
+.rdw-info.let-op span { color: #a4521f; }
+.rdw-info.verlopen { background: #fdecec; border-left-color: #c03030; }
+.rdw-info.verlopen span { color: #a12020; }
