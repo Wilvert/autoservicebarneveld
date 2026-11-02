@@ -36,6 +36,10 @@ mockups/                   De tien ontwerpvoorstellen (noindex)
 
 "Plan afspraak" opent een venster met kenteken, dienst, kilometerstand,
 e-mailadres en eventueel vervangend vervoer (Renault 5, VW Caddy of leenfiets).
+Optioneel kiest de bezoeker twee voorkeursdata in een kalender (minimaal twee
+weken vooruit, geen weekend). Dagen blokkeren doe je bovenin het
+voorkeursdatum-blok in `js/site.js`: `GEBLOKKEERD` (weekdagen per maand) en
+`GEBLOKKEERDE_DATA` (losse data).
 Bij versturen opent WhatsApp (`wa.me/31342234003`) met een
 ingevuld bericht dat de bezoeker zelf verstuurt; de site slaat niets op.
 Zonder JavaScript gaan de knoppen naar de contactpagina.

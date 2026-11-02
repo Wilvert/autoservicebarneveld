@@ -340,7 +340,9 @@ textarea { min-height: 120px; resize: vertical; }
 .vervoer-keuze strong { display: inline-flex; align-items: center; gap: 5px; color: var(--grijs); font-size: 14px; }
 .vervoer-keuze small { color: var(--grijs-80); font-size: 12px; }
 .vervoer-btw { grid-column: 1 / -1; margin: 0; font-size: 12px; color: var(--grijs-80); }
-.vervoer-keuze .blad { flex: none; color: #2f9e5f; }
+svg.blad { display: inline-block; flex: none; margin-top: 0; color: #2f9e5f; vertical-align: -2px; }
+.optie h3 .blad { vertical-align: -1px; }
+.extra strong .blad { margin-left: 2px; }
 .vervoer-keuze input:checked + span { border-color: var(--blauw); background: #f4f8fc; box-shadow: inset 0 0 0 1px var(--blauw); }
 .vervoer-keuze input:focus-visible + span { outline: 3px solid var(--oranje); outline-offset: 2px; }
 @media (max-width: 480px) { .vervoer-keuze { grid-template-columns: 1fr; } }
@@ -358,3 +360,18 @@ textarea { min-height: 120px; resize: vertical; }
 .datum-keuze .veld { margin-bottom: 10px; }
 .datum-let-op { margin: 0 0 8px; padding: 10px 12px; border-left: 3px solid var(--oranje); background: var(--wit); border-radius: 4px; font-size: 13px; line-height: 1.45; }
 .datum-weg { padding: 0; border: 0; background: none; color: var(--blauw); font: 600 13px var(--tekst); text-decoration: underline; cursor: pointer; }
+.kalender { margin: 2px 0 10px; padding: 10px; background: var(--wit); border: 1px solid var(--blauw-20); border-radius: 6px; }
+.kal-kop { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.kal-maand { font-size: 14px; text-transform: capitalize; color: var(--grijs); }
+.kal-kop button { width: 34px; height: 34px; border: 0; border-radius: 50%; background: #eef3f8; color: var(--blauw); font-size: 22px; line-height: 1; cursor: pointer; }
+.kal-kop button:disabled { opacity: .3; cursor: default; }
+.kal-dagen, .kal-raster { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; text-align: center; }
+.kal-dagen span { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--grijs-60); padding: 2px 0; }
+.kal-raster button { position: relative; height: 36px; border: 1.5px solid transparent; border-radius: 6px; background: #eef6f1; color: var(--grijs); font: 600 14px var(--tekst); cursor: pointer; }
+.kal-raster button:hover { border-color: var(--blauw); }
+.kal-raster button:disabled { background: none; color: var(--grijs-40); font-weight: 400; text-decoration: line-through; cursor: not-allowed; border-color: transparent; }
+.kal-raster button.gekozen { background: var(--blauw); color: var(--wit); }
+.kal-raster button.gekozen::after { content: attr(data-nr); position: absolute; top: -6px; right: -4px; width: 16px; height: 16px; border-radius: 50%; background: var(--oranje); color: var(--wit); font-size: 10px; line-height: 16px; }
+.datum-gekozen { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0 0 10px; font-size: 13px; }
+.datum-gekozen.fout { color: #a12020; font-weight: 600; }
+.geen-breuk { white-space: nowrap; }

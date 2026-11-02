@@ -151,13 +151,20 @@
           <label><input type="radio" name="vervoermiddel" value="Leenfiets"><span><strong>Leenfiets <svg class="blad" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20 3C10 3 4 8 4 15c0 1.6.4 3 1 4.2C7 14 11 10.5 16 8.5c-4 2.6-7.4 6.4-9.3 11.3 1.3.8 2.8 1.2 4.3 1.2C18 21 21 13 20 3z"/></svg><span class="sr-only"> (milieuvriendelijk)</span></strong><small>Gratis</small></span></label>
           <p class="vervoer-btw">Prijzen incl. btw.</p>
         </fieldset>
-        <button type="button" class="datum-knop" aria-expanded="false" aria-controls="v-datum-keuze"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></g></svg><span><strong>Voorkeursdatum opgeven</strong><small>Optioneel, vanaf twee weken vooruit</small></span></button>
+        <button type="button" class="datum-knop" aria-expanded="false" aria-controls="v-datum-keuze"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></g></svg><span><strong>Voorkeursdatum opgeven</strong><small>Optioneel, kies twee dagen in de kalender</small></span></button>
         <fieldset class="datum-keuze" id="v-datum-keuze" hidden>
-          <legend>Uw voorkeursdata</legend>
-          <div class="rij">
-            <div class="veld"><label for="v-datum1">1e voorkeur</label><input class="invoer" type="date" id="v-datum1" name="datum1"></div>
-            <div class="veld"><label for="v-datum2">2e voorkeur</label><input class="invoer" type="date" id="v-datum2" name="datum2"></div>
+          <legend>Kies twee voorkeursdata</legend>
+          <div class="kalender">
+            <div class="kal-kop">
+              <button type="button" class="kal-vorige" aria-label="Vorige maand">‹</button>
+              <strong class="kal-maand" aria-live="polite"></strong>
+              <button type="button" class="kal-volgende" aria-label="Volgende maand">›</button>
+            </div>
+            <div class="kal-dagen" aria-hidden="true"><span>ma</span><span>di</span><span>wo</span><span>do</span><span>vr</span><span>za</span><span>zo</span></div>
+            <div class="kal-raster"></div>
           </div>
+          <p class="datum-gekozen" aria-live="polite"></p>
+          <input type="hidden" name="datum1"><input type="hidden" name="datum2">
           <p class="datum-let-op"><strong>Let op: dit is nog geen afspraak.</strong> Wij bekijken uw voorkeur en bevestigen de afspraak daarna.</p>
           <button type="button" class="datum-weg">Geen voorkeursdatum</button>
         </fieldset>

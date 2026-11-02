@@ -104,53 +104,121 @@
   }
   veld('vervoer').addEventListener('change', zetVervoer);
 
-  // Voorkeursdatum: twee data, minimaal twee weken vooruit, niet op zondag
+  /* Voorkeursdatum: eigen kalender. Geblokkeerde dagen zijn niet te kiezen:
+     - eerder dan twee weken vanaf vandaag
+     - zaterdag en zondag
+     - de weekdagen in GEBLOKKEERD (per maand, 'jjjj-mm'; 1 = ma, 2 = di, 3 = wo ...)
+     - losse data in GEBLOKKEERDE_DATA ('jjjj-mm-dd') */
+  var GEBLOKKEERD = {
+    '2026-11': [2, 3],   // november: dinsdag en woensdag
+    '2026-12': [2]       // december: dinsdag
+  };
+  var GEBLOKKEERDE_DATA = [];
+  var MAANDEN_VOORUIT = 4;
+
   var datumKnop = venster.querySelector('.datum-knop');
   var datumKeuze = venster.querySelector('.datum-keuze');
-  var datums = [veld('datum1'), veld('datum2')];
-  function isoDatum(d) {
-    return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
-  }
-  function leesDatum(v) { var p = v.split('-'); return new Date(+p[0], p[1] - 1, +p[2]); }
+  var kalMaand = venster.querySelector('.kal-maand');
+  var kalRaster = venster.querySelector('.kal-raster');
+  var kalVorige = venster.querySelector('.kal-vorige');
+  var kalVolgende = venster.querySelector('.kal-volgende');
+  var gekozenTekst = venster.querySelector('.datum-gekozen');
+  var gekozen = [];
+  var toonMaand;
+
+  function twee(n) { return ('0' + n).slice(-2); }
+  function iso(d) { return d.getFullYear() + '-' + twee(d.getMonth() + 1) + '-' + twee(d.getDate()); }
+  function vandaag() { var d = new Date(); d.setHours(0, 0, 0, 0); return d; }
+  function eersteDag() { var d = vandaag(); d.setDate(d.getDate() + 14); return d; }
+  function laatsteDag() { var d = vandaag(); d.setMonth(d.getMonth() + MAANDEN_VOORUIT); return d; }
+  function lees(v) { var p = v.split('-'); return new Date(+p[0], p[1] - 1, +p[2]); }
   function mooiDatum(v) {
-    return leesDatum(v).toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    return lees(v).toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
   }
-  function controleerDatums() {
-    datums.forEach(function (d, i) {
-      var fout = '';
-      if (d.value && d.value < d.min) fout = 'Kies een datum vanaf ' + mooiDatum(d.min) + '.';
-      else if (d.value && leesDatum(d.value).getDay() === 0) fout = 'Op zondag zijn we gesloten. Kies een andere dag.';
-      else if (i === 1 && d.value && d.value === datums[0].value) fout = 'Kies twee verschillende data.';
-      d.setCustomValidity(fout);
-    });
+  function kort(v) {
+    return lees(v).toLocaleDateString('nl-NL', { weekday: 'short', day: 'numeric', month: 'short' });
   }
+  function beschikbaar(d) {
+    var dag = d.getDay();
+    if (dag === 0 || dag === 6) return false;
+    if (d < eersteDag() || d > laatsteDag()) return false;
+    var maand = GEBLOKKEERD[d.getFullYear() + '-' + twee(d.getMonth() + 1)];
+    if (maand && maand.indexOf(dag) !== -1) return false;
+    return GEBLOKKEERDE_DATA.indexOf(iso(d)) === -1;
+  }
+
+  function teken() {
+    var j = toonMaand.getFullYear(), m = toonMaand.getMonth();
+    kalMaand.textContent = toonMaand.toLocaleDateString('nl-NL', { month: 'long', year: 'numeric' });
+    var eerste = eersteDag(), laatste = laatsteDag();
+    kalVorige.disabled = j * 12 + m <= eerste.getFullYear() * 12 + eerste.getMonth();
+    kalVolgende.disabled = j * 12 + m >= laatste.getFullYear() * 12 + laatste.getMonth();
+    kalRaster.innerHTML = '';
+    var leeg = (new Date(j, m, 1).getDay() + 6) % 7;
+    for (var i = 0; i < leeg; i++) kalRaster.appendChild(document.createElement('span'));
+    var aantal = new Date(j, m + 1, 0).getDate();
+    for (var dag = 1; dag <= aantal; dag++) {
+      var d = new Date(j, m, dag), waarde = iso(d), knop = document.createElement('button');
+      var nr = gekozen.indexOf(waarde);
+      knop.type = 'button';
+      knop.textContent = dag;
+      knop.dataset.datum = waarde;
+      knop.disabled = !beschikbaar(d);
+      knop.setAttribute('aria-label', mooiDatum(waarde) + (knop.disabled ? ', niet beschikbaar' : nr !== -1 ? ', ' + (nr + 1) + 'e voorkeur' : ''));
+      if (nr !== -1) { knop.className = 'gekozen'; knop.setAttribute('data-nr', nr + 1); knop.setAttribute('aria-pressed', 'true'); }
+      kalRaster.appendChild(knop);
+    }
+    venster.querySelector('[name="datum1"]').value = gekozen[0] || '';
+    venster.querySelector('[name="datum2"]').value = gekozen[1] || '';
+    gekozenTekst.classList.remove('fout');
+    gekozenTekst.innerHTML = gekozen.length
+      ? '<span>1e voorkeur: <strong>' + kort(gekozen[0]) + '</strong></span><span>2e voorkeur: <strong>' + (gekozen[1] ? kort(gekozen[1]) : 'kies nog een dag') + '</strong></span>'
+      : 'Klik op twee dagen die u schikken.';
+  }
+  kalRaster.addEventListener('click', function (e) {
+    var waarde = e.target.dataset && e.target.dataset.datum;
+    if (!waarde || e.target.disabled) return;
+    var nr = gekozen.indexOf(waarde);
+    if (nr !== -1) gekozen.splice(nr, 1);
+    else if (gekozen.length < 2) gekozen.push(waarde);
+    else gekozen[1] = waarde;
+    teken();
+    var zelfde = kalRaster.querySelector('[data-datum="' + waarde + '"]');
+    if (zelfde) zelfde.focus();
+  });
+  kalVorige.addEventListener('click', function () { toonMaand.setMonth(toonMaand.getMonth() - 1); teken(); });
+  kalVolgende.addEventListener('click', function () { toonMaand.setMonth(toonMaand.getMonth() + 1); teken(); });
+
   function zetDatum(aan) {
     datumKeuze.hidden = !aan;
     datumKnop.hidden = aan;
     datumKnop.setAttribute('aria-expanded', aan);
-    var min = new Date(); min.setDate(min.getDate() + 14);
-    datums.forEach(function (d) {
-      d.min = isoDatum(min);
-      d.required = aan;
-      if (!aan) { d.value = ''; d.setCustomValidity(''); }
-    });
+    gekozen = [];
+    var e = eersteDag();
+    toonMaand = new Date(e.getFullYear(), e.getMonth(), 1);
+    teken();
+  }
+  function datumsOk() {
+    if (datumKeuze.hidden || gekozen.length === 2) return true;
+    gekozenTekst.textContent = 'Kies twee voorkeursdata, of klik op "Geen voorkeursdatum".';
+    gekozenTekst.classList.add('fout');
+    datumKeuze.scrollIntoView({ block: 'nearest' });
+    return false;
   }
   datumKnop.addEventListener('click', function () {
     zetDatum(true);
-    datums[0].focus();
-    try { datums[0].showPicker(); } catch (fout) { /* oudere browsers: gewoon focus */ }
+    var eerste = kalRaster.querySelector('button:not(:disabled)');
+    if (eerste) eerste.focus();
   });
   venster.querySelector('.datum-weg').addEventListener('click', function () {
     zetDatum(false);
     datumKnop.focus();
   });
-  datums.forEach(function (d) { d.addEventListener('input', controleerDatums); });
 
   formulier.addEventListener('submit', function (e) {
     e.preventDefault();
     controleerKenteken(veld('kenteken'));
-    controleerDatums();
-    if (!formulier.reportValidity()) return;
+    if (!formulier.reportValidity() || !datumsOk()) return;
 
     var bericht = [
       'Hallo Autoservice Barneveld,',
@@ -165,7 +233,7 @@
     ];
     if (!datumKeuze.hidden) {
       bericht.push('', 'Voorkeursdata (nog geen afspraak, graag bevestigen):',
-        '1. ' + mooiDatum(veld('datum1').value), '2. ' + mooiDatum(veld('datum2').value));
+        '1. ' + mooiDatum(gekozen[0]), '2. ' + mooiDatum(gekozen[1]));
     }
     bericht = bericht.join('\n');
     var url = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(bericht);
