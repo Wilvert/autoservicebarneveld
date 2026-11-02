@@ -314,8 +314,9 @@ def venster(r):
         </div>
         <div class="rij">
           <div class="veld">
-            <label for="v-km">Kilometerstand</label>
+            <label for="v-km">Kilometerstand <small class="label-hint">ongeveer is prima</small></label>
             <input class="invoer" id="v-km" name="kilometerstand" inputmode="numeric" autocomplete="off" placeholder="bijv. 85.000" required>
+            <button type="button" class="link-klein km-onbekend" aria-pressed="false">Ik weet de km-stand niet</button>
           </div>
           <div class="veld">
             <label for="v-mail">E-mailadres</label>

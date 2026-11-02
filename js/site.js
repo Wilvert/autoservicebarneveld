@@ -145,7 +145,7 @@
     controleerKenteken(veld('kenteken'));
     zetOmschrijving();
     venster.showModal();
-    var leeg = velden.map(veld).filter(function (v) { return !v.value && !v.closest('[hidden]'); })[0];
+    var leeg = velden.map(veld).filter(function (v) { return !v.value && !v.disabled && !v.closest('[hidden]'); })[0];
     (leeg || veld('kenteken')).focus();
   }
 
@@ -331,6 +331,20 @@
     });
   });
 
+  // Kilometerstand onbekend: veld uit, niet verplicht
+  var kmKnop = venster.querySelector('.km-onbekend');
+  kmKnop.addEventListener('click', function () {
+    var onbekend = kmKnop.getAttribute('aria-pressed') !== 'true';
+    var km = veld('kilometerstand');
+    kmKnop.setAttribute('aria-pressed', onbekend);
+    kmKnop.textContent = onbekend ? 'Toch invullen' : 'Ik weet de km-stand niet';
+    km.disabled = onbekend;
+    km.required = !onbekend;
+    km.value = '';
+    km.placeholder = onbekend ? 'Onbekend' : 'bijv. 85.000';
+    if (!onbekend) km.focus();
+  });
+
   // Kenteken onbekend: zie kentekenOnbekend() bovenin
   var kentekenBlok = venster.querySelector('.kenteken-blok');
 
@@ -403,7 +417,7 @@
         : [regel('Kenteken: ' + kentekenNetjes(veld('kenteken').value))].concat(
             veld('kenteken').rdw ? [regel('Auto: ' + veld('kenteken').rdw.auto)].concat(
               veld('kenteken').rdw.apk ? [regel('APK geldig tot: ' + veld('kenteken').rdw.apk)] : []) : []).join('\n'),
-      regel('Kilometerstand: ' + veld('kilometerstand').value + ' km'),
+      regel('Kilometerstand: ' + (veld('kilometerstand').value ? 'ca. ' + veld('kilometerstand').value + ' km' : 'onbekend')),
       '',
       kop('Vervangend vervoer'),
       regel(veld('vervoer').checked ? keuzeVervoer() : 'Niet nodig')
