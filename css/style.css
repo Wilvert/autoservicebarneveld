@@ -413,5 +413,4 @@ svg.blad { display: inline-block; flex: none; margin-top: 0; color: #2f9e5f; ver
 .rdw-info.let-op span { color: #a4521f; }
 .rdw-info.verlopen { background: #fdecec; border-left-color: #c03030; }
 .rdw-info.verlopen span { color: #a12020; }
-.label-hint { margin-left: 4px; font-size: 11px; font-weight: 500; color: var(--grijs-80); }
 .invoer:disabled { background: #f2f3f5; color: var(--grijs-60); }
