@@ -233,20 +233,21 @@
     controleerKenteken(veld('kenteken'));
     if (!formulier.reportValidity() || !datumsOk()) return;
 
-    // WhatsApp-bericht: kopjes met *vet* (WhatsApp-opmaak) en een emoji per blok
+    // WhatsApp-bericht: kopjes met *vet* (WhatsApp-opmaak).
+    // Geen emoji: de doorstuurpagina van WhatsApp maakt die kapot (�).
     var bericht = [
       'Hallo Autoservice Barneveld,',
       '',
       'Graag maak ik een afspraak. Hieronder mijn gegevens.',
       '',
-      '🔧 *Werkzaamheden*',
+      '*Werkzaamheden*',
       veld('dienst').value,
       '',
-      '🚗 *Voertuig*',
+      '*Voertuig*',
       'Kenteken: ' + veld('kenteken').value.trim().toUpperCase(),
       'Kilometerstand: ' + veld('kilometerstand').value + ' km',
       '',
-      '🔑 *Vervangend vervoer*',
+      '*Vervangend vervoer*',
       veld('vervoer').checked ? keuzeVervoer() : 'Niet nodig'
     ];
     if (!omschrijving.hidden && veld('omschrijving').value.trim()) {
@@ -254,13 +255,13 @@
     }
     if (!datumKeuze.hidden) {
       bericht.push('',
-        '📅 *Voorkeursdata*',
+        '*Voorkeursdata*',
         '1e keuze: ' + mooiDatum(gekozen[0]),
         '2e keuze: ' + mooiDatum(gekozen[1]),
         '_Ik hoor graag welke datum u kunt bevestigen._');
     }
     bericht.push('',
-      '✉️ *Contact*',
+      '*Contact*',
       'E-mail: ' + veld('email').value.trim(),
       '',
       'Met vriendelijke groet');
