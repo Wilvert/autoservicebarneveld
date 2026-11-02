@@ -52,3 +52,7 @@ Geen cookies, geen trackers, geen externe scripts of lettertypes. Een
 Content-Security-Policy staat als meta-tag in elke pagina (GitHub Pages laat
 geen eigen headers toe). Het contactformulier verstuurt via FormSubmit
 (formsubmit.co) een e-mail naar contact@autoservicebarneveld.nl.
+
+CSS en JS worden gelinkt met `?v=<hash>`, zodat bezoekers na een wijziging
+meteen de nieuwe versie krijgen. Daarom altijd opnieuw bouwen na het aanpassen
+van `css/style.css` of `js/site.js`.

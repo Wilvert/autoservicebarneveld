@@ -6,11 +6,18 @@ Kop, voet, afspraakvenster en bedrijfsgegevens staan hier op één plek.
 Bedrijfsgegevens voor Google (schema.org) staan in bron/bedrijf.json.
 Alleen de Python-standaardbibliotheek is nodig.
 """
+import hashlib
 import html
 import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+
+
+def versie(pad):
+    """Korte hash van een bestand, achter de link gezet (?v=...) zodat browsers
+    na een wijziging meteen de nieuwe versie laden in plaats van een oude kopie."""
+    return hashlib.sha1((ROOT / pad).read_bytes()).hexdigest()[:8]
 SITE = "https://www.autoservicebarneveld.nl"
 DATUM = "2026-11-01"
 
@@ -213,8 +220,8 @@ def head(r, pad, title, desc, noindex=False):
         f'<link rel="apple-touch-icon" href="{r}img/apple-touch-icon.png">',
         f'<link rel="preload" href="{r}fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin>',
         f'<link rel="preload" href="{r}fonts/bebas-neue.woff2" as="font" type="font/woff2" crossorigin>',
-        f'<link rel="stylesheet" href="{r}css/style.css">',
-        f'<script src="{r}js/site.js" defer></script>',
+        f'<link rel="stylesheet" href="{r}css/style.css?v={versie('css/style.css')}">',
+        f'<script src="{r}js/site.js?v={versie('js/site.js')}" defer></script>',
     ]
     return "\n".join(regels)
 
