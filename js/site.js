@@ -220,21 +220,34 @@
     controleerKenteken(veld('kenteken'));
     if (!formulier.reportValidity() || !datumsOk()) return;
 
+    // WhatsApp-bericht: kopjes met *vet* (WhatsApp-opmaak) en een emoji per blok
     var bericht = [
       'Hallo Autoservice Barneveld,',
       '',
-      'Ik wil graag een afspraak maken.',
+      'Graag maak ik een afspraak. Hieronder mijn gegevens.',
       '',
-      'Dienst: ' + veld('dienst').value,
-      'Kenteken: ' + veld('kenteken').value.trim(),
+      '🔧 *Werkzaamheden*',
+      veld('dienst').value,
+      '',
+      '🚗 *Voertuig*',
+      'Kenteken: ' + veld('kenteken').value.trim().toUpperCase(),
       'Kilometerstand: ' + veld('kilometerstand').value + ' km',
-      'Vervangend vervoer: ' + (veld('vervoer').checked ? keuzeVervoer() : 'Nee'),
-      'E-mail: ' + veld('email').value.trim()
+      '',
+      '🔑 *Vervangend vervoer*',
+      veld('vervoer').checked ? keuzeVervoer() : 'Niet nodig'
     ];
     if (!datumKeuze.hidden) {
-      bericht.push('', 'Voorkeursdata (nog geen afspraak, graag bevestigen):',
-        '1. ' + mooiDatum(gekozen[0]), '2. ' + mooiDatum(gekozen[1]));
+      bericht.push('',
+        '📅 *Voorkeursdata*',
+        '1e keuze: ' + mooiDatum(gekozen[0]),
+        '2e keuze: ' + mooiDatum(gekozen[1]),
+        '_Ik hoor graag welke datum u kunt bevestigen._');
     }
+    bericht.push('',
+      '✉️ *Contact*',
+      'E-mail: ' + veld('email').value.trim(),
+      '',
+      'Met vriendelijke groet');
     bericht = bericht.join('\n');
     var url = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(bericht);
 
