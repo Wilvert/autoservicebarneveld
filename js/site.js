@@ -417,7 +417,7 @@
         : [regel('Kenteken: ' + kentekenNetjes(veld('kenteken').value))].concat(
             veld('kenteken').rdw ? [regel('Auto: ' + veld('kenteken').rdw.auto)].concat(
               veld('kenteken').rdw.apk ? [regel('APK geldig tot: ' + veld('kenteken').rdw.apk)] : []) : []).join('\n'),
-      regel('Kilometerstand: ' + (veld('kilometerstand').value ? 'ca. ' + veld('kilometerstand').value + ' km' : 'onbekend')),
+      regel('Kilometerstand: ' + (veld('kilometerstand').value ? 'ca. ' + veld('kilometerstand').value + ' km' : 'weet ik niet')),
       '',
       kop('Vervangend vervoer'),
       regel(veld('vervoer').checked ? keuzeVervoer() : 'Niet nodig')
