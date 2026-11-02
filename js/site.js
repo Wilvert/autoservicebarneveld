@@ -524,6 +524,7 @@
       melding.innerHTML = tekst;
       melding.classList.toggle('fout', !!fout);
       melding.hidden = false;
+      melding.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     }
 
     form.addEventListener('submit', function (e) {
@@ -531,7 +532,6 @@
       if (!form.reportValidity()) return;
       var data = {};
       new FormData(form).forEach(function (waarde, naam) { data[naam] = waarde; });
-      if (data._honey) return; // spam
       knop.disabled = true;
       knop.textContent = 'Bezig met versturen…';
       melding.hidden = true;

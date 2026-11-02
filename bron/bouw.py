@@ -694,7 +694,6 @@ def contact_sectie(r, kaart=True, titel="Neem vandaag nog contact op", h="h2"):
       <form class="formulier" action="https://formsubmit.co/{MAIL}" method="post" aria-label="Contactformulier">
         <input type="hidden" name="_subject" value="Nieuw bericht via de website">
         <input type="hidden" name="_template" value="table">
-        <input type="text" name="_honey" class="honing" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="rij">
           <div class="veld"><label for="naam">Naam *</label><input class="invoer" id="naam" name="Naam" autocomplete="name" required></div>
           <div class="veld"><label for="tel">Telefoonnummer</label><input class="invoer" id="tel" name="Telefoonnummer" type="tel" autocomplete="tel"></div>

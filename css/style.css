@@ -210,7 +210,6 @@ h2.groot, h1.groot { font-family: var(--kop); font-weight: 400; font-size: clamp
 textarea { min-height: 120px; resize: vertical; }
 .akkoord { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; font-weight: 500; margin: 4px 0 20px; }
 .akkoord input { width: 18px !important; height: 18px; flex: none; margin-top: 2px; accent-color: var(--blauw); }
-.honing { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .formulier-melding { margin: 16px 0 0; padding: 12px 14px; border-radius: 8px; font-size: 15px; font-weight: 600; background: #e7f6ec; color: #135c2e; }
 .formulier-melding.fout { background: #fdecec; color: #8a1c1c; }
 .formulier-melding a { color: inherit; }
