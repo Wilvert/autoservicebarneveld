@@ -31,7 +31,7 @@ PROFIELEN = [
 ]
 
 CSP = ("default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; "
-       "frame-src https://www.openstreetmap.org; form-action 'self' mailto:; "
+       "frame-src https://www.openstreetmap.org; connect-src 'self' https://formsubmit.co; form-action 'self' mailto: https://formsubmit.co; "
        "base-uri 'self'; object-src 'none'")
 
 # ------------------------------------------------------------------ iconen
@@ -468,7 +468,6 @@ def homepage():
     <div class="hero-foto"><img src="img/hero-home.webp" alt="" width="1848" height="1232" fetchpriority="high"></div>
     <div class="wrap">
       <div class="hero-tekst">
-        <span class="kicker"><i aria-hidden="true"></i>Garage in Barneveld · alle merken</span>
         <h1 id="hero-titel">Vakkundig onderhoud voor uw auto in Barneveld</h1>
         <p>Onderhoud, reparatie, APK, diagnose, banden en airco. Vul uw kenteken in, kies een dienst en verstuur uw aanvraag via WhatsApp.</p>
         <a class="hero-bel" href="{TEL_LINK}"><span aria-hidden="true">{I_TEL.format(s=20)}</span>Liever bellen? {TEL}</a>
@@ -498,7 +497,7 @@ def homepage():
       <li><img class="rdw-mini" src="img/rdw-erkend.webp" alt="" width="62" height="36"><span><strong>RDW erkend</strong>APK voor alle merken</span></li>
       <li><span class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M3 16V11l2-5h14l2 5v5M3 16h18M3 16v2h3v-2m12 0v2h3v-2M5 11h14"/></svg></span><span><strong>Alle merken</strong>Onderhoud en reparatie</span></li>
       <li><span class="ico" aria-hidden="true">{I_BLIKSEM.format(s=24)}</span><span><strong>Ook elektrisch</strong>Onderhoud van e-auto's</span></li>
-      <li><span class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></g></svg></span><span><strong>Vervangend vervoer</strong>Leenauto, fiets of haal- en brengservice</span></li>
+      <li><span class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></g></svg></span><span><strong>Vervangend vervoer</strong>Leenauto of leenfiets</span></li>
     </ul>
   </section>
 
@@ -527,7 +526,7 @@ def homepage():
           <li><strong>U plant een afspraak</strong><p>Online met uw kenteken via WhatsApp, of telefonisch.</p></li>
           <li><strong>Kosten vooraf besproken</strong><p>Zo komt u nooit voor verrassingen te staan.</p></li>
           <li><strong>Op de hoogte via WhatsApp</strong><p>Iets onverwachts? Dan hoort u het direct, met foto's, korte filmpjes of een duidelijke toelichting.</p></li>
-          <li><strong>U blijft mobiel</strong><p>Met vervangend vervoer of haal- en brengservice.</p></li>
+          <li><strong>U blijft mobiel</strong><p>Met een leenauto of leenfiets.</p></li>
         </ol>
         <a class="verder" href="over-ons/">Meer over ons <span aria-hidden="true">→</span></a>
       </div>
@@ -572,10 +571,9 @@ def vervoer_sectie(r, titel_h="h2", link=True):
         <div class="optie foto"><img src="{r}img/hero-vervangend-vervoer.webp" alt="Leenauto van Autoservice Barneveld in de werkplaats" width="1848" height="1232" loading="lazy"></div>
       </div>
       <ul class="extra">
-        <li>{I_VINK}<span><strong>Haal- en brengservice</strong>In Barneveld en Voorthuizen.</span></li>
         <li>{I_VINK}<span><strong>Leenfiets</strong>Voor korte ritten.</span></li>
         <li>{I_VINK}<span><strong>Station op 5 minuten</strong>Lopen vanaf de garage.</span></li>
-        <li>{I_VINK}<span><strong>Werkplek</strong>Met bureau, koffie en wifi.</span></li>
+        <li>{I_VINK}<span><strong>Wachtruimte</strong>Met koffie en wifi, als u even wacht.</span></li>
       </ul>{verder}
     </div>
   </section>"""
@@ -603,15 +601,19 @@ def contact_sectie(r, kaart=True, titel="Neem vandaag nog contact op", h="h2"):
         </ul>
         <div class="tijden-bord">{I_KLOK}<span>Maandag t/m vrijdag 08:00–17:00<br>Zaterdag op afspraak<br>Zondag gesloten</span></div>{osm}
       </div>
-      <form class="formulier" action="mailto:{MAIL}" method="post" enctype="text/plain" aria-label="Contactformulier">
+      <form class="formulier" action="https://formsubmit.co/{MAIL}" method="post" aria-label="Contactformulier">
+        <input type="hidden" name="_subject" value="Nieuw bericht via de website">
+        <input type="hidden" name="_template" value="table">
+        <input type="text" name="_honey" class="honing" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="rij">
           <div class="veld"><label for="naam">Naam *</label><input class="invoer" id="naam" name="Naam" autocomplete="name" required></div>
           <div class="veld"><label for="tel">Telefoonnummer</label><input class="invoer" id="tel" name="Telefoonnummer" type="tel" autocomplete="tel"></div>
         </div>
-        <div class="veld"><label for="mail">E-mail *</label><input class="invoer" id="mail" name="E-mail" type="email" autocomplete="email" required></div>
+        <div class="veld"><label for="mail">E-mail *</label><input class="invoer" id="mail" name="email" type="email" autocomplete="email" required></div>
         <div class="veld"><label for="bericht">Bericht *</label><textarea id="bericht" name="Bericht" required></textarea></div>
         <label class="akkoord"><input type="checkbox" required> Ik ga ermee akkoord dat deze gegevens worden opgeslagen en verwerkt met het doel contact op te nemen. Ik kan mijn toestemming op elk moment intrekken. *</label>
         <button class="knop blauw" type="submit">Versturen</button>
+        <p class="formulier-melding" role="status" hidden></p>
       </form>
     </div>
   </section>"""
@@ -663,7 +665,7 @@ def over_ons():
           <li><strong>U plant een afspraak</strong><p>Online met uw kenteken via WhatsApp, of telefonisch.</p></li>
           <li><strong>Kosten vooraf besproken</strong><p>Zo komt u nooit voor verrassingen te staan.</p></li>
           <li><strong>Op de hoogte via WhatsApp</strong><p>Iets onverwachts? Dan hoort u het direct.</p></li>
-          <li><strong>U blijft mobiel</strong><p>Met <a href="{r}vervangend-vervoer/">vervangend vervoer</a> of haal- en brengservice.</p></li>
+          <li><strong>U blijft mobiel</strong><p>Met een leenauto of leenfiets, zie <a href="{r}vervangend-vervoer/">vervangend vervoer</a>.</p></li>
         </ol>
       </div>
       {zijkaart(r)}
@@ -685,15 +687,15 @@ def vervangend_vervoer():
     <div class="wrap artikel">
       <div class="tekst">
         <h2>Voor particulieren en zakelijke klanten</h2>
-        <p>Particulieren rijden in onze elektrische Renault 5. Zakelijke klanten kunnen de Volkswagen Caddy gebruiken, zodat het werk gewoon door kan gaan. Wilt u liever niet zelf rijden? Dan halen en brengen we uw auto in Barneveld en Voorthuizen.</p>
+        <p>Particulieren rijden in onze elektrische Renault 5. Zakelijke klanten kunnen de Volkswagen Caddy gebruiken, zodat het werk gewoon door kan gaan.</p>
         <p>Of u nu particulier of zakelijk klant bent, wij zorgen dat u mobiel blijft. Geef bij het plannen van uw afspraak aan welke optie u wilt gebruiken.</p>
       </div>
       {zijkaart(r)}
     </div>
   </section>"""
     schrijf("vervangend-vervoer/index.html", pagina(
-        r, "vervangend-vervoer/", "Vervangend vervoer, haal en breng | Autoservice Barneveld",
-        "Leenauto (elektrische Renault 5 of VW Caddy), leenfiets of haal- en brengservice in Barneveld en Voorthuizen terwijl uw auto bij ons staat.",
+        r, "vervangend-vervoer/", "Vervangend vervoer | Autoservice Barneveld",
+        "Leenauto (elektrische Renault 5 of VW Caddy) of leenfiets terwijl uw auto bij ons in Barneveld staat.",
         "vervangend-vervoer", main))
 
 
@@ -717,6 +719,7 @@ def privacy():
 
         <h2>Welke gegevens en waarvoor</h2>
         <p>Neemt u contact met ons op via telefoon, e-mail, WhatsApp of het contactformulier, dan gebruiken we uw naam, contactgegevens en bericht om uw vraag te beantwoorden en een afspraak te maken. Laat u werk aan uw auto uitvoeren, dan gebruiken we ook uw kenteken, kilometerstand en voertuiggegevens om de opdracht uit te voeren en te factureren.</p>
+        <p>Berichten via het contactformulier worden als e-mail aan ons doorgestuurd door FormSubmit (formsubmit.co). Die dienst verwerkt daarvoor de gegevens die u invult en technische gegevens zoals uw IP-adres.</p>
         <p>Bij een APK-keuring zijn we wettelijk verplicht de uitslag aan de RDW door te geven. Facturen bewaren we zolang de fiscale bewaarplicht dat vereist.</p>
 
         <h2>Afspraak plannen via WhatsApp</h2>
@@ -779,7 +782,7 @@ def sitemap_en_llms():
 - KvK: {KVK}
 - Btw: {BTW}
 - Werkgebied: Barneveld, Voorthuizen, Kootwijkerbroek, Terschuur, Zwartebroek, Garderen, Stroe, De Glind, Lunteren
-- Vervangend vervoer: elektrische Renault 5 (particulier), VW Caddy (zakelijk), leenfiets, haal- en brengservice in Barneveld en Voorthuizen; station op vijf minuten lopen
+- Vervangend vervoer: elektrische Renault 5 (particulier), VW Caddy (zakelijk), leenfiets; wachtruimte met koffie en wifi; station op vijf minuten lopen
 
 ## Diensten
 

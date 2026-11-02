@@ -157,7 +157,7 @@ h2.groot, h1.groot { font-family: var(--kop); font-weight: 400; font-size: clamp
 .optie p { margin: 0; font-size: 15px; }
 .optie.foto { padding: 0; overflow: hidden; border: 0; }
 .optie.foto img { width: 100%; height: 100%; object-fit: cover; min-height: 240px; }
-.extra { list-style: none; padding: 0; margin: 20px 0 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.extra { list-style: none; padding: 0; margin: 20px 0 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .extra li { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; background: #f4f6f9; padding: 18px; border-radius: 10px; }
 .extra svg { flex: none; color: var(--blauw); margin-top: 2px; }
 .extra strong { display: block; color: var(--grijs); }
@@ -276,7 +276,6 @@ textarea { min-height: 120px; resize: vertical; }
   .vertrouwen li:nth-child(n+3) { border-top: 1px solid var(--grijs-20); }
   .vervoer-raster { grid-template-columns: 1fr 1fr; }
   .optie.foto { grid-column: 1 / -1; max-height: 300px; }
-  .extra { grid-template-columns: 1fr 1fr; }
   .voet .wrap { grid-template-columns: 1fr 1fr; }
   .artikel { grid-template-columns: minmax(0, 1fr); }
   .zijkaart { position: static; max-width: 560px; }
