@@ -6,6 +6,7 @@
   'use strict';
 
   var WHATSAPP = '31342234003';
+  var MAIL = 'contact@autoservicebarneveld.nl';
 
   /* ---------- Menu op mobiel ---------- */
   var menuKnop = document.querySelector('.menu-knop');
@@ -121,7 +122,9 @@
 
   var formulier = venster.querySelector('form');
   var stapInvullen = venster.querySelector('.venster-invullen');
-  var stapKlaar = venster.querySelector('.venster-klaar');
+  var stapKlaar = venster.querySelector('.venster-klaar:not(.venster-klaar-mail)');
+  var stapKlaarMail = venster.querySelector('.venster-klaar-mail');
+  var mailMelding = venster.querySelector('.mail-melding');
   var linkOpnieuw = venster.querySelector('.wa-opnieuw');
   var velden = ['kenteken', 'kilometerstand', 'email', 'postcode', 'huisnummer'];
   function veld(naam) { return formulier.elements[naam]; }
@@ -129,6 +132,8 @@
   function open(waarden) {
     stapInvullen.hidden = false;
     stapKlaar.hidden = true;
+    stapKlaarMail.hidden = true;
+    mailMelding.hidden = true;
     if (waarden.onbekend) {
       kentekenOnbekend(formulier, true, false);
       veld('merk').value = waarden.merk || '';
@@ -388,56 +393,99 @@
   veld('postcode').addEventListener('input', function () { adresGevonden.hidden = true; adres = null; });
   veld('huisnummer').addEventListener('input', function () { adresGevonden.hidden = true; adres = null; });
 
+  // Welke knop is gebruikt: WhatsApp (standaard) of e-mail
+  var kanaal = 'whatsapp';
+  Array.prototype.forEach.call(formulier.querySelectorAll('[data-kanaal]'), function (knop) {
+    knop.addEventListener('click', function () { kanaal = knop.getAttribute('data-kanaal'); });
+  });
+
+  // De aanvraag als blokken met kopjes; daaruit maken we het WhatsApp-bericht of de e-mail
+  function aanvraag() {
+    var werk = gekozenDiensten();
+    if (!omschrijving.hidden && veld('omschrijving').value.trim()) {
+      werk.push('Omschrijving: ' + veld('omschrijving').value.trim().replace(/\s+/g, ' '));
+    }
+    var voertuig = kentekenBlok.hidden
+      ? ['Kenteken: onbekend', 'Merk en model: ' + veld('merk').value.trim() + ' ' + veld('model').value.trim()]
+      : ['Kenteken: ' + kentekenNetjes(veld('kenteken').value)];
+    var rdw = !kentekenBlok.hidden && veld('kenteken').rdw;
+    if (rdw) {
+      voertuig.push('Auto: ' + rdw.auto);
+      if (rdw.apk) voertuig.push('APK geldig tot: ' + rdw.apk);
+    }
+    voertuig.push('Kilometerstand: ' + (veld('kilometerstand').value ? 'ca. ' + veld('kilometerstand').value + ' km' : 'weet ik niet'));
+    var blokken = [
+      { kop: 'Werkzaamheden', regels: werk },
+      { kop: 'Voertuig', regels: voertuig },
+      { kop: 'Vervangend vervoer', regels: [veld('vervoer').checked ? keuzeVervoer() : 'Niet nodig'] }
+    ];
+    if (!datumKeuze.hidden) {
+      blokken.push({ kop: 'Voorkeursdata', regels: ['1e keuze: ' + mooiDatum(gekozen[0]), '2e keuze: ' + mooiDatum(gekozen[1])],
+        noot: 'Ik hoor graag welke datum u kunt bevestigen.' });
+    }
+    blokken.push({ kop: 'Contact', regels: [
+      'Adres: ' + (adres || (postcodeNet(veld('postcode').value).replace(/^(\d{4})/, '$1 ') + ', huisnummer ' + veld('huisnummer').value.trim())),
+      'E-mail: ' + veld('email').value.trim()
+    ] });
+    return blokken;
+  }
+
+  // WhatsApp-bericht: kopjes met ▸ en *vet*, regels met •.
+  // Geen emoji: de doorstuurpagina van WhatsApp maakt die kapot (�).
+  function whatsappTekst(blokken) {
+    var r = ['Hallo Autoservice Barneveld,', '', 'Graag maak ik een afspraak. Hieronder mijn gegevens.'];
+    blokken.forEach(function (b) {
+      r.push('', '▸ *' + b.kop + '*');
+      b.regels.forEach(function (t) { r.push('• ' + t); });
+      if (b.noot) r.push('_' + b.noot + '_');
+    });
+    r.push('', 'Met vriendelijke groet');
+    return r.join('\n');
+  }
+
+  function verstuurPerMail(blokken) {
+    var knop = formulier.querySelector('[data-kanaal="mail"]');
+    var data = {
+      _subject: 'Afspraakaanvraag via de website' +
+        (kentekenBlok.hidden ? '' : ' - ' + kentekenNetjes(veld('kenteken').value)),
+      _template: 'table',
+      _captcha: 'false',
+      email: veld('email').value.trim()
+    };
+    blokken.forEach(function (b) { data[b.kop] = b.regels.join(' | ') + (b.noot ? ' (' + b.noot + ')' : ''); });
+    knop.disabled = true;
+    knop.textContent = 'Bezig met versturen…';
+    mailMelding.hidden = true;
+    fetch('https://formsubmit.co/ajax/' + MAIL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
+    }).then(function (r) { return r.json(); }).then(function (antwoord) {
+      if (String(antwoord.success) !== 'true') throw new Error(antwoord.message);
+      stapInvullen.hidden = true;
+      stapKlaarMail.hidden = false;
+    }).catch(function () {
+      mailMelding.innerHTML = 'Versturen per e-mail is niet gelukt. Probeer WhatsApp of bel <a href="tel:+31342234003">0342-234003</a>.';
+      mailMelding.hidden = false;
+    }).then(function () {
+      knop.disabled = false;
+      knop.textContent = 'Geen WhatsApp? Verstuur per e-mail';
+    });
+  }
+
   formulier.addEventListener('submit', function (e) {
     e.preventDefault();
+    var gekozenKanaal = (e.submitter && e.submitter.getAttribute('data-kanaal')) || kanaal;
+    kanaal = 'whatsapp';
     if (!kentekenBlok.hidden) controleerKenteken(veld('kenteken'));
     controleerDiensten();
     controleerPostcode();
     if (!formulier.reportValidity() || !datumsOk()) return;
 
-    // WhatsApp-bericht: kopjes met ▸ en *vet*, regels met •.
-    // Geen emoji: de doorstuurpagina van WhatsApp maakt die kapot (�).
-    function kop(t) { return '▸ *' + t + '*'; }
-    function regel(t) { return '• ' + t; }
-    var werk = gekozenDiensten().map(regel);
-    if (!omschrijving.hidden && veld('omschrijving').value.trim()) {
-      werk.push(regel('Omschrijving: ' + veld('omschrijving').value.trim().replace(/\s+/g, ' ')));
-    }
-    var bericht = [
-      'Hallo Autoservice Barneveld,',
-      '',
-      'Graag maak ik een afspraak. Hieronder mijn gegevens.',
-      '',
-      kop('Werkzaamheden')
-    ].concat(werk, [
-      '',
-      kop('Voertuig'),
-      kentekenBlok.hidden
-        ? regel('Kenteken: onbekend') + '\n' + regel('Merk en model: ' + veld('merk').value.trim() + ' ' + veld('model').value.trim())
-        : [regel('Kenteken: ' + kentekenNetjes(veld('kenteken').value))].concat(
-            veld('kenteken').rdw ? [regel('Auto: ' + veld('kenteken').rdw.auto)].concat(
-              veld('kenteken').rdw.apk ? [regel('APK geldig tot: ' + veld('kenteken').rdw.apk)] : []) : []).join('\n'),
-      regel('Kilometerstand: ' + (veld('kilometerstand').value ? 'ca. ' + veld('kilometerstand').value + ' km' : 'weet ik niet')),
-      '',
-      kop('Vervangend vervoer'),
-      regel(veld('vervoer').checked ? keuzeVervoer() : 'Niet nodig')
-    ]);
-    if (!datumKeuze.hidden) {
-      bericht.push('',
-        kop('Voorkeursdata'),
-        regel('1e keuze: ' + mooiDatum(gekozen[0])),
-        regel('2e keuze: ' + mooiDatum(gekozen[1])),
-        '_Ik hoor graag welke datum u kunt bevestigen._');
-    }
-    bericht.push('',
-      kop('Contact'),
-      regel('Adres: ' + (adres || (postcodeNet(veld('postcode').value).replace(/^(\d{4})/, '$1 ') + ', huisnummer ' + veld('huisnummer').value.trim()))),
-      regel('E-mail: ' + veld('email').value.trim()),
-      '',
-      'Met vriendelijke groet');
-    bericht = bericht.join('\n');
-    var url = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(bericht);
+    var blokken = aanvraag();
+    if (gekozenKanaal === 'mail') { verstuurPerMail(blokken); return; }
 
+    var url = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(whatsappTekst(blokken));
     linkOpnieuw.href = url;
     stapInvullen.hidden = true;
     stapKlaar.hidden = false;

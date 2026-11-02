@@ -414,3 +414,11 @@ svg.blad { display: inline-block; flex: none; margin-top: 0; color: #2f9e5f; ver
 .rdw-info.verlopen { background: #fdecec; border-left-color: #c03030; }
 .rdw-info.verlopen span { color: #a12020; }
 .invoer:disabled { background: #f2f3f5; color: var(--grijs-60); }
+/* ---------- Planner: WhatsApp eerst, e-mail als alternatief ---------- */
+.kanaal-uitleg { margin: 8px 0 0; text-align: center; font-size: 13px; font-weight: 600; color: #1f7a45; }
+.mail-optie { margin: 6px 0 0; text-align: center; }
+.mail-optie .link-klein { font-size: 13px; color: var(--grijs-80); }
+.mail-optie .link-klein:hover { color: var(--blauw); }
+.mail-melding { margin: 10px 0 0; padding: 10px 12px; border-radius: 6px; background: #fdecec; color: #8a1c1c; font-size: 13px; font-weight: 600; }
+.mail-melding a { color: inherit; }
+.mail-melding[hidden] { display: none; }

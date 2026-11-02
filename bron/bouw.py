@@ -364,8 +364,11 @@ def venster(r):
           <p class="datum-haast">{I_TEL.format(s=18)}<span><strong>Haast of eerder geholpen worden?</strong> Bel even <a href="{TEL_LINK}">{TEL}</a>. U heeft dan direct contact met ons en we helpen u meteen verder.</span></p>
           <button type="button" class="datum-weg">Geen voorkeursdatum</button>
         </fieldset>
-        <button class="knop wa" type="submit">{I_WA} Verstuur via WhatsApp</button>
-        <p class="klein">Uw gegevens gaan alleen naar ons via WhatsApp. Zie de <a href="{r}privacy/">privacyverklaring</a>. Liever bellen? <a href="{TEL_LINK}">{TEL}</a></p>
+        <button class="knop wa" type="submit" data-kanaal="whatsapp">{I_WA} Verstuur via WhatsApp</button>
+        <p class="kanaal-uitleg">De snelste manier om uw afspraak te regelen.</p>
+        <p class="mail-optie"><button type="submit" class="link-klein" data-kanaal="mail">Geen WhatsApp? Verstuur per e-mail</button></p>
+        <p class="mail-melding" role="status" hidden></p>
+        <p class="klein">Uw gegevens gaan alleen naar ons. Zie de <a href="{r}privacy/">privacyverklaring</a>. Liever bellen? <a href="{TEL_LINK}">{TEL}</a></p>
       </form>
     </div>
     <div class="venster-klaar" hidden>
@@ -373,6 +376,12 @@ def venster(r):
       <h2>Bijna klaar</h2>
       <p class="uitleg">WhatsApp is geopend met uw aanvraag. Druk daar op <strong>verzenden</strong>, dan nemen wij zo snel mogelijk contact op om de afspraak vast te leggen.</p>
       <p class="klein">Opent WhatsApp niet? <a class="wa-opnieuw" href="{WA_LINK}">Probeer het opnieuw</a> of bel <a href="{TEL_LINK}">{TEL}</a>.</p>
+    </div>
+    <div class="venster-klaar venster-klaar-mail" hidden>
+      <svg width="56" height="56" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M7 12.5l3.2 3L17 9"/></g></svg>
+      <h2>Aanvraag verstuurd</h2>
+      <p class="uitleg">Uw aanvraag is per e-mail bij ons binnengekomen. Wij nemen zo snel mogelijk contact op om de afspraak vast te leggen.</p>
+      <p class="klein">Haast? Bel <a href="{TEL_LINK}">{TEL}</a>.</p>
     </div>
   </div>
 </dialog>"""
@@ -800,7 +809,7 @@ def privacy():
         <p>Bij een APK-keuring zijn we wettelijk verplicht de uitslag aan de RDW door te geven. Facturen bewaren we zolang de fiscale bewaarplicht dat vereist.</p>
 
         <h2>Afspraak plannen via WhatsApp</h2>
-        <p>Het afspraakformulier op deze website slaat niets op en verstuurt niets zelf. Het zet uw kenteken (of merk en model), de gekozen werkzaamheden, kilometerstand, adres, e-mailadres en eventuele voorkeursdata in een WhatsApp-bericht, dat u daarna zelf verstuurt. Voor dat bericht gelden ook de voorwaarden van WhatsApp (Meta). Om uw straat en woonplaats bij uw postcode en huisnummer te vinden, vraagt het formulier die op bij de Basisregistratie Adressen via PDOK (Kadaster). Bij een ingevuld kenteken haalt het formulier het merk, model en de APK-vervaldatum op uit de openbare gegevens van de RDW. Bij beide wordt niets opgeslagen.</p>
+        <p>Het afspraakformulier op deze website slaat niets op en verstuurt niets zelf. Het zet uw kenteken (of merk en model), de gekozen werkzaamheden, kilometerstand, adres, e-mailadres en eventuele voorkeursdata in een WhatsApp-bericht, dat u daarna zelf verstuurt. Voor dat bericht gelden ook de voorwaarden van WhatsApp (Meta). Kiest u voor versturen per e-mail, dan gaan dezelfde gegevens via FormSubmit (formsubmit.co) als e-mail naar ons. Om uw straat en woonplaats bij uw postcode en huisnummer te vinden, vraagt het formulier die op bij de Basisregistratie Adressen via PDOK (Kadaster). Bij een ingevuld kenteken haalt het formulier het merk, model en de APK-vervaldatum op uit de openbare gegevens van de RDW. Bij beide wordt niets opgeslagen.</p>
 
         <h2>Deze website</h2>
         <p>Deze website gebruikt geen cookies, geen analyse- of advertentiediensten en laadt geen externe lettertypes. De website wordt gehost via GitHub Pages; GitHub kan daarbij technische gegevens zoals uw IP-adres verwerken om de site te leveren en te beveiligen. De kaart op de contactpagina wordt geladen van OpenStreetMap.</p>
