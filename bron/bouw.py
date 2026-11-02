@@ -288,7 +288,7 @@ def venster(r):
     <div class="venster-invullen">
       <h2 id="venster-titel">Plan uw afspraak</h2>
       <p class="uitleg">Vul uw gegevens in. Daarna opent WhatsApp met uw aanvraag al klaar; u verstuurt hem zelf.</p>
-      <form method="dialog" novalidate>
+      <form method="dialog" novalidate data-verplicht>
         <div class="veld kenteken-blok">
           <label for="v-kenteken">Kenteken</label>
           {kenteken_veld("v-kenteken")}
@@ -541,14 +541,24 @@ def homepage():
       <form class="afspraak" id="afspraak-snel" action="contact/" method="get" aria-labelledby="afspraak-titel">
         <h2 id="afspraak-titel">Plan uw afspraak</h2>
         <p>In twee stappen geregeld via WhatsApp.</p>
-        <div class="veld">
+        <div class="veld kenteken-blok">
           <label for="kenteken">Kenteken</label>
           {kenteken_veld("kenteken", verplicht=False)}
+          <button type="button" class="link-klein kenteken-onbekend">Ik weet mijn kenteken niet</button>
         </div>
-        <div class="veld">
-          <label for="dienst">Wat mogen we voor u doen?</label>
-          {dienst_select("dienst")}
+        <div class="merk-model" hidden>
+          <div class="rij">
+            <div class="veld"><label for="merk">Merk</label><input class="invoer" id="merk" name="merk" autocomplete="off" placeholder="bijv. Volkswagen"></div>
+            <div class="veld"><label for="model">Model</label><input class="invoer" id="model" name="model" autocomplete="off" placeholder="bijv. Golf"></div>
+          </div>
+          <button type="button" class="link-klein kenteken-bekend">Toch kenteken invullen</button>
         </div>
+        <fieldset class="veld diensten-keuze">
+          <legend>Wat mogen we voor u doen? <small>Meerdere mogelijk</small></legend>
+          <div class="diensten-raster">
+{diensten_vinkjes()}
+          </div>
+        </fieldset>
         <button class="knop oranje" type="submit">Plan afspraak
           {I_PIJL}
         </button>

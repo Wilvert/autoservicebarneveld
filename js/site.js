@@ -40,6 +40,25 @@
     invoer.addEventListener('input', function () { controleerKenteken(invoer); });
   });
 
+  /* ---------- Kenteken onbekend: merk en model invullen ---------- */
+  function kentekenOnbekend(form, onbekend, focus) {
+    var blok = form.querySelector('.kenteken-blok'), mm = form.querySelector('.merk-model');
+    if (!blok || !mm) return;
+    var kenteken = form.elements.kenteken, merk = form.elements.merk, model = form.elements.model;
+    var verplicht = form.hasAttribute('data-verplicht');
+    blok.hidden = onbekend;
+    mm.hidden = !onbekend;
+    kenteken.required = verplicht && !onbekend;
+    merk.required = model.required = verplicht && onbekend;
+    if (onbekend) { kenteken.value = ''; kenteken.setCustomValidity(''); if (focus) merk.focus(); }
+    else { merk.value = ''; model.value = ''; if (focus) kenteken.focus(); }
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('form'), function (form) {
+    var aan = form.querySelector('.kenteken-onbekend'), uit = form.querySelector('.kenteken-bekend');
+    if (aan) aan.addEventListener('click', function () { kentekenOnbekend(form, true, true); });
+    if (uit) uit.addEventListener('click', function () { kentekenOnbekend(form, false, true); });
+  });
+
   /* ---------- Afspraakvenster ---------- */
   var venster = document.getElementById('afspraak-venster');
   if (!venster || typeof venster.showModal !== 'function') return;
@@ -54,9 +73,17 @@
   function open(waarden) {
     stapInvullen.hidden = false;
     stapKlaar.hidden = true;
-    if (waarden.kenteken) veld('kenteken').value = waarden.kenteken;
-    if (waarden.dienst) {
-      Array.prototype.forEach.call(dienstVinkjes, function (v) { if (v.value === waarden.dienst) v.checked = true; });
+    if (waarden.onbekend) {
+      kentekenOnbekend(formulier, true, false);
+      veld('merk').value = waarden.merk || '';
+      veld('model').value = waarden.model || '';
+    } else if (waarden.kenteken) {
+      kentekenOnbekend(formulier, false, false);
+      veld('kenteken').value = waarden.kenteken;
+    }
+    var diensten = waarden.diensten || (waarden.dienst ? [waarden.dienst] : []);
+    if (diensten.length) {
+      Array.prototype.forEach.call(dienstVinkjes, function (v) { v.checked = diensten.indexOf(v.value) !== -1; });
     }
     controleerKenteken(veld('kenteken'));
     zetOmschrijving();
@@ -70,7 +97,14 @@
   if (snel) {
     snel.addEventListener('submit', function (e) {
       e.preventDefault();
-      open({ kenteken: snel.elements.kenteken.value, dienst: snel.elements.dienst.value });
+      open({
+        onbekend: !snel.querySelector('.merk-model').hidden,
+        kenteken: snel.elements.kenteken.value,
+        merk: snel.elements.merk.value.trim(),
+        model: snel.elements.model.value.trim(),
+        diensten: Array.prototype.filter.call(snel.querySelectorAll('input[name="diensten"]'),
+          function (v) { return v.checked; }).map(function (v) { return v.value; })
+      });
     });
   }
 
@@ -240,20 +274,8 @@
     });
   });
 
-  // Kenteken onbekend: merk en model invullen
+  // Kenteken onbekend: zie kentekenOnbekend() bovenin
   var kentekenBlok = venster.querySelector('.kenteken-blok');
-  var merkModel = venster.querySelector('.merk-model');
-  function zetKentekenOnbekend(onbekend) {
-    kentekenBlok.hidden = onbekend;
-    merkModel.hidden = !onbekend;
-    veld('kenteken').required = !onbekend;
-    veld('merk').required = onbekend;
-    veld('model').required = onbekend;
-    if (onbekend) { veld('kenteken').value = ''; veld('kenteken').setCustomValidity(''); veld('merk').focus(); }
-    else { veld('merk').value = ''; veld('model').value = ''; veld('kenteken').focus(); }
-  }
-  venster.querySelector('.kenteken-onbekend').addEventListener('click', function () { zetKentekenOnbekend(true); });
-  venster.querySelector('.kenteken-bekend').addEventListener('click', function () { zetKentekenOnbekend(false); });
 
   // Adres: postcode + huisnummer; straat en plaats via PDOK (Basisregistratie Adressen)
   var adresGevonden = venster.querySelector('.adres-gevonden');

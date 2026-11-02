@@ -401,3 +401,6 @@ svg.blad { display: inline-block; flex: none; margin-top: 0; color: #2f9e5f; ver
 .adres-gevonden[hidden] { display: none; }
 @media (max-width: 480px) { .diensten-raster { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 600px) { .venster .rij.adres, .venster .merk-model .rij { grid-template-columns: 1fr 1fr; gap: 12px; } }
+.afspraak .diensten-raster { grid-template-columns: 1fr 1fr; }
+.afspraak .diensten-keuze { margin-bottom: 18px; }
+.afspraak .merk-model .rij { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
