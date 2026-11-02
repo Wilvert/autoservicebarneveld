@@ -166,8 +166,11 @@ h2.groot, h1.groot { font-family: var(--kop); font-weight: 400; font-size: clamp
 .review { padding: 0 0 96px; overflow: hidden; }
 .review .kopje { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; max-width: none; margin-bottom: 32px; }
 .review .kopje h2 { margin: 0; }
-.review-acties { display: flex; align-items: center; gap: 16px; }
+.review-acties { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 16px; }
 .review-alle { color: var(--blauw); font-weight: 700; font-size: 15px; }
+.review-schrijf { display: inline-flex; white-space: nowrap; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 6px; background: var(--blauw); color: var(--wit); font-weight: 700; font-size: 14px; text-decoration: none; }
+.review-schrijf:hover { background: var(--blauw-80); }
+.review-schrijf svg { width: 16px; height: 16px; color: var(--geel); }
 .review-pauze { width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--blauw-40); background: var(--wit); color: var(--blauw); cursor: pointer; display: grid; place-items: center; }
 .review-pauze[hidden] { display: none; }
 .review-pauze:hover { background: var(--blauw-20); }
@@ -415,9 +418,10 @@ svg.blad { display: inline-block; flex: none; margin-top: 0; color: #2f9e5f; ver
 .invoer:disabled { background: #f2f3f5; color: var(--grijs-60); }
 /* ---------- Planner: WhatsApp eerst, e-mail als alternatief ---------- */
 .kanaal-uitleg { margin: 8px 0 0; text-align: center; font-size: 13px; font-weight: 600; color: #1f7a45; }
-.mail-optie { margin: 6px 0 0; text-align: center; }
-.mail-optie .link-klein { font-size: 13px; color: var(--grijs-80); }
-.mail-optie .link-klein:hover { color: var(--blauw); }
+.mail-optie { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 12px 0 0; padding-top: 12px; border-top: 1px solid var(--grijs-20); font-size: 13px; color: var(--grijs-80); }
+.knop-mail { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border: 1.5px solid var(--blauw-40); border-radius: 6px; background: var(--wit); color: var(--blauw); font: 700 14px var(--tekst); cursor: pointer; }
+.knop-mail:hover { border-color: var(--blauw); background: #f4f8fc; }
+.knop-mail:disabled { opacity: .6; cursor: wait; }
 .mail-melding { margin: 10px 0 0; padding: 10px 12px; border-radius: 6px; background: #fdecec; color: #8a1c1c; font-size: 13px; font-weight: 600; }
 .mail-melding a { color: inherit; }
 .mail-melding[hidden] { display: none; }

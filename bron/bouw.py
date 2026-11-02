@@ -22,6 +22,7 @@ SITE = "https://www.autoservicebarneveld.nl"
 DATUM = "2026-11-01"
 
 TEL = "0342-234003"
+REVIEW_LINK = "https://g.page/r/CVfGuGQnGn8fEBM/review"  # Google: schrijf een review
 TEL_LINK = "tel:+31342234003"
 WA_LINK = "https://wa.me/31342234003"
 MAIL = "contact@autoservicebarneveld.nl"
@@ -370,7 +371,10 @@ def venster(r):
         </fieldset>
         <button class="knop wa" type="submit" data-kanaal="whatsapp">{I_WA} Verstuur via WhatsApp</button>
         <p class="kanaal-uitleg">De snelste manier om uw afspraak te regelen.</p>
-        <p class="mail-optie"><button type="submit" class="link-klein" data-kanaal="mail">Geen WhatsApp? Verstuur per e-mail</button></p>
+        <div class="mail-optie">
+          <span>Geen WhatsApp?</span>
+          <button type="submit" class="knop-mail" data-kanaal="mail"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M3 5h18v14H3zM3 6l9 7 9-7"/></svg><span>Verstuur per e-mail</span></button>
+        </div>
         <p class="mail-melding" role="status" hidden></p>
         <p class="klein">Uw gegevens gaan alleen naar ons. Zie de <a href="{r}privacy/">privacyverklaring</a>. Liever bellen? <a href="{TEL_LINK}">{TEL}</a></p>
       </form>
@@ -517,6 +521,7 @@ def review_sectie():
           <h2 class="groot" id="review-titel">Wat klanten zeggen</h2>
         </div>
         <div class="review-acties">
+          <a class="review-schrijf" href="{REVIEW_LINK}" rel="noopener">{I_STER}<span>Schrijf een review</span></a>
           <a class="review-alle" href="{google}" rel="noopener">Alle reviews op Google</a>
           <button type="button" class="review-pauze" aria-label="Reviews stilzetten" aria-pressed="false" hidden><svg class="ico-pauze" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg><svg class="ico-speel" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4l13 8-13 8z"/></svg></button>
         </div>

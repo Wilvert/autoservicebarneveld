@@ -459,7 +459,8 @@
     };
     blokken.forEach(function (b) { data[b.kop] = b.regels.join(' | ') + (b.noot ? ' (' + b.noot + ')' : ''); });
     knop.disabled = true;
-    knop.textContent = 'Bezig met versturen…';
+    var label = knop.querySelector('span');
+    label.textContent = 'Bezig met versturen…';
     mailMelding.hidden = true;
     fetch('https://formsubmit.co/ajax/' + MAIL, {
       method: 'POST',
@@ -474,7 +475,7 @@
       mailMelding.hidden = false;
     }).then(function () {
       knop.disabled = false;
-      knop.textContent = 'Geen WhatsApp? Verstuur per e-mail';
+      label.textContent = 'Verstuur per e-mail';
     });
   }
 
