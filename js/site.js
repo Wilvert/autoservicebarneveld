@@ -104,9 +104,52 @@
   }
   veld('vervoer').addEventListener('change', zetVervoer);
 
+  // Voorkeursdatum: twee data, minimaal twee weken vooruit, niet op zondag
+  var datumKnop = venster.querySelector('.datum-knop');
+  var datumKeuze = venster.querySelector('.datum-keuze');
+  var datums = [veld('datum1'), veld('datum2')];
+  function isoDatum(d) {
+    return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+  }
+  function leesDatum(v) { var p = v.split('-'); return new Date(+p[0], p[1] - 1, +p[2]); }
+  function mooiDatum(v) {
+    return leesDatum(v).toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  }
+  function controleerDatums() {
+    datums.forEach(function (d, i) {
+      var fout = '';
+      if (d.value && d.value < d.min) fout = 'Kies een datum vanaf ' + mooiDatum(d.min) + '.';
+      else if (d.value && leesDatum(d.value).getDay() === 0) fout = 'Op zondag zijn we gesloten. Kies een andere dag.';
+      else if (i === 1 && d.value && d.value === datums[0].value) fout = 'Kies twee verschillende data.';
+      d.setCustomValidity(fout);
+    });
+  }
+  function zetDatum(aan) {
+    datumKeuze.hidden = !aan;
+    datumKnop.hidden = aan;
+    datumKnop.setAttribute('aria-expanded', aan);
+    var min = new Date(); min.setDate(min.getDate() + 14);
+    datums.forEach(function (d) {
+      d.min = isoDatum(min);
+      d.required = aan;
+      if (!aan) { d.value = ''; d.setCustomValidity(''); }
+    });
+  }
+  datumKnop.addEventListener('click', function () {
+    zetDatum(true);
+    datums[0].focus();
+    try { datums[0].showPicker(); } catch (fout) { /* oudere browsers: gewoon focus */ }
+  });
+  venster.querySelector('.datum-weg').addEventListener('click', function () {
+    zetDatum(false);
+    datumKnop.focus();
+  });
+  datums.forEach(function (d) { d.addEventListener('input', controleerDatums); });
+
   formulier.addEventListener('submit', function (e) {
     e.preventDefault();
     controleerKenteken(veld('kenteken'));
+    controleerDatums();
     if (!formulier.reportValidity()) return;
 
     var bericht = [
@@ -119,7 +162,12 @@
       'Kilometerstand: ' + veld('kilometerstand').value + ' km',
       'Vervangend vervoer: ' + (veld('vervoer').checked ? keuzeVervoer() : 'Nee'),
       'E-mail: ' + veld('email').value.trim()
-    ].join('\n');
+    ];
+    if (!datumKeuze.hidden) {
+      bericht.push('', 'Voorkeursdata (nog geen afspraak, graag bevestigen):',
+        '1. ' + mooiDatum(veld('datum1').value), '2. ' + mooiDatum(veld('datum2').value));
+    }
+    bericht = bericht.join('\n');
     var url = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(bericht);
 
     linkOpnieuw.href = url;

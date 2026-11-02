@@ -344,3 +344,17 @@ textarea { min-height: 120px; resize: vertical; }
 .vervoer-keuze input:checked + span { border-color: var(--blauw); background: #f4f8fc; box-shadow: inset 0 0 0 1px var(--blauw); }
 .vervoer-keuze input:focus-visible + span { outline: 3px solid var(--oranje); outline-offset: 2px; }
 @media (max-width: 480px) { .vervoer-keuze { grid-template-columns: 1fr; } }
+
+/* ---------- Voorkeursdatum in de planner ---------- */
+.datum-knop { display: flex; align-items: center; gap: 12px; width: 100%; margin: 0 0 18px; padding: 12px 16px; border: 1.5px dashed var(--blauw-40); border-radius: 6px; background: var(--wit); color: var(--blauw); font: inherit; text-align: left; cursor: pointer; }
+.datum-knop:hover { background: #f4f8fc; border-color: var(--blauw); }
+.datum-knop[hidden] { display: none; }
+.datum-knop span { display: flex; flex-direction: column; gap: 2px; }
+.datum-knop strong { font-size: 14px; }
+.datum-knop small { font-size: 12px; color: var(--grijs-80); }
+.datum-keuze { margin: 0 0 18px; padding: 14px 16px 12px; border: 1.5px solid var(--blauw); border-radius: 6px; background: #f4f8fc; }
+.datum-keuze[hidden] { display: none; }
+.datum-keuze legend { padding: 0 6px; margin-left: -6px; font-size: 14px; font-weight: 700; color: var(--grijs); }
+.datum-keuze .veld { margin-bottom: 10px; }
+.datum-let-op { margin: 0 0 8px; padding: 10px 12px; border-left: 3px solid var(--oranje); background: var(--wit); border-radius: 4px; font-size: 13px; line-height: 1.45; }
+.datum-weg { padding: 0; border: 0; background: none; color: var(--blauw); font: 600 13px var(--tekst); text-decoration: underline; cursor: pointer; }

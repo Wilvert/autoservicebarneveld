@@ -86,7 +86,7 @@ DIENSTEN = [
      "Het reguliere onderhoud, banden, airco en APK van elektrische auto's van alle merken.",
      "Plan onderhoud"),
 ]
-DIENST_OPTIES = [d[1] for d in DIENSTEN]
+DIENST_OPTIES = [d[1] for d in DIENSTEN if d[0] != "elektrische-auto"] + ["Overig"]
 
 TEKST = {
 "apk-keuring": """
@@ -306,6 +306,16 @@ def venster(r):
           <label><input type="radio" name="vervoermiddel" value="Leenfiets"><span><strong>Leenfiets <svg class="blad" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20 3C10 3 4 8 4 15c0 1.6.4 3 1 4.2C7 14 11 10.5 16 8.5c-4 2.6-7.4 6.4-9.3 11.3 1.3.8 2.8 1.2 4.3 1.2C18 21 21 13 20 3z"/></svg><span class="sr-only"> (milieuvriendelijk)</span></strong><small>Gratis</small></span></label>
           <p class="vervoer-btw">Prijzen incl. btw.</p>
         </fieldset>
+        <button type="button" class="datum-knop" aria-expanded="false" aria-controls="v-datum-keuze"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></g></svg><span><strong>Voorkeursdatum opgeven</strong><small>Optioneel, vanaf twee weken vooruit</small></span></button>
+        <fieldset class="datum-keuze" id="v-datum-keuze" hidden>
+          <legend>Uw voorkeursdata</legend>
+          <div class="rij">
+            <div class="veld"><label for="v-datum1">1e voorkeur</label><input class="invoer" type="date" id="v-datum1" name="datum1"></div>
+            <div class="veld"><label for="v-datum2">2e voorkeur</label><input class="invoer" type="date" id="v-datum2" name="datum2"></div>
+          </div>
+          <p class="datum-let-op"><strong>Let op: dit is nog geen afspraak.</strong> Wij bekijken uw voorkeur en bevestigen de afspraak daarna.</p>
+          <button type="button" class="datum-weg">Geen voorkeursdatum</button>
+        </fieldset>
         <button class="knop wa" type="submit">{I_WA} Verstuur via WhatsApp</button>
         <p class="klein">Uw gegevens gaan alleen naar ons via WhatsApp. Zie de <a href="{r}privacy/">privacyverklaring</a>. Liever bellen? <a href="{TEL_LINK}">{TEL}</a></p>
       </form>
@@ -370,6 +380,8 @@ def pagina(r, pad, title, desc, actief, main, noindex=False):
 
 
 def zijkaart(r, dienst=""):
+    if dienst not in DIENST_OPTIES:
+        dienst = "Onderhoud & reparatie" if dienst == "Elektrische auto" else ""
     data = f' data-dienst="{e(dienst)}"' if dienst else ""
     return f"""<aside class="zijkaart" aria-labelledby="zijkaart-titel">
         <h2 id="zijkaart-titel">Plan uw afspraak</h2>
@@ -468,7 +480,7 @@ def homepage():
         lijst.append(f"""        <li class="dienst">
           <img src="img/{foto}.webp" alt="{e(alt)}" width="960" height="639" loading="lazy">
           <div><h3><a href="{slug}/">{e(naam)}</a></h3><p>{kort}</p><a class="meer" href="{slug}/">Meer over {e(naam.lower() if slug != 'apk-keuring' else 'de APK')}</a></div>
-          <a class="plan" href="contact/" data-afspraak data-dienst="{e(naam)}">{knop} <span aria-hidden="true">→</span></a>
+          <a class="plan" href="contact/" data-afspraak data-dienst="{e(naam if naam in DIENST_OPTIES else "Onderhoud & reparatie")}">{knop} <span aria-hidden="true">→</span></a>
         </li>""")
     diensten = "\n".join(lijst)
     main = f"""  <section class="hero" id="afspraak" aria-labelledby="hero-titel">
@@ -565,20 +577,20 @@ def vervoer_sectie(r, titel_h="h2", link=True):
 {kopje}      <div class="vervoer-raster">
         <article class="optie">
           <span class="ico" aria-hidden="true">{I_BLIKSEM.format(s=26)}</span>
-          <small>€ 34,70 per dag incl. btw</small>
+          <small>Voor particulieren</small>
           <h3>Elektrische Renault 5</h3>
           <p>Een moderne, duurzame en comfortabele leenauto waarmee u direct verder kunt rijden.</p>
         </article>
         <article class="optie">
           <span class="ico" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M8 7V5h8v2"/></g></svg></span>
-          <small>€ 23,60 per dag incl. btw</small>
+          <small>Voor zakelijke klanten</small>
           <h3>Volkswagen Caddy</h3>
-          <p>Praktisch en ruim, handig als u spullen moet vervoeren of uw werk door moet gaan.</p>
+          <p>Praktisch en ruim, ideaal voor ondernemers die hun werk niet kunnen onderbreken.</p>
         </article>
         <div class="optie foto"><img src="{r}img/hero-vervangend-vervoer.webp" alt="Leenauto van Autoservice Barneveld in de werkplaats" width="1848" height="1232" loading="lazy"></div>
       </div>
       <ul class="extra">
-        <li>{I_VINK}<span><strong>Leenfiets</strong>Gratis, voor korte ritten.</span></li>
+        <li>{I_VINK}<span><strong>Leenfiets</strong>Voor korte ritten.</span></li>
         <li>{I_VINK}<span><strong>Station op 5 minuten</strong>Lopen vanaf de garage.</span></li>
         <li>{I_VINK}<span><strong>Wachtruimte</strong>Met koffie en wifi, als u even wacht.</span></li>
       </ul>{verder}
@@ -693,9 +705,9 @@ def vervangend_vervoer():
   <section class="sectie zonder-boven">
     <div class="wrap artikel">
       <div class="tekst">
-        <h2>Voor iedereen, particulier of zakelijk</h2>
-        <p>Kies de elektrische Renault 5 (€ 34,70 per dag), de ruime Volkswagen Caddy (€ 23,60 per dag) of een gratis leenfiets. Prijzen zijn inclusief btw.</p>
-        <p>Geef bij het plannen van uw afspraak aan welke optie u wilt gebruiken.</p>
+        <h2>Voor particulieren en zakelijke klanten</h2>
+        <p>Particulieren rijden in onze elektrische Renault 5. Zakelijke klanten kunnen de Volkswagen Caddy gebruiken, zodat het werk gewoon door kan gaan.</p>
+        <p>Of u nu particulier of zakelijk klant bent, wij zorgen dat u mobiel blijft. Geef bij het plannen van uw afspraak aan welke optie u wilt gebruiken.</p>
       </div>
       {zijkaart(r)}
     </div>
@@ -789,7 +801,7 @@ def sitemap_en_llms():
 - KvK: {KVK}
 - Btw: {BTW}
 - Werkgebied: Barneveld, Voorthuizen, Kootwijkerbroek, Terschuur, Zwartebroek, Garderen, Stroe, De Glind, Lunteren
-- Vervangend vervoer: elektrische Renault 5 (€ 34,70 per dag), VW Caddy (€ 23,60 per dag), gratis leenfiets (prijzen incl. btw); wachtruimte met koffie en wifi; station op vijf minuten lopen
+- Vervangend vervoer: elektrische Renault 5 (particulier), VW Caddy (zakelijk), leenfiets; wachtruimte met koffie en wifi; station op vijf minuten lopen
 
 ## Diensten
 
