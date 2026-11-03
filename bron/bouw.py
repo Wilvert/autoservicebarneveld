@@ -428,12 +428,14 @@ def voet(r):
     <div>
       <h3>Contact</h3>
       <ul><li><a href="{TEL_LINK}">{TEL}</a></li><li><a href="{WA_LINK}">WhatsApp</a></li><li><a href="mailto:{MAIL}">{MAIL}</a></li><li><a href="{r}contact/" data-afspraak>Plan afspraak</a></li></ul>
+      <h3 class="voet-sub">Handig</h3>
+      <ul><li><a href="{r}apk-check/">APK-check</a></li><li><a href="{r}occasion-check/">Occasion-check</a></li><li><a href="{r}dashboardlampjes/">Dashboardlampjes</a></li><li><a href="{r}hulp/">Hulp bij klachten</a></li><li><a href="{r}handig/">Alle checks en uitleg</a></li></ul>
     </div>
     <div>
       <h3>Diensten</h3>
-      <ul>{diensten}<li><a href="{r}vervangend-vervoer/">Vervangend vervoer</a></li></ul>
+      <ul>{diensten}<li><a href="{r}aankoopkeuring/">Aankoopkeuring</a></li><li><a href="{r}vervangend-vervoer/">Vervangend vervoer</a></li></ul>
       <h3 class="voet-sub">Meer</h3>
-      <ul><li><a href="{r}apk-check/">APK-check</a></li><li><a href="{r}merken/">Alle merken</a></li><li><a href="{r}werkgebied/">Werkgebied</a></li><li><a href="{r}veelgestelde-vragen/">Veelgestelde vragen</a></li></ul>
+      <ul><li><a href="{r}merken/">Alle merken</a></li><li><a href="{r}werkgebied/">Werkgebied</a></li><li><a href="{r}veelgestelde-vragen/">Veelgestelde vragen</a></li></ul>
     </div>
     <p class="onder">© 2026 Autoservice Barneveld · KvK {KVK} · btw {BTW} · <a href="{r}privacy/">Privacyverklaring</a> · Volg ons: {profielen}</p>
   </div>
@@ -692,6 +694,8 @@ def homepage():
 
 {vervoer_sectie("")}
 
+{handig_sectie()}
+
 {review_sectie()}
 
 {contact_sectie("", kaart=False)}"""
@@ -776,17 +780,37 @@ def contact_sectie(r, kaart=True, titel="Neem vandaag nog contact op", h="h2"):
 
 
 # ------------------------------------------------------------------ subpagina's
+def tip(slug, kop, tekst):
+    return f'<p class="apk-tip"><a href="{{r}}{slug}/"><strong>{kop}</strong><span>{tekst}</span></a></p>\n\n'
+
+
+TIPS = {
+    "onderhoud-reparatie": tip("onderhoudswijzer", "Kleine of grote beurt?", "Zie met onze onderhoudswijzer wanneer uw volgende beurt komt."),
+    "diagnose": tip("dashboardlampjes", "Welk lampje brandt er?", "Zie per lampje wat het betekent en of u nog kunt doorrijden."),
+    "bandenservice": tip("winterbanden", "Al tijd voor winterbanden?", "Onze bandenmeter kijkt naar de temperatuur in Barneveld voor de komende dagen."),
+    "airco-service": tip("hulp/airco-koelt-niet", "Airco koelt niet of ruikt muf?", "Lees de meest voorkomende oorzaken."),
+    "elektrische-auto": tip("hulp/auto-start-niet", "Elektrische auto gaat niet aan?", "Vaak is de kleine 12V-accu leeg. Lees wat u kunt doen."),
+}
+
+
 def dienstpagina(d):
     slug, naam, title, desc, h1, foto, _alt, kort, _knop = d
     r = "../"
     andere = "\n".join(f'          <li><a href="{r}{s}/">{e(n)}</a></li>'
                        for s, n, *_ in DIENSTEN if s != slug)
+    schema = {"@context": "https://schema.org", "@graph": [
+        {"@type": "Service", "name": naam, "serviceType": naam, "description": desc, "url": f"{SITE}/{slug}/",
+         "areaServed": "Barneveld en omgeving",
+         "provider": {"@type": "AutoRepair", "name": "Autoservice Barneveld", "url": SITE, "telephone": TEL}},
+        {"@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/"},
+            {"@type": "ListItem", "position": 2, "name": naam, "item": f"{SITE}/{slug}/"}]}]}
     main = f"""{pagina_kop(r, h1, foto, "Dienst · alle merken", kort)}
 
   <section class="sectie">
     <div class="wrap artikel">
       <div class="tekst">
-{TEKST[slug].strip().format(r=r)}
+{TIPS.get(slug, "").format(r=r)}{TEKST[slug].strip().format(r=r)}
 
         <ul class="andere-diensten" aria-label="Andere diensten">
 {andere}
@@ -794,7 +818,10 @@ def dienstpagina(d):
       </div>
       {zijkaart(r, naam)}
     </div>
-  </section>"""
+  </section>
+  <script type="application/ld+json">
+{json.dumps(schema, ensure_ascii=False, indent=1)}
+  </script>"""
     schrijf(f"{slug}/index.html", pagina(r, f"{slug}/", title, desc, None, main))
 
 
@@ -881,7 +908,7 @@ def privacy():
 
         <h2>Afspraak plannen via WhatsApp</h2>
         <p>Het afspraakformulier op deze website slaat niets op. Het zet uw kenteken (of merk en model), de gekozen werkzaamheden, eventueel uw overleggrens, kilometerstand, adres, e-mailadres en eventuele voorkeursdata in een WhatsApp-bericht, dat u daarna zelf verstuurt. Voor dat bericht gelden ook de voorwaarden van WhatsApp (Meta). Kiest u voor versturen per e-mail, dan gaan dezelfde gegevens via FormSubmit (formsubmit.co) als e-mail naar ons. Om uw straat en woonplaats bij uw postcode en huisnummer te vinden, vraagt het formulier die op bij de Basisregistratie Adressen via PDOK (Kadaster). Bij een ingevuld kenteken haalt het formulier het merk, model en de APK-vervaldatum op uit de openbare gegevens van de RDW. Bij beide wordt niets opgeslagen.</p>
-        <p>De <a href="{r}apk-check/">APK-check</a> werkt op dezelfde manier: uw browser vraagt de openbare voertuiggegevens rechtstreeks op bij de RDW. Wij zien en bewaren het kenteken niet.</p>
+        <p>De kenteken-checks op deze website (zoals de <a href="{r}apk-check/">APK-check</a> en de <a href="{r}occasion-check/">occasion-check</a>) werken op dezelfde manier: uw browser vraagt de openbare voertuiggegevens rechtstreeks op bij de RDW. Wij zien en bewaren het kenteken niet. De <a href="{r}winterbanden/">winterbandenmeter</a> haalt de weersverwachting voor Barneveld op bij Open-Meteo. Daarbij gaan alleen technische gegevens mee, zoals uw IP-adres, die nodig zijn om de verwachting te leveren.</p>
 
         <h2>Deze website</h2>
         <p>Deze website gebruikt geen cookies, geen analyse- of advertentiediensten en laadt geen externe lettertypes. De website wordt gehost via GitHub Pages; GitHub kan daarbij technische gegevens zoals uw IP-adres verwerken om de site te leveren en te beveiligen. De kaart op de contactpagina wordt geladen van OpenStreetMap.</p>
@@ -1688,8 +1715,67 @@ def hulp_overzicht():
                 inhoud, (), None, "Reparatie", naam="Wat is er met mijn auto?")
 
 
+HANDIG = [
+    ("Kenteken-checks", "Gratis, rechtstreeks uit de openbare gegevens van de RDW.", [
+        ("apk-check", "APK-check", "Tot wanneer is uw APK geldig, en vanaf wanneer kunt u keuren?"),
+        ("occasion-check", "Occasion-check", "APK-historie, gemelde gebreken en tellerstand van een tweedehands auto."),
+        ("kentekencheck", "Kentekencheck", "Alle openbare gegevens van een auto op een rij."),
+        ("terugroepactie-check", "Terugroepactie-check", "Staat er een terugroepactie open voor uw auto?"),
+        ("trekgewicht-check", "Trekgewicht-check", "Hoeveel mag uw auto trekken met caravan of aanhanger?"),
+    ]),
+    ("Banden", "", [
+        ("winterbanden", "Winterbandenmeter", "Is het al tijd voor winterbanden in Barneveld?"),
+        ("bandencheck", "Bandencheck", "Bandenmaat, leeftijd en profiel uitgelegd."),
+    ]),
+    ("Onderhoud en storingen", "", [
+        ("onderhoudswijzer", "Onderhoudswijzer", "Wanneer komt uw volgende beurt, klein of groot?"),
+        ("dashboardlampjes", "Dashboardlampjes", "Wat betekent dit lampje, en kunt u nog doorrijden?"),
+        ("hulp", "Wat is er met mijn auto?", "Piepende remmen, een trillend stuur, rook uit de uitlaat en meer."),
+        ("aankoopkeuring", "Aankoopkeuring", "Een tweedehands auto vóór de koop laten nakijken."),
+    ]),
+]
+
+
+def handig():
+    blokken = []
+    for kop, sub, items in HANDIG:
+        lijst = "\n".join(f'          <li><a href="{{r}}{slug}/">{e(n)}</a><span>{e(u)}</span></li>' for slug, n, u in items)
+        subp = f"\n        <p>{sub}</p>" if sub else ""
+        blokken.append(f'        <h2>{kop}</h2>{subp}\n        <ul class="check-links">\n{lijst}\n        </ul>')
+    inhoud = ("        <p>Even zelf iets nakijken? Hier vindt u al onze gratis checks en uitleg op één plek. "
+              "Komt u er niet uit, of wilt u het zeker weten? Bel of app ons gerust.</p>\n\n" + "\n\n".join(blokken))
+    tool_pagina("handig", "Handige checks en uitleg voor uw auto | Autoservice Barneveld",
+                "Gratis APK-check, occasion-check, kentekencheck, winterbandenmeter, onderhoudswijzer en uitleg over dashboardlampjes en klachten. Van uw garage in Barneveld.",
+                "Handige checks en uitleg", "dienst-diagnose", "Handig",
+                "Gratis checks en heldere uitleg over uw auto, op één plek.",
+                inhoud, (), None, "", naam="Handige checks en uitleg")
+
+
+def handig_sectie():
+    keuze = [("apk-check", "APK-check", "Hoe lang is uw APK nog geldig?"),
+             ("occasion-check", "Occasion-check", "Wat is er bekend over een tweedehands auto?"),
+             ("dashboardlampjes", "Dashboardlampjes", "Wat betekent dit lampje?"),
+             ("winterbanden", "Winterbandenmeter", "Al tijd voor winterbanden?")]
+    lijst = "\n".join(f'        <li><a href="{slug}/">{e(n)}</a><span>{e(u)}</span></li>' for slug, n, u in keuze)
+    return f"""  <section class="sectie handig-sectie" aria-labelledby="handig-titel">
+    <div class="wrap">
+      <div class="kopje">
+        <span class="label">Handig</span>
+        <h2 class="groot" id="handig-titel">Even zelf checken</h2>
+        <p>Gratis checks en heldere uitleg, voor als u even iets wilt nakijken.</p>
+      </div>
+      <ul class="check-links handig-raster">
+{lijst}
+      </ul>
+      <p><a class="verder" href="handig/">Alle checks en uitleg <span aria-hidden="true">→</span></a></p>
+    </div>
+  </section>"""
+
+
 def sitemap_en_llms():
-    paden = ["", *[d[0] + "/" for d in DIENSTEN], "apk-check/", "vervangend-vervoer/", "merken/", "werkgebied/", "veelgestelde-vragen/", "over-ons/", "contact/", "privacy/"]
+    paden = ["", *[d[0] + "/" for d in DIENSTEN], "aankoopkeuring/", "apk-check/", "occasion-check/", "kentekencheck/", "terugroepactie-check/", "trekgewicht-check/",
+             "winterbanden/", "bandencheck/", "onderhoudswijzer/", "dashboardlampjes/", "hulp/", *[f"hulp/{k[0]}/" for k in KLACHTEN],
+             "handig/", "vervangend-vervoer/", "merken/", "werkgebied/", "veelgestelde-vragen/", "over-ons/", "contact/", "privacy/"]
     schrijf("sitemap.xml",
             '<?xml version="1.0" encoding="UTF-8"?>\n'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -1717,7 +1803,20 @@ def sitemap_en_llms():
 
 ## Meer
 
+- [Aankoopkeuring]({SITE}/aankoopkeuring/): tweedehands auto vóór de koop laten nakijken.
+
+## Gratis checks en uitleg
+
 - [APK-check]({SITE}/apk-check/): vul een kenteken in en zie tot wanneer de APK geldig is, vanaf wanneer keuren met behoud van de vervaldatum kan, en de openbare RDW-gegevens van de auto.
+- [Occasion-check]({SITE}/occasion-check/): APK-datum, gemelde gebreken en adviespunten bij eerdere APK-keuringen, tellerstandoordeel, import en terugroepacties per kenteken.
+- [Kentekencheck]({SITE}/kentekencheck/): openbare RDW-gegevens van een auto.
+- [Terugroepactie-check]({SITE}/terugroepactie-check/): staat er een terugroepactie open?
+- [Trekgewicht-check]({SITE}/trekgewicht-check/): geremd en ongeremd trekgewicht, met uitleg over rijbewijs B, code 96 en BE.
+- [Winterbandenmeter]({SITE}/winterbanden/): 7-gradenregel op basis van de weersverwachting voor Barneveld.
+- [Bandencheck]({SITE}/bandencheck/): bandenmaat en DOT-code uitgelegd, profieldiepte en bandenlabel.
+- [Onderhoudswijzer]({SITE}/onderhoudswijzer/): kleine of grote beurt, en wanneer.
+- [Dashboardlampjes]({SITE}/dashboardlampjes/): betekenis van storingslampjes per kleur en wat te doen.
+- [Wat is er met mijn auto?]({SITE}/hulp/): uitleg bij veelvoorkomende klachten.
 - [Vervangend vervoer]({SITE}/vervangend-vervoer/)
 - [Alle merken]({SITE}/merken/)
 - [Werkgebied]({SITE}/werkgebied/)
@@ -1753,4 +1852,5 @@ if __name__ == "__main__":
     hulp_overzicht()
     for k in KLACHTEN:
         klachtpagina(k)
+    handig()
     sitemap_en_llms()

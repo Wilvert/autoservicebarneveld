@@ -1,0 +1,20 @@
+# Meldt bij elke wijziging alle pagina's aan bij IndexNow (Bing, Yandex en anderen),
+# zodat nieuwe en gewijzigde pagina's snel worden opgepikt.
+name: IndexNow
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['README.md', '.github/**']
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Wachten tot GitHub Pages bijgewerkt is
+        run: sleep 120
+      - name: Pagina's aanmelden
+        run: |
+          URLS=$(grep -o '<loc>[^<]*</loc>' sitemap.xml | sed -e 's/<loc>//' -e 's/<\/loc>//' | python3 -c 'import sys,json;print(json.dumps([l.strip() for l in sys.stdin if l.strip()]))')
+          curl -sS -o /dev/null -w "IndexNow: %{http_code}\n" -X POST https://api.indexnow.org/indexnow \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            -d "{\"host\":\"www.autoservicebarneveld.nl\",\"key\":\"f982f1dc673c4ffdbdc60bb4257ecd8a\",\"keyLocation\":\"https://www.autoservicebarneveld.nl/f982f1dc673c4ffdbdc60bb4257ecd8a.txt\",\"urlList\":$URLS}"
