@@ -82,6 +82,8 @@ section { scroll-margin-top: 84px; }
 .hero-bel { display: inline-flex; align-items: center; gap: 12px; margin-top: 10px; color: var(--wit); text-decoration: none; font-weight: 700; font-size: 18px; }
 .hero-bel span { width: 44px; height: 44px; border-radius: 50%; border: 2px solid #ffffff80; display: grid; place-items: center; }
 .hero-bel:hover span { background: #ffffff26; }
+.hero-tekst .hero-bel-noot { margin: 8px 0 0 56px; max-width: 420px; font-size: 14px; line-height: 1.5; color: #ffffffcc; }
+@media (max-width: 600px) { .hero-tekst .hero-bel-noot { margin-left: 0; } }
 
 .afspraak { background: var(--wit); color: var(--grijs); border-radius: 12px; padding: 30px 30px 26px; box-shadow: 0 24px 60px #0e1c2c59; }
 .afspraak h2 { font-family: var(--kop); font-weight: 400; font-size: 36px; letter-spacing: .02em; color: var(--blauw); margin-bottom: 4px; }

@@ -558,6 +558,7 @@ def homepage():
         <h1 id="hero-titel">Vakkundig onderhoud voor uw auto in Barneveld</h1>
         <p>Onderhoud, reparatie, APK, diagnose, banden, uitlijnen en airco. Vul uw kenteken in, kies een dienst en verstuur uw aanvraag via WhatsApp.</p>
         <a class="hero-bel" href="{TEL_LINK}"><span aria-hidden="true">{I_TEL.format(s=20)}</span>Liever bellen? {TEL}</a>
+        <p class="hero-bel-noot">Geen keuzemenu, geen wachtmuziek en geen receptie: u heeft meteen de monteur zelf aan de lijn.</p>
       </div>
 
       <form class="afspraak" id="afspraak-snel" action="contact/" method="get" aria-labelledby="afspraak-titel">
