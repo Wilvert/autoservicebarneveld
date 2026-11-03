@@ -828,6 +828,52 @@ TIPS = {
 }
 
 
+DIENST_VRAGEN = {
+    "apk-keuring": [
+        ("Hoe lang van tevoren kan ik mijn auto laten keuren?",
+         "Tot twee maanden vóór de vervaldatum, zonder dat u er tijd mee verliest: de nieuwe datum wordt gerekend vanaf de oude. Uw datum ziet u met de <a href=\"{r}apk-check/\">APK-check</a>."),
+        ("Wat gebeurt er als mijn auto wordt afgekeurd?",
+         "Dan hoort u van ons welke punten hersteld moeten worden. Valt het herstel binnen het bedrag dat u bij uw afspraak heeft opgegeven, dan gaan we door; anders overleggen we eerst met u."),
+        ("Moet een elektrische auto ook APK?",
+         "Ja. Ook elektrische auto's zijn APK-plichtig, en wij keuren ze net zo goed als auto's op benzine of diesel."),
+    ],
+    "onderhoud-reparatie": [
+        ("Wat is het verschil tussen een kleine en een grote beurt?",
+         "Bij een kleine beurt verversen we olie en oliefilter en controleren we de belangrijkste onderdelen. Bij een grote beurt vervangen we ook filters zoals het lucht- en interieurfilter. Met de <a href=\"{r}onderhoudswijzer/\">onderhoudswijzer</a> ziet u wanneer uw volgende beurt komt."),
+        ("Blijft mijn fabrieksgarantie geldig?",
+         "Ja. Wordt het onderhoud volgens de voorschriften van de fabrikant uitgevoerd, dan blijft uw garantie gewoon geldig. U hoeft daarvoor niet naar de dealer."),
+        ("Hoor ik het als er tijdens het werk iets extra's nodig is?",
+         "Ja. Valt het boven het bedrag dat u heeft opgegeven, dan overleggen we eerst met u, meestal via WhatsApp met een foto of korte toelichting."),
+    ],
+    "diagnose": [
+        ("Er brandt een oranje motorlampje. Wat nu?",
+         "Brandt het continu, laat de auto dan binnenkort uitlezen. Knippert het, rijd dan rustig en laat hem direct nakijken. Meer lampjes vindt u bij <a href=\"{r}dashboardlampjes/\">dashboardlampjes</a>."),
+        ("Kunnen jullie ook elektrische auto's uitlezen?",
+         "Ja. Onze diagnoseapparatuur is geschikt voor alle merken, ook voor elektrische en hybride auto's."),
+    ],
+    "bandenservice": [
+        ("Wanneer moet ik winterbanden laten monteren?",
+         "Als de temperatuur structureel onder de 7 °C zakt. Onze <a href=\"{r}winterbanden/\">winterbandenmeter</a> kijkt naar de verwachting voor Barneveld."),
+        ("Hoeveel profiel moet er minimaal op mijn banden?",
+         "Wettelijk 1,6 mm. Wij adviseren minimaal 3 mm voor zomerbanden en 4 mm voor winter- en all-season banden. Zie ook de <a href=\"{r}bandencheck/\">bandencheck</a>."),
+        ("Wanneer moet mijn auto worden uitgelijnd?",
+         "Als de auto naar één kant trekt, het stuur scheef staat of de banden ongelijk slijten, en na een flinke klap tegen een stoeprand."),
+    ],
+    "airco-service": [
+        ("Hoe vaak moet de airco worden gecontroleerd?",
+         "Als vuistregel eens per twee jaar, en eerder als hij minder goed koelt, muf ruikt of als uw ruiten snel beslaan."),
+        ("Waarom ruikt mijn airco muf?",
+         "Meestal door bacteriën en schimmel in het systeem of een vervuild interieurfilter. Reinigen en het filter vervangen helpt. Lees meer bij <a href=\"{r}hulp/airco-koelt-niet/\">airco koelt niet of ruikt muf</a>."),
+    ],
+    "elektrische-auto": [
+        ("Hoe vaak heeft een elektrische auto onderhoud nodig?",
+         "Als vuistregel eens per jaar een controlebeurt, met aandacht voor remmen, banden, ophanging, remvloeistof, airco en de 12V-accu."),
+        ("Moet ik voor onderhoud naar de dealer om mijn garantie te houden?",
+         "Nee. Wordt het onderhoud volgens de voorschriften van de fabrikant uitgevoerd, dan blijft uw garantie geldig."),
+    ],
+}
+
+
 def dienstpagina(d):
     slug, naam, title, desc, h1, foto, _alt, kort, _knop = d
     r = "../"
@@ -840,12 +886,19 @@ def dienstpagina(d):
         {"@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/"},
             {"@type": "ListItem", "position": 2, "name": naam, "item": f"{SITE}/{slug}/"}]}]}
+    if slug in DIENST_VRAGEN:
+        import re as _re
+        schema["@graph"].append({"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": v, "acceptedAnswer": {"@type": "Answer", "text": _re.sub(r"<[^>]+>", "", a)}}
+            for v, a in DIENST_VRAGEN[slug]]})
     main = f"""{pagina_kop(r, h1, foto, "Dienst · alle merken", kort)}
 
   <section class="sectie">
     <div class="wrap artikel">
       <div class="tekst">
 {TIPS.get(slug, "").format(r=r)}{TEKST[slug].strip().format(r=r)}
+
+{vragen_blok([(v, a.replace("{r}", r)) for v, a in DIENST_VRAGEN.get(slug, [])]) if slug in DIENST_VRAGEN else ""}
 
         <ul class="andere-diensten" aria-label="Andere diensten">
 {andere}
@@ -1010,7 +1063,11 @@ VRAGEN = [
     ("Doen jullie ook elektrische auto's?",
      "Ja. Ook een elektrische auto heeft onderhoud nodig: banden, remmen, ophanging, airco en APK. Lees meer over <a href=\"{r}elektrische-auto/\">onderhoud van elektrische auto's</a>."),
     ("Wanneer verloopt mijn APK?",
-     "Vul uw kenteken in bij Plan afspraak; we tonen dan direct de APK-vervaldatum uit de gegevens van de RDW. U kunt de keuring tot twee maanden vóór die datum laten doen zonder dat u er tijd mee verliest."),
+     "Dat ziet u direct met onze gratis <a href=\"{r}apk-check/\">APK-check</a>: vul uw kenteken in en u ziet de vervaldatum uit de gegevens van de RDW. U kunt de keuring tot twee maanden vóór die datum laten doen zonder dat u er tijd mee verliest."),
+    ("Er brandt een lampje op mijn dashboard. Kan ik doorrijden?",
+     "Dat hangt af van de kleur. Bij rood is direct actie nodig, bij oranje laat u de auto binnenkort nakijken. Per lampje leest u het in onze uitleg over <a href=\"{r}dashboardlampjes/\">dashboardlampjes</a>. Twijfelt u, bel ons dan even: {tel}."),
+    ("Doen jullie ook aankoopkeuringen?",
+     "Ja. Wij kijken een tweedehands auto vóór de koop onafhankelijk na en vertellen u eerlijk wat we zien. Lees meer over de <a href=\"{r}aankoopkeuring/\">aankoopkeuring</a>, of check eerst zelf de APK-historie met de <a href=\"{r}occasion-check/\">occasion-check</a>."),
     ("Hoe weet ik wat het gaat kosten?",
      "U geeft bij het plannen van uw afspraak aan tot welk bedrag we mogen doorwerken. Wordt het duurder, of komen we iets onverwachts tegen, dan overleggen we eerst met u, meestal via WhatsApp met een foto of korte toelichting."),
     ("Kan ik wachten terwijl mijn auto wordt gemaakt?",
@@ -1070,6 +1127,9 @@ def werkgebied():
 
         <h2>Altijd mobiel</h2>
         <p>Moet uw auto langer bij ons blijven? Dan rijdt u verder in een elektrische Renault 5 of een Volkswagen Caddy, of pakt u een leenfiets. Wachten kan ook, met koffie en wifi. Zie <a href="{r}vervangend-vervoer/">vervangend vervoer</a>.</p>
+
+        <h2>Even zelf checken</h2>
+        <p>Met onze gratis <a href="{r}apk-check/">APK-check</a> ziet u direct tot wanneer uw APK geldig is. Meer checks en uitleg, zoals de <a href="{r}winterbanden/">winterbandenmeter</a> en de uitleg over <a href="{r}dashboardlampjes/">dashboardlampjes</a>, vindt u bij <a href="{r}handig/">handige checks</a>.</p>
       </div>
       {zijkaart(r)}
     </div>

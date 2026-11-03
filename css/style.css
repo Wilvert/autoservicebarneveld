@@ -637,3 +637,4 @@ p.banden-uitleg.banden-let-op { padding: 10px 12px; border-radius: 6px; backgrou
   .checks-menu, .apk-knop { margin-right: 0; }
 }
 .afspraak-voet a, .dienst .meer { display: inline-block; padding: 3px 0; }
+.apk-tip a span { font-weight: 400; font-size: 14px; }
