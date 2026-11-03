@@ -453,3 +453,16 @@ svg.blad { display: inline-block; flex: none; margin-top: 0; color: #2f9e5f; ver
 .euro-veld .invoer { padding-left: 32px; width: 100%; }
 .overleg-uitleg { font-size: 12px; line-height: 1.4; color: var(--grijs-80); }
 @media (max-width: 420px) { .overleg-rij { flex-direction: column; align-items: stretch; } .euro-veld { width: 100%; } }
+
+/* Waarom Autoservice Barneveld */
+.waarom-raster { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--grijs-20); border: 1px solid var(--grijs-20); border-radius: 12px; overflow: hidden; }
+.waarom-raster li { background: var(--wit); padding: 30px 28px 32px; }
+.waarom-raster .ico { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: #f4f6f9; color: var(--blauw); margin-bottom: 16px; }
+.waarom-raster h3 { font-size: 17px; line-height: 1.3; color: var(--blauw); margin: 0 0 8px; }
+.waarom-raster p { font-size: 15px; line-height: 1.6; margin: 0; }
+.waarom-raster a { color: var(--blauw); font-weight: 600; }
+.waarom-kortom { margin: 28px 0 0; font-size: 17px; }
+.waarom-kortom strong { color: var(--blauw); }
+@media (max-width: 900px) { .waarom-raster { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .waarom-raster { grid-template-columns: 1fr; } .waarom-raster li { padding: 24px 20px; } }
+.waarom { padding-top: 0; }

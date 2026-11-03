@@ -550,6 +550,49 @@ def review_sectie():
 
 
 # ------------------------------------------------------------------ homepage
+WAAROM = [
+    ("Korte lijnen",
+     "Wie u aan de telefoon of op WhatsApp spreekt, sleutelt ook aan uw auto. Uw vraag komt dus nooit via via bij de monteur terecht.",
+     '<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/>'),
+    ("Geen wachttijden",
+     "Geen keuzemenu, geen receptie en geen rij aan de balie. U belt of appt en krijgt direct antwoord van de vakman zelf.",
+     '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'),
+    ("Dezelfde mogelijkheden als de dealer",
+     "Ik werk met de officiële dealersoftware en technische gegevens van de fabrikant, en bestel originele onderdelen voor alle merken.",
+     '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>'),
+    ("Uw fabrieksgarantie blijft geldig",
+     'Onderhoud volgens de voorschriften van de fabrikant houdt uw garantie intact. Daarvoor hoeft u niet naar de dealer. <a href="merken/">Lees meer</a>',
+     '<path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>'),
+    ("Bijgeschoold en gecertificeerd",
+     "Auto's veranderen snel. Daarom volg ik regelmatig bijscholing en heb ik diverse aanvullende certificaten behaald.",
+     '<circle cx="12" cy="9" r="5"/><path d="M9 13.5 8 21l4-2 4 2-1-7.5"/>'),
+    ("Een eerlijk tarief",
+     "Geen personeel, geen receptie en geen showroom. Die lagere kosten ziet u terug in een scherp en eerlijk tarief.",
+     '<path d="M17 6.5A6.5 6.5 0 1 0 17 17.5M4 10h9M4 14h9"/>'),
+]
+
+
+def waarom_sectie():
+    items = "\n".join(f"""        <li>
+          <span class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">{ico}</g></svg></span>
+          <h3>{e(kop)}</h3>
+          <p>{tekst}</p>
+        </li>""" for kop, tekst, ico in WAAROM)
+    return f"""  <section class="sectie waarom" id="waarom" aria-labelledby="waarom-titel">
+    <div class="wrap">
+      <div class="kopje">
+        <span class="label">Waarom Autoservice Barneveld</span>
+        <h2 class="groot" id="waarom-titel">Dealerkwaliteit, zonder de omweg</h2>
+        <p>Bij een dealer of grote garage spreekt u vaak eerst een receptie of serviceadviseur, en de monteur ziet u zelden. Bij ons regelt u alles rechtstreeks met de monteur die ook aan uw auto werkt.</p>
+      </div>
+      <ul class="waarom-raster">
+{items}
+      </ul>
+      <p class="waarom-kortom"><strong>Kortom:</strong> u bespaart tijd, gedoe en geld, zonder in te leveren op kwaliteit.</p>
+    </div>
+  </section>"""
+
+
 def homepage():
     r = ""
     lijst = []
@@ -623,6 +666,8 @@ def homepage():
       <p class="ev">{I_BLIKSEM.format(s=24)}<span>Ook een elektrische auto heeft onderhoud nodig. Wij verzorgen het reguliere onderhoud, banden, airco en APK van elektrische auto's van alle merken. <a href="elektrische-auto/">Meer over elektrische auto's</a></span></p>
     </div>
   </section>
+
+{waarom_sectie()}
 
   <section class="sectie over" id="over-ons" aria-labelledby="over-titel">
     <div class="wrap">
@@ -767,7 +812,8 @@ def over_ons():
         <p>Transparantie staat centraal in mijn werkwijze. U geeft zelf aan tot welk bedrag we mogen doorwerken; wordt het duurder, dan overleggen we eerst. Ontdekken we tijdens het werk iets onverwachts? Dan houd ik u direct op de hoogte via WhatsApp, met foto's, korte filmpjes of een duidelijke toelichting.</p>
 
         <h2>Waarom klanten kiezen voor Autoservice Barneveld</h2>
-        <p>Klanten waarderen vooral de combinatie van deskundigheid, duidelijke communicatie en een nuchtere aanpak. Zo weet u zeker dat uw auto in goede handen is.</p>
+        <p>Klanten waarderen vooral de combinatie van deskundigheid, duidelijke communicatie en een nuchtere aanpak. Waar u bij een dealer of grote garage eerst langs een receptie of serviceadviseur gaat, spreekt u bij ons direct de monteur die ook aan uw auto werkt. Dat scheelt misverstanden en wachttijd.</p>
+        <p>Tegelijk biedt een zelfstandige garage dezelfde mogelijkheden als een dealer. Ik werk met de officiële dealersoftware en technische gegevens van de fabrikant, bestel originele onderdelen voor alle merken en houd mijn kennis bij met regelmatige bijscholing en aanvullende certificaten. Omdat ik geen personeel, receptie of showroom heb, zijn de kosten lager, en dat ziet u terug in een eerlijk tarief. Kortom: u bespaart tijd, gedoe en geld.</p>
 
         <ol class="stappen" aria-label="Zo werkt het">
           <li><strong>U plant een afspraak</strong><p>Online met uw kenteken via WhatsApp, of telefonisch.</p></li>
@@ -889,6 +935,8 @@ VRAGEN = [
      "Via de knop Plan afspraak op deze website. U vult uw kenteken (of merk en model), de werkzaamheden en uw gegevens in en verstuurt de aanvraag via WhatsApp of per e-mail. Bellen kan ook: {tel}."),
     ("Is een aanvraag via de website meteen een afspraak?",
      "Nee. U geeft uw voorkeur door en wij nemen contact op om de afspraak te bevestigen. Heeft u haast, bel dan {tel}."),
+    ("Wat is het verschil met een dealer?",
+     "U spreekt direct de monteur die aan uw auto werkt, zonder receptie of tussenpersoon. Ik werk met de officiële dealersoftware van de fabrikant en bestel originele onderdelen voor alle merken. Omdat er geen personeel of showroom is, zijn de kosten lager. Uw fabrieksgarantie blijft gewoon geldig."),
     ("Onderhouden jullie alle merken?",
      "Ja. Wij zijn een universele, zelfstandige garage en werken aan alle merken en modellen, ook aan elektrische en hybride auto's. Zie ook <a href=\"{r}merken/\">alle merken</a>."),
     ("Blijft mijn fabrieksgarantie geldig als ik bij jullie onderhoud laat doen?",
