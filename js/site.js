@@ -367,7 +367,7 @@
       .map(function (v) { return v.value; });
   }
   function controleerDiensten() {
-    dienstVinkjes[0].setCustomValidity(gekozenDiensten().length ? '' : 'Kies minimaal één onderdeel.');
+    dienstVinkjes[0].setCustomValidity(gekozenDiensten().length ? '' : 'Kies minimaal één optie.');
   }
   function omschrijvingNodig() {
     var g = gekozenDiensten();

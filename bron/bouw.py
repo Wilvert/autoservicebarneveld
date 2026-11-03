@@ -59,13 +59,13 @@ I_STER = '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><pa
 DIENSTEN = [
     ("onderhoud-reparatie", "Onderhoud & reparatie",
      "Onderhoud en reparatie Barneveld | Autoservice Barneveld",
-     "Kleine of grote beurt en reparaties voor alle merken in Barneveld. Kosten vooraf duidelijk en updates via WhatsApp. Bel 0342-234003.",
+     "Kleine of grote beurt en reparaties voor alle merken in Barneveld. U bepaalt wanneer we overleggen en krijgt updates via WhatsApp. Bel 0342-234003.",
      "Onderhoud en reparatie in Barneveld", "dienst-onderhoud", "Monteur aan het werk bij een wiel",
      "Grote of kleine onderhoudsbeurt, of het vervangen van een lampje: wij zorgen dat uw auto veilig, betrouwbaar en in topconditie blijft.",
      "Plan onderhoud"),
     ("apk-keuring", "APK-keuring",
      "APK-keuring Barneveld, alle merken | Autoservice Barneveld",
-     "RDW-erkende APK-keuring in Barneveld voor alle merken, ook elektrische auto's. Kosten vooraf duidelijk. Plan uw afspraak via WhatsApp.",
+     "RDW-erkende APK-keuring in Barneveld voor alle merken, ook elektrische auto's. Plan uw afspraak eenvoudig via WhatsApp.",
      "APK-keuring in Barneveld", "dienst-apk", "Auto op de brug tijdens een APK-keuring",
      "De verplichte keuring voor verkeersveiligheid en milieu, zorgvuldig uitgevoerd voor alle merken.",
      "Plan APK"),
@@ -82,7 +82,7 @@ DIENSTEN = [
      "Montage, balanceren, (seizoens)wissel en uitlijnen. Snel en vakkundig, voor alle merken, ook elektrische auto's.",
      "Plan banden"),
     ("airco-service", "Aircoservice",
-     "Airco-service auto in Barneveld | Autoservice Barneveld",
+     "Aircoservice auto in Barneveld | Autoservice Barneveld",
      "Auto-airco vullen, controleren, lekdetectie en reparatie voor alle merken in Barneveld. Koel in de zomer, heldere ruiten in de winter.",
      "Aircoservice voor uw auto", "dienst-airco", "Aircoservice onder de motorkap",
      "Vullen, controleren, lekdetectie en reparaties. Koel in de zomer en helder zicht in de winter.",
@@ -105,11 +105,11 @@ TEKST = {
 "apk-keuring": """
 <p>De APK (Algemene Periodieke Keuring) is verplicht en controleert of uw auto veilig en milieuvriendelijk genoeg is voor de weg. Autoservice Barneveld is door de RDW erkend en keurt auto's van alle merken, ook elektrische auto's. We voeren de keuring zorgvuldig uit, zodat u veilig en volgens de wettelijke eisen de weg op gaat.</p>
 
-<h2>Wanneer moet uw auto APK?</h2>
+<h2>Wanneer moet uw auto voor de APK?</h2>
 <p>De vervaldatum van uw APK ziet u bij de <a href="https://ovi.rdw.nl/">kentekencheck van de RDW</a>. U kunt de keuring tot twee maanden vóór die datum laten doen zonder dat u er tijd mee verliest: de nieuwe vervaldatum wordt dan gerekend vanaf de oude.</p>
 
 <h2>APK en onderhoud in één afspraak</h2>
-<p>Veel klanten combineren de APK met een kleine of grote <a href="{r}onderhoud-reparatie/">onderhoudsbeurt</a>. Dat scheelt een extra ritje naar de garage. Komt er tijdens de keuring iets naar boven dat vervangen moet worden? Dan bespreken we eerst de kosten met u, eventueel met een foto of filmpje via WhatsApp. Pas na uw akkoord gaan we aan de slag.</p>
+<p>Veel klanten combineren de APK met een kleine of grote <a href="{r}onderhoud-reparatie/">onderhoudsbeurt</a>. Dat scheelt een extra ritje naar de garage. Komt er tijdens de keuring iets naar boven dat vervangen moet worden? Valt dat boven het bedrag dat u bij uw afspraak heeft opgegeven, dan overleggen we eerst met u, eventueel met een foto of filmpje via WhatsApp.</p>
 
 <h2>Mobiel blijven</h2>
 <p>Moet uw auto wat langer blijven? U kunt gebruikmaken van ons <a href="{r}vervangend-vervoer/">vervangend vervoer</a>, zoals een elektrische leenauto of een leenfiets. Het station ligt op vijf minuten lopen.</p>
@@ -124,7 +124,7 @@ TEKST = {
 <p>Van remmen en ophanging tot uitlaat en elektronische storingen: onze werkplaats is uitgerust met moderne apparatuur, zodat we zowel regulier onderhoud als complexere reparaties kunnen uitvoeren. Heeft uw auto een storing? Lees meer over onze <a href="{r}diagnose/">diagnose</a>.</p>
 
 <h2>Geen verrassingen achteraf</h2>
-<p>U geeft zelf aan tot welk bedrag we mogen doorwerken. Wordt het duurder, dan overleggen we eerst met u. Ontdekken we tijdens het werk iets onverwachts, dan houden we u direct op de hoogte via WhatsApp, met foto's, korte filmpjes of een duidelijke toelichting. U weet dus altijd wie er aan uw auto werkt en wat er gaat gebeuren.</p>
+<p>U geeft zelf aan tot welk bedrag we mogen doorwerken. Wordt het duurder, dan overleggen we eerst met u. Ontdekken we tijdens het werk iets onverwachts, dan houden we u direct op de hoogte via WhatsApp, met foto's, korte filmpjes of een duidelijke toelichting. Zo weet u altijd wie er aan uw auto werkt en wat er gaat gebeuren.</p>
 
 <h2>Combineer met uw APK</h2>
 <p>Is uw <a href="{r}apk-keuring/">APK</a> bijna verlopen? Plan die dan tegelijk met uw onderhoudsbeurt in.</p>
@@ -158,13 +158,13 @@ TEKST = {
 <p>Laat uw auto in elk geval nakijken na een flinke klap tegen een stoeprand of door een diepe kuil, en na vervanging van onderdelen van de wielophanging of besturing. Goed uitgelijnde wielen zorgen voor een auto die recht en stabiel rijdt, banden die langer meegaan en een lager verbruik.</p>
 """,
 "airco-service": """
-<p>Voor een goed werkende airco bent u bij ons aan het juiste adres. Wij verzorgen het vullen, controleren, lekdetectie en reparaties van aircosystemen van alle merken. Zo blijft uw auto koel in de zomer en blijven uw ruiten helder in de winter.</p>
+<p>Voor een goed werkende airco bent u bij ons aan het juiste adres. Wij controleren en vullen aircosystemen van alle merken, sporen lekkages op en voeren reparaties uit. Zo blijft uw auto koel in de zomer en blijven uw ruiten helder in de winter.</p>
 
 <h2>Waarom aircoservice?</h2>
 <p>Een airco verliest ieder jaar een beetje koudemiddel. Koelt uw airco minder goed, ruikt het muf of beslaan uw ruiten snel? Dan is het tijd voor een controle. Een goed werkende airco droogt de lucht, waardoor uw ruiten in de winter sneller ontwasemen.</p>
 
 <h2>Wat we doen</h2>
-<p>We controleren het systeem, vullen het koudemiddel bij en sporen eventuele lekkages op. Is er een onderdeel defect, dan bespreken we de reparatie en de kosten eerst met u.</p>
+<p>We controleren het systeem, vullen het koudemiddel bij en sporen eventuele lekkages op. Is er een onderdeel defect, dan hoort u van ons wat er nodig is. Valt de reparatie boven het bedrag dat u heeft opgegeven, dan overleggen we eerst.</p>
 
 <h2>Combineer met onderhoud</h2>
 <p>Een aircoservice laat zich goed combineren met een <a href="{r}onderhoud-reparatie/">onderhoudsbeurt</a> of uw <a href="{r}apk-keuring/">APK</a>.</p>
@@ -179,7 +179,7 @@ TEKST = {
 <blockquote>"Autoservice Barneveld heeft onlangs de draagarmen van mijn Tesla vervangen. Tijdens de werkzaamheden hield Matthijs me goed op de hoogte. Het vervangend vervoer was perfect geregeld. Top service!"</blockquote>
 
 <h2>APK en diagnose</h2>
-<p>Ook een elektrische auto moet APK. Wij keuren alle merken, zie <a href="{r}apk-keuring/">APK-keuring</a>. Brandt er een storingslampje? Onze <a href="{r}diagnose/">diagnoseapparatuur</a> is ook geschikt voor elektrische auto's.</p>
+<p>Ook een elektrische auto is APK-plichtig. Wij keuren alle merken, zie <a href="{r}apk-keuring/">APK-keuring</a>. Brandt er een storingslampje? Onze <a href="{r}diagnose/">diagnoseapparatuur</a> is ook geschikt voor elektrische auto's.</p>
 
 <h2>Zelf ook elektrisch onderweg</h2>
 <p>Terwijl uw auto bij ons staat, kunt u rijden in onze elektrische Renault 5. Lees meer over ons <a href="{r}vervangend-vervoer/">vervangend vervoer</a>.</p>
@@ -298,7 +298,7 @@ def venster(r):
   <div class="venster-binnen">
     <div class="venster-invullen">
       <h2 id="venster-titel">Plan uw afspraak</h2>
-      <p class="uitleg">Vul uw gegevens in. Daarna opent WhatsApp met uw aanvraag al klaar; u verstuurt hem zelf.</p>
+      <p class="uitleg">Vul uw gegevens in. Daarna opent WhatsApp met uw aanvraag al klaar; u verstuurt hem zelf. Geen WhatsApp? Versturen per e-mail kan ook.</p>
       <form method="dialog" novalidate data-verplicht>
         <div class="veld kenteken-blok">
           <label for="v-kenteken">Kenteken</label>
@@ -378,7 +378,7 @@ def venster(r):
           <p class="datum-gekozen" aria-live="polite"></p>
           <input type="hidden" name="datum1"><input type="hidden" name="datum2">
           <p class="datum-let-op"><strong>Let op: dit is nog geen afspraak.</strong> Wij bekijken uw voorkeur en bevestigen de afspraak daarna.</p>
-          <p class="datum-haast">{I_TEL.format(s=18)}<span><strong>Haast of eerder geholpen worden?</strong> Bel even <a href="{TEL_LINK}">{TEL}</a>. U heeft dan direct contact met ons en we helpen u meteen verder.</span></p>
+          <p class="datum-haast">{I_TEL.format(s=18)}<span><strong>Haast, of wilt u eerder geholpen worden?</strong> Bel even <a href="{TEL_LINK}">{TEL}</a>. U heeft dan direct contact met ons en we helpen u meteen verder.</span></p>
           <button type="button" class="datum-weg">Geen voorkeursdatum</button>
         </fieldset>
         <button class="knop wa" type="submit" data-kanaal="whatsapp">{I_WA} Verstuur via WhatsApp</button>
@@ -463,7 +463,7 @@ def zijkaart(r, dienst=""):
     data = f' data-dienst="{e(dienst)}"' if dienst else ""
     return f"""<aside class="zijkaart" aria-labelledby="zijkaart-titel">
         <h2 id="zijkaart-titel">Plan uw afspraak</h2>
-        <p>Kenteken, kilometerstand en e-mail invullen, dan staat uw aanvraag klaar in WhatsApp.</p>
+        <p>Vul uw kenteken en gegevens in, dan staat uw aanvraag klaar in WhatsApp. Per e-mail kan ook.</p>
         <a class="knop oranje" href="{r}contact/" data-afspraak{data}>Plan afspraak {I_PIJL}</a>
         <ul>
           <li>Bel <a href="{TEL_LINK}">{TEL}</a></li>
@@ -746,7 +746,7 @@ def contact_sectie(r, kaart=True, titel="Neem vandaag nog contact op", h="h2"):
       <div>
         <span class="label">Contact</span>
         {kop_html}
-        <p>Heeft u vragen over onze diensten of wilt u een afspraak maken? Neem dan gelijk contact met ons op voor betrouwbare en professionele service.</p>
+        <p>Heeft u vragen over onze diensten of wilt u een afspraak maken? Neem dan direct contact met ons op voor betrouwbare en professionele service.</p>
         <ul class="contact-lijst">
           <li>{I_TEL.format(s=22)}<span><span class="sr-only">Telefoon: </span><a href="{TEL_LINK}">{TEL}</a></span></li>
           <li>{I_WA}<span><span class="sr-only">WhatsApp: </span><a href="{WA_LINK}">WhatsApp {TEL}</a></span></li>
@@ -806,10 +806,10 @@ def over_ons():
         <p>Bij Autoservice Barneveld draait alles om vakmanschap, transparantie en persoonlijk contact. Als zelfstandige monteur werk ik rechtstreeks met mijn klanten samen, zonder tussenpersonen of ingewikkelde processen. Zo weet u altijd precies wie er aan uw auto werkt en wat er gaat gebeuren.</p>
 
         <h2>Moderne werkplaats, alle merken</h2>
-        <p>Onze werkplaats is uitgerust met de nieuwste apparatuur en geschikt voor zowel regulier onderhoud als complexe diagnoses. Ik verzorg onderhoud en reparaties aan alle merken en modellen, inclusief het reguliere onderhoud van <a href="{r}elektrische-auto/">elektrische auto's</a>.</p>
+        <p>Mijn werkplaats is uitgerust met de nieuwste apparatuur en geschikt voor zowel regulier onderhoud als complexe diagnoses. Ik verzorg onderhoud en reparaties aan alle merken en modellen, inclusief het reguliere onderhoud van <a href="{r}elektrische-auto/">elektrische auto's</a>.</p>
 
         <h2>Heldere communicatie</h2>
-        <p>Transparantie staat centraal in mijn werkwijze. U geeft zelf aan tot welk bedrag we mogen doorwerken; wordt het duurder, dan overleggen we eerst. Ontdekken we tijdens het werk iets onverwachts? Dan houd ik u direct op de hoogte via WhatsApp, met foto's, korte filmpjes of een duidelijke toelichting.</p>
+        <p>Transparantie staat centraal in mijn werkwijze. U geeft zelf aan tot welk bedrag ik mag doorwerken; wordt het duurder, dan overleg ik eerst met u. Kom ik tijdens het werk iets onverwachts tegen? Dan houd ik u direct op de hoogte via WhatsApp, met foto's, korte filmpjes of een duidelijke toelichting.</p>
 
         <h2>Waarom klanten kiezen voor Autoservice Barneveld</h2>
         <p>Klanten waarderen vooral de combinatie van deskundigheid, duidelijke communicatie en een nuchtere aanpak. Waar u bij een dealer of grote garage eerst langs een receptie of serviceadviseur gaat, spreekt u bij ons direct de monteur die ook aan uw auto werkt. Dat scheelt misverstanden en wachttijd.</p>
@@ -827,7 +827,7 @@ def over_ons():
   </section>"""
     schrijf("over-ons/index.html", pagina(
         r, "over-ons/", "Over ons | Autoservice Barneveld",
-        "Autoservice Barneveld: zelfstandige monteur met moderne werkplaats. Vakmanschap, vooraf duidelijke kosten en updates via WhatsApp.",
+        "Autoservice Barneveld: zelfstandige monteur met moderne werkplaats. Vakmanschap, korte lijnen en updates via WhatsApp.",
         "over-ons", main))
 
 
@@ -842,7 +842,7 @@ def vervangend_vervoer():
       <div class="tekst">
         <h2>Voor particulieren en zakelijke klanten</h2>
         <p>Particulieren rijden in onze elektrische Renault 5. Zakelijke klanten kunnen de Volkswagen Caddy gebruiken, zodat het werk gewoon door kan gaan.</p>
-        <p>Of u nu particulier of zakelijk klant bent, wij zorgen dat u mobiel blijft. Geef bij het plannen van uw afspraak aan welke optie u wilt gebruiken.</p>
+        <p>Of u nu particulier bent of zakelijke klant, wij zorgen dat u mobiel blijft. Geef bij het plannen van uw afspraak aan welke optie u wilt gebruiken.</p>
       </div>
       {zijkaart(r)}
     </div>
@@ -877,7 +877,7 @@ def privacy():
         <p>Bij een APK-keuring zijn we wettelijk verplicht de uitslag aan de RDW door te geven. Facturen bewaren we zolang de fiscale bewaarplicht dat vereist.</p>
 
         <h2>Afspraak plannen via WhatsApp</h2>
-        <p>Het afspraakformulier op deze website slaat niets op en verstuurt niets zelf. Het zet uw kenteken (of merk en model), de gekozen werkzaamheden, eventueel uw overleggrens, kilometerstand, adres, e-mailadres en eventuele voorkeursdata in een WhatsApp-bericht, dat u daarna zelf verstuurt. Voor dat bericht gelden ook de voorwaarden van WhatsApp (Meta). Kiest u voor versturen per e-mail, dan gaan dezelfde gegevens via FormSubmit (formsubmit.co) als e-mail naar ons. Om uw straat en woonplaats bij uw postcode en huisnummer te vinden, vraagt het formulier die op bij de Basisregistratie Adressen via PDOK (Kadaster). Bij een ingevuld kenteken haalt het formulier het merk, model en de APK-vervaldatum op uit de openbare gegevens van de RDW. Bij beide wordt niets opgeslagen.</p>
+        <p>Het afspraakformulier op deze website slaat niets op. Het zet uw kenteken (of merk en model), de gekozen werkzaamheden, eventueel uw overleggrens, kilometerstand, adres, e-mailadres en eventuele voorkeursdata in een WhatsApp-bericht, dat u daarna zelf verstuurt. Voor dat bericht gelden ook de voorwaarden van WhatsApp (Meta). Kiest u voor versturen per e-mail, dan gaan dezelfde gegevens via FormSubmit (formsubmit.co) als e-mail naar ons. Om uw straat en woonplaats bij uw postcode en huisnummer te vinden, vraagt het formulier die op bij de Basisregistratie Adressen via PDOK (Kadaster). Bij een ingevuld kenteken haalt het formulier het merk, model en de APK-vervaldatum op uit de openbare gegevens van de RDW. Bij beide wordt niets opgeslagen.</p>
 
         <h2>Deze website</h2>
         <p>Deze website gebruikt geen cookies, geen analyse- of advertentiediensten en laadt geen externe lettertypes. De website wordt gehost via GitHub Pages; GitHub kan daarbij technische gegevens zoals uw IP-adres verwerken om de site te leveren en te beveiligen. De kaart op de contactpagina wordt geladen van OpenStreetMap.</p>
@@ -936,7 +936,7 @@ VRAGEN = [
     ("Is een aanvraag via de website meteen een afspraak?",
      "Nee. U geeft uw voorkeur door en wij nemen contact op om de afspraak te bevestigen. Heeft u haast, bel dan {tel}."),
     ("Wat is het verschil met een dealer?",
-     "U spreekt direct de monteur die aan uw auto werkt, zonder receptie of tussenpersoon. Ik heb toegang tot alle dealersoftware en de mogelijkheid om originele onderdelen te bestellen. Omdat er geen personeel of showroom is, zijn de kosten lager. Uw fabrieksgarantie blijft gewoon geldig."),
+     "U spreekt direct de monteur die aan uw auto werkt, zonder receptie of tussenpersoon. We hebben toegang tot alle dealersoftware en de mogelijkheid om originele onderdelen te bestellen. Omdat er geen personeel of showroom is, zijn de kosten lager. Uw fabrieksgarantie blijft gewoon geldig."),
     ("Onderhouden jullie alle merken?",
      "Ja. Wij zijn een universele, zelfstandige garage en werken aan alle merken en modellen, ook aan elektrische en hybride auto's. Zie ook <a href=\"{r}merken/\">alle merken</a>."),
     ("Blijft mijn fabrieksgarantie geldig als ik bij jullie onderhoud laat doen?",
@@ -945,8 +945,8 @@ VRAGEN = [
      "Ja. Ook een elektrische auto heeft onderhoud nodig: banden, remmen, ophanging, airco en APK. Lees meer over <a href=\"{r}elektrische-auto/\">onderhoud van elektrische auto's</a>."),
     ("Wanneer verloopt mijn APK?",
      "Vul uw kenteken in bij Plan afspraak; we tonen dan direct de APK-vervaldatum uit de gegevens van de RDW. U kunt de keuring tot twee maanden vóór die datum laten doen zonder dat u er tijd mee verliest."),
-    ("Krijg ik vooraf te horen wat het kost?",
-     "Ja. We bespreken de kosten vooraf. Komen we tijdens het werk iets onverwachts tegen, dan hoort u dat direct via WhatsApp voordat we verdergaan."),
+    ("Hoe weet ik wat het gaat kosten?",
+     "U geeft bij het plannen van uw afspraak aan tot welk bedrag we mogen doorwerken. Wordt het duurder, of komen we iets onverwachts tegen, dan overleggen we eerst met u, meestal via WhatsApp met een foto of korte toelichting."),
     ("Kan ik wachten terwijl mijn auto wordt gemaakt?",
      "Ja, voor kortere klussen kunt u wachten in onze wachtruimte met koffie en wifi."),
     ("Wat als mijn auto langer moet blijven?",
@@ -981,7 +981,7 @@ def merken():
         <h2>Wat we voor elk merk doen</h2>
         <p><a href="{r}onderhoud-reparatie/">Onderhoud en reparatie</a>, <a href="{r}apk-keuring/">APK-keuring</a>, <a href="{r}diagnose/">diagnose</a>, <a href="{r}bandenservice/">banden en uitlijnen</a>, <a href="{r}airco-service/">aircoservice</a> en het onderhoud van <a href="{r}elektrische-auto/">elektrische auto's</a>.</p>
 
-        <p class="klein-noot">Autoservice Barneveld is een onafhankelijke garage en geen officieel dealer van de genoemde merken. Merknamen zijn eigendom van hun respectieve eigenaren.</p>
+        <p class="klein-noot">Autoservice Barneveld is een onafhankelijke garage en geen officiële dealer van de genoemde merken. Merknamen zijn eigendom van hun respectieve eigenaren.</p>
       </div>
       {zijkaart(r)}
     </div>
