@@ -618,6 +618,11 @@ def homepage():
           <div><h3><a href="{slug}/">{e(naam)}</a></h3><p>{kort}</p><a class="meer" href="{slug}/">Meer over {e(naam.lower() if slug != 'apk-keuring' else 'de APK')}</a></div>
           <a class="plan" href="contact/" data-afspraak data-dienst="{e(DIENST_NAAR_KEUZE.get(naam, "Onderhoudsbeurt"))}">{knop} <span aria-hidden="true">→</span></a>
         </li>""")
+    lijst.append(f"""        <li class="dienst">
+          <img src="img/hero-home.webp" alt="Auto op de brug voor een aankoopkeuring" width="960" height="639" loading="lazy">
+          <div><h3><a href="aankoopkeuring/">Aankoopkeuring</a></h3><p>Een tweedehands auto vóór de koop onafhankelijk laten nakijken, met een eerlijk advies van de monteur.</p><a class="meer" href="aankoopkeuring/">Meer over de aankoopkeuring</a></div>
+          <a class="plan" href="contact/" data-afspraak data-dienst="Overig" data-omschrijving="Aankoopkeuring">Plan aankoopkeuring <span aria-hidden="true">→</span></a>
+        </li>""")
     diensten = "\n".join(lijst)
     main = f"""  <section class="hero" id="afspraak" aria-labelledby="hero-titel">
     <div class="hero-foto"><img src="img/hero-home.webp" alt="" width="1848" height="1232" fetchpriority="high"></div>
@@ -806,7 +811,7 @@ def dienstpagina(d):
     slug, naam, title, desc, h1, foto, _alt, kort, _knop = d
     r = "../"
     andere = "\n".join(f'          <li><a href="{r}{s}/">{e(n)}</a></li>'
-                       for s, n, *_ in DIENSTEN if s != slug)
+                       for s, n, *_ in DIENSTEN if s != slug) + f'\n          <li><a href="{r}aankoopkeuring/">Aankoopkeuring</a></li>'
     schema = {"@context": "https://schema.org", "@graph": [
         {"@type": "Service", "name": naam, "serviceType": naam, "description": desc, "url": f"{SITE}/{slug}/",
          "areaServed": "Barneveld en omgeving",
@@ -1748,7 +1753,6 @@ HANDIG = [
         ("onderhoudswijzer", "Onderhoudswijzer", "Wanneer komt uw volgende beurt, klein of groot?"),
         ("dashboardlampjes", "Dashboardlampjes", "Wat betekent dit lampje, en kunt u nog doorrijden?"),
         ("hulp", "Wat is er met mijn auto?", "Piepende remmen, een trillend stuur, rook uit de uitlaat en meer."),
-        ("aankoopkeuring", "Aankoopkeuring", "Een tweedehands auto vóór de koop laten nakijken."),
     ]),
 ]
 
