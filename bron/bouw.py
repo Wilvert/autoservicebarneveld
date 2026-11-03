@@ -1167,7 +1167,7 @@ def apk_check():
         <p>U mag uw auto tot twee maanden vóór de vervaldatum laten keuren. De nieuwe vervaldatum wordt dan gerekend vanaf de oude, dus u verliest er geen dag mee. Verloopt uw APK bijvoorbeeld op 15 juni, dan kunt u vanaf 15 april keuren en blijft 15 juni de basis voor uw volgende APK.</p>
 
         <h2>APK laten doen in Barneveld</h2>
-        <p>Autoservice Barneveld is door de RDW erkend en keurt auto's van alle merken, ook elektrische auto's. Combineer de keuring gerust met een <a href="{r}onderhoud-reparatie/">onderhoudsbeurt</a>, dan bent u in één keer klaar. Meer weten? Lees alles over onze <a href="{r}apk-keuring/">APK-keuring</a>.</p>"""
+        <p>Autoservice Barneveld is door de RDW erkend en keurt auto's van alle merken, ook elektrische auto's. Combineer de keuring gerust met een <a href="{r}onderhoud-reparatie/">onderhoudsbeurt</a>, dan bent u in één keer klaar. Meer weten? Lees alles over onze <a href="{r}apk-keuring/">APK-keuring</a>.</p>""" + meer_checks("apk-check")
     tool_pagina("apk-check", "APK-check: wanneer verloopt mijn APK? | Autoservice Barneveld",
                 "Gratis APK-check: vul uw kenteken in en zie direct tot wanneer uw APK geldig is, vanaf wanneer u kunt keuren met behoud van uw datum, en de RDW-gegevens van uw auto.",
                 "APK-check: hoe lang is uw APK nog geldig?", "dienst-apk", "Gratis APK-check",
@@ -1179,7 +1179,7 @@ def apk_check():
 
 OCCASION_VRAGEN = [
     ("Welke gegevens toont de occasion-check?",
-     "De openbare gegevens van de RDW: APK-vervaldatum, gemelde gebreken bij eerdere APK-keuringen, het oordeel over de tellerstand, of de auto is geïmporteerd, openstaande terugroepacties en technische gegevens zoals brandstof, vermogen en gewicht."),
+     "De openbare gegevens van de RDW: APK-vervaldatum, gemelde gebreken en adviespunten bij eerdere APK-keuringen, het oordeel over de tellerstand, of de auto is geïmporteerd, openstaande terugroepacties en technische gegevens zoals brandstof, vermogen en gewicht."),
     ("Wat betekent het tellerstandoordeel?",
      "De RDW verzamelt kilometerstanden bij onder meer onderhoud en APK. Is de reeks logisch, dan staat er ‘Logisch’. Staat er ‘Onlogisch’ of ‘Geen oordeel’, vraag de verkoper dan om uitleg en om onderhoudsfacturen."),
     ("Zegt de check alles over de staat van de auto?",
@@ -1193,7 +1193,7 @@ def occasion_check():
     inhoud = rdw_tool("{r}", "occasion", "Check auto") + """
 
         <h2>Een tweedehands auto kopen?</h2>
-        <p>Met deze check ziet u in een paar seconden wat er over de auto bekend is bij de RDW: tot wanneer de APK loopt, welke gebreken keurmeesters eerder hebben gemeld, of de tellerstand logisch is en of er een terugroepactie openstaat. Zo weet u vóór de bezichtiging al waar u op moet letten.</p>
+        <p>Met deze check ziet u in een paar seconden wat er over de auto bekend is bij de RDW: tot wanneer de APK loopt, welke gebreken en adviespunten keurmeesters eerder hebben gemeld, of de tellerstand logisch is en of er een terugroepactie openstaat. Zo weet u vóór de bezichtiging al waar u op moet letten.</p>
 
         <h2>Waar let u verder op?</h2>
         <ul class="lijst-vink">
@@ -1204,7 +1204,7 @@ def occasion_check():
         </ul>
 
         <h2>Laat de auto even nakijken</h2>
-        <p>Twijfelt u, of wilt u gewoon zeker zijn? Breng de auto vóór de koop even langs voor een <a href="{r}aankoopkeuring/">aankoopkeuring</a>. We bekijken hem op de brug, lezen de elektronica uit en vertellen u eerlijk wat we zien.</p>"""
+        <p>Twijfelt u, of wilt u gewoon zeker zijn? Breng de auto vóór de koop even langs voor een <a href="{r}aankoopkeuring/">aankoopkeuring</a>. We bekijken hem op de brug, lezen de elektronica uit en vertellen u eerlijk wat we zien.</p>""" + meer_checks("occasion-check")
     tool_pagina("occasion-check", "Occasion-check: APK-historie en gebreken per kenteken | Autoservice Barneveld",
                 "Gratis occasion-check: zie bij een kenteken de APK-datum, eerder gemelde gebreken, het tellerstandoordeel, import en terugroepacties. Handig vóór u een tweedehands auto koopt.",
                 "Occasion-check: wat is er bekend over deze auto?", "dienst-diagnose", "Gratis occasion-check",
@@ -1248,6 +1248,86 @@ def aankoopkeuring():
                 "Aankoopkeuring: eerst laten nakijken, dan kopen", "dienst-onderhoud", "Dienst · alle merken",
                 "Laat een tweedehands auto vóór de koop door ons nakijken. U hoort eerlijk wat er goed is en wat aandacht nodig heeft.",
                 inhoud, AANKOOP_VRAGEN, None, "Overig", naam="Aankoopkeuring")
+
+
+CHECKS = [("apk-check", "APK-check", "Tot wanneer is uw APK geldig?"),
+          ("occasion-check", "Occasion-check", "APK-historie en gemelde gebreken"),
+          ("kentekencheck", "Kentekencheck", "Alle gegevens van een auto"),
+          ("terugroepactie-check", "Terugroepactie-check", "Staat er iets open voor uw auto?"),
+          ("trekgewicht-check", "Trekgewicht-check", "Hoeveel mag uw auto trekken?")]
+
+
+def meer_checks(huidig):
+    items = "\n".join(f'          <li><a href="{{r}}{slug}/">{naam}</a><span>{uitleg}</span></li>'
+                      for slug, naam, uitleg in CHECKS if slug != huidig)
+    return f"""
+        <h2>Meer gratis checks</h2>
+        <ul class="check-links">
+{items}
+        </ul>"""
+
+
+def kentekencheck():
+    inhoud = rdw_tool("{r}", "kenteken", "Check kenteken") + """
+
+        <h2>Wat ziet u bij de kentekencheck?</h2>
+        <p>De openbare gegevens die de RDW over een auto bijhoudt: merk en model, kleur, brandstof, vermogen, bouwjaar, gewicht en trekgewicht, de APK-vervaldatum, het oordeel over de tellerstand, of de auto verzekerd is en of er een terugroepactie openstaat. Handig als u uw eigen auto wilt nakijken, of een auto die u wilt kopen.</p>
+""" + meer_checks("kentekencheck")
+    vragen = [
+        ("Is de kentekencheck gratis?", "Ja. De gegevens zijn openbaar en de check kost niets. U hoeft niets in te vullen behalve het kenteken."),
+        ("Kan ik zien wie de eigenaar is?", "Nee. De RDW deelt geen gegevens over de eigenaar of houder van een auto. Die zijn privé."),
+        ("Waar komen de gegevens vandaan?", "Uit de openbare voertuiggegevens van de RDW. Uw browser vraagt ze daar rechtstreeks op; wij zien en bewaren het kenteken niet."),
+    ]
+    tool_pagina("kentekencheck", "Kentekencheck: gratis autogegevens bij kenteken | Autoservice Barneveld",
+                "Gratis kentekencheck: zie direct merk, model, bouwjaar, brandstof, vermogen, gewicht, APK-datum en tellerstandoordeel van een auto. Rechtstreeks uit de RDW-gegevens.",
+                "Kentekencheck: alle gegevens van een auto", "dienst-diagnose", "Gratis kentekencheck",
+                "Vul een kenteken in en zie direct de openbare gegevens van de auto, rechtstreeks van de RDW.",
+                inhoud, vragen, ("Kentekencheck", "Zie bij een kenteken de openbare RDW-gegevens van een auto, zoals merk, model, bouwjaar, brandstof, APK-datum en tellerstandoordeel."))
+
+
+def terugroepactie_check():
+    inhoud = rdw_tool("{r}", "terugroep", "Check terugroepactie") + """
+
+        <h2>Wat is een terugroepactie?</h2>
+        <p>Ontdekt een fabrikant een fout aan een type auto, bijvoorbeeld aan de remmen, de airbags of de software, dan roept hij die auto's terug om de fout te verhelpen. Dat gebeurt meestal gratis, bij een merkdealer. De RDW houdt bij voor welke auto's nog een terugroepactie openstaat.</p>
+
+        <h2>Wat moet u doen?</h2>
+        <p>Meestal krijgt u als eigenaar een brief van de importeur met uitleg en een advies. Volg die op en maak een afspraak bij een dealer van uw merk. Heeft u geen brief gehad, of twijfelt u wat het betekent? Bel of app ons gerust, dan zoeken we het samen uit. Uw gewone onderhoud en APK kunt u gewoon bij ons blijven doen.</p>
+""" + meer_checks("terugroepactie-check")
+    vragen = [
+        ("Kost een terugroepactie geld?", "Nee, een terugroepactie wordt in de regel kosteloos uitgevoerd door een dealer van het merk."),
+        ("Ik heb de auto tweedehands gekocht. Geldt het dan ook?", "Ja. De terugroepactie hoort bij de auto, niet bij de eigenaar. Ook als u de auto later heeft gekocht, kunt u hem laten uitvoeren."),
+        ("Waar komen de gegevens vandaan?", "Uit de openbare voertuiggegevens van de RDW. Uw browser vraagt ze daar rechtstreeks op; wij zien en bewaren het kenteken niet."),
+    ]
+    tool_pagina("terugroepactie-check", "Terugroepactie check op kenteken | Autoservice Barneveld",
+                "Gratis terugroepactie-check: zie met uw kenteken of er voor uw auto een terugroepactie openstaat, en wat u dan moet doen. Rechtstreeks uit de RDW-gegevens.",
+                "Terugroepactie-check: staat er iets open voor uw auto?", "dienst-onderhoud", "Gratis terugroepactie-check",
+                "Vul uw kenteken in en zie direct of er volgens de RDW een terugroepactie openstaat voor uw auto.",
+                inhoud, vragen, ("Terugroepactie-check", "Zie met uw kenteken of er volgens de RDW een terugroepactie openstaat voor uw auto."))
+
+
+def trekgewicht_check():
+    inhoud = rdw_tool("{r}", "trekgewicht", "Check trekgewicht") + """
+
+        <h2>Geremd en ongeremd</h2>
+        <p>Een caravan of grotere aanhanger heeft meestal eigen remmen: dan geldt het geremde trekgewicht. Een lichte aanhanger zonder remmen mag niet zwaarder zijn dan het ongeremde trekgewicht. Het gaat steeds om het gewicht van de aanhanger zoals u hem trekt, dus inclusief lading.</p>
+
+        <h2>Welk rijbewijs heeft u nodig?</h2>
+        <p>Met rijbewijs B mag u een aanhanger trekken met een toegestane maximummassa tot 750 kg. Is de aanhanger zwaarder, dan mogen auto en aanhanger samen niet zwaarder zijn dan 3.500 kg (toegestane maximummassa). Is de combinatie zwaarder, dan heeft u code 96 op uw rijbewijs nodig (tot 4.250 kg) of rijbewijs BE. Kijk voor de precieze regels bij het CBR.</p>
+
+        <h2>Op vakantie met de caravan?</h2>
+        <p>Laat uw auto vóór vertrek even nakijken: banden, remmen, verlichting en vloeistoffen. Dan rijdt u met een gerust hart weg. <a href="{r}onderhoud-reparatie/">Meer over onderhoud</a>.</p>
+""" + meer_checks("trekgewicht-check")
+    vragen = [
+        ("Waar staat het trekgewicht van mijn auto?", "Op het kentekenbewijs en in de gegevens van de RDW. Met deze check ziet u het direct bij uw kenteken."),
+        ("Er staat geen trekgewicht bij mijn auto. Wat nu?", "Dan is er voor deze auto geen trekgewicht geregistreerd en mag u in principe geen aanhanger trekken. Twijfelt u? Vraag het ons gerust."),
+        ("Waar komen de gegevens vandaan?", "Uit de openbare voertuiggegevens van de RDW. Uw browser vraagt ze daar rechtstreeks op; wij zien en bewaren het kenteken niet."),
+    ]
+    tool_pagina("trekgewicht-check", "Trekgewicht check op kenteken | Autoservice Barneveld",
+                "Gratis trekgewicht-check: zie met uw kenteken hoeveel uw auto geremd en ongeremd mag trekken, plus uitleg over caravan, aanhanger en rijbewijs.",
+                "Trekgewicht-check: hoeveel mag uw auto trekken?", "dienst-banden", "Gratis trekgewicht-check",
+                "Caravan of aanhanger? Vul uw kenteken in en zie direct het geremde en ongeremde trekgewicht van uw auto.",
+                inhoud, vragen, ("Trekgewicht-check", "Zie met uw kenteken hoeveel uw auto geremd en ongeremd mag trekken."))
 
 
 def sitemap_en_llms():
@@ -1305,4 +1385,7 @@ if __name__ == "__main__":
     apk_check()
     occasion_check()
     aankoopkeuring()
+    kentekencheck()
+    terugroepactie_check()
+    trekgewicht_check()
     sitemap_en_llms()

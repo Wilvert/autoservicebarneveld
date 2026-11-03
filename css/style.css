@@ -531,3 +531,8 @@ svg.blad { display: inline-block; flex: none; margin-top: 0; color: #2f9e5f; ver
 .lijst-vink li { position: relative; padding: 5px 0 5px 28px; }
 .lijst-vink li::before { content: ""; position: absolute; left: 2px; top: 11px; width: 14px; height: 8px; border-left: 2.5px solid #2f9e5f; border-bottom: 2.5px solid #2f9e5f; transform: rotate(-45deg); }
 @media (max-width: 600px) { .apk-extra { padding: 18px; } }
+.check-links { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.check-links li { display: flex; flex-direction: column; gap: 2px; padding: 14px 16px; border: 1px solid var(--grijs-20); border-radius: 10px; font-size: 14px; }
+.check-links a { font-weight: 700; font-size: 15px; color: var(--blauw); }
+.check-links span { color: var(--grijs-80); }
+@media (max-width: 600px) { .check-links { grid-template-columns: 1fr; } }

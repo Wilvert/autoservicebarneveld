@@ -236,7 +236,7 @@
         if (punten.length) zetStatus('nu', 'Let op', 'Wij zien ' + (punten.length === 1 ? 'één aandachtspunt' : punten.length + ' aandachtspunten') + ' bij deze auto.', punten);
         else zetStatus('geldig', 'Geen bijzonderheden', 'In de openbare gegevens zien wij geen bijzonderheden.', apkZin(s) + ' Een goede proefrit en een aankoopkeuring blijven verstandig.');
       } else {
-        zetStatus(s.soort === 'onbekend' ? 'onbekend' : s.soort, 'Gevonden', naamVan(a) + ' (' + kentekenNetjes(a.kenteken) + ')', apkZin(s));
+        zetStatus(s.soort === 'verlopen' ? 'verlopen' : 'onbekend', 'Gevonden', naamVan(a) + ' (' + kentekenNetjes(a.kenteken) + ')', apkZin(s));
       }
     }
 
@@ -298,9 +298,9 @@
     }
     function toonHistorie(h) {
       if (!extra) return;
-      if (!h) { extra.innerHTML = '<h3>Gemelde gebreken bij APK-keuringen</h3><p class="apk-leeg">De keuringshistorie is nu niet bereikbaar. Probeer het later nog eens.</p>'; return; }
+      if (!h) { extra.innerHTML = '<h3>Gemeld bij APK-keuringen</h3><p class="apk-leeg">De keuringshistorie is nu niet bereikbaar. Probeer het later nog eens.</p>'; return; }
       if (!h.meldingen.length) {
-        extra.innerHTML = '<h3>Gemelde gebreken bij APK-keuringen</h3><p class="apk-leeg">Bij de keuringen die de RDW openbaar deelt, zijn voor deze auto geen gebreken gemeld.</p>';
+        extra.innerHTML = '<h3>Gemeld bij APK-keuringen</h3><p class="apk-leeg">Bij de keuringen die de RDW openbaar deelt, zijn voor deze auto geen gebreken of adviespunten gemeld.</p>';
         return;
       }
       var perDatum = {};
@@ -309,8 +309,8 @@
         (perDatum[d] = perDatum[d] || []).push(m);
       });
       var data = Object.keys(perDatum).sort().reverse();
-      extra.innerHTML = '<h3>Gemelde gebreken bij APK-keuringen</h3>' +
-        '<p class="apk-leeg">Dit zijn de gebreken die keurmeesters hebben gemeld. Meestal zijn ze direct bij de keuring verholpen.</p>' +
+      extra.innerHTML = '<h3>Gemeld bij APK-keuringen</h3>' +
+        '<p class="apk-leeg">Punten die keurmeesters hebben gemeld. Dat kunnen gebreken zijn die hersteld moesten worden, of adviespunten voor later, zoals slijtage.</p>' +
         '<ol class="apk-historie">' + data.map(function (d) {
           return '<li><strong>' + kort(rdwDatum(d)) + '</strong><ul>' + perDatum[d].map(function (m) {
             var o = h.omschrijving[m.gebrek_identificatie] || ('Gebrek ' + m.gebrek_identificatie);
