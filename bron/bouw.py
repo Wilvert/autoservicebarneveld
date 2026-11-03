@@ -241,7 +241,6 @@ def head(r, pad, title, desc, noindex=False):
 def kop(r, actief):
     home = r or "./"
     items = [(f"{home}#diensten" if r else "#diensten", "Diensten", "diensten"),
-             (f"{r}apk-check/", "APK-check", "apk-check"),
              (f"{r}over-ons/", "Over ons", "over-ons"),
              (f"{r}vervangend-vervoer/", "Vervangend vervoer", "vervangend-vervoer"),
              (f"{r}contact/", "Contact", "contact")]
@@ -264,6 +263,7 @@ def kop(r, actief):
     <nav class="menu" id="menu" aria-label="Hoofdmenu">
 {menu}
     </nav>
+    <a class="apk-knop" href="{r}apk-check/"{' aria-current="page"' if actief == "apk-check" else ""}><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M8.5 14l2.5 2.5 4.5-5"/></g></svg>APK-check</a>
     <a class="knop blauw" href="{r}contact/" data-afspraak>Plan afspraak</a>
     <button class="menu-knop" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menu openen">
       <svg width="22" height="16" viewBox="0 0 22 16" aria-hidden="true"><path d="M0 1h22M0 8h22M0 15h22" stroke="currentColor" stroke-width="2.2"/></svg>

@@ -510,3 +510,10 @@ svg.blad { display: inline-block; flex: none; margin-top: 0; color: #2f9e5f; ver
   .apk-gegevens dl { grid-template-columns: 1fr 1fr; }
 }
 .vertrouwen li > span > a { text-decoration: underline; text-underline-offset: 2px; }
+
+/* APK-check knop in de kop (RDW-oranje) */
+.apk-knop { display: inline-flex; align-items: center; gap: 8px; margin-right: -14px; padding: 11px 16px; border: 2px solid #e8662a; border-radius: 6px; background: #fdf0e8; color: #b5461a; font: 700 15px/1 var(--tekst); text-decoration: none; white-space: nowrap; transition: background .15s, color .15s; }
+.apk-knop:hover, .apk-knop[aria-current="page"] { background: #e8662a; color: var(--wit); }
+.apk-knop svg { flex: none; }
+@media (max-width: 900px) { .kop .wrap { gap: 12px; } .apk-knop { margin-right: 0; } }
+@media (max-width: 380px) { .apk-knop { padding: 10px 11px; font-size: 14px; gap: 6px; } .kop-logo img { width: 118px; } }
