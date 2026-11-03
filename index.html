@@ -189,8 +189,8 @@
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preload" href="fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/bebas-neue.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/style.css?v=bf2c934a">
-<script src="js/site.js?v=15f98255" defer></script>
+<link rel="stylesheet" href="css/style.css?v=a07bae08">
+<script src="js/site.js?v=0d3d582d" defer></script>
 </head>
 <body>
 <a class="naar-inhoud" href="#inhoud">Direct naar de inhoud</a>
@@ -254,11 +254,13 @@
         <fieldset class="veld diensten-keuze">
           <legend>Wat mogen we voor u doen? <small>Meerdere mogelijk</small></legend>
           <div class="diensten-raster">
-            <label><input type="checkbox" name="diensten" value="Onderhoud &amp; reparatie"><span>Onderhoud &amp; reparatie</span></label>
-            <label><input type="checkbox" name="diensten" value="APK-keuring"><span>APK-keuring</span></label>
+            <label><input type="checkbox" name="diensten" value="Onderhoudsbeurt"><span>Onderhoudsbeurt</span></label>
+            <label><input type="checkbox" name="diensten" value="APK"><span>APK</span></label>
             <label><input type="checkbox" name="diensten" value="Diagnose"><span>Diagnose</span></label>
-            <label><input type="checkbox" name="diensten" value="Bandenservice &amp; uitlijnen"><span>Bandenservice &amp; uitlijnen</span></label>
             <label><input type="checkbox" name="diensten" value="Aircoservice"><span>Aircoservice</span></label>
+            <label><input type="checkbox" name="diensten" value="Bandenservice"><span>Bandenservice</span></label>
+            <label><input type="checkbox" name="diensten" value="Uitlijnen"><span>Uitlijnen</span></label>
+            <label><input type="checkbox" name="diensten" value="Reparatie"><span>Reparatie</span></label>
             <label><input type="checkbox" name="diensten" value="Overig"><span>Overig</span></label>
           </div>
         </fieldset>
@@ -290,12 +292,12 @@
         <li class="dienst">
           <img src="img/dienst-onderhoud.webp" alt="Monteur aan het werk bij een wiel" width="960" height="639" loading="lazy">
           <div><h3><a href="onderhoud-reparatie/">Onderhoud &amp; reparatie</a></h3><p>Grote of kleine onderhoudsbeurt, of het vervangen van een lampje: wij zorgen dat uw auto veilig, betrouwbaar en in topconditie blijft.</p><a class="meer" href="onderhoud-reparatie/">Meer over onderhoud &amp; reparatie</a></div>
-          <a class="plan" href="contact/" data-afspraak data-dienst="Onderhoud &amp; reparatie">Plan onderhoud <span aria-hidden="true">→</span></a>
+          <a class="plan" href="contact/" data-afspraak data-dienst="Onderhoudsbeurt">Plan onderhoud <span aria-hidden="true">→</span></a>
         </li>
         <li class="dienst">
           <img src="img/dienst-apk.webp" alt="Auto op de brug tijdens een APK-keuring" width="960" height="639" loading="lazy">
           <div><h3><a href="apk-keuring/">APK-keuring</a></h3><p>De verplichte keuring voor verkeersveiligheid en milieu, zorgvuldig uitgevoerd voor alle merken.</p><a class="meer" href="apk-keuring/">Meer over de APK</a></div>
-          <a class="plan" href="contact/" data-afspraak data-dienst="APK-keuring">Plan APK <span aria-hidden="true">→</span></a>
+          <a class="plan" href="contact/" data-afspraak data-dienst="APK">Plan APK <span aria-hidden="true">→</span></a>
         </li>
         <li class="dienst">
           <img src="img/dienst-diagnose.webp" alt="Uitleesapparatuur bij een auto" width="960" height="639" loading="lazy">
@@ -305,7 +307,7 @@
         <li class="dienst">
           <img src="img/dienst-banden.webp" alt="Band op de bandenmontagemachine" width="960" height="639" loading="lazy">
           <div><h3><a href="bandenservice/">Bandenservice &amp; uitlijnen</a></h3><p>Montage, balanceren, (seizoens)wissel en uitlijnen. Snel en vakkundig, voor alle merken, ook elektrische auto's.</p><a class="meer" href="bandenservice/">Meer over bandenservice &amp; uitlijnen</a></div>
-          <a class="plan" href="contact/" data-afspraak data-dienst="Bandenservice &amp; uitlijnen">Plan banden <span aria-hidden="true">→</span></a>
+          <a class="plan" href="contact/" data-afspraak data-dienst="Bandenservice">Plan banden <span aria-hidden="true">→</span></a>
         </li>
         <li class="dienst">
           <img src="img/dienst-airco.webp" alt="Aircoservice onder de motorkap" width="960" height="639" loading="lazy">
@@ -601,17 +603,19 @@
         <fieldset class="veld diensten-keuze">
           <legend>Wat mogen we voor u doen? <small>Meerdere mogelijk</small></legend>
           <div class="diensten-raster">
-            <label><input type="checkbox" name="diensten" value="Onderhoud &amp; reparatie"><span>Onderhoud &amp; reparatie</span></label>
-            <label><input type="checkbox" name="diensten" value="APK-keuring"><span>APK-keuring</span></label>
+            <label><input type="checkbox" name="diensten" value="Onderhoudsbeurt"><span>Onderhoudsbeurt</span></label>
+            <label><input type="checkbox" name="diensten" value="APK"><span>APK</span></label>
             <label><input type="checkbox" name="diensten" value="Diagnose"><span>Diagnose</span></label>
-            <label><input type="checkbox" name="diensten" value="Bandenservice &amp; uitlijnen"><span>Bandenservice &amp; uitlijnen</span></label>
             <label><input type="checkbox" name="diensten" value="Aircoservice"><span>Aircoservice</span></label>
+            <label><input type="checkbox" name="diensten" value="Bandenservice"><span>Bandenservice</span></label>
+            <label><input type="checkbox" name="diensten" value="Uitlijnen"><span>Uitlijnen</span></label>
+            <label><input type="checkbox" name="diensten" value="Reparatie"><span>Reparatie</span></label>
             <label><input type="checkbox" name="diensten" value="Overig"><span>Overig</span></label>
           </div>
         </fieldset>
-        <div class="veld omschrijving" hidden>
-          <label for="v-omschrijving">Korte omschrijving</label>
-          <textarea class="invoer" id="v-omschrijving" name="omschrijving" rows="3" maxlength="300" placeholder="Bijv. piepende remmen of een lampje op het dashboard"></textarea>
+        <div class="veld omschrijving">
+          <label for="v-omschrijving"><span class="omschrijving-label">Opmerking</span> <small class="label-optioneel">optioneel</small></label>
+          <textarea class="invoer" id="v-omschrijving" name="omschrijving" rows="2" maxlength="300" placeholder="Bijv. wanneer u de auto kunt brengen of iets wat we moeten weten"></textarea>
         </div>
         <div class="rij">
           <div class="veld">

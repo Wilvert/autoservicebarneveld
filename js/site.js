@@ -318,9 +318,12 @@
     datumKnop.focus();
   });
 
-  // Diensten: meerdere aanvinken; bij "Overig" een vak voor een korte omschrijving
+  // Diensten: meerdere aanvinken. Het opmerkingenveld staat er altijd (optioneel);
+  // bij Reparatie of Overig wordt het een verplichte korte omschrijving.
   var dienstVinkjes = formulier.querySelectorAll('input[name="diensten"]');
   var omschrijving = venster.querySelector('.omschrijving');
+  var omschrijvingLabel = omschrijving.querySelector('.omschrijving-label');
+  var omschrijvingOptioneel = omschrijving.querySelector('.label-optioneel');
   function gekozenDiensten() {
     return Array.prototype.filter.call(dienstVinkjes, function (v) { return v.checked; })
       .map(function (v) { return v.value; });
@@ -328,16 +331,24 @@
   function controleerDiensten() {
     dienstVinkjes[0].setCustomValidity(gekozenDiensten().length ? '' : 'Kies minimaal één onderdeel.');
   }
+  function omschrijvingNodig() {
+    var g = gekozenDiensten();
+    return g.indexOf('Reparatie') !== -1 || g.indexOf('Overig') !== -1;
+  }
   function zetOmschrijving() {
-    var overig = gekozenDiensten().indexOf('Overig') !== -1;
-    omschrijving.hidden = !overig;
-    veld('omschrijving').required = overig;
+    var nodig = omschrijvingNodig();
+    omschrijvingLabel.textContent = nodig ? 'Korte omschrijving' : 'Opmerking';
+    omschrijvingOptioneel.textContent = nodig ? 'wat is er aan de hand?' : 'optioneel';
+    veld('omschrijving').placeholder = nodig
+      ? 'Bijv. piepende remmen, een lampje op het dashboard of een vreemd geluid'
+      : 'Bijv. wanneer u de auto kunt brengen of iets wat we moeten weten';
+    veld('omschrijving').required = nodig;
     controleerDiensten();
   }
   Array.prototype.forEach.call(dienstVinkjes, function (v) {
     v.addEventListener('change', function () {
       zetOmschrijving();
-      if (v.value === 'Overig' && v.checked) veld('omschrijving').focus();
+      if ((v.value === 'Reparatie' || v.value === 'Overig') && v.checked) veld('omschrijving').focus();
     });
   });
 
@@ -407,8 +418,8 @@
   // De aanvraag als blokken met kopjes; daaruit maken we het WhatsApp-bericht of de e-mail
   function aanvraag() {
     var werk = gekozenDiensten();
-    if (!omschrijving.hidden && veld('omschrijving').value.trim()) {
-      werk.push('Omschrijving: ' + veld('omschrijving').value.trim().replace(/\s+/g, ' '));
+    if (veld('omschrijving').value.trim()) {
+      werk.push((omschrijvingNodig() ? 'Omschrijving: ' : 'Opmerking: ') + veld('omschrijving').value.trim().replace(/\s+/g, ' '));
     }
     var voertuig = kentekenBlok.hidden
       ? ['Kenteken: onbekend', 'Merk en model: ' + veld('merk').value.trim() + ' ' + veld('model').value.trim()]

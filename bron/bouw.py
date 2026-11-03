@@ -94,7 +94,12 @@ DIENSTEN = [
      "Het reguliere onderhoud, banden, airco en APK van elektrische auto's van alle merken.",
      "Plan onderhoud"),
 ]
-DIENST_OPTIES = [d[1] for d in DIENSTEN if d[0] != "elektrische-auto"] + ["Overig"]
+# Keuzes in de planner (meerdere mogelijk). Reparatie en Overig vragen om een korte omschrijving.
+DIENST_OPTIES = ["Onderhoudsbeurt", "APK", "Diagnose", "Aircoservice", "Bandenservice", "Uitlijnen", "Reparatie", "Overig"]
+# Welke plannerkeuze vooraf aangevinkt wordt vanaf een dienstpagina
+DIENST_NAAR_KEUZE = {"Onderhoud & reparatie": "Onderhoudsbeurt", "APK-keuring": "APK", "Diagnose": "Diagnose",
+                     "Bandenservice & uitlijnen": "Bandenservice", "Aircoservice": "Aircoservice",
+                     "Elektrische auto": "Onderhoudsbeurt"}
 
 TEKST = {
 "apk-keuring": """
@@ -313,9 +318,9 @@ def venster(r):
 {diensten_vinkjes()}
           </div>
         </fieldset>
-        <div class="veld omschrijving" hidden>
-          <label for="v-omschrijving">Korte omschrijving</label>
-          <textarea class="invoer" id="v-omschrijving" name="omschrijving" rows="3" maxlength="300" placeholder="Bijv. piepende remmen of een lampje op het dashboard"></textarea>
+        <div class="veld omschrijving">
+          <label for="v-omschrijving"><span class="omschrijving-label">Opmerking</span> <small class="label-optioneel">optioneel</small></label>
+          <textarea class="invoer" id="v-omschrijving" name="omschrijving" rows="2" maxlength="300" placeholder="Bijv. wanneer u de auto kunt brengen of iets wat we moeten weten"></textarea>
         </div>
         <div class="rij">
           <div class="veld">
@@ -447,8 +452,7 @@ def pagina(r, pad, title, desc, actief, main, noindex=False):
 
 
 def zijkaart(r, dienst=""):
-    if dienst not in DIENST_OPTIES:
-        dienst = "Onderhoud & reparatie" if dienst == "Elektrische auto" else ""
+    dienst = DIENST_NAAR_KEUZE.get(dienst, dienst if dienst in DIENST_OPTIES else "")
     data = f' data-dienst="{e(dienst)}"' if dienst else ""
     return f"""<aside class="zijkaart" aria-labelledby="zijkaart-titel">
         <h2 id="zijkaart-titel">Plan uw afspraak</h2>
@@ -548,7 +552,7 @@ def homepage():
         lijst.append(f"""        <li class="dienst">
           <img src="img/{foto}.webp" alt="{e(alt)}" width="960" height="639" loading="lazy">
           <div><h3><a href="{slug}/">{e(naam)}</a></h3><p>{kort}</p><a class="meer" href="{slug}/">Meer over {e(naam.lower() if slug != 'apk-keuring' else 'de APK')}</a></div>
-          <a class="plan" href="contact/" data-afspraak data-dienst="{e(naam if naam in DIENST_OPTIES else "Onderhoud & reparatie")}">{knop} <span aria-hidden="true">→</span></a>
+          <a class="plan" href="contact/" data-afspraak data-dienst="{e(DIENST_NAAR_KEUZE.get(naam, "Onderhoudsbeurt"))}">{knop} <span aria-hidden="true">→</span></a>
         </li>""")
     diensten = "\n".join(lijst)
     main = f"""  <section class="hero" id="afspraak" aria-labelledby="hero-titel">
