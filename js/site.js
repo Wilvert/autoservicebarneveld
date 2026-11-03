@@ -223,7 +223,10 @@
     '2026-11': [2, 3],   // november: dinsdag en woensdag
     '2026-12': [2]       // december: dinsdag
   };
-  var GEBLOKKEERDE_DATA = [];
+  var GEBLOKKEERDE_DATA = [
+    // Kerstvakantie: dicht van 25 december 2026 t/m 3 januari 2027
+    '2026-12-28', '2026-12-29', '2026-12-30', '2026-12-31'
+  ];
   var MAANDEN_VOORUIT = 4;
 
   var datumKnop = venster.querySelector('.datum-knop');
