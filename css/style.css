@@ -263,7 +263,7 @@ textarea { min-height: 120px; resize: vertical; }
 .voet { background: var(--nacht); color: var(--blauw-20); padding: 56px 0 36px; font-size: 14px; }
 .voet .wrap { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 40px; align-items: start; }
 .voet img.logo { width: 160px; margin-bottom: 18px; }
-.voet h3 { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--wit); margin-bottom: 12px; }
+.voet h2, .voet h3 { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--wit); margin-bottom: 12px; }
 .voet ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
 .voet a { color: var(--wit); text-decoration: none; }
 .voet a:hover { text-decoration: underline; }
@@ -384,7 +384,7 @@ svg.blad { display: inline-block; flex: none; margin-top: 0; color: #2f9e5f; ver
 .datum-haast svg { flex: none; margin-top: 2px; color: #2f9e5f; }
 .datum-haast a { color: var(--blauw); font-weight: 700; white-space: nowrap; }
 /* ---------- Planner: diensten, kenteken onbekend, adres ---------- */
-.link-klein { align-self: flex-start; margin-top: 2px; padding: 0; border: 0; background: none; color: var(--blauw); font: 500 12px var(--tekst); text-decoration: underline; cursor: pointer; }
+.link-klein { align-self: flex-start; margin-top: 2px; padding: 5px 0; border: 0; background: none; color: var(--blauw); font: 500 12px var(--tekst); text-decoration: underline; cursor: pointer; }
 .kenteken-blok[hidden], .merk-model[hidden] { display: none; }
 .merk-model { margin-bottom: 16px; }
 .merk-model .veld { margin-bottom: 6px; }
@@ -636,3 +636,4 @@ p.banden-uitleg.banden-let-op { padding: 10px 12px; border-radius: 6px; backgrou
   .menu a { padding: 14px 0; border-bottom: 1px solid var(--grijs-20); font-size: 16px; }
   .checks-menu, .apk-knop { margin-right: 0; }
 }
+.afspraak-voet a, .dienst .meer { display: inline-block; padding: 3px 0; }

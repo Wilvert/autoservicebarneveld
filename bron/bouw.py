@@ -19,7 +19,7 @@ def versie(pad):
     na een wijziging meteen de nieuwe versie laden in plaats van een oude kopie."""
     return hashlib.sha1((ROOT / pad).read_bytes()).hexdigest()[:8]
 SITE = "https://www.autoservicebarneveld.nl"
-DATUM = "2026-11-01"
+DATUM = __import__("datetime").date.today().isoformat()  # lastmod in de sitemap = bouwdatum
 
 TEL = "0342-234003"
 REVIEW_LINK = "https://g.page/r/CVfGuGQnGn8fEBM/review"  # Google: schrijf een review
@@ -215,6 +215,7 @@ def head(r, pad, title, desc, noindex=False, og="deelafbeelding.jpg"):
         '<meta name="viewport" content="width=device-width, initial-scale=1">',
         f'<meta http-equiv="Content-Security-Policy" content="{CSP}">',
         '<meta name="referrer" content="strict-origin-when-cross-origin">',
+        '<meta name="theme-color" content="#0a467f">',
         f"<title>{e(title)}</title>",
         f'<meta name="description" content="{e(desc)}">',
     ]
@@ -440,19 +441,19 @@ def voet(r):
       <img class="rdw" src="{r}img/rdw-erkend.webp" alt="RDW erkend" width="132" height="77" loading="lazy">
     </div>
     <div>
-      <h3>Adres en tijden</h3>
+      <h2>Adres en tijden</h2>
       <ul><li>{ADRES}</li><li>{POSTCODE_PLAATS}</li><li>Ma–vr 08:00–17:00</li><li>Za op afspraak · zo gesloten</li><li><a href="{r}contact/">Route plannen</a></li></ul>
     </div>
     <div>
-      <h3>Contact</h3>
+      <h2>Contact</h2>
       <ul><li><a href="{TEL_LINK}">{TEL}</a></li><li><a href="{WA_LINK}">WhatsApp</a></li><li><a href="mailto:{MAIL}">{MAIL}</a></li><li><a href="{r}contact/" data-afspraak>Plan afspraak</a></li></ul>
-      <h3 class="voet-sub">Handig</h3>
+      <h2 class="voet-sub">Handig</h2>
       <ul><li><a href="{r}apk-check/">APK-check</a></li><li><a href="{r}occasion-check/">Occasion-check</a></li><li><a href="{r}dashboardlampjes/">Dashboardlampjes</a></li><li><a href="{r}hulp/">Hulp bij klachten</a></li><li><a href="{r}handig/">Alle checks en uitleg</a></li></ul>
     </div>
     <div>
-      <h3>Diensten</h3>
+      <h2>Diensten</h2>
       <ul>{diensten}<li><a href="{r}aankoopkeuring/">Aankoopkeuring</a></li><li><a href="{r}vervangend-vervoer/">Vervangend vervoer</a></li></ul>
-      <h3 class="voet-sub">Meer</h3>
+      <h2 class="voet-sub">Meer</h2>
       <ul><li><a href="{r}merken/">Alle merken</a></li><li><a href="{r}werkgebied/">Werkgebied</a></li><li><a href="{r}veelgestelde-vragen/">Veelgestelde vragen</a></li></ul>
     </div>
     <p class="onder">© 2026 Autoservice Barneveld · KvK {KVK} · btw {BTW} · <a href="{r}privacy/">Privacyverklaring</a> · Volg ons: {profielen}</p>
@@ -746,9 +747,11 @@ def vervoer_sectie(r, titel_h="h2", link=True):
         <p>Terwijl uw auto bij ons in onderhoud of reparatie is, bieden wij verschillende mogelijkheden om uw dag zorgeloos voort te zetten.</p>
       </div>
 """
-    return f"""  <section class="sectie" id="vervangend-vervoer"{' aria-labelledby="vervoer-titel"' if kopje else ' aria-label="Mogelijkheden"'}>
+    if not kopje:
+        kopje = '      <h2 class="sr-only">Onze mogelijkheden</h2>\n'
+    return f"""  <section class="sectie" id="vervangend-vervoer" aria-labelledby="vervoer-titel">
     <div class="wrap">
-{kopje}      <div class="vervoer-raster">
+{kopje.replace('class="sr-only"', 'class="sr-only" id="vervoer-titel"')}      <div class="vervoer-raster">
         <article class="optie">
           <span class="ico" aria-hidden="true">{I_BLIKSEM.format(s=26)}</span>
           <small>Voor particulieren</small>
