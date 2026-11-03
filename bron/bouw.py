@@ -105,8 +105,10 @@ TEKST = {
 "apk-keuring": """
 <p>De APK (Algemene Periodieke Keuring) is verplicht en controleert of uw auto veilig en milieuvriendelijk genoeg is voor de weg. Autoservice Barneveld is door de RDW erkend en keurt auto's van alle merken, ook elektrische auto's. We voeren de keuring zorgvuldig uit, zodat u veilig en volgens de wettelijke eisen de weg op gaat.</p>
 
+<p class="apk-tip"><a href="{r}apk-check/"><strong>Gratis APK-check</strong><span>Zie met uw kenteken tot wanneer uw APK geldig is en vanaf wanneer u kunt keuren.</span></a></p>
+
 <h2>Wanneer moet uw auto voor de APK?</h2>
-<p>De vervaldatum van uw APK ziet u bij de <a href="https://ovi.rdw.nl/">kentekencheck van de RDW</a>. U kunt de keuring tot twee maanden vóór die datum laten doen zonder dat u er tijd mee verliest: de nieuwe vervaldatum wordt dan gerekend vanaf de oude.</p>
+<p>De vervaldatum van uw APK ziet u direct met onze <a href="{r}apk-check/">APK-check</a>. U kunt de keuring tot twee maanden vóór die datum laten doen zonder dat u er tijd mee verliest: de nieuwe vervaldatum wordt dan gerekend vanaf de oude.</p>
 
 <h2>APK en onderhoud in één afspraak</h2>
 <p>Veel klanten combineren de APK met een kleine of grote <a href="{r}onderhoud-reparatie/">onderhoudsbeurt</a>. Dat scheelt een extra ritje naar de garage. Komt er tijdens de keuring iets naar boven dat vervangen moet worden? Valt dat boven het bedrag dat u bij uw afspraak heeft opgegeven, dan overleggen we eerst met u, eventueel met een foto of filmpje via WhatsApp.</p>
@@ -239,6 +241,7 @@ def head(r, pad, title, desc, noindex=False):
 def kop(r, actief):
     home = r or "./"
     items = [(f"{home}#diensten" if r else "#diensten", "Diensten", "diensten"),
+             (f"{r}apk-check/", "APK-check", "apk-check"),
              (f"{r}over-ons/", "Over ons", "over-ons"),
              (f"{r}vervangend-vervoer/", "Vervangend vervoer", "vervangend-vervoer"),
              (f"{r}contact/", "Contact", "contact")]
@@ -430,7 +433,7 @@ def voet(r):
       <h3>Diensten</h3>
       <ul>{diensten}<li><a href="{r}vervangend-vervoer/">Vervangend vervoer</a></li></ul>
       <h3 class="voet-sub">Meer</h3>
-      <ul><li><a href="{r}merken/">Alle merken</a></li><li><a href="{r}werkgebied/">Werkgebied</a></li><li><a href="{r}veelgestelde-vragen/">Veelgestelde vragen</a></li></ul>
+      <ul><li><a href="{r}apk-check/">APK-check</a></li><li><a href="{r}merken/">Alle merken</a></li><li><a href="{r}werkgebied/">Werkgebied</a></li><li><a href="{r}veelgestelde-vragen/">Veelgestelde vragen</a></li></ul>
     </div>
     <p class="onder">© 2026 Autoservice Barneveld · KvK {KVK} · btw {BTW} · <a href="{r}privacy/">Privacyverklaring</a> · Volg ons: {profielen}</p>
   </div>
@@ -646,7 +649,7 @@ def homepage():
 
   <section class="vertrouwen" aria-label="Waarom Autoservice Barneveld">
     <ul>
-      <li><img class="rdw-mini" src="img/rdw-erkend.webp" alt="" width="62" height="36"><span><strong>APK</strong>RDW erkend</span></li>
+      <li><img class="rdw-mini" src="img/rdw-erkend.webp" alt="" width="62" height="36"><span><strong>APK</strong>RDW erkend · <a href="apk-check/">check uw APK-datum</a></span></li>
       <li><span class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M3 16V11l2-5h14l2 5v5M3 16h18M3 16v2h3v-2m12 0v2h3v-2M5 11h14"/></svg></span><span><strong><a href="merken/">Alle merken <span class="geen-breuk">(ook EV's)</span></a></strong>Onderhoud en reparatie</span></li>
       <li><span class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span><span><strong>Alles onder één dak</strong>Alle zorg voor uw auto</span></li>
       <li><span class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></g></svg></span><span><strong>Vervangend vervoer</strong>Leenauto of leenfiets</span></li>
@@ -878,6 +881,7 @@ def privacy():
 
         <h2>Afspraak plannen via WhatsApp</h2>
         <p>Het afspraakformulier op deze website slaat niets op. Het zet uw kenteken (of merk en model), de gekozen werkzaamheden, eventueel uw overleggrens, kilometerstand, adres, e-mailadres en eventuele voorkeursdata in een WhatsApp-bericht, dat u daarna zelf verstuurt. Voor dat bericht gelden ook de voorwaarden van WhatsApp (Meta). Kiest u voor versturen per e-mail, dan gaan dezelfde gegevens via FormSubmit (formsubmit.co) als e-mail naar ons. Om uw straat en woonplaats bij uw postcode en huisnummer te vinden, vraagt het formulier die op bij de Basisregistratie Adressen via PDOK (Kadaster). Bij een ingevuld kenteken haalt het formulier het merk, model en de APK-vervaldatum op uit de openbare gegevens van de RDW. Bij beide wordt niets opgeslagen.</p>
+        <p>De <a href="{r}apk-check/">APK-check</a> werkt op dezelfde manier: uw browser vraagt de openbare voertuiggegevens rechtstreeks op bij de RDW. Wij zien en bewaren het kenteken niet.</p>
 
         <h2>Deze website</h2>
         <p>Deze website gebruikt geen cookies, geen analyse- of advertentiediensten en laadt geen externe lettertypes. De website wordt gehost via GitHub Pages; GitHub kan daarbij technische gegevens zoals uw IP-adres verwerken om de site te leveren en te beveiligen. De kaart op de contactpagina wordt geladen van OpenStreetMap.</p>
@@ -1046,8 +1050,102 @@ def vragen():
         None, main))
 
 
+APK_VRAGEN = [
+    ("Hoe lang van tevoren kan ik mijn auto APK laten keuren?",
+     "U kunt uw auto tot twee maanden vóór de vervaldatum laten keuren. Uw nieuwe vervaldatum wordt dan gerekend vanaf de oude datum, zodat u geen dag verliest."),
+    ("Wat gebeurt er als mijn APK verlopen is?",
+     "Met een verlopen APK mag u niet de weg op. De RDW controleert dit automatisch en u kunt een boete krijgen. Plan daarom zo snel mogelijk een keuring."),
+    ("Hoe vaak moet mijn auto APK?",
+     "Een nieuwe auto op benzine of stroom gaat voor het eerst na vier jaar naar de APK, daarna na twee jaar en vanaf acht jaar oud elk jaar. Een auto op diesel of lpg gaat na drie jaar voor het eerst en daarna elk jaar. Voor oudere auto's en oldtimers gelden aparte regels; de APK-check toont altijd uw eigen vervaldatum."),
+    ("Waar komen de gegevens vandaan?",
+     "Uit de openbare voertuiggegevens van de RDW. Uw browser vraagt ze daar rechtstreeks op; wij zien en bewaren het kenteken niet."),
+]
+
+
+def apk_check():
+    r = "../"
+    vragen_html = "\n".join(f"""        <details class="vraag">
+          <summary>{e(v)}</summary>
+          <p>{e(a)}</p>
+        </details>""" for v, a in APK_VRAGEN)
+    schema = {"@context": "https://schema.org", "@graph": [
+        {"@type": "WebApplication", "name": "APK-check", "url": f"{SITE}/apk-check/",
+         "applicationCategory": "UtilitiesApplication", "operatingSystem": "Alle",
+         "description": "Zie met uw kenteken tot wanneer uw APK geldig is en vanaf wanneer u kunt keuren met behoud van de vervaldatum.",
+         "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"},
+         "provider": {"@type": "AutoRepair", "name": "Autoservice Barneveld", "url": SITE}},
+        {"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": v, "acceptedAnswer": {"@type": "Answer", "text": a}} for v, a in APK_VRAGEN]}]}
+    main = f"""{pagina_kop(r, "APK-check: hoe lang is uw APK nog geldig?", "dienst-apk", "Gratis APK-check", "Vul uw kenteken in en zie direct tot wanneer uw APK geldig is, vanaf wanneer u kunt keuren zonder tijd te verliezen, en de openbare gegevens van uw auto.")}
+
+  <section class="sectie apk-check-sectie">
+    <div class="wrap artikel">
+      <div class="tekst">
+        <form class="apk-check" id="apk-check" action="./" method="get" novalidate>
+          <label for="apk-kenteken">Uw kenteken</label>
+          <div class="apk-check-rij">
+            <div class="kenteken">
+              <span class="nl" aria-hidden="true">
+                {I_NL}
+                NL
+              </span>
+              <input id="apk-kenteken" name="kenteken" data-geen-rdw placeholder="AB-123-C" maxlength="8" autocomplete="off" spellcheck="false" autocapitalize="characters" required>
+            </div>
+            <button class="knop oranje" type="submit">Check APK {I_PIJL}</button>
+          </div>
+          <p class="apk-check-melding" role="alert" hidden></p>
+        </form>
+
+        <div class="apk-uitslag" id="apk-uitslag" aria-live="polite" hidden>
+          <div class="apk-status">
+            <div class="apk-status-tekst">
+              <span class="apk-status-label"></span>
+              <p class="apk-status-kop"></p>
+              <p class="apk-status-uitleg"></p>
+              <div class="apk-status-knoppen">
+                <a class="knop blauw" href="{r}contact/" data-afspraak data-dienst="APK" data-kenteken-van="#apk-kenteken">Plan uw APK {I_PIJL}</a>
+                <button type="button" class="link-klein apk-agenda">Zet een herinnering in uw agenda</button>
+              </div>
+            </div>
+          </div>
+          <div class="apk-auto">
+            <figure class="apk-plaatje">
+              <div class="apk-svg"></div>
+              <figcaption></figcaption>
+            </figure>
+            <div class="apk-gegevens">
+              <p class="apk-naam"></p>
+              <dl></dl>
+            </div>
+          </div>
+          <p class="apk-bron">Bron: openbare voertuiggegevens van de RDW. Aan deze gegevens kunnen geen rechten worden ontleend.</p>
+        </div>
+
+        <h2>Keuren met behoud van uw APK-datum</h2>
+        <p>U mag uw auto tot twee maanden vóór de vervaldatum laten keuren. De nieuwe vervaldatum wordt dan gerekend vanaf de oude, dus u verliest er geen dag mee. Verloopt uw APK bijvoorbeeld op 15 juni, dan kunt u vanaf 15 april keuren en blijft 15 juni de basis voor uw volgende APK.</p>
+
+        <h2>APK laten doen in Barneveld</h2>
+        <p>Autoservice Barneveld is door de RDW erkend en keurt auto's van alle merken, ook elektrische auto's. Combineer de keuring gerust met een <a href="{r}onderhoud-reparatie/">onderhoudsbeurt</a>, dan bent u in één keer klaar. Meer weten? Lees alles over onze <a href="{r}apk-keuring/">APK-keuring</a>.</p>
+
+        <h2>Veelgestelde vragen over de APK</h2>
+        <div class="vragen">
+{vragen_html}
+        </div>
+      </div>
+      {zijkaart(r, "APK")}
+    </div>
+  </section>
+  <script type="application/ld+json">
+{json.dumps(schema, ensure_ascii=False, indent=1)}
+  </script>"""
+    schrijf("apk-check/index.html", pagina(
+        r, "apk-check/", "APK-check: wanneer verloopt mijn APK? | Autoservice Barneveld",
+        "Gratis APK-check: vul uw kenteken in en zie direct tot wanneer uw APK geldig is, vanaf wanneer u kunt keuren met behoud van uw datum, en de RDW-gegevens van uw auto.",
+        "apk-check", main))
+
+
 def sitemap_en_llms():
-    paden = ["", *[d[0] + "/" for d in DIENSTEN], "vervangend-vervoer/", "merken/", "werkgebied/", "veelgestelde-vragen/", "over-ons/", "contact/", "privacy/"]
+    paden = ["", *[d[0] + "/" for d in DIENSTEN], "apk-check/", "vervangend-vervoer/", "merken/", "werkgebied/", "veelgestelde-vragen/", "over-ons/", "contact/", "privacy/"]
     schrijf("sitemap.xml",
             '<?xml version="1.0" encoding="UTF-8"?>\n'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -1075,6 +1173,7 @@ def sitemap_en_llms():
 
 ## Meer
 
+- [APK-check]({SITE}/apk-check/): vul een kenteken in en zie tot wanneer de APK geldig is, vanaf wanneer keuren met behoud van de vervaldatum kan, en de openbare RDW-gegevens van de auto.
 - [Vervangend vervoer]({SITE}/vervangend-vervoer/)
 - [Alle merken]({SITE}/merken/)
 - [Werkgebied]({SITE}/werkgebied/)
@@ -1097,4 +1196,5 @@ if __name__ == "__main__":
     contact()
     privacy()
     niet_gevonden()
+    apk_check()
     sitemap_en_llms()

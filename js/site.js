@@ -93,7 +93,7 @@
         .catch(function () { info.hidden = true; });
     }, 350);
   }
-  Array.prototype.forEach.call(document.querySelectorAll('input[name="kenteken"]'), function (invoer) {
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="kenteken"]:not([data-geen-rdw])'), function (invoer) {
     invoer.addEventListener('input', function () { controleerKenteken(invoer); zoekRdw(invoer); });
   });
 
@@ -115,6 +115,190 @@
     if (aan) aan.addEventListener('click', function () { kentekenOnbekend(form, true, true); });
     if (uit) uit.addEventListener('click', function () { kentekenOnbekend(form, false, true); });
   });
+
+  /* ---------- APK-check: openbare RDW-gegevens bij een kenteken ---------- */
+  (function () {
+    var form = document.getElementById('apk-check');
+    if (!form || !window.fetch) return;
+    var invoer = form.elements.kenteken;
+    var melding = form.querySelector('.apk-check-melding');
+    var uitslag = document.getElementById('apk-uitslag');
+    var status = uitslag.querySelector('.apk-status');
+    var agendaKnop = uitslag.querySelector('.apk-agenda');
+    var RDW = 'https://opendata.rdw.nl/resource/';
+    var KLEUREN = { ZWART: '#1f2125', WIT: '#f3f4f5', GRIJS: '#8b9097', BLAUW: '#2b5ca8', ROOD: '#c3282e', GROEN: '#2f7d4f',
+      GEEL: '#f0c12c', ORANJE: '#e4782c', BRUIN: '#6d4b30', BEIGE: '#d9c8a4', CREME: '#efe6cf', PAARS: '#6b3e90', ROSE: '#e8a4b7' };
+    var huidig = null;
+
+    function dag(d) { var x = new Date(d); x.setHours(0, 0, 0, 0); return x; }
+    function lang(d) { return d.toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }); }
+    function kort(d) { return d.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' }); }
+    function rdwDatum(v) { return v ? new Date(+v.slice(0, 4), +v.slice(4, 6) - 1, +v.slice(6, 8)) : null; }
+    // Twee maanden eerder, op dezelfde dag (of de laatste dag van die maand)
+    function tweeMaandenEerder(d) {
+      var x = new Date(d.getFullYear(), d.getMonth() - 2, 1);
+      var laatste = new Date(x.getFullYear(), x.getMonth() + 1, 0).getDate();
+      x.setDate(Math.min(d.getDate(), laatste));
+      return x;
+    }
+    function duur(dagen) {
+      if (dagen === 1) return '1 dag';
+      if (dagen < 62) return dagen + ' dagen';
+      var m = Math.floor(dagen / 30.44);
+      return 'ruim ' + (m >= 24 ? Math.floor(m / 12) + ' jaar' : m + ' maanden');
+    }
+    function getal(n) { return Number(n).toLocaleString('nl-NL'); }
+    function tekst(t) { var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+
+    function plaatje(kleur, bestel) {
+      var vul = KLEUREN[(kleur || '').toUpperCase()] || '#9aa3ad';
+      var rand = vul === '#f3f4f5' || vul === '#efe6cf' ? '#9aa3ad' : 'rgba(0,0,0,.25)';
+      var lijf = bestel
+        ? 'M14 74V40q0-8 8-10l40-6h96q10 0 16 7l26 24 20 4q10 2 10 12v3z'
+        : 'M16 74V60q2-8 12-10l42-5 26-19q5-4 12-4h52q10 0 17 6l23 18 24 5q10 2 10 12v11z';
+      var ramen = bestel
+        ? '<path d="M150 31h20q5 0 9 4l20 18h-49z" fill="#cfe2f2" stroke="' + rand + '"/>'
+        : '<path d="M104 31h30v19H80z" fill="#cfe2f2" stroke="' + rand + '"/><path d="M140 31h22q6 0 10 4l16 15h-48z" fill="#cfe2f2" stroke="' + rand + '"/>';
+      function wiel(x) { return '<circle cx="' + x + '" cy="76" r="17" fill="#26282c"/><circle cx="' + x + '" cy="76" r="7" fill="#c7cbd1"/>'; }
+      return '<svg viewBox="0 0 256 100" role="img" aria-label="Illustratie van de auto">' +
+        '<ellipse cx="128" cy="93" rx="112" ry="5" fill="rgba(0,0,0,.12)"/>' +
+        '<path d="' + lijf + '" fill="' + vul + '" stroke="' + rand + '" stroke-width="1.5"/>' + ramen +
+        wiel(bestel ? 62 : 64) + wiel(bestel ? 196 : 194) + '</svg>';
+    }
+
+    function toonStatus(apk, kenteken) {
+      var vandaag = dag(new Date());
+      status.className = 'apk-status';
+      var label = uitslag.querySelector('.apk-status-label');
+      var kop = uitslag.querySelector('.apk-status-kop');
+      var uitleg = uitslag.querySelector('.apk-status-uitleg');
+      huidig = null;
+      agendaKnop.hidden = true;
+      if (!apk) {
+        status.classList.add('onbekend');
+        label.textContent = 'Geen APK-datum';
+        kop.textContent = 'De RDW heeft geen APK-vervaldatum voor dit voertuig.';
+        uitleg.textContent = 'Mogelijk is het voertuig niet APK-plichtig. Twijfelt u? Bel of app ons gerust.';
+        return;
+      }
+      var dagen = Math.round((apk - vandaag) / 864e5);
+      var vanaf = tweeMaandenEerder(apk);
+      if (dagen < 0) {
+        status.classList.add('verlopen');
+        label.textContent = 'APK verlopen';
+        kop.textContent = 'Uw APK is verlopen op ' + kort(apk) + '.';
+        uitleg.textContent = 'Met een verlopen APK mag u niet de weg op. Plan zo snel mogelijk uw keuring, of bel ons voor een snelle afspraak.';
+      } else if (vandaag >= vanaf) {
+        status.classList.add('nu');
+        label.textContent = 'U kunt nu keuren';
+        kop.textContent = 'Uw APK verloopt over ' + duur(dagen) + ', op ' + lang(apk) + '.';
+        uitleg.textContent = 'U kunt nu al keuren met behoud van uw vervaldatum: de nieuwe datum wordt gerekend vanaf ' + kort(apk) + '.';
+      } else {
+        status.classList.add('geldig');
+        label.textContent = 'APK geldig';
+        kop.textContent = 'Uw APK is nog ' + duur(dagen) + ' geldig, tot ' + lang(apk) + '.';
+        uitleg.textContent = 'Vanaf ' + lang(vanaf) + ' kunt u keuren met behoud van uw vervaldatum.';
+        huidig = { vanaf: vanaf, apk: apk, kenteken: kenteken };
+        agendaKnop.hidden = false;
+      }
+    }
+
+    function toonAuto(a, brandstof) {
+      var merk = netjes(a.merk || ''), type = netjes(a.handelsbenaming || '');
+      var naam = type.toLowerCase().indexOf(merk.toLowerCase()) === 0 ? type : (merk + ' ' + type).trim();
+      uitslag.querySelector('.apk-naam').textContent = naam;
+      var kleur = (a.eerste_kleur || '').toLowerCase();
+      var bestel = /bedrijfsauto/i.test(a.voertuigsoort || '');
+      uitslag.querySelector('.apk-svg').innerHTML = plaatje(a.eerste_kleur, bestel);
+      uitslag.querySelector('.apk-plaatje figcaption').textContent =
+        'Illustratie' + (kleur && kleur !== 'n.v.t.' && kleur !== 'diversen' ? ' in de kleur van uw auto (' + kleur + ')' : '');
+      var eerste = rdwDatum(a.datum_eerste_toelating), nl = rdwDatum(a.datum_eerste_tenaamstelling_in_nederland);
+      var rijen = [];
+      function rij(k, v) { if (v) rijen.push('<dt>' + k + '</dt><dd>' + v + '</dd>'); }
+      rij('Kenteken', tekst(kentekenNetjes(a.kenteken)));
+      rij('Soort', tekst([a.voertuigsoort, a.inrichting && a.inrichting !== 'Niet geregistreerd' ? a.inrichting : ''].filter(Boolean).join(', ')));
+      rij('Kleur', tekst(kleur && kleur !== 'n.v.t.' ? kleur.charAt(0).toUpperCase() + kleur.slice(1) : ''));
+      rij('Brandstof', tekst(brandstof.soort.charAt(0) + brandstof.soort.slice(1).toLowerCase()));
+      rij('Vermogen', brandstof.kw ? getal(Math.round(brandstof.kw)) + ' kW (' + getal(Math.round(brandstof.kw * 1.36)) + ' pk)' : '');
+      rij('Eerste toelating', eerste ? kort(eerste) : '');
+      if (eerste && nl && Math.abs(nl - eerste) > 864e5 * 30) rij('In Nederland sinds', kort(nl) + ' (import)');
+      rij('Cilinderinhoud', +a.cilinderinhoud ? getal(a.cilinderinhoud) + ' cc' : '');
+      rij('Zitplaatsen', tekst(a.aantal_zitplaatsen || ''));
+      rij('Gewicht rijklaar', +a.massa_rijklaar ? getal(a.massa_rijklaar) + ' kg' : '');
+      rij('Trekgewicht', +a.maximum_trekken_massa_geremd ? getal(a.maximum_trekken_massa_geremd) + ' kg geremd' +
+        (+a.maximum_massa_trekken_ongeremd ? ', ' + getal(a.maximum_massa_trekken_ongeremd) + ' kg ongeremd' : '') : '');
+      rij('Energielabel', tekst(a.zuinigheidsclassificatie || ''));
+      rij('Tellerstand', tekst(a.tellerstandoordeel || ''));
+      rij('Verzekerd (WAM)', tekst(a.wam_verzekerd || ''));
+      if (a.openstaande_terugroepactie_indicator === 'Ja') {
+        rij('Terugroepactie', '<span class="apk-let-op">Ja, er staat een terugroepactie open.</span> Neem contact op met de dealer of vraag het ons.');
+      } else rij('Terugroepactie', a.openstaande_terugroepactie_indicator === 'Nee' ? 'Geen openstaande' : '');
+      uitslag.querySelector('.apk-gegevens dl').innerHTML = rijen.join('');
+    }
+
+    function check(waarde, schuif) {
+      melding.hidden = true;
+      if (!kentekenOk(waarde)) {
+        melding.textContent = 'Vul een Nederlands kenteken in, bijvoorbeeld AB-123-C.';
+        melding.hidden = false; uitslag.hidden = true; invoer.focus(); return;
+      }
+      var kaal = waarde.replace(/[\s-]/g, '').toUpperCase();
+      var knop = form.querySelector('button[type="submit"]');
+      knop.disabled = true;
+      Promise.all([
+        fetch(RDW + 'm9d7-ebf2.json?kenteken=' + kaal).then(function (r) { return r.json(); }),
+        fetch(RDW + '8ys7-d773.json?kenteken=' + kaal).then(function (r) { return r.json(); }).catch(function () { return []; })
+      ]).then(function (res) {
+        var a = res[0] && res[0][0];
+        if (!a) {
+          melding.textContent = 'Dit kenteken vinden we niet bij de RDW. Controleer of het goed is ingevuld.';
+          melding.hidden = false; uitslag.hidden = true; return;
+        }
+        var soorten = [], kw = 0;
+        (res[1] || []).forEach(function (b) {
+          if (b.brandstof_omschrijving && soorten.indexOf(b.brandstof_omschrijving) === -1) soorten.push(b.brandstof_omschrijving);
+          if (!kw && +b.nettomaximumvermogen) kw = +b.nettomaximumvermogen;
+        });
+        toonStatus(rdwDatum(a.vervaldatum_apk), kentekenNetjes(kaal));
+        toonAuto(a, { soort: soorten.join(' en '), kw: kw });
+        uitslag.hidden = false;
+        try { history.replaceState(null, '', '?kenteken=' + kaal); } catch (e) { /* niets */ }
+        if (schuif) uitslag.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }).catch(function () {
+        melding.textContent = 'De gegevens van de RDW zijn nu niet bereikbaar. Probeer het later nog eens of bel ons.';
+        melding.hidden = false;
+      }).then(function () { knop.disabled = false; });
+    }
+
+    invoer.addEventListener('input', function () { controleerKenteken(invoer); melding.hidden = true; });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      invoer.value = kentekenNetjes(invoer.value);
+      check(invoer.value, true);
+    });
+
+    // Herinnering: agenda-afspraak (.ics) op de dag dat keuren met behoud van datum kan
+    agendaKnop.addEventListener('click', function () {
+      if (!huidig) return;
+      function ics(d) { return d.getFullYear() + ('0' + (d.getMonth() + 1)).slice(-2) + ('0' + d.getDate()).slice(-2); }
+      var eind = new Date(huidig.vanaf); eind.setDate(eind.getDate() + 1);
+      var regels = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Autoservice Barneveld//APK-check//NL', 'BEGIN:VEVENT',
+        'UID:apk-' + huidig.kenteken + '-' + ics(huidig.vanaf) + '@autoservicebarneveld.nl',
+        'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z',
+        'DTSTART;VALUE=DATE:' + ics(huidig.vanaf), 'DTEND;VALUE=DATE:' + ics(eind),
+        'SUMMARY:APK ' + huidig.kenteken + ' plannen',
+        'DESCRIPTION:Vanaf vandaag kunt u keuren met behoud van uw vervaldatum (' + kort(huidig.apk) + '). Plan uw APK via www.autoservicebarneveld.nl of bel 0342-234003.'.replace(/([,;])/g, '\\$1'),
+        'END:VEVENT', 'END:VCALENDAR'];
+      var url = URL.createObjectURL(new Blob([regels.join('\r\n')], { type: 'text/calendar' }));
+      var link = document.createElement('a');
+      link.href = url; link.download = 'APK-' + huidig.kenteken + '.ics';
+      document.body.appendChild(link); link.click(); link.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    });
+
+    var gevraagd = new URLSearchParams(location.search).get('kenteken');
+    if (gevraagd) { invoer.value = kentekenNetjes(gevraagd); check(invoer.value, false); }
+  })();
 
   /* ---------- Afspraakvenster ---------- */
   var venster = document.getElementById('afspraak-venster');
@@ -179,7 +363,9 @@
   Array.prototype.forEach.call(document.querySelectorAll('[data-afspraak]'), function (knop) {
     knop.addEventListener('click', function (e) {
       e.preventDefault();
-      open({ dienst: knop.getAttribute('data-dienst') || '' });
+      var van = knop.getAttribute('data-kenteken-van');
+      var bron = van && document.querySelector(van);
+      open({ dienst: knop.getAttribute('data-dienst') || '', kenteken: bron && kentekenOk(bron.value) ? kentekenNetjes(bron.value) : '' });
     });
   });
 

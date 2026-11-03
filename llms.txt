@@ -23,6 +23,7 @@
 
 ## Meer
 
+- [APK-check](https://www.autoservicebarneveld.nl/apk-check/): vul een kenteken in en zie tot wanneer de APK geldig is, vanaf wanneer keuren met behoud van de vervaldatum kan, en de openbare RDW-gegevens van de auto.
 - [Vervangend vervoer](https://www.autoservicebarneveld.nl/vervangend-vervoer/)
 - [Alle merken](https://www.autoservicebarneveld.nl/merken/)
 - [Werkgebied](https://www.autoservicebarneveld.nl/werkgebied/)
