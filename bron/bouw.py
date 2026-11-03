@@ -193,6 +193,15 @@ def e(t):
     return html.escape(t, quote=True)
 
 
+def srcset(r, naam, sizes):
+    """srcset + sizes voor een foto in img/, met de kleinere varianten (naam-480.webp enz.) die bestaan."""
+    from PIL import Image
+    breedte = Image.open(ROOT / "img" / f"{naam}.webp").size[0]
+    delen = [f"{r}img/{naam}-{b}.webp {b}w" for b in (480, 960, 1440) if (ROOT / "img" / f"{naam}-{b}.webp").exists()]
+    delen.append(f"{r}img/{naam}.webp {breedte}w")
+    return f'srcset="{", ".join(delen)}" sizes="{sizes}"'
+
+
 # ------------------------------------------------------------------ vaste blokken
 def schema_tag():
     data = json.loads((ROOT / "bron" / "bedrijf.json").read_text(encoding="utf-8"))
@@ -200,7 +209,7 @@ def schema_tag():
             + json.dumps(data, ensure_ascii=False, indent=1) + "\n</script>")
 
 
-def head(r, pad, title, desc, noindex=False):
+def head(r, pad, title, desc, noindex=False, og="deelafbeelding.jpg"):
     regels = [
         '<meta charset="utf-8">',
         '<meta name="viewport" content="width=device-width, initial-scale=1">',
@@ -221,7 +230,7 @@ def head(r, pad, title, desc, noindex=False):
             f'<meta property="og:title" content="{e(title)}">',
             f'<meta property="og:description" content="{e(desc)}">',
             f'<meta property="og:url" content="{url}">',
-            f'<meta property="og:image" content="{SITE}/img/deelafbeelding.jpg">',
+            f'<meta property="og:image" content="{SITE}/img/{og}">',
             '<meta property="og:image:width" content="1200">',
             '<meta property="og:image:height" content="630">',
             '<meta name="twitter:card" content="summary_large_image">',
@@ -452,10 +461,12 @@ def voet(r):
 
 
 def pagina(r, pad, title, desc, actief, main, noindex=False):
+    foto, OG_FOTO[0] = OG_FOTO[0], None
+    og = f"og-{foto}.jpg" if foto and (ROOT / "img" / f"og-{foto}.jpg").exists() else "deelafbeelding.jpg"
     return f"""<!DOCTYPE html>
 <html lang="nl">
 <head>
-{head(r, pad, title, desc, noindex)}
+{head(r, pad, title, desc, noindex, og)}
 </head>
 <body>
 {kop(r, actief)}
@@ -488,11 +499,15 @@ def zijkaart(r, dienst=""):
       </aside>"""
 
 
+OG_FOTO = [None]  # foto van de laatst opgebouwde paginakop, voor de deelafbeelding
+
+
 def pagina_kop(r, h1, foto, kicker="", inleiding=""):
+    OG_FOTO[0] = foto
     k = f'<span class="kicker"><i aria-hidden="true"></i>{kicker}</span>\n      ' if kicker else ""
     i = f'\n      <p class="inleiding">{inleiding}</p>' if inleiding else ""
     return f"""  <section class="pagina-kop">
-    <div class="hero-foto"><img src="{r}img/{foto}.webp" alt="" width="1848" height="1232" fetchpriority="high"></div>
+    <div class="hero-foto"><img src="{r}img/{foto}.webp" {srcset(r, foto, "100vw")} alt="" width="1848" height="1232" fetchpriority="high"></div>
     <div class="wrap">
       {k}<h1>{h1}</h1>{i}
     </div>
@@ -614,18 +629,18 @@ def homepage():
         if slug == "elektrische-auto":
             continue
         lijst.append(f"""        <li class="dienst">
-          <img src="img/{foto}.webp" alt="{e(alt)}" width="960" height="639" loading="lazy">
+          <img src="img/{foto}.webp" {srcset("", foto, "(max-width: 600px) 100vw, 220px")} alt="{e(alt)}" width="960" height="639" loading="lazy">
           <div><h3><a href="{slug}/">{e(naam)}</a></h3><p>{kort}</p><a class="meer" href="{slug}/">Meer over {e(naam.lower() if slug != 'apk-keuring' else 'de APK')}</a></div>
           <a class="plan" href="contact/" data-afspraak data-dienst="{e(DIENST_NAAR_KEUZE.get(naam, "Onderhoudsbeurt"))}">{knop} <span aria-hidden="true">→</span></a>
         </li>""")
     lijst.append(f"""        <li class="dienst">
-          <img src="img/hero-home.webp" alt="Auto op de brug voor een aankoopkeuring" width="960" height="639" loading="lazy">
+          <img src="img/hero-home.webp" {srcset("", "hero-home", "(max-width: 600px) 100vw, 220px")} alt="Auto op de brug voor een aankoopkeuring" width="960" height="639" loading="lazy">
           <div><h3><a href="aankoopkeuring/">Aankoopkeuring</a></h3><p>Een tweedehands auto vóór de koop onafhankelijk laten nakijken, met een eerlijk advies van de monteur.</p><a class="meer" href="aankoopkeuring/">Meer over de aankoopkeuring</a></div>
           <a class="plan" href="contact/" data-afspraak data-dienst="Overig" data-omschrijving="Aankoopkeuring">Plan aankoopkeuring <span aria-hidden="true">→</span></a>
         </li>""")
     diensten = "\n".join(lijst)
     main = f"""  <section class="hero" id="afspraak" aria-labelledby="hero-titel">
-    <div class="hero-foto"><img src="img/hero-home.webp" alt="" width="1848" height="1232" fetchpriority="high"></div>
+    <div class="hero-foto"><img src="img/hero-home.webp" {srcset("", "hero-home", "100vw")} alt="" width="1848" height="1232" fetchpriority="high"></div>
     <div class="wrap">
       <div class="hero-tekst">
         <h1 id="hero-titel">Vakkundig onderhoud voor uw auto in Barneveld</h1>
@@ -690,7 +705,7 @@ def homepage():
 
   <section class="sectie over" id="over-ons" aria-labelledby="over-titel">
     <div class="wrap">
-      <div class="over-foto"><img src="img/hero-over-ons.webp" alt="De monteur van Autoservice Barneveld in de werkplaats" width="1232" height="1848" loading="lazy"></div>
+      <div class="over-foto"><img src="img/hero-over-ons.webp" {srcset("", "hero-over-ons", "(max-width: 900px) 100vw, 560px")} alt="De monteur van Autoservice Barneveld in de werkplaats" width="1232" height="1848" loading="lazy"></div>
       <div>
         <span class="label">Over ons</span>
         <h2 class="groot" id="over-titel">Kwaliteit en service staan voorop</h2>
@@ -712,7 +727,10 @@ def homepage():
 
 {review_sectie()}
 
-{contact_sectie("", kaart=False)}"""
+{contact_sectie("", kaart=False)}
+  <script type="application/ld+json">
+{json.dumps({"@context": "https://schema.org", "@type": "WebSite", "name": "Autoservice Barneveld", "url": SITE + "/", "inLanguage": "nl-NL", "publisher": {"@id": SITE + "/#bedrijf"}}, ensure_ascii=False, indent=1)}
+  </script>"""
     schrijf("index.html", pagina(
         "", "", "Garage Barneveld: APK & onderhoud | Autoservice Barneveld",
         "Universele garage in Barneveld voor APK, onderhoud, reparatie, diagnose, banden, uitlijnen en airco. Alle merken, ook elektrisch. Bel 0342-234003.",
@@ -743,7 +761,7 @@ def vervoer_sectie(r, titel_h="h2", link=True):
           <h3>Volkswagen Caddy</h3>
           <p>Praktisch en ruim, ideaal voor ondernemers die hun werk niet kunnen onderbreken.</p>
         </article>
-        <div class="optie foto"><img src="{r}img/hero-vervangend-vervoer.webp" alt="Leenauto van Autoservice Barneveld in de werkplaats" width="1848" height="1232" loading="lazy"></div>
+        <div class="optie foto"><img src="{r}img/hero-vervangend-vervoer.webp" {srcset(r, "hero-vervangend-vervoer", "(max-width: 1060px) 100vw, 400px")} alt="Leenauto van Autoservice Barneveld in de werkplaats" width="1848" height="1232" loading="lazy"></div>
       </div>
       <ul class="extra">
         <li>{I_VINK}<span><strong>Leenfiets <svg class="blad" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20 3C10 3 4 8 4 15c0 1.6.4 3 1 4.2C7 14 11 10.5 16 8.5c-4 2.6-7.4 6.4-9.3 11.3 1.3.8 2.8 1.2 4.3 1.2C18 21 21 13 20 3z"/></svg><span class="sr-only"> (milieuvriendelijk)</span></strong>Voor korte ritten.</span></li>
