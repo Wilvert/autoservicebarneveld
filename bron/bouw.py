@@ -557,8 +557,8 @@ WAAROM = [
     ("Geen wachttijden",
      "Geen keuzemenu, geen receptie en geen rij aan de balie. U belt of appt en krijgt direct antwoord van de vakman zelf.",
      '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'),
-    ("Dezelfde mogelijkheden als de dealer",
-     "Ik werk met de officiële dealersoftware en technische gegevens van de fabrikant, en bestel originele onderdelen voor alle merken.",
+    ("Dealermogelijkheden waar nodig",
+     "Ik heb toegang tot de officiële dealersoftware en originele onderdelen van alle merken. Niet standaard, maar wel wanneer het nodig is of als u daar de voorkeur aan geeft.",
      '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>'),
     ("Uw fabrieksgarantie blijft geldig",
      'Onderhoud volgens de voorschriften van de fabrikant houdt uw garantie intact. Daarvoor hoeft u niet naar de dealer. <a href="merken/">Lees meer</a>',
@@ -813,7 +813,7 @@ def over_ons():
 
         <h2>Waarom klanten kiezen voor Autoservice Barneveld</h2>
         <p>Klanten waarderen vooral de combinatie van deskundigheid, duidelijke communicatie en een nuchtere aanpak. Waar u bij een dealer of grote garage eerst langs een receptie of serviceadviseur gaat, spreekt u bij ons direct de monteur die ook aan uw auto werkt. Dat scheelt misverstanden en wachttijd.</p>
-        <p>Tegelijk biedt een zelfstandige garage dezelfde mogelijkheden als een dealer. Ik werk met de officiële dealersoftware en technische gegevens van de fabrikant, bestel originele onderdelen voor alle merken en houd mijn kennis bij met regelmatige bijscholing en aanvullende certificaten. Omdat ik geen personeel, receptie of showroom heb, zijn de kosten lager, en dat ziet u terug in een eerlijk tarief. Kortom: u bespaart tijd, gedoe en geld.</p>
+        <p>Tegelijk biedt een zelfstandige garage dezelfde mogelijkheden als een dealer. Ik heb toegang tot de officiële dealersoftware en originele onderdelen van alle merken, en zet die in wanneer het nodig is of als u daar de voorkeur aan geeft. Daarnaast houd ik mijn kennis bij met regelmatige bijscholing en aanvullende certificaten. Omdat ik geen personeel, receptie of showroom heb, zijn de kosten lager, en dat ziet u terug in een eerlijk tarief. Kortom: u bespaart tijd, gedoe en geld.</p>
 
         <ol class="stappen" aria-label="Zo werkt het">
           <li><strong>U plant een afspraak</strong><p>Online met uw kenteken via WhatsApp, of telefonisch.</p></li>
@@ -936,7 +936,7 @@ VRAGEN = [
     ("Is een aanvraag via de website meteen een afspraak?",
      "Nee. U geeft uw voorkeur door en wij nemen contact op om de afspraak te bevestigen. Heeft u haast, bel dan {tel}."),
     ("Wat is het verschil met een dealer?",
-     "U spreekt direct de monteur die aan uw auto werkt, zonder receptie of tussenpersoon. Ik werk met de officiële dealersoftware van de fabrikant en bestel originele onderdelen voor alle merken. Omdat er geen personeel of showroom is, zijn de kosten lager. Uw fabrieksgarantie blijft gewoon geldig."),
+     "U spreekt direct de monteur die aan uw auto werkt, zonder receptie of tussenpersoon. Waar nodig, of als u dat wilt, gebruik ik de officiële dealersoftware en originele onderdelen, voor alle merken. Omdat er geen personeel of showroom is, zijn de kosten lager. Uw fabrieksgarantie blijft gewoon geldig."),
     ("Onderhouden jullie alle merken?",
      "Ja. Wij zijn een universele, zelfstandige garage en werken aan alle merken en modellen, ook aan elektrische en hybride auto's. Zie ook <a href=\"{r}merken/\">alle merken</a>."),
     ("Blijft mijn fabrieksgarantie geldig als ik bij jullie onderhoud laat doen?",
