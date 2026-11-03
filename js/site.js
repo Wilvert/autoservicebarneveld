@@ -217,7 +217,8 @@
      - eerder dan twee weken vanaf vandaag
      - zaterdag en zondag
      - de weekdagen in GEBLOKKEERD (per maand, 'jjjj-mm'; 1 = ma, 2 = di, 3 = wo ...)
-     - losse data in GEBLOKKEERDE_DATA ('jjjj-mm-dd') */
+     - losse data in GEBLOKKEERDE_DATA ('jjjj-mm-dd')
+     - officiële feestdagen (elk jaar automatisch, zie feestdagen()) */
   var GEBLOKKEERD = {
     '2026-11': [2, 3],   // november: dinsdag en woensdag
     '2026-12': [2]       // december: dinsdag
@@ -247,12 +248,40 @@
   function kort(v) {
     return lees(v).toLocaleDateString('nl-NL', { weekday: 'short', day: 'numeric', month: 'short' });
   }
+  // Officiële vrije dagen in Nederland, per jaar berekend.
+  // Bevrijdingsdag alleen in lustrumjaren (2030, 2035 ...); Goede Vrijdag niet.
+  var feestCache = {};
+  function feestdagen(j) {
+    if (feestCache[j]) return feestCache[j];
+    // Paasdatum (Meeus/Jones/Butcher)
+    var a = j % 19, b = Math.floor(j / 100), c = j % 100, d = Math.floor(b / 4), e = b % 4,
+        f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30,
+        i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7,
+        m = Math.floor((a + 11 * h + 22 * l) / 451), mnd = Math.floor((h + l - 7 * m + 114) / 31),
+        dg = ((h + l - 7 * m + 114) % 31) + 1;
+    function naPasen(n) { return iso(new Date(j, mnd - 1, dg + n)); }
+    var koning = new Date(j, 3, 27);
+    if (koning.getDay() === 0) koning = new Date(j, 3, 26);
+    var lijst = [
+      j + '-01-01',      // Nieuwjaarsdag
+      naPasen(1),        // Tweede paasdag
+      iso(koning),       // Koningsdag
+      naPasen(39),       // Hemelvaartsdag
+      naPasen(50),       // Tweede pinksterdag
+      j + '-12-25',      // Eerste kerstdag
+      j + '-12-26'       // Tweede kerstdag
+    ];
+    if (j % 5 === 0) lijst.push(j + '-05-05'); // Bevrijdingsdag (lustrumjaar)
+    return (feestCache[j] = lijst);
+  }
+
   function beschikbaar(d) {
     var dag = d.getDay();
     if (dag === 0 || dag === 6) return false;
     if (d < eersteDag() || d > laatsteDag()) return false;
     var maand = GEBLOKKEERD[d.getFullYear() + '-' + twee(d.getMonth() + 1)];
     if (maand && maand.indexOf(dag) !== -1) return false;
+    if (feestdagen(d.getFullYear()).indexOf(iso(d)) !== -1) return false;
     return GEBLOKKEERDE_DATA.indexOf(iso(d)) === -1;
   }
 
