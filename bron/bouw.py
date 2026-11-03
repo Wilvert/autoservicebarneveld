@@ -1196,7 +1196,7 @@ def apk_check():
         <h2>APK laten doen in Barneveld</h2>
         <p>Autoservice Barneveld is door de RDW erkend en keurt auto's van alle merken, ook elektrische auto's. Combineer de keuring gerust met een <a href="{r}onderhoud-reparatie/">onderhoudsbeurt</a>, dan bent u in één keer klaar. Meer weten? Lees alles over onze <a href="{r}apk-keuring/">APK-keuring</a>.</p>""" + meer_checks("apk-check")
     tool_pagina("apk-check", "APK-check: wanneer verloopt mijn APK? | Autoservice Barneveld",
-                "Gratis APK-check: vul uw kenteken in en zie direct tot wanneer uw APK geldig is, vanaf wanneer u kunt keuren met behoud van uw datum, en de RDW-gegevens van uw auto.",
+                "Gratis APK-check: zie met uw kenteken direct tot wanneer uw APK geldig is en vanaf wanneer u kunt keuren met behoud van uw datum. Plus de RDW-gegevens.",
                 "APK-check: hoe lang is uw APK nog geldig?", "dienst-apk", "Gratis APK-check",
                 "Vul uw kenteken in en zie direct tot wanneer uw APK geldig is, vanaf wanneer u kunt keuren zonder tijd te verliezen, en de openbare gegevens van uw auto.",
                 inhoud, [(v, e(a)) for v, a in APK_VRAGEN],
@@ -1232,8 +1232,8 @@ def occasion_check():
 
         <h2>Laat de auto even nakijken</h2>
         <p>Twijfelt u, of wilt u gewoon zeker zijn? Breng de auto vóór de koop even langs voor een <a href="{r}aankoopkeuring/">aankoopkeuring</a>. We bekijken hem op de brug, lezen de elektronica uit en vertellen u eerlijk wat we zien.</p>""" + meer_checks("occasion-check")
-    tool_pagina("occasion-check", "Occasion-check: APK-historie en gebreken per kenteken | Autoservice Barneveld",
-                "Gratis occasion-check: zie bij een kenteken de APK-datum, eerder gemelde gebreken, het tellerstandoordeel, import en terugroepacties. Handig vóór u een tweedehands auto koopt.",
+    tool_pagina("occasion-check", "Occasion-check: APK-historie en gebreken | Autoservice Barneveld",
+                "Gratis occasion-check: zie bij een kenteken de APK-datum, eerder gemelde gebreken, tellerstand, import en terugroepacties. Handig vóór u een occasion koopt.",
                 "Occasion-check: wat is er bekend over deze auto?", "dienst-diagnose", "Gratis occasion-check",
                 "Een tweedehands auto op het oog? Vul het kenteken in en zie de APK-historie, gemelde gebreken, het tellerstandoordeel en meer.",
                 inhoud, OCCASION_VRAGEN,
@@ -1305,8 +1305,8 @@ def kentekencheck():
         ("Kan ik zien wie de eigenaar is?", "Nee. De RDW deelt geen gegevens over de eigenaar of houder van een auto. Die zijn privé."),
         ("Waar komen de gegevens vandaan?", "Uit de openbare voertuiggegevens van de RDW. Uw browser vraagt ze daar rechtstreeks op; wij zien en bewaren het kenteken niet."),
     ]
-    tool_pagina("kentekencheck", "Kentekencheck: gratis autogegevens bij kenteken | Autoservice Barneveld",
-                "Gratis kentekencheck: zie direct merk, model, bouwjaar, brandstof, vermogen, gewicht, APK-datum en tellerstandoordeel van een auto. Rechtstreeks uit de RDW-gegevens.",
+    tool_pagina("kentekencheck", "Kentekencheck: gratis autogegevens | Autoservice Barneveld",
+                "Gratis kentekencheck: zie direct merk, model, bouwjaar, brandstof, vermogen, gewicht, APK-datum en tellerstand van een auto, rechtstreeks van de RDW.",
                 "Kentekencheck: alle gegevens van een auto", "dienst-diagnose", "Gratis kentekencheck",
                 "Vul een kenteken in en zie direct de openbare gegevens van de auto, rechtstreeks van de RDW.",
                 inhoud, vragen, ("Kentekencheck", "Zie bij een kenteken de openbare RDW-gegevens van een auto, zoals merk, model, bouwjaar, brandstof, APK-datum en tellerstandoordeel."))
@@ -1443,8 +1443,8 @@ def dashboardlampjes():
         ("Het lampje is vanzelf weer uitgegaan. Moet ik iets doen?", "De storing staat vaak nog wel in het geheugen van de auto. Laat het bij de volgende gelegenheid even uitlezen, zeker als het vaker gebeurt."),
         ("Kan ik een storing zelf wissen?", "Wissen haalt alleen het lampje weg, niet de oorzaak. Komt het lampje terug, dan is er nog iets aan de hand."),
     ]
-    tool_pagina("dashboardlampjes", "Dashboardlampjes: wat betekent dit lampje? | Autoservice Barneveld",
-                "Wat betekent het lampje op uw dashboard? Uitleg per kleur: motorstoring, oliedruk, accu, remmen, ABS, bandenspanning, roetfilter en meer. Met wat u het beste kunt doen.",
+    tool_pagina("dashboardlampjes", "Dashboardlampje: wat betekent het? | Autoservice Barneveld",
+                "Wat betekent het lampje op uw dashboard? Uitleg per kleur: motorstoring, oliedruk, accu, remmen, ABS, bandenspanning, roetfilter en wat u moet doen.",
                 "Dashboardlampjes: wat betekent dit lampje?", "dienst-diagnose", "Uitleg",
                 "Rood, oranje of groen: zo weet u wat een lampje betekent en of u nog kunt doorrijden.",
                 inhoud, vragen, None, "Diagnose", naam="Dashboardlampjes")
@@ -1471,7 +1471,7 @@ def winterbanden():
         ("Zijn winterbanden verplicht in Nederland?", "Nee. In Nederland niet, in onder meer Duitsland en Oostenrijk wel bij winterse omstandigheden."),
         ("Hoeveel profiel moeten winterbanden hebben?", "Wettelijk minimaal 1,6 mm, maar voor winterbanden adviseren we minimaal 4 mm. Daaronder nemen de grip op sneeuw en natte wegen sterk af."),
     ]
-    tool_pagina("winterbanden", "Winterbanden: is het al tijd om te wisselen? | Autoservice Barneveld",
+    tool_pagina("winterbanden", "Winterbanden: al tijd om te wisselen? | Autoservice Barneveld",
                 "Is het tijd voor winterbanden? Bekijk de temperatuurverwachting voor Barneveld en de 7-gradenregel. Plus uitleg over all-season banden en wintersport.",
                 "Winterbanden: is het al tijd om te wisselen?", "dienst-banden", "Bandenmeter",
                 "Volgens de 7-gradenregel: onze meter kijkt naar de temperatuur in Barneveld voor de komende dagen.",
@@ -1514,7 +1514,7 @@ def bandencheck():
         ("Hoe oud mag een band zijn?", "Rubber veroudert, ook als u weinig rijdt. Let vanaf zes jaar extra op scheurtjes. Veel fabrikanten adviseren banden van tien jaar of ouder te vervangen, ook als er nog profiel op zit."),
         ("Wat is de minimale profieldiepte?", "Wettelijk 1,6 mm. Wij adviseren minimaal 3 mm voor zomerbanden en 4 mm voor winter- en all-season banden."),
     ]
-    tool_pagina("bandencheck", "Bandencheck: bandenmaat, leeftijd en profiel | Autoservice Barneveld",
+    tool_pagina("bandencheck", "Bandencheck: maat, leeftijd en profiel | Autoservice Barneveld",
                 "Wat betekent de bandenmaat op uw band, hoe oud is uw band (DOT-code) en hoeveel profiel moet erop? Gratis bandencheck met heldere uitleg.",
                 "Bandencheck: maat, leeftijd en profiel", "dienst-banden", "Gratis bandencheck",
                 "Vul de bandenmaat of DOT-code in en zie direct wat het betekent. Met uitleg over profiel, spanning en het bandenlabel.",
@@ -1579,7 +1579,7 @@ def onderhoudswijzer():
         ("Wat als ik een beurt heb overgeslagen?", "Geen paniek. Plan gewoon een beurt in; wij kijken wat er nodig is om weer bij te zijn."),
     ]
     tool_pagina("onderhoudswijzer", "Kleine of grote beurt? Onderhoudswijzer | Autoservice Barneveld",
-                "Wanneer is uw volgende onderhoudsbeurt, en wordt het een kleine of grote beurt? Gratis onderhoudswijzer met uitleg over het verschil. Ook voor hybride en elektrisch.",
+                "Wanneer is uw volgende onderhoudsbeurt, en wordt het een kleine of grote? Gratis onderhoudswijzer met uitleg over het verschil, ook voor elektrisch.",
                 "Onderhoudswijzer: kleine of grote beurt?", "dienst-onderhoud", "Gratis onderhoudswijzer",
                 "Vul in wanneer uw vorige beurt was en hoeveel u rijdt, en zie wanneer de volgende beurt komt.",
                 inhoud, vragen, ("Onderhoudswijzer", "Geeft een vuistregel voor wanneer de volgende onderhoudsbeurt komt en of het een kleine of grote beurt is."),
@@ -1693,7 +1693,7 @@ def klachtpagina(k):
         <ul class="hulp-links">
 {andere}
         </ul>"""
-    tool_pagina(f"hulp/{slug}", f"{h1} | Autoservice Barneveld", desc, h1, foto, "Hulp bij klachten", "Wat het kan zijn, of u nog kunt doorrijden en wanneer u het moet laten nakijken.",
+    tool_pagina(f"hulp/{slug}", f"{naam}: oorzaken | Autoservice Barneveld", desc, h1, foto, "Hulp bij klachten", "Wat het kan zijn, of u nog kunt doorrijden en wanneer u het moet laten nakijken.",
                 inhoud, (), None, dienst, kruimel=[("Wat is er met mijn auto?", f"{SITE}/hulp/")], naam=naam)
 
 
@@ -1708,7 +1708,7 @@ def hulp_overzicht():
 
         <h2>Brandt er een lampje?</h2>
         <p>Bekijk onze uitleg over <a href="{{r}}dashboardlampjes/">dashboardlampjes</a>: per lampje wat het betekent en wat u het beste kunt doen.</p>"""
-    tool_pagina("hulp", "Wat is er met mijn auto? Hulp bij klachten | Autoservice Barneveld",
+    tool_pagina("hulp", "Wat is er met mijn auto? | Autoservice Barneveld",
                 "Piepende remmen, een trillend stuur, rook uit de uitlaat of een auto die niet start? Uitleg over de meest voorkomende klachten en of u nog kunt doorrijden.",
                 "Wat is er met mijn auto?", "dienst-diagnose", "Hulp bij klachten",
                 "De meest voorkomende klachten op een rij: wat het kan zijn en of u nog kunt doorrijden.",
