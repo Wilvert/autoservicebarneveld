@@ -603,3 +603,9 @@ p.banden-uitleg.banden-let-op { padding: 10px 12px; border-radius: 6px; backgrou
 .wijzer-uitslag { margin-top: 18px; }
 .wijzer-uitslag[hidden] { display: none; }
 @media (max-width: 600px) { .wijzer-rij { grid-template-columns: 1fr; } }
+.oorzaken { margin: 0 0 1em; padding-left: 20px; }
+.oorzaken li { margin: 0 0 10px; }
+.oorzaken strong { display: block; color: var(--grijs); }
+.hulp-links { margin: 0; padding-left: 20px; columns: 2; column-gap: 28px; }
+.hulp-links li { margin: 0 0 6px; break-inside: avoid; }
+@media (max-width: 600px) { .hulp-links { columns: 1; } }

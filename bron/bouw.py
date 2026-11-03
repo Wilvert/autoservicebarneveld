@@ -1559,6 +1559,135 @@ def onderhoudswijzer():
                 "Onderhoudsbeurt")
 
 
+KLACHTEN = [
+    ("remmen-piepen", "Remmen piepen of schuren", "Remmen piepen of schuren: oorzaken en wat te doen",
+     "Piepen of schuren uw remmen? Lees de meest voorkomende oorzaken, of u nog kunt doorrijden en wanneer u de remmen moet laten nakijken.",
+     "dienst-onderhoud", "Reparatie",
+     "Piepende of schurende remmen zijn vervelend, en soms een teken dat er iets aan de hand is. Niet elk geluid is een probleem, maar remmen zijn te belangrijk om te laten zitten.",
+     [("Roest na regen of stilstaan", "Een dun laagje roest op de remschijven geeft de eerste keren remmen een schurend of piepend geluid. Verdwijnt het na een paar keer remmen, dan is er niets aan de hand."),
+      ("Versleten remblokken", "Veel remblokken hebben een slijtagestrip die gaat piepen als het blok bijna op is. Hoort u een metalen, schurend geluid, dan is het blok mogelijk al tot op het metaal versleten."),
+      ("Vuil of een steentje", "Een steentje of vuil tussen blok en schijf geeft een continu krassend geluid, ook als u niet remt."),
+      ("Ongelijke remschijven", "Trilt het stuur of het rempedaal bij het remmen, dan zijn de remschijven vaak ongelijk versleten.")],
+     "Gaat het piepen na een paar keer remmen weg, dan kunt u gewoon doorrijden. Hoort u schuren, voelt het rempedaal anders of remt de auto minder goed? Laat het dan zo snel mogelijk nakijken.",
+     "We controleren remblokken, remschijven, remklauwen en remvloeistof, en vertellen u eerlijk wat nodig is en wat nog even kan."),
+    ("auto-trekt-scheef", "Auto trekt naar links of rechts", "Auto trekt naar links of rechts: oorzaken",
+     "Trekt uw auto naar links of rechts, of staat het stuur scheef? Lees de oorzaken, zoals bandenspanning, uitlijning of de remmen, en wat u eraan kunt doen.",
+     "dienst-banden", "Uitlijnen",
+     "Trekt uw auto naar één kant terwijl u rechtdoor rijdt, of staat het stuur scheef? Een licht trekken naar rechts kan door de bolling van de weg komen. Is het duidelijk merkbaar, dan zit de oorzaak meestal in de banden, de uitlijning of de ophanging.",
+     [("Bandenspanning", "Een zachte band links of rechts laat de auto trekken. Controleer eerst de spanning van alle banden."),
+      ("Uitlijning", "Na een klap tegen een stoeprand of door een diepe kuil kan de wieluitlijning verlopen. De auto trekt dan, het stuur staat scheef en de banden slijten ongelijk."),
+      ("Versleten ophanging", "Speling in draagarmen, rubbers of stuurkogels kan de auto laten trekken, vaak samen met een onrustig stuur."),
+      ("Een vastzittende rem", "Trekt de auto vooral na het remmen naar één kant, of wordt één wiel warm? Dan kan een remklauw blijven hangen.")],
+     "U kunt meestal voorzichtig doorrijden, maar laat het binnenkort nakijken. Trekt de auto sterk of wordt een wiel heet, rijd dan liever niet verder.",
+     "We controleren banden, ophanging en remmen en meten de uitlijning nauwkeurig op. Lees meer over <a href=\"{r}bandenservice/\">uitlijnen</a>."),
+    ("stuur-trilt", "Stuur trilt tijdens het rijden", "Stuur trilt tijdens het rijden: oorzaken",
+     "Trilt uw stuur bij een bepaalde snelheid of tijdens het remmen? Lees de meest voorkomende oorzaken, van onbalans tot remschijven.",
+     "dienst-banden", "Bandenservice",
+     "Een trillend stuur is vervelend en vermoeiend. Wanneer het trilt, zegt veel over de oorzaak.",
+     [("Wielen uit balans", "Trilt het stuur vooral tussen ongeveer 80 en 120 km/u, dan zijn de wielen vaak uit balans. Balanceren lost dat meestal snel op."),
+      ("Schade aan band of velg", "Een bult in de band of een kromme velg na een klap geeft trillingen bij elke snelheid."),
+      ("Remschijven", "Trilt het alleen tijdens het remmen, dan zijn de remschijven waarschijnlijk ongelijk versleten."),
+      ("Ophanging of aandrijving", "Speling in de ophanging of een versleten aandrijfas kan ook trillingen geven, vaak bij optrekken.")],
+     "U kunt meestal doorrijden, maar laat het nakijken. Ziet u een bult in de band, rijd dan rustig en laat de band zo snel mogelijk vervangen.",
+     "We controleren banden en velgen, balanceren de wielen en kijken naar remmen en ophanging. Lees meer over onze <a href=\"{r}bandenservice/\">bandenservice</a>."),
+    ("auto-start-niet", "Auto start niet", "Auto start niet of accu leeg: oorzaken",
+     "Start uw auto niet, of hoort u alleen een klik? Lees de meest voorkomende oorzaken, zoals een lege accu, en wat u zelf kunt doen. Ook voor elektrische auto's.",
+     "dienst-diagnose", "Diagnose",
+     "Draait de motor niet, hoort u alleen een klik of start de auto heel moeizaam? Meestal ligt het aan de accu, zeker in de winter.",
+     [("Lege of oude accu", "Kou, veel korte ritten of een accu van vijf jaar of ouder: dan heeft de accu vaak niet genoeg kracht meer. De startmotor draait traag of u hoort alleen klikken."),
+      ("Dynamo", "Laadt de dynamo de accu niet op, dan is de accu na een tijdje leeg. Vaak brandt dan eerst het accu-lampje tijdens het rijden."),
+      ("Startmotor", "Is de accu goed maar gebeurt er niets of hoort u één klik, dan kan de startmotor defect zijn."),
+      ("Sleutel of startonderbreker", "Een lege batterij in de sleutel of een storing in de startonderbreker kan het starten blokkeren."),
+      ("Elektrische auto: de 12V-accu", "Ook een elektrische auto heeft een kleine 12V-accu. Is die leeg, dan gaat de auto niet aan, ook al is de grote accu vol.")],
+     "Met startkabels of een startbooster komt u vaak weer op gang. Gaat het daarna opnieuw mis, laat de accu en de dynamo dan testen.",
+     "We testen de accu en het laadsysteem, en lezen bij twijfel de auto uit. Lees meer over <a href=\"{r}diagnose/\">diagnose</a>."),
+    ("airco-koelt-niet", "Airco koelt niet of ruikt muf", "Airco koelt niet of ruikt muf: oorzaken",
+     "Koelt uw auto-airco niet meer goed, of ruikt het muf? Lees de oorzaken, zoals te weinig koudemiddel of een vervuild filter, en wat eraan te doen is.",
+     "dienst-airco", "Aircoservice",
+     "Een airco die niet meer koelt of een muffe lucht uit de roosters: het komt veel voor en is meestal goed op te lossen.",
+     [("Te weinig koudemiddel", "Een airco verliest ieder jaar een beetje koudemiddel. Na een paar jaar koelt hij merkbaar minder. Gaat het snel, dan is er mogelijk een lek."),
+      ("Compressor of ventilator", "Blijft de lucht warm, ook na bijvullen, dan kan de compressor, de koppeling ervan of de ventilator defect zijn."),
+      ("Vervuild interieurfilter", "Een vol interieurfilter geeft minder luchtstroom en kan muf ruiken."),
+      ("Bacteriën op de verdamper", "Een muffe of zure lucht komt vaak van bacteriën en schimmel in het aircosysteem. Reinigen helpt.")],
+     "U kunt gewoon doorrijden. Gebruik de airco ook in de winter af en toe: dat houdt het systeem soepel en droogt de lucht, zodat uw ruiten minder beslaan.",
+     "We controleren het systeem, vullen het koudemiddel bij, sporen lekkages op en reinigen of vervangen het filter. Lees meer over onze <a href=\"{r}airco-service/\">aircoservice</a>."),
+    ("geluid-bij-drempels", "Geluid bij drempels of sturen", "Klunkend of krakend geluid bij drempels of sturen",
+     "Hoort u een klunk bij drempels, of kraakt of tikt het bij het sturen? Lees welke onderdelen van de ophanging en besturing de oorzaak kunnen zijn.",
+     "dienst-onderhoud", "Reparatie",
+     "Een klunk bij een drempel, gekraak bij het sturen of getik in een bocht: geluiden uit de ophanging nemen meestal langzaam toe. Hoe eerder u het laat bekijken, hoe kleiner de reparatie vaak is.",
+     [("Draagarmen en rubbers", "Versleten rubbers of kogels in de draagarmen geven een klunk bij drempels en een onrustig stuurgedrag. Bij zware auto's, zoals elektrische auto's, slijten ze sneller."),
+      ("Stabilisatorstangen", "Een ratelend of klepperend geluid over oneffenheden komt vaak van de stabilisatorstangen."),
+      ("Schokdempers en veren", "Een gebroken veer of versleten schokdemper geeft gebonk en een deinende auto."),
+      ("Aandrijfas", "Een tikkend geluid bij vol insturen en optrekken, bijvoorbeeld op een parkeerplaats, wijst vaak op een versleten homokineet.")],
+     "U kunt meestal doorrijden, maar wacht niet te lang: speling in de ophanging maakt de auto minder stabiel en laat de banden sneller slijten.",
+     "We bekijken de ophanging op de brug en vertellen u wat er versleten is. Lees meer over <a href=\"{r}onderhoud-reparatie/\">onderhoud en reparatie</a>."),
+    ("rook-uit-uitlaat", "Rook uit de uitlaat", "Rook uit de uitlaat: wat betekent de kleur?",
+     "Witte, blauwe of zwarte rook uit de uitlaat? De kleur zegt veel over de oorzaak. Lees wat normaal is en wanneer u het moet laten nakijken.",
+     "dienst-diagnose", "Diagnose",
+     "Een beetje damp uit de uitlaat is normaal, zeker bij een koude motor. Blijft het roken, dan zegt de kleur veel over de oorzaak.",
+     [("Witte damp bij een koude start", "Condens, vooral bij koud en vochtig weer. Verdwijnt het als de motor warm is, dan is er niets aan de hand."),
+      ("Dikke witte rook die blijft", "Kan wijzen op koelvloeistof die in de motor komt, bijvoorbeeld door een defecte koppakking. Let op de temperatuurmeter en het koelvloeistofpeil."),
+      ("Blauwe rook", "De motor verbrandt olie, bijvoorbeeld door versleten zuigerveren of klepsteeldichtingen, of een turboprobleem."),
+      ("Zwarte rook", "Er wordt te veel brandstof verbrand. Bij een diesel kan het door een verstopt luchtfilter, de turbo of de verstuivers komen.")],
+     "Witte damp bij een koude start is geen probleem. Blijft er rook komen, zeker blauw of dik wit, laat het dan snel nakijken. Loopt de temperatuur op, stop dan.",
+     "We lezen de motor uit en zoeken gericht naar de oorzaak. Lees meer over <a href=\"{r}diagnose/\">diagnose</a>."),
+    ("olie-lekt", "Vlek of lekkage onder de auto", "Vlek onder de auto: wat lekt er?",
+     "Een vlek onder uw auto? De kleur verraadt meestal wat er lekt: motorolie, koelvloeistof, remvloeistof of gewoon condenswater van de airco.",
+     "dienst-onderhoud", "Reparatie",
+     "Een vlek onder de auto op de oprit? De kleur en de plek geven een goede aanwijzing.",
+     [("Helder water", "Komt het van onder het dashboard, aan de voorkant, dan is het condenswater van de airco. Dat is normaal."),
+      ("Bruin of zwart en vettig", "Motorolie. Controleer het oliepeil met de peilstok en laat het lek nakijken."),
+      ("Groen, roze of blauw", "Koelvloeistof. Controleer het peil in het reservoir als de motor koud is. Een tekort kan de motor laten oververhitten."),
+      ("Rood of roodbruin", "Vaak olie van de automatische versnellingsbak of de stuurbekrachtiging."),
+      ("Helder tot geelachtig, bij een wiel", "Kan remvloeistof zijn. Rijd dan niet verder en laat het direct nakijken.")],
+     "Condenswater is geen probleem. Bij olie of koelvloeistof kunt u meestal nog rustig naar de garage rijden als het peil goed is. Vermoedt u remvloeistof, of brandt er een rood lampje, rijd dan niet verder.",
+     "We zoeken de lekkage op en vertellen u wat er nodig is. Zie ook onze uitleg over <a href=\"{r}dashboardlampjes/\">dashboardlampjes</a>."),
+]
+
+
+def klachtpagina(k):
+    slug, naam, h1, desc, foto, dienst, intro, oorzaken, rijden, wij = k
+    lijst = "\n".join(f"          <li><strong>{e(kop)}</strong> {e(tk)}</li>" for kop, tk in oorzaken)
+    andere = "\n".join(f'          <li><a href="{{r}}hulp/{s2}/">{e(n2)}</a></li>' for s2, n2, *_ in KLACHTEN if s2 != slug)
+    inhoud = f"""        <p>{e(intro)}</p>
+
+        <h2>Wat kan het zijn?</h2>
+        <ul class="oorzaken">
+{lijst}
+        </ul>
+
+        <h2>Kunt u nog doorrijden?</h2>
+        <p>{e(rijden)}</p>
+
+        <h2>Wat doen wij?</h2>
+        <p>{wij}</p>
+
+        <h2>Andere klachten</h2>
+        <ul class="hulp-links">
+{andere}
+        </ul>"""
+    tool_pagina(f"hulp/{slug}", f"{h1} | Autoservice Barneveld", desc, h1, foto, "Hulp bij klachten", "Wat het kan zijn, of u nog kunt doorrijden en wanneer u het moet laten nakijken.",
+                inhoud, (), None, dienst, kruimel=[("Wat is er met mijn auto?", f"{SITE}/hulp/")], naam=naam)
+
+
+def hulp_overzicht():
+    lijst = "\n".join(f'          <li><a href="{{r}}hulp/{slug}/">{e(naam)}</a><span>{e(intro.split(". ")[0])}.</span></li>'
+                      for slug, naam, _h, _d, _f, _di, intro, *_ in KLACHTEN)
+    inhoud = f"""        <p>Merkt u iets geks aan uw auto? Hieronder vindt u de klachten die we het vaakst horen, met de meest voorkomende oorzaken en of u nog kunt doorrijden. Staat uw klacht er niet bij, of twijfelt u? Bel of app ons gerust.</p>
+
+        <ul class="check-links hulp-overzicht">
+{lijst}
+        </ul>
+
+        <h2>Brandt er een lampje?</h2>
+        <p>Bekijk onze uitleg over <a href="{{r}}dashboardlampjes/">dashboardlampjes</a>: per lampje wat het betekent en wat u het beste kunt doen.</p>"""
+    tool_pagina("hulp", "Wat is er met mijn auto? Hulp bij klachten | Autoservice Barneveld",
+                "Piepende remmen, een trillend stuur, rook uit de uitlaat of een auto die niet start? Uitleg over de meest voorkomende klachten en of u nog kunt doorrijden.",
+                "Wat is er met mijn auto?", "dienst-diagnose", "Hulp bij klachten",
+                "De meest voorkomende klachten op een rij: wat het kan zijn en of u nog kunt doorrijden.",
+                inhoud, (), None, "Reparatie", naam="Wat is er met mijn auto?")
+
+
 def sitemap_en_llms():
     paden = ["", *[d[0] + "/" for d in DIENSTEN], "apk-check/", "vervangend-vervoer/", "merken/", "werkgebied/", "veelgestelde-vragen/", "over-ons/", "contact/", "privacy/"]
     schrijf("sitemap.xml",
@@ -1621,4 +1750,7 @@ if __name__ == "__main__":
     winterbanden()
     bandencheck()
     onderhoudswijzer()
+    hulp_overzicht()
+    for k in KLACHTEN:
+        klachtpagina(k)
     sitemap_en_llms()
