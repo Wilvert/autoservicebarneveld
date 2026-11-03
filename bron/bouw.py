@@ -247,7 +247,9 @@ def kop(r, actief):
     huidig = ' aria-current="page"'
     menu = "\n".join(
         f'      <a href="{h}"{huidig if k == actief else ""}>{n}</a>'
-        for h, n, k in items)
+        for h, n, k in items) + f'\n      <a class="alleen-mobiel" href="{r}handig/">Zelf checken</a>'
+    checks = "\n".join(f'          <li><a href="{r}{slug}/">{e(n)}</a></li>'
+                        for _kop, _sub, lijst in HANDIG for slug, n, _u in lijst)
     return f"""<a class="naar-inhoud" href="#inhoud">Direct naar de inhoud</a>
 
 <div class="topbalk">
@@ -263,6 +265,13 @@ def kop(r, actief):
     <nav class="menu" id="menu" aria-label="Hoofdmenu">
 {menu}
     </nav>
+    <details class="checks-menu">
+      <summary>Zelf checken <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+      <ul>
+{checks}
+          <li class="alles"><a href="{r}handig/">Alles bij elkaar</a></li>
+      </ul>
+    </details>
     <a class="apk-knop" href="{r}apk-check/"{' aria-current="page"' if actief == "apk-check" else ""}><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M8.5 14l2.5 2.5 4.5-5"/></g></svg>APK-check</a>
     <a class="knop blauw" href="{r}contact/" data-afspraak>Plan afspraak</a>
     <button class="menu-knop" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menu openen">
@@ -1231,7 +1240,7 @@ def occasion_check():
         </ul>
 
         <h2>Laat de auto even nakijken</h2>
-        <p>Twijfelt u, of wilt u gewoon zeker zijn? Breng de auto vóór de koop even langs voor een <a href="{r}aankoopkeuring/">aankoopkeuring</a>. We bekijken hem op de brug, lezen de elektronica uit en vertellen u eerlijk wat we zien.</p>""" + meer_checks("occasion-check")
+        <p>Twijfelt u, of wilt u gewoon zeker zijn? Breng de auto vóór de koop even langs voor een <a href="{r}aankoopkeuring/">aankoopkeuring</a>. We bekijken hem op de brug, lezen de elektronica uit en vertellen u eerlijk wat we zien. Bij een importauto met een onduidelijke geschiedenis kan dat met een uitgebreid historierapport.</p>""" + meer_checks("occasion-check")
     tool_pagina("occasion-check", "Occasion-check: APK-historie en gebreken | Autoservice Barneveld",
                 "Gratis occasion-check: zie bij een kenteken de APK-datum, eerder gemelde gebreken, tellerstand, import en terugroepacties. Handig vóór u een occasion koopt.",
                 "Occasion-check: wat is er bekend over deze auto?", "dienst-diagnose", "Gratis occasion-check",
@@ -1245,14 +1254,17 @@ AANKOOP_VRAGEN = [
     ("Moet de verkoper meewerken?",
      "Ja, de auto moet bij ons langs kunnen komen. Vraag de verkoper of u de auto even mag laten nakijken. Een eerlijke verkoper vindt dat meestal geen probleem; u kunt ook samen komen."),
     ("Wat kost een aankoopkeuring?",
-     "Bel of app ons even, dan hoort u vooraf wat het kost. Dat hangt onder meer af van het type auto."),
-    ("Kan ik de APK meteen laten doen?",
-     "Ja. Is de APK bijna verlopen, dan kunnen we de keuring vaak meteen combineren. Gebruik de <a href=\"{r}apk-check/\">APK-check</a> om de datum te zien."),
+     "Bel of app ons even, dan hoort u vooraf wat het kost."),
+    ("Krijg ik garantie op de auto na een aankoopkeuring?",
+     "Nee. Een aankoopkeuring is een momentopname en een advies op basis van wat we op dat moment kunnen zien en uitlezen. Het is geen garantie dat de auto vrij is van gebreken."),
 ]
 
 
 def aankoopkeuring():
     inhoud = """        <p>Een tweedehands auto op het oog? Laat hem even door ons nakijken voordat u tekent. Een frisse blik van een monteur voorkomt dure verrassingen achteraf, en u staat sterker als u over de prijs praat.</p>
+
+        <h2>Onafhankelijk</h2>
+        <p>Autoservice Barneveld is een onafhankelijke garage. We verkopen zelf geen auto's en zijn niet verbonden aan een merk of verkoper. We hebben dus geen enkel belang bij de koop: u hoort gewoon wat we zien.</p>
 
         <h2>Wat we bekijken</h2>
         <ul class="lijst-vink">
@@ -1265,15 +1277,20 @@ def aankoopkeuring():
           <li>De openbare RDW-gegevens, zoals APK, tellerstand en terugroepacties</li>
         </ul>
 
+        <h2>Twijfel over een importauto?</h2>
+        <p>Komt de auto uit het buitenland en is de geschiedenis niet helemaal duidelijk? Dan vragen we bij de aankoopkeuring een uitgebreid historierapport aan van Carfax of carVertical. Daarin staan onder meer eerder geregistreerde kilometerstanden en gemelde schades, ook uit het buitenland.</p>
+
         <h2>Eerlijk advies</h2>
         <p>Na afloop hoort u van ons wat er goed is, wat binnenkort aandacht nodig heeft en wat dat ongeveer kost. Geen verkooppraatje, gewoon een eerlijk verhaal van de monteur zelf. Elektrisch of hybride? Ook dan kijken we graag met u mee.</p>
 
         <h2>Eerst zelf even checken</h2>
-        <p>Met onze gratis <a href="{r}occasion-check/">occasion-check</a> ziet u vooraf al de APK-historie, gemelde gebreken en het tellerstandoordeel van de auto.</p>"""
+        <p>Met onze gratis <a href="{r}occasion-check/">occasion-check</a> ziet u vooraf al de APK-historie, gemelde gebreken en het tellerstandoordeel van de auto.</p>
+
+        <p class="klein-noot">Een aankoopkeuring is een momentopname en een advies op basis van wat we op dat moment kunnen zien, uitlezen en tijdens de proefrit merken. Er kunnen geen rechten aan worden ontleend. Autoservice Barneveld is niet aansprakelijk voor gebreken die bij de keuring niet zichtbaar waren of later ontstaan of aan het licht komen. Een historierapport van Carfax of carVertical komt van een externe partij; voor de juistheid daarvan zijn wij niet verantwoordelijk.</p>"""
     tool_pagina("aankoopkeuring", "Aankoopkeuring tweedehands auto Barneveld | Autoservice Barneveld",
-                "Laat uw tweedehands auto vóór de koop nakijken in Barneveld. Op de brug, uitlezen en een proefrit, met eerlijk advies van de monteur. Alle merken.",
+                "Laat uw tweedehands auto vóór de koop onafhankelijk nakijken in Barneveld: op de brug, uitlezen en een proefrit. Bij importauto's ook een historierapport.",
                 "Aankoopkeuring: eerst laten nakijken, dan kopen", "dienst-onderhoud", "Dienst · alle merken",
-                "Laat een tweedehands auto vóór de koop door ons nakijken. U hoort eerlijk wat er goed is en wat aandacht nodig heeft.",
+                "Laat een tweedehands auto vóór de koop onafhankelijk nakijken. U hoort eerlijk wat er goed is en wat aandacht nodig heeft.",
                 inhoud, AANKOOP_VRAGEN, None, "Overig", naam="Aankoopkeuring")
 
 
@@ -1326,7 +1343,7 @@ def terugroepactie_check():
         ("Ik heb de auto tweedehands gekocht. Geldt het dan ook?", "Ja. De terugroepactie hoort bij de auto, niet bij de eigenaar. Ook als u de auto later heeft gekocht, kunt u hem laten uitvoeren."),
         ("Waar komen de gegevens vandaan?", "Uit de openbare voertuiggegevens van de RDW. Uw browser vraagt ze daar rechtstreeks op; wij zien en bewaren het kenteken niet."),
     ]
-    tool_pagina("terugroepactie-check", "Terugroepactie check op kenteken | Autoservice Barneveld",
+    tool_pagina("terugroepactie-check", "Terugroepactie-check op kenteken | Autoservice Barneveld",
                 "Gratis terugroepactie-check: zie met uw kenteken of er voor uw auto een terugroepactie openstaat, en wat u dan moet doen. Rechtstreeks uit de RDW-gegevens.",
                 "Terugroepactie-check: staat er iets open voor uw auto?", "dienst-onderhoud", "Gratis terugroepactie-check",
                 "Vul uw kenteken in en zie direct of er volgens de RDW een terugroepactie openstaat voor uw auto.",
@@ -1350,7 +1367,7 @@ def trekgewicht_check():
         ("Er staat geen trekgewicht bij mijn auto. Wat nu?", "Dan is er voor deze auto geen trekgewicht geregistreerd en mag u in principe geen aanhanger trekken. Twijfelt u? Vraag het ons gerust."),
         ("Waar komen de gegevens vandaan?", "Uit de openbare voertuiggegevens van de RDW. Uw browser vraagt ze daar rechtstreeks op; wij zien en bewaren het kenteken niet."),
     ]
-    tool_pagina("trekgewicht-check", "Trekgewicht check op kenteken | Autoservice Barneveld",
+    tool_pagina("trekgewicht-check", "Trekgewicht-check op kenteken | Autoservice Barneveld",
                 "Gratis trekgewicht-check: zie met uw kenteken hoeveel uw auto geremd en ongeremd mag trekken, plus uitleg over caravan, aanhanger en rijbewijs.",
                 "Trekgewicht-check: hoeveel mag uw auto trekken?", "dienst-banden", "Gratis trekgewicht-check",
                 "Caravan of aanhanger? Vul uw kenteken in en zie direct het geremde en ongeremde trekgewicht van uw auto.",
@@ -1358,7 +1375,7 @@ def trekgewicht_check():
 
 
 LAMPJES = [
-    ("rood", "Rood: stoppen zodra het veilig kan", [
+    ("rood", "Rood: direct actie nodig", [
         ("Oliedruk", "Een oliekannetje met een druppel.",
          "De oliedruk is te laag. Zonder goede smering kan de motor binnen korte tijd ernstig beschadigd raken.",
          "Stop zodra het veilig kan en zet de motor uit. Controleer het oliepeil met de peilstok. Rijd niet verder, maar bel ons of de pechhulp."),
@@ -1429,7 +1446,7 @@ def dashboardlampjes():
         </div>""")
     inhoud = """        <p>Een lampje op het dashboard zegt iets over de staat van uw auto. De kleur vertelt hoe dringend het is. Hieronder leest u per lampje wat het betekent en wat u het beste kunt doen. De symbolen verschillen soms per merk; kijk bij twijfel in het instructieboekje of bel ons even.</p>
         <ul class="lampjes-legenda">
-          <li><span class="lampje-stip rood" aria-hidden="true"></span><strong>Rood</strong> stoppen zodra het veilig kan</li>
+          <li><span class="lampje-stip rood" aria-hidden="true"></span><strong>Rood</strong> direct actie nodig, vaak stoppen zodra het veilig kan</li>
           <li><span class="lampje-stip oranje" aria-hidden="true"></span><strong>Oranje</strong> binnenkort laten nakijken</li>
           <li><span class="lampje-stip groen" aria-hidden="true"></span><strong>Groen of blauw</strong> ter informatie</li>
         </ul>
@@ -1439,7 +1456,7 @@ def dashboardlampjes():
         <h2>Lampje laten uitlezen</h2>
         <p>Brandt er een lampje en weet u niet precies wat er aan de hand is? Met onze <a href="{r}diagnose/">diagnoseapparatuur</a> lezen we de opgeslagen storing uit en zoeken we de oorzaak. Dat geldt voor alle merken, ook elektrische auto's.</p>"""
     vragen = [
-        ("Mag ik doorrijden met een oranje lampje?", "Meestal wel, maar laat de auto binnenkort nakijken. Bij een rood lampje stopt u zodra het veilig kan."),
+        ("Mag ik doorrijden met een oranje lampje?", "Meestal wel, maar laat de auto binnenkort nakijken. Bij een rood lampje is direct actie nodig; vaak moet u dan stoppen zodra het veilig kan."),
         ("Het lampje is vanzelf weer uitgegaan. Moet ik iets doen?", "De storing staat vaak nog wel in het geheugen van de auto. Laat het bij de volgende gelegenheid even uitlezen, zeker als het vaker gebeurt."),
         ("Kan ik een storing zelf wissen?", "Wissen haalt alleen het lampje weg, niet de oorzaak. Komt het lampje terug, dan is er nog iets aan de hand."),
     ]
@@ -1484,15 +1501,15 @@ def bandencheck():
           <label for="bandmaat">Bandenmaat <small>zoals op de zijkant van uw band, bijv. 205/55 R16 91V</small></label>
           <div class="banden-rij">
             <input class="invoer" id="bandmaat" placeholder="205/55 R16 91V" autocomplete="off" spellcheck="false">
-            <button class="knop blauw" type="submit">Uitleg</button>
+            <button class="knop blauw" type="submit">Bekijk uitleg</button>
           </div>
           <dl class="banden-uitleg" hidden></dl>
         </form>
 
         <form class="banden-tool" id="banden-dot" novalidate>
-          <label for="dotcode">Hoe oud is uw band? <small>de laatste 4 cijfers van de DOT-code, bijv. 2321</small></label>
+          <label for="dotcode">Hoe oud is uw band? <small>de 4 cijfers aan het eind van de DOT-code op de zijkant, bijv. 2321</small></label>
           <div class="banden-rij">
-            <input class="invoer" id="dotcode" placeholder="2321" inputmode="numeric" maxlength="4" autocomplete="off">
+            <input class="invoer" id="dotcode" placeholder="2321" inputmode="numeric" maxlength="24" autocomplete="off">
             <button class="knop blauw" type="submit">Bereken</button>
           </div>
           <p class="banden-uitleg" hidden></p>
@@ -1610,7 +1627,7 @@ KLACHTEN = [
     ("stuur-trilt", "Stuur trilt tijdens het rijden", "Stuur trilt tijdens het rijden: oorzaken",
      "Trilt uw stuur bij een bepaalde snelheid of tijdens het remmen? Lees de meest voorkomende oorzaken, van onbalans tot remschijven.",
      "dienst-banden", "Bandenservice",
-     "Een trillend stuur is vervelend en vermoeiend. Wanneer het trilt, zegt veel over de oorzaak.",
+     "Een trillend stuur is vervelend en vermoeiend. Het moment waarop het stuur trilt, zegt veel over de oorzaak.",
      [("Wielen uit balans", "Trilt het stuur vooral tussen ongeveer 80 en 120 km/u, dan zijn de wielen vaak uit balans. Balanceren lost dat meestal snel op."),
       ("Schade aan band of velg", "Een bult in de band of een kromme velg na een klap geeft trillingen bij elke snelheid."),
       ("Remschijven", "Trilt het alleen tijdens het remmen, dan zijn de remschijven waarschijnlijk ongelijk versleten."),
@@ -1698,7 +1715,7 @@ def klachtpagina(k):
 
 
 def hulp_overzicht():
-    lijst = "\n".join(f'          <li><a href="{{r}}hulp/{slug}/">{e(naam)}</a><span>{e(intro.split(". ")[0])}.</span></li>'
+    lijst = "\n".join(f'          <li><a href="{{r}}hulp/{slug}/">{e(naam)}</a><span>{e(intro.split(". ")[0].rstrip("."))}.</span></li>'
                       for slug, naam, _h, _d, _f, _di, intro, *_ in KLACHTEN)
     inhoud = f"""        <p>Merkt u iets geks aan uw auto? Hieronder vindt u de klachten die we het vaakst horen, met de meest voorkomende oorzaken en of u nog kunt doorrijden. Staat uw klacht er niet bij, of twijfelt u? Bel of app ons gerust.</p>
 
@@ -1716,7 +1733,7 @@ def hulp_overzicht():
 
 
 HANDIG = [
-    ("Kenteken-checks", "Gratis, rechtstreeks uit de openbare gegevens van de RDW.", [
+    ("Kenteken-checks", "", [
         ("apk-check", "APK-check", "Tot wanneer is uw APK geldig, en vanaf wanneer kunt u keuren?"),
         ("occasion-check", "Occasion-check", "APK-historie, gemelde gebreken en tellerstand van een tweedehands auto."),
         ("kentekencheck", "Kentekencheck", "Alle openbare gegevens van een auto op een rij."),
@@ -1803,7 +1820,7 @@ def sitemap_en_llms():
 
 ## Meer
 
-- [Aankoopkeuring]({SITE}/aankoopkeuring/): tweedehands auto vóór de koop laten nakijken.
+- [Aankoopkeuring]({SITE}/aankoopkeuring/): tweedehands auto vóór de koop onafhankelijk laten nakijken; bij importauto\'s met twijfel ook een historierapport van Carfax of carVertical.
 
 ## Gratis checks en uitleg
 

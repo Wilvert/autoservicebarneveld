@@ -25,6 +25,13 @@
     });
   }
 
+  /* ---------- Zelf checken-menu: sluiten bij klik ernaast of Escape ---------- */
+  var checksMenu = document.querySelector('.checks-menu');
+  if (checksMenu) {
+    document.addEventListener('click', function (e) { if (!checksMenu.contains(e.target)) checksMenu.open = false; });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') checksMenu.open = false; });
+  }
+
   /* ---------- Kenteken: hoofdletters en controle ---------- */
   function kentekenOk(waarde) {
     var kaal = waarde.replace(/[\s-]/g, '');
@@ -445,7 +452,7 @@
     maatForm.addEventListener('submit', function (e) {
       e.preventDefault();
       var uit = maatForm.querySelector('.banden-uitleg');
-      var m = maatForm.querySelector('input').value.toUpperCase().match(/(\d{3})\s*\/\s*(\d{2})\s*(Z?R)?\s*-?\s*(\d{2})(?:\s*(\d{2,3})\s*\(?([A-Z])\)?)?/);
+      var m = maatForm.querySelector('input').value.toUpperCase().match(/(\d{3})\s*[\/\s-]\s*(\d{2})\s*[\/\s-]?\s*(Z?R)?\s*[\/-]?\s*(\d{2})(?:\s*(\d{2,3})\s*\(?([A-Z])\)?)?/);
       uit.hidden = false;
       if (!m) { uit.innerHTML = '<dd class="banden-fout">Dat lijkt geen bandenmaat. Typ hem zoals op de band, bijvoorbeeld 205/55 R16 91V.</dd>'; return; }
       var h = '';
@@ -460,12 +467,12 @@
     dotForm.addEventListener('submit', function (e) {
       e.preventDefault();
       var uit = dotForm.querySelector('.banden-uitleg');
-      var v = dotForm.querySelector('input').value.replace(/\D/g, '');
+      var v = dotForm.querySelector('input').value.replace(/\D/g, '').slice(-4);
       uit.hidden = false;
       uit.className = 'banden-uitleg';
       var week = +v.slice(0, 2), jaar = 2000 + +v.slice(2, 4);
       if (v.length !== 4 || week < 1 || week > 53 || jaar > new Date().getFullYear()) {
-        uit.textContent = 'Vul de laatste 4 cijfers van de DOT-code in: eerst de week, dan het jaar. 2321 betekent week 23 van 2021.';
+        uit.textContent = 'Vul de 4 cijfers aan het eind van de DOT-code in: eerst de week, dan het jaar. 2321 betekent week 23 van 2021.';
         uit.classList.add('banden-fout'); return;
       }
       var gemaakt = new Date(jaar, 0, 1 + (week - 1) * 7);

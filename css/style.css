@@ -613,3 +613,26 @@ p.banden-uitleg.banden-let-op { padding: 10px 12px; border-radius: 6px; backgrou
 .handig-raster { grid-template-columns: repeat(4, 1fr); margin-bottom: 18px; }
 @media (max-width: 900px) { .handig-raster { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 480px) { .handig-raster { grid-template-columns: 1fr; } }
+
+/* Zelf checken-menu in de kop */
+.checks-menu { position: relative; margin-right: -14px; }
+.checks-menu summary { display: inline-flex; align-items: center; gap: 6px; padding: 11px 14px; border: 2px solid var(--grijs-20); border-radius: 6px; background: var(--wit); color: var(--grijs); font: 700 15px/1 var(--tekst); cursor: pointer; list-style: none; white-space: nowrap; }
+.checks-menu summary::-webkit-details-marker { display: none; }
+.checks-menu summary:hover, .checks-menu[open] summary { border-color: var(--blauw-40); color: var(--blauw); }
+.checks-menu[open] summary svg { transform: rotate(180deg); }
+.checks-menu ul { position: absolute; top: calc(100% + 8px); left: 0; z-index: 60; min-width: 240px; margin: 0; padding: 8px; list-style: none; background: var(--wit); border: 1px solid var(--grijs-20); border-radius: 10px; box-shadow: 0 14px 30px #0e1c2c26; }
+.checks-menu li a { display: block; padding: 9px 12px; border-radius: 6px; font-size: 14px; font-weight: 600; color: var(--grijs); text-decoration: none; }
+.checks-menu li a:hover { background: #f4f6f9; color: var(--blauw); }
+.checks-menu li.alles { margin-top: 4px; padding-top: 4px; border-top: 1px solid var(--grijs-20); }
+.checks-menu li.alles a { color: var(--blauw); }
+.menu a.alleen-mobiel { display: none; }
+@media (max-width: 1200px) { .menu { gap: 18px; } .kop .wrap { gap: 20px; } }
+@media (max-width: 900px) { .checks-menu { display: none; } .menu.open a.alleen-mobiel { display: block; } }
+.menu a { white-space: nowrap; }
+@media (max-width: 1120px) {
+  .menu-knop { display: grid; }
+  .menu { display: none; position: absolute; top: 76px; left: 0; right: 0; background: var(--wit); flex-direction: column; gap: 0; padding: 6px var(--rand) 16px; box-shadow: 0 12px 20px #0e1c2c26; }
+  .menu.open { display: flex; }
+  .menu a { padding: 14px 0; border-bottom: 1px solid var(--grijs-20); font-size: 16px; }
+  .checks-menu, .apk-knop { margin-right: 0; }
+}
