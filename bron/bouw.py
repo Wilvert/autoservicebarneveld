@@ -626,7 +626,7 @@ def homepage():
         <p>Bij Autoservice Barneveld draait alles om vakmanschap, transparantie en persoonlijk contact. Als zelfstandige monteur werk ik rechtstreeks met mijn klanten samen, zonder tussenpersonen. Zo weet u altijd precies wie er aan uw auto werkt. De werkplaats is uitgerust met de nieuwste apparatuur, voor regulier onderhoud én complexe diagnoses.</p>
         <ol class="stappen" aria-label="Zo werkt het">
           <li><strong>U plant een afspraak</strong><p>Online met uw kenteken via WhatsApp, of telefonisch.</p></li>
-          <li><strong>Kosten vooraf besproken</strong><p>Zo komt u nooit voor verrassingen te staan.</p></li>
+          <li><strong>U bepaalt wanneer we overleggen</strong><p>Geef bij uw afspraak aan tot welk bedrag we mogen doorwerken. Wordt het duurder, dan nemen we eerst contact met u op.</p></li>
           <li><strong>Op de hoogte via WhatsApp</strong><p>Iets onverwachts? Dan hoort u het direct, met foto's, korte filmpjes of een duidelijke toelichting.</p></li>
           <li><strong>U blijft mobiel</strong><p>Met een leenauto of leenfiets.</p></li>
         </ol>
