@@ -13,23 +13,32 @@ De HTML wordt gemaakt door een klein bouwscript. **Pas de teksten aan in
 python bron/bouw.py
 ```
 
-Alleen de Python-standaardbibliotheek is nodig. Kop, voet, afspraakvenster,
+Nodig: Python 3 met Pillow (`pip install pillow`), voor de fotoformaten. Kop, voet, afspraakvenster,
 openingstijden, telefoon, KvK en btw staan bovenin `bron/bouw.py`. De
 bedrijfsgegevens voor Google (schema.org JSON-LD) staan in `bron/bedrijf.json`.
 
 ## Opbouw
 
 ```
-index.html                 Home (afspraakblok, diensten, over ons, vervoer, contact)
+index.html                 Home (afspraakblok, diensten, waarom, over ons, vervoer, zelf checken, reviews, contact)
 merken/, werkgebied/, veelgestelde-vragen/   Vindbaarheid: merken, plaatsen, FAQ (met FAQ-schema)
-apk-keuring/ ...           Zes dienstpagina's
+apk-keuring/ ...           Zes dienstpagina's (met eigen vragen + Service/FAQ-schema)
+aankoopkeuring/            Dienst aankoopkeuring (met voorbehoud in kleine letters)
+apk-check/, occasion-check/, kentekencheck/, terugroepactie-check/, trekgewicht-check/
+                           Kenteken-checks op de open data van de RDW (één tool, data-modus per pagina)
+winterbanden/, bandencheck/, onderhoudswijzer/, dashboardlampjes/
+                           Overige checks en uitleg (weer via Open-Meteo)
+hulp/                      "Wat is er met mijn auto?" + acht klachtpagina's (KLACHTEN in bouw.py)
+handig/                    Overzicht van alle checks (HANDIG in bouw.py; vult ook het menu "Zelf checken")
 over-ons/, vervangend-vervoer/, contact/, privacy/
 404.html                   Foutpagina (absolute paden, noindex)
 css/style.css              Alle opmaak (kleuren bovenin :root)
 js/site.js                 Mobiel menu en het afspraakvenster
 fonts/                     Montserrat en Bebas Neue (zelf gehost)
-img/                       Foto's (WebP), logo's (SVG), deelafbeelding.jpg
+img/                       Foto's (WebP, met -480/-960/-1440 varianten voor srcset), logo's (SVG),
+                           deelafbeelding.jpg en og-*.jpg (deelafbeelding per pagina)
 robots.txt, sitemap.xml, llms.txt, .well-known/security.txt
+<sleutel>.txt              IndexNow-sleutel; .github/workflows/indexnow.yml meldt na elke push alle pagina's aan
 mockups/                   De tien ontwerpvoorstellen (noindex)
 ```
 
@@ -42,7 +51,8 @@ e-mailadres en eventueel vervangend vervoer (Renault 5, VW Caddy of leenfiets).
 Optioneel kiest de bezoeker twee voorkeursdata in een kalender (minimaal twee
 weken vooruit, geen weekend). Dagen blokkeren doe je bovenin het
 voorkeursdatum-blok in `js/site.js`: `GEBLOKKEERD` (weekdagen per maand) en
-`GEBLOKKEERDE_DATA` (losse data).
+`GEBLOKKEERDE_DATA` (losse data). Officiële feestdagen gaan automatisch dicht
+(`feestdagen()`).
 Bij versturen opent WhatsApp (`wa.me/31342234003`) met een
 ingevuld bericht dat de bezoeker zelf verstuurt; de site slaat niets op.
 Zonder JavaScript gaan de knoppen naar de contactpagina.
@@ -57,3 +67,10 @@ geen eigen headers toe). Het contactformulier verstuurt via FormSubmit
 CSS en JS worden gelinkt met `?v=<hash>`, zodat bezoekers na een wijziging
 meteen de nieuwe versie krijgen. Daarom altijd opnieuw bouwen na het aanpassen
 van `css/style.css` of `js/site.js`.
+
+## Nieuwe foto toevoegen
+
+Zet de foto als WebP in `img/` en maak de kleinere varianten en de
+deelafbeelding, bijvoorbeeld met Pillow: `naam-480.webp`, `naam-960.webp`,
+`naam-1440.webp` (alleen kleiner dan het origineel) en `og-naam.jpg`
+(1200 x 630). Het bouwscript gebruikt ze automatisch als ze bestaan.
