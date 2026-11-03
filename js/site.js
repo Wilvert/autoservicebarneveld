@@ -116,14 +116,17 @@
     if (uit) uit.addEventListener('click', function () { kentekenOnbekend(form, false, true); });
   });
 
-  /* ---------- APK-check: openbare RDW-gegevens bij een kenteken ---------- */
-  (function () {
-    var form = document.getElementById('apk-check');
-    if (!form || !window.fetch) return;
+  /* ---------- Kenteken-checks: openbare RDW-gegevens bij een kenteken ----------
+     Eén tool, verschillende pagina's (data-modus): apk, kenteken, occasion,
+     terugroep, trekgewicht. Alles gaat rechtstreeks van de browser naar de RDW. */
+  Array.prototype.forEach.call(document.querySelectorAll('form.apk-check[data-modus]'), function (form) {
+    if (!window.fetch) return;
+    var modus = form.getAttribute('data-modus');
     var invoer = form.elements.kenteken;
     var melding = form.querySelector('.apk-check-melding');
-    var uitslag = document.getElementById('apk-uitslag');
+    var uitslag = form.nextElementSibling;
     var status = uitslag.querySelector('.apk-status');
+    var extra = uitslag.querySelector('.apk-extra');
     var agendaKnop = uitslag.querySelector('.apk-agenda');
     var RDW = 'https://opendata.rdw.nl/resource/';
     var KLEUREN = { ZWART: '#1f2125', WIT: '#f3f4f5', GRIJS: '#8b9097', BLAUW: '#2b5ca8', ROOD: '#c3282e', GROEN: '#2f7d4f',
@@ -149,6 +152,7 @@
     }
     function getal(n) { return Number(n).toLocaleString('nl-NL'); }
     function tekst(t) { var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+    function json(url) { return fetch(url).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); }
 
     function plaatje(kleur, bestel) {
       var vul = KLEUREN[(kleur || '').toUpperCase()] || '#9aa3ad';
@@ -166,74 +170,153 @@
         wiel(bestel ? 62 : 64) + wiel(bestel ? 196 : 194) + '</svg>';
     }
 
-    function toonStatus(apk, kenteken) {
-      var vandaag = dag(new Date());
-      status.className = 'apk-status';
-      var label = uitslag.querySelector('.apk-status-label');
-      var kop = uitslag.querySelector('.apk-status-kop');
-      var uitleg = uitslag.querySelector('.apk-status-uitleg');
-      huidig = null;
-      agendaKnop.hidden = true;
-      if (!apk) {
-        status.classList.add('onbekend');
-        label.textContent = 'Geen APK-datum';
-        kop.textContent = 'De RDW heeft geen APK-vervaldatum voor dit voertuig.';
-        uitleg.textContent = 'Mogelijk is het voertuig niet APK-plichtig. Twijfelt u? Bel of app ons gerust.';
-        return;
-      }
-      var dagen = Math.round((apk - vandaag) / 864e5);
+    function zetStatus(soort, label, kop, uitleg) {
+      status.className = 'apk-status ' + soort;
+      uitslag.querySelector('.apk-status-label').textContent = label;
+      uitslag.querySelector('.apk-status-kop').textContent = kop;
+      var u = uitslag.querySelector('.apk-status-uitleg');
+      if (Array.isArray(uitleg)) {
+        u.innerHTML = '<ul>' + uitleg.map(function (t) { return '<li>' + tekst(t) + '</li>'; }).join('') + '</ul>';
+      } else u.textContent = uitleg;
+    }
+
+    // APK-stand: soort (geldig/nu/verlopen/onbekend), dagen en vanaf-datum
+    function apkStand(apk) {
+      if (!apk) return { soort: 'onbekend' };
+      var dagen = Math.round((apk - dag(new Date())) / 864e5);
       var vanaf = tweeMaandenEerder(apk);
-      if (dagen < 0) {
-        status.classList.add('verlopen');
-        label.textContent = 'APK verlopen';
-        kop.textContent = 'Uw APK is verlopen op ' + kort(apk) + '.';
-        uitleg.textContent = 'Met een verlopen APK mag u niet de weg op. Plan zo snel mogelijk uw keuring, of bel ons voor een snelle afspraak.';
-      } else if (vandaag >= vanaf) {
-        status.classList.add('nu');
-        label.textContent = 'U kunt nu keuren';
-        kop.textContent = 'Uw APK verloopt over ' + duur(dagen) + ', op ' + lang(apk) + '.';
-        uitleg.textContent = 'U kunt nu al keuren met behoud van uw vervaldatum: de nieuwe datum wordt gerekend vanaf ' + kort(apk) + '.';
+      return { soort: dagen < 0 ? 'verlopen' : dag(new Date()) >= vanaf ? 'nu' : 'geldig', dagen: dagen, vanaf: vanaf, apk: apk };
+    }
+    function apkZin(s) {
+      if (s.soort === 'onbekend') return 'Geen APK-vervaldatum bekend bij de RDW.';
+      if (s.soort === 'verlopen') return 'APK verlopen op ' + kort(s.apk) + '.';
+      return 'APK geldig tot ' + kort(s.apk) + (s.soort === 'nu' ? ' (u kunt nu al keuren met behoud van datum).' : '.');
+    }
+
+    function naamVan(a) {
+      var merk = netjes(a.merk || ''), type = netjes(a.handelsbenaming || '');
+      return type.toLowerCase().indexOf(merk.toLowerCase()) === 0 ? type : (merk + ' ' + type).trim();
+    }
+    function isImport(a) {
+      var eerste = rdwDatum(a.datum_eerste_toelating), nl = rdwDatum(a.datum_eerste_tenaamstelling_in_nederland);
+      return eerste && nl && Math.abs(nl - eerste) > 864e5 * 30;
+    }
+
+    function toonStatus(a, kenteken) {
+      var s = apkStand(rdwDatum(a.vervaldatum_apk));
+      huidig = null;
+      if (agendaKnop) agendaKnop.hidden = true;
+      if (modus === 'apk') {
+        if (s.soort === 'onbekend') zetStatus('onbekend', 'Geen APK-datum', 'De RDW heeft geen APK-vervaldatum voor dit voertuig.', 'Mogelijk is het voertuig niet APK-plichtig. Twijfelt u? Bel of app ons gerust.');
+        else if (s.soort === 'verlopen') zetStatus('verlopen', 'APK verlopen', 'Uw APK is verlopen op ' + kort(s.apk) + '.', 'Met een verlopen APK mag u niet de weg op. Plan zo snel mogelijk uw keuring, of bel ons voor een snelle afspraak.');
+        else if (s.soort === 'nu') zetStatus('nu', 'U kunt nu keuren', 'Uw APK verloopt over ' + duur(s.dagen) + ', op ' + lang(s.apk) + '.', 'U kunt nu al keuren met behoud van uw vervaldatum: de nieuwe datum wordt gerekend vanaf ' + kort(s.apk) + '.');
+        else {
+          zetStatus('geldig', 'APK geldig', 'Uw APK is nog ' + duur(s.dagen) + ' geldig, tot ' + lang(s.apk) + '.', 'Vanaf ' + lang(s.vanaf) + ' kunt u keuren met behoud van uw vervaldatum.');
+          huidig = { vanaf: s.vanaf, apk: s.apk, kenteken: kenteken };
+          if (agendaKnop) agendaKnop.hidden = false;
+        }
+      } else if (modus === 'terugroep') {
+        if (a.openstaande_terugroepactie_indicator === 'Ja') zetStatus('nu', 'Terugroepactie open', 'Voor deze auto staat een terugroepactie open.',
+          'De fabrikant heeft een verbetering voor dit type auto. Die wordt meestal gratis uitgevoerd door een merkdealer. Heeft u een brief van de importeur gehad? Volg die op. Twijfelt u, bel of app ons gerust, dan zoeken we het met u uit.');
+        else if (a.openstaande_terugroepactie_indicator === 'Nee') zetStatus('geldig', 'Geen terugroepactie', 'Voor deze auto staat geen terugroepactie open.', 'Er hoeft voor zover bekend bij de RDW niets extra aan te gebeuren. ' + apkZin(s));
+        else zetStatus('onbekend', 'Onbekend', 'De RDW geeft voor dit voertuig geen informatie over terugroepacties.', apkZin(s));
+      } else if (modus === 'trekgewicht') {
+        var geremd = +a.maximum_trekken_massa_geremd, ongeremd = +a.maximum_massa_trekken_ongeremd;
+        if (!geremd && !ongeremd) zetStatus('onbekend', 'Geen trekgewicht', 'Voor deze auto is geen trekgewicht geregistreerd.', 'Zonder geregistreerd trekgewicht mag u in principe geen aanhanger of caravan trekken. Twijfelt u? Vraag het ons gerust.');
+        else zetStatus('geldig', 'Trekgewicht', 'Deze auto mag ' + getal(geremd) + ' kg geremd' + (ongeremd ? ' en ' + getal(ongeremd) + ' kg ongeremd' : '') + ' trekken.',
+          'Geremd geldt voor een aanhanger of caravan met eigen remmen, ongeremd voor een lichte aanhanger zonder remmen. Kijk voor de rijbewijsregels hieronder.');
+      } else if (modus === 'occasion') {
+        var punten = [];
+        if (s.soort === 'verlopen') punten.push('De APK is verlopen (' + kort(s.apk) + ').');
+        else if (s.soort === 'nu') punten.push('De APK verloopt binnenkort (' + kort(s.apk) + ').');
+        if (a.openstaande_terugroepactie_indicator === 'Ja') punten.push('Er staat een terugroepactie open.');
+        if (a.tellerstandoordeel && !/^logisch$/i.test(a.tellerstandoordeel)) punten.push('Tellerstand: ' + a.tellerstandoordeel.toLowerCase() + '.');
+        if (a.wam_verzekerd === 'Nee') punten.push('De auto staat niet als verzekerd geregistreerd.');
+        if (isImport(a)) punten.push('De auto is geïmporteerd; vraag naar de onderhoudshistorie.');
+        if (punten.length) zetStatus('nu', 'Let op', 'Wij zien ' + (punten.length === 1 ? 'één aandachtspunt' : punten.length + ' aandachtspunten') + ' bij deze auto.', punten);
+        else zetStatus('geldig', 'Geen bijzonderheden', 'In de openbare gegevens zien wij geen bijzonderheden.', apkZin(s) + ' Een goede proefrit en een aankoopkeuring blijven verstandig.');
       } else {
-        status.classList.add('geldig');
-        label.textContent = 'APK geldig';
-        kop.textContent = 'Uw APK is nog ' + duur(dagen) + ' geldig, tot ' + lang(apk) + '.';
-        uitleg.textContent = 'Vanaf ' + lang(vanaf) + ' kunt u keuren met behoud van uw vervaldatum.';
-        huidig = { vanaf: vanaf, apk: apk, kenteken: kenteken };
-        agendaKnop.hidden = false;
+        zetStatus(s.soort === 'onbekend' ? 'onbekend' : s.soort, 'Gevonden', naamVan(a) + ' (' + kentekenNetjes(a.kenteken) + ')', apkZin(s));
       }
     }
 
     function toonAuto(a, brandstof) {
-      var merk = netjes(a.merk || ''), type = netjes(a.handelsbenaming || '');
-      var naam = type.toLowerCase().indexOf(merk.toLowerCase()) === 0 ? type : (merk + ' ' + type).trim();
-      uitslag.querySelector('.apk-naam').textContent = naam;
+      uitslag.querySelector('.apk-naam').textContent = naamVan(a);
       var kleur = (a.eerste_kleur || '').toLowerCase();
       var bestel = /bedrijfsauto/i.test(a.voertuigsoort || '');
       uitslag.querySelector('.apk-svg').innerHTML = plaatje(a.eerste_kleur, bestel);
       uitslag.querySelector('.apk-plaatje figcaption').textContent =
         'Illustratie' + (kleur && kleur !== 'n.v.t.' && kleur !== 'diversen' ? ' in de kleur van uw auto (' + kleur + ')' : '');
       var eerste = rdwDatum(a.datum_eerste_toelating), nl = rdwDatum(a.datum_eerste_tenaamstelling_in_nederland);
+      var s = apkStand(rdwDatum(a.vervaldatum_apk));
       var rijen = [];
       function rij(k, v) { if (v) rijen.push('<dt>' + k + '</dt><dd>' + v + '</dd>'); }
       rij('Kenteken', tekst(kentekenNetjes(a.kenteken)));
+      if (modus !== 'apk') rij('APK geldig tot', s.apk ? kort(s.apk) + (s.soort === 'verlopen' ? ' <span class="apk-let-op">(verlopen)</span>' : '') : '');
       rij('Soort', tekst([a.voertuigsoort, a.inrichting && a.inrichting !== 'Niet geregistreerd' ? a.inrichting : ''].filter(Boolean).join(', ')));
       rij('Kleur', tekst(kleur && kleur !== 'n.v.t.' ? kleur.charAt(0).toUpperCase() + kleur.slice(1) : ''));
       rij('Brandstof', tekst(brandstof.soort.charAt(0) + brandstof.soort.slice(1).toLowerCase()));
       rij('Vermogen', brandstof.kw ? getal(Math.round(brandstof.kw)) + ' kW (' + getal(Math.round(brandstof.kw * 1.36)) + ' pk)' : '');
       rij('Eerste toelating', eerste ? kort(eerste) : '');
-      if (eerste && nl && Math.abs(nl - eerste) > 864e5 * 30) rij('In Nederland sinds', kort(nl) + ' (import)');
+      if (isImport(a)) rij('In Nederland sinds', kort(nl) + ' (import)');
       rij('Cilinderinhoud', +a.cilinderinhoud ? getal(a.cilinderinhoud) + ' cc' : '');
       rij('Zitplaatsen', tekst(a.aantal_zitplaatsen || ''));
       rij('Gewicht rijklaar', +a.massa_rijklaar ? getal(a.massa_rijklaar) + ' kg' : '');
       rij('Trekgewicht', +a.maximum_trekken_massa_geremd ? getal(a.maximum_trekken_massa_geremd) + ' kg geremd' +
         (+a.maximum_massa_trekken_ongeremd ? ', ' + getal(a.maximum_massa_trekken_ongeremd) + ' kg ongeremd' : '') : '');
+      if (modus === 'trekgewicht') rij('Max. gewicht combinatie', +a.maximum_massa_samenstelling ? getal(a.maximum_massa_samenstelling) + ' kg' : '');
+      if (modus === 'trekgewicht') rij('Max. gewicht auto', +a.toegestane_maximum_massa_voertuig ? getal(a.toegestane_maximum_massa_voertuig) + ' kg' : '');
       rij('Energielabel', tekst(a.zuinigheidsclassificatie || ''));
       rij('Tellerstand', tekst(a.tellerstandoordeel || ''));
       rij('Verzekerd (WAM)', tekst(a.wam_verzekerd || ''));
       if (a.openstaande_terugroepactie_indicator === 'Ja') {
-        rij('Terugroepactie', '<span class="apk-let-op">Ja, er staat een terugroepactie open.</span> Neem contact op met de dealer of vraag het ons.');
+        rij('Terugroepactie', '<span class="apk-let-op">Ja, er staat een terugroepactie open.</span>');
       } else rij('Terugroepactie', a.openstaande_terugroepactie_indicator === 'Nee' ? 'Geen openstaande' : '');
       uitslag.querySelector('.apk-gegevens dl').innerHTML = rijen.join('');
+    }
+
+    // Occasion-check: gebreken die bij eerdere APK-keuringen zijn gemeld
+    function historie(kaal) {
+      return json(RDW + 'a34c-vvps.json?kenteken=' + kaal + '&$limit=200').then(function (meldingen) {
+        if (!meldingen.length) return { meldingen: [], omschrijving: {} };
+        var ids = [];
+        meldingen.forEach(function (m) { if (ids.indexOf(m.gebrek_identificatie) === -1) ids.push(m.gebrek_identificatie); });
+        var lijst = ids.map(function (i) { return "'" + String(i).replace(/'/g, '') + "'"; }).join(',');
+        return json(RDW + 'hx2c-gt7k.json?$where=' + encodeURIComponent('gebrek_identificatie in(' + lijst + ')') + '&$limit=500')
+          .catch(function () { return []; })
+          .then(function (rijen) {
+            var omschrijving = {}, ingang = {};
+            rijen.forEach(function (r) {
+              var id = r.gebrek_identificatie;
+              if (!omschrijving[id] || (r.ingangsdatum_gebrek || '') > (ingang[id] || '')) {
+                omschrijving[id] = r.gebrek_omschrijving; ingang[id] = r.ingangsdatum_gebrek || '';
+              }
+            });
+            return { meldingen: meldingen, omschrijving: omschrijving };
+          });
+      });
+    }
+    function toonHistorie(h) {
+      if (!extra) return;
+      if (!h) { extra.innerHTML = '<h3>Gemelde gebreken bij APK-keuringen</h3><p class="apk-leeg">De keuringshistorie is nu niet bereikbaar. Probeer het later nog eens.</p>'; return; }
+      if (!h.meldingen.length) {
+        extra.innerHTML = '<h3>Gemelde gebreken bij APK-keuringen</h3><p class="apk-leeg">Bij de keuringen die de RDW openbaar deelt, zijn voor deze auto geen gebreken gemeld.</p>';
+        return;
+      }
+      var perDatum = {};
+      h.meldingen.forEach(function (m) {
+        var d = m.meld_datum_door_keuringsinstantie;
+        (perDatum[d] = perDatum[d] || []).push(m);
+      });
+      var data = Object.keys(perDatum).sort().reverse();
+      extra.innerHTML = '<h3>Gemelde gebreken bij APK-keuringen</h3>' +
+        '<p class="apk-leeg">Dit zijn de gebreken die keurmeesters hebben gemeld. Meestal zijn ze direct bij de keuring verholpen.</p>' +
+        '<ol class="apk-historie">' + data.map(function (d) {
+          return '<li><strong>' + kort(rdwDatum(d)) + '</strong><ul>' + perDatum[d].map(function (m) {
+            var o = h.omschrijving[m.gebrek_identificatie] || ('Gebrek ' + m.gebrek_identificatie);
+            return '<li>' + tekst(o.charAt(0).toUpperCase() + o.slice(1)) + (+m.aantal_gebreken_geconstateerd > 1 ? ' (' + m.aantal_gebreken_geconstateerd + '×)' : '') + '</li>';
+          }).join('') + '</ul></li>';
+        }).join('') + '</ol>';
     }
 
     function check(waarde, schuif) {
@@ -246,8 +329,9 @@
       var knop = form.querySelector('button[type="submit"]');
       knop.disabled = true;
       Promise.all([
-        fetch(RDW + 'm9d7-ebf2.json?kenteken=' + kaal).then(function (r) { return r.json(); }),
-        fetch(RDW + '8ys7-d773.json?kenteken=' + kaal).then(function (r) { return r.json(); }).catch(function () { return []; })
+        json(RDW + 'm9d7-ebf2.json?kenteken=' + kaal),
+        json(RDW + '8ys7-d773.json?kenteken=' + kaal).catch(function () { return []; }),
+        modus === 'occasion' ? historie(kaal).catch(function () { return null; }) : null
       ]).then(function (res) {
         var a = res[0] && res[0][0];
         if (!a) {
@@ -259,8 +343,9 @@
           if (b.brandstof_omschrijving && soorten.indexOf(b.brandstof_omschrijving) === -1) soorten.push(b.brandstof_omschrijving);
           if (!kw && +b.nettomaximumvermogen) kw = +b.nettomaximumvermogen;
         });
-        toonStatus(rdwDatum(a.vervaldatum_apk), kentekenNetjes(kaal));
+        toonStatus(a, kentekenNetjes(kaal));
         toonAuto(a, { soort: soorten.join(' en '), kw: kw });
+        if (modus === 'occasion') toonHistorie(res[2]);
         uitslag.hidden = false;
         try { history.replaceState(null, '', '?kenteken=' + kaal); } catch (e) { /* niets */ }
         if (schuif) uitslag.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -278,7 +363,7 @@
     });
 
     // Herinnering: agenda-afspraak (.ics) op de dag dat keuren met behoud van datum kan
-    agendaKnop.addEventListener('click', function () {
+    if (agendaKnop) agendaKnop.addEventListener('click', function () {
       if (!huidig) return;
       function ics(d) { return d.getFullYear() + ('0' + (d.getMonth() + 1)).slice(-2) + ('0' + d.getDate()).slice(-2); }
       var eind = new Date(huidig.vanaf); eind.setDate(eind.getDate() + 1);
@@ -298,7 +383,7 @@
 
     var gevraagd = new URLSearchParams(location.search).get('kenteken');
     if (gevraagd) { invoer.value = kentekenNetjes(gevraagd); check(invoer.value, false); }
-  })();
+  });
 
   /* ---------- Afspraakvenster ---------- */
   var venster = document.getElementById('afspraak-venster');
@@ -331,6 +416,7 @@
     if (diensten.length) {
       Array.prototype.forEach.call(dienstVinkjes, function (v) { v.checked = diensten.indexOf(v.value) !== -1; });
     }
+    if (waarden.omschrijving) veld('omschrijving').value = waarden.omschrijving;
     controleerKenteken(veld('kenteken'));
     zetOmschrijving();
     venster.showModal();
@@ -365,7 +451,8 @@
       e.preventDefault();
       var van = knop.getAttribute('data-kenteken-van');
       var bron = van && document.querySelector(van);
-      open({ dienst: knop.getAttribute('data-dienst') || '', kenteken: bron && kentekenOk(bron.value) ? kentekenNetjes(bron.value) : '' });
+      open({ dienst: knop.getAttribute('data-dienst') || '', kenteken: bron && kentekenOk(bron.value) ? kentekenNetjes(bron.value) : '',
+        omschrijving: knop.getAttribute('data-omschrijving') || '' });
     });
   });
 

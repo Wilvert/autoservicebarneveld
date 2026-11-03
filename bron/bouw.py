@@ -1062,52 +1062,43 @@ APK_VRAGEN = [
 ]
 
 
-def apk_check():
-    r = "../"
-    vragen_html = "\n".join(f"""        <details class="vraag">
-          <summary>{e(v)}</summary>
-          <p>{e(a)}</p>
-        </details>""" for v, a in APK_VRAGEN)
-    schema = {"@context": "https://schema.org", "@graph": [
-        {"@type": "WebApplication", "name": "APK-check", "url": f"{SITE}/apk-check/",
-         "applicationCategory": "UtilitiesApplication", "operatingSystem": "Alle",
-         "description": "Zie met uw kenteken tot wanneer uw APK geldig is en vanaf wanneer u kunt keuren met behoud van de vervaldatum.",
-         "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"},
-         "provider": {"@type": "AutoRepair", "name": "Autoservice Barneveld", "url": SITE}},
-        {"@type": "FAQPage", "mainEntity": [
-            {"@type": "Question", "name": v, "acceptedAnswer": {"@type": "Answer", "text": a}} for v, a in APK_VRAGEN]}]}
-    main = f"""{pagina_kop(r, "APK-check: hoe lang is uw APK nog geldig?", "dienst-apk", "Gratis APK-check", "Vul uw kenteken in en zie direct tot wanneer uw APK geldig is, vanaf wanneer u kunt keuren zonder tijd te verliezen, en de openbare gegevens van uw auto.")}
+RDW_CTA = {
+    "apk": ("Plan uw APK", "APK", ""),
+    "occasion": ("Plan een aankoopkeuring", "Overig", "Aankoopkeuring"),
+    "kenteken": ("Plan een afspraak", "", ""),
+    "terugroep": ("Plan een afspraak", "", ""),
+    "trekgewicht": ("Plan een afspraak", "", ""),
+}
 
-  <section class="sectie apk-check-sectie">
-    <div class="wrap artikel">
-      <div class="tekst">
-        <form class="apk-check" id="apk-check" action="./" method="get" novalidate>
-          <label for="apk-kenteken">Uw kenteken</label>
+
+def rdw_tool(r, modus, knop):
+    cta, dienst, oms = RDW_CTA[modus]
+    agenda = ('\n                <button type="button" class="link-klein apk-agenda" hidden>Zet een herinnering in uw agenda</button>'
+              if modus == "apk" else "")
+    extra = '\n          <div class="apk-extra"></div>' if modus == "occasion" else ""
+    return f"""        <form class="apk-check" data-modus="{modus}" action="./" method="get" novalidate>
+          <label for="kt-{modus}">Uw kenteken</label>
           <div class="apk-check-rij">
             <div class="kenteken">
               <span class="nl" aria-hidden="true">
                 {I_NL}
                 NL
               </span>
-              <input id="apk-kenteken" name="kenteken" data-geen-rdw placeholder="AB-123-C" maxlength="8" autocomplete="off" spellcheck="false" autocapitalize="characters" required>
+              <input id="kt-{modus}" name="kenteken" data-geen-rdw placeholder="AB-123-C" maxlength="8" autocomplete="off" spellcheck="false" autocapitalize="characters" required>
             </div>
-            <button class="knop oranje" type="submit">Check APK {I_PIJL}</button>
+            <button class="knop oranje" type="submit">{knop} {I_PIJL}</button>
           </div>
           <p class="apk-check-melding" role="alert" hidden></p>
         </form>
-
-        <div class="apk-uitslag" id="apk-uitslag" aria-live="polite" hidden>
+        <div class="apk-uitslag" aria-live="polite" hidden>
           <div class="apk-status">
-            <div class="apk-status-tekst">
-              <span class="apk-status-label"></span>
-              <p class="apk-status-kop"></p>
-              <p class="apk-status-uitleg"></p>
-              <div class="apk-status-knoppen">
-                <a class="knop blauw" href="{r}contact/" data-afspraak data-dienst="APK" data-kenteken-van="#apk-kenteken">Plan uw APK {I_PIJL}</a>
-                <button type="button" class="link-klein apk-agenda">Zet een herinnering in uw agenda</button>
-              </div>
+            <span class="apk-status-label"></span>
+            <p class="apk-status-kop"></p>
+            <div class="apk-status-uitleg"></div>
+            <div class="apk-status-knoppen">
+              <a class="knop blauw" href="{r}contact/" data-afspraak data-dienst="{dienst}" data-omschrijving="{oms}" data-kenteken-van="#kt-{modus}">{cta} {I_PIJL}</a>{agenda}
             </div>
-          </div>
+          </div>{extra}
           <div class="apk-auto">
             <figure class="apk-plaatje">
               <div class="apk-svg"></div>
@@ -1119,29 +1110,144 @@ def apk_check():
             </div>
           </div>
           <p class="apk-bron">Bron: openbare voertuiggegevens van de RDW. Aan deze gegevens kunnen geen rechten worden ontleend.</p>
-        </div>
+        </div>"""
 
-        <h2>Keuren met behoud van uw APK-datum</h2>
-        <p>U mag uw auto tot twee maanden vóór de vervaldatum laten keuren. De nieuwe vervaldatum wordt dan gerekend vanaf de oude, dus u verliest er geen dag mee. Verloopt uw APK bijvoorbeeld op 15 juni, dan kunt u vanaf 15 april keuren en blijft 15 juni de basis voor uw volgende APK.</p>
 
-        <h2>APK laten doen in Barneveld</h2>
-        <p>Autoservice Barneveld is door de RDW erkend en keurt auto's van alle merken, ook elektrische auto's. Combineer de keuring gerust met een <a href="{r}onderhoud-reparatie/">onderhoudsbeurt</a>, dan bent u in één keer klaar. Meer weten? Lees alles over onze <a href="{r}apk-keuring/">APK-keuring</a>.</p>
-
-        <h2>Veelgestelde vragen over de APK</h2>
+def vragen_blok(vragen, kop="Veelgestelde vragen"):
+    items = "\n".join(f"""          <details class="vraag">
+            <summary>{e(v)}</summary>
+            <p>{a}</p>
+          </details>""" for v, a in vragen)
+    return f"""        <h2>{kop}</h2>
         <div class="vragen">
-{vragen_html}
-        </div>
+{items}
+        </div>"""
+
+
+def tool_pagina(slug, title, desc, h1, foto, kicker, inleiding, inhoud, vragen=(), app=None, dienst="", actief=None, kruimel=None, naam=None):
+    """Een pagina in de stijl van de dienstpagina's, met optioneel een tool (app) en vragen."""
+    import re as _re
+    r = "../" * (slug.count("/") + 1)
+    graph = []
+    if app:
+        graph.append({"@type": "WebApplication", "name": app[0], "url": f"{SITE}/{slug}/",
+                      "applicationCategory": "UtilitiesApplication", "operatingSystem": "Alle",
+                      "description": app[1], "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"},
+                      "provider": {"@type": "AutoRepair", "name": "Autoservice Barneveld", "url": SITE}})
+    if vragen:
+        graph.append({"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": v, "acceptedAnswer": {"@type": "Answer", "text": _re.sub(r"<[^>]+>", "", a)}}
+            for v, a in vragen]})
+    stappen = [("Home", SITE + "/")] + list(kruimel or []) + [(naam or app[0] if (naam or app) else h1, f"{SITE}/{slug}/")]
+    graph.append({"@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": n + 1, "name": naam, "item": url} for n, (naam, url) in enumerate(stappen)]})
+    schema = {"@context": "https://schema.org", "@graph": graph}
+    main = f"""{pagina_kop(r, h1, foto, kicker, inleiding)}
+
+  <section class="sectie">
+    <div class="wrap artikel">
+      <div class="tekst">
+{inhoud.replace("{r}", r)}
+{vragen_blok([(v, a.replace("{r}", r)) for v, a in vragen]) if vragen else ""}
       </div>
-      {zijkaart(r, "APK")}
+      {zijkaart(r, dienst)}
     </div>
   </section>
   <script type="application/ld+json">
 {json.dumps(schema, ensure_ascii=False, indent=1)}
   </script>"""
-    schrijf("apk-check/index.html", pagina(
-        r, "apk-check/", "APK-check: wanneer verloopt mijn APK? | Autoservice Barneveld",
-        "Gratis APK-check: vul uw kenteken in en zie direct tot wanneer uw APK geldig is, vanaf wanneer u kunt keuren met behoud van uw datum, en de RDW-gegevens van uw auto.",
-        "apk-check", main))
+    schrijf(f"{slug}/index.html", pagina(r, f"{slug}/", title, desc, actief, main))
+
+
+def apk_check():
+    r = "../"
+    inhoud = rdw_tool(r, "apk", "Check APK") + """
+
+        <h2>Keuren met behoud van uw APK-datum</h2>
+        <p>U mag uw auto tot twee maanden vóór de vervaldatum laten keuren. De nieuwe vervaldatum wordt dan gerekend vanaf de oude, dus u verliest er geen dag mee. Verloopt uw APK bijvoorbeeld op 15 juni, dan kunt u vanaf 15 april keuren en blijft 15 juni de basis voor uw volgende APK.</p>
+
+        <h2>APK laten doen in Barneveld</h2>
+        <p>Autoservice Barneveld is door de RDW erkend en keurt auto's van alle merken, ook elektrische auto's. Combineer de keuring gerust met een <a href="{r}onderhoud-reparatie/">onderhoudsbeurt</a>, dan bent u in één keer klaar. Meer weten? Lees alles over onze <a href="{r}apk-keuring/">APK-keuring</a>.</p>"""
+    tool_pagina("apk-check", "APK-check: wanneer verloopt mijn APK? | Autoservice Barneveld",
+                "Gratis APK-check: vul uw kenteken in en zie direct tot wanneer uw APK geldig is, vanaf wanneer u kunt keuren met behoud van uw datum, en de RDW-gegevens van uw auto.",
+                "APK-check: hoe lang is uw APK nog geldig?", "dienst-apk", "Gratis APK-check",
+                "Vul uw kenteken in en zie direct tot wanneer uw APK geldig is, vanaf wanneer u kunt keuren zonder tijd te verliezen, en de openbare gegevens van uw auto.",
+                inhoud, [(v, e(a)) for v, a in APK_VRAGEN],
+                ("APK-check", "Zie met uw kenteken tot wanneer uw APK geldig is en vanaf wanneer u kunt keuren met behoud van de vervaldatum."),
+                "APK", "apk-check")
+
+
+OCCASION_VRAGEN = [
+    ("Welke gegevens toont de occasion-check?",
+     "De openbare gegevens van de RDW: APK-vervaldatum, gemelde gebreken bij eerdere APK-keuringen, het oordeel over de tellerstand, of de auto is geïmporteerd, openstaande terugroepacties en technische gegevens zoals brandstof, vermogen en gewicht."),
+    ("Wat betekent het tellerstandoordeel?",
+     "De RDW verzamelt kilometerstanden bij onder meer onderhoud en APK. Is de reeks logisch, dan staat er ‘Logisch’. Staat er ‘Onlogisch’ of ‘Geen oordeel’, vraag de verkoper dan om uitleg en om onderhoudsfacturen."),
+    ("Zegt de check alles over de staat van de auto?",
+     "Nee. Hij laat zien wat er officieel geregistreerd is. Roest, lekkages, slijtage en storingen ziet u alleen als iemand de auto echt bekijkt. Daarvoor is een <a href=\"{r}aankoopkeuring/\">aankoopkeuring</a> bedoeld."),
+    ("Ziet de verkoper dat ik zijn kenteken check?",
+     "Nee. De gegevens zijn openbaar en uw browser vraagt ze rechtstreeks op bij de RDW. Wij zien en bewaren het kenteken ook niet."),
+]
+
+
+def occasion_check():
+    inhoud = rdw_tool("{r}", "occasion", "Check auto") + """
+
+        <h2>Een tweedehands auto kopen?</h2>
+        <p>Met deze check ziet u in een paar seconden wat er over de auto bekend is bij de RDW: tot wanneer de APK loopt, welke gebreken keurmeesters eerder hebben gemeld, of de tellerstand logisch is en of er een terugroepactie openstaat. Zo weet u vóór de bezichtiging al waar u op moet letten.</p>
+
+        <h2>Waar let u verder op?</h2>
+        <ul class="lijst-vink">
+          <li>Vraag naar onderhoudsfacturen of het onderhoudsboekje.</li>
+          <li>Maak een proefrit met een koude motor, ook over een stuk snelweg.</li>
+          <li>Let op storingslampjes op het dashboard, zie onze uitleg over <a href="{r}dashboardlampjes/">dashboardlampjes</a>.</li>
+          <li>Kijk onder de auto en in de motorruimte naar roest en lekkages.</li>
+        </ul>
+
+        <h2>Laat de auto even nakijken</h2>
+        <p>Twijfelt u, of wilt u gewoon zeker zijn? Breng de auto vóór de koop even langs voor een <a href="{r}aankoopkeuring/">aankoopkeuring</a>. We bekijken hem op de brug, lezen de elektronica uit en vertellen u eerlijk wat we zien.</p>"""
+    tool_pagina("occasion-check", "Occasion-check: APK-historie en gebreken per kenteken | Autoservice Barneveld",
+                "Gratis occasion-check: zie bij een kenteken de APK-datum, eerder gemelde gebreken, het tellerstandoordeel, import en terugroepacties. Handig vóór u een tweedehands auto koopt.",
+                "Occasion-check: wat is er bekend over deze auto?", "dienst-diagnose", "Gratis occasion-check",
+                "Een tweedehands auto op het oog? Vul het kenteken in en zie de APK-historie, gemelde gebreken, het tellerstandoordeel en meer.",
+                inhoud, OCCASION_VRAGEN,
+                ("Occasion-check", "Zie bij een kenteken de APK-datum, eerder gemelde gebreken, het tellerstandoordeel, import en terugroepacties."),
+                "Overig")
+
+
+AANKOOP_VRAGEN = [
+    ("Moet de verkoper meewerken?",
+     "Ja, de auto moet bij ons langs kunnen komen. Vraag de verkoper of u de auto even mag laten nakijken. Een eerlijke verkoper vindt dat meestal geen probleem; u kunt ook samen komen."),
+    ("Wat kost een aankoopkeuring?",
+     "Bel of app ons even, dan hoort u vooraf wat het kost. Dat hangt onder meer af van het type auto."),
+    ("Kan ik de APK meteen laten doen?",
+     "Ja. Is de APK bijna verlopen, dan kunnen we de keuring vaak meteen combineren. Gebruik de <a href=\"{r}apk-check/\">APK-check</a> om de datum te zien."),
+]
+
+
+def aankoopkeuring():
+    inhoud = """        <p>Een tweedehands auto op het oog? Laat hem even door ons nakijken voordat u tekent. Een frisse blik van een monteur voorkomt dure verrassingen achteraf, en u staat sterker als u over de prijs praat.</p>
+
+        <h2>Wat we bekijken</h2>
+        <ul class="lijst-vink">
+          <li>Onderkant en carrosserie op de brug: roest, schade en lekkages</li>
+          <li>Remmen, banden, ophanging en uitlaat</li>
+          <li>Motor, koppeling of automaat, en vloeistoffen</li>
+          <li>Uitlezen van de elektronica op opgeslagen storingen</li>
+          <li>Verlichting, airco en de belangrijkste elektrische functies</li>
+          <li>Een korte proefrit</li>
+          <li>De openbare RDW-gegevens, zoals APK, tellerstand en terugroepacties</li>
+        </ul>
+
+        <h2>Eerlijk advies</h2>
+        <p>Na afloop hoort u van ons wat er goed is, wat binnenkort aandacht nodig heeft en wat dat ongeveer kost. Geen verkooppraatje, gewoon een eerlijk verhaal van de monteur zelf. Elektrisch of hybride? Ook dan kijken we graag met u mee.</p>
+
+        <h2>Eerst zelf even checken</h2>
+        <p>Met onze gratis <a href="{r}occasion-check/">occasion-check</a> ziet u vooraf al de APK-historie, gemelde gebreken en het tellerstandoordeel van de auto.</p>"""
+    tool_pagina("aankoopkeuring", "Aankoopkeuring tweedehands auto Barneveld | Autoservice Barneveld",
+                "Laat uw tweedehands auto vóór de koop nakijken in Barneveld. Op de brug, uitlezen en een proefrit, met eerlijk advies van de monteur. Alle merken.",
+                "Aankoopkeuring: eerst laten nakijken, dan kopen", "dienst-onderhoud", "Dienst · alle merken",
+                "Laat een tweedehands auto vóór de koop door ons nakijken. U hoort eerlijk wat er goed is en wat aandacht nodig heeft.",
+                inhoud, AANKOOP_VRAGEN, None, "Overig", naam="Aankoopkeuring")
 
 
 def sitemap_en_llms():
@@ -1197,4 +1303,6 @@ if __name__ == "__main__":
     privacy()
     niet_gevonden()
     apk_check()
+    occasion_check()
+    aankoopkeuring()
     sitemap_en_llms()

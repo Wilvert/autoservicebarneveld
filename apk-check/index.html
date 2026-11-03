@@ -189,8 +189,8 @@
 <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
 <link rel="preload" href="../fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../fonts/bebas-neue.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../css/style.css?v=c9987fd4">
-<script src="../js/site.js?v=6564a8ee" defer></script>
+<link rel="stylesheet" href="../css/style.css?v=b8330b75">
+<script src="../js/site.js?v=5ea4609c" defer></script>
 </head>
 <body>
 <a class="naar-inhoud" href="#inhoud">Direct naar de inhoud</a>
@@ -229,34 +229,31 @@
     </div>
   </section>
 
-  <section class="sectie apk-check-sectie">
+  <section class="sectie">
     <div class="wrap artikel">
       <div class="tekst">
-        <form class="apk-check" id="apk-check" action="./" method="get" novalidate>
-          <label for="apk-kenteken">Uw kenteken</label>
+        <form class="apk-check" data-modus="apk" action="./" method="get" novalidate>
+          <label for="kt-apk">Uw kenteken</label>
           <div class="apk-check-rij">
             <div class="kenteken">
               <span class="nl" aria-hidden="true">
                 <svg viewBox="0 0 24 20"><g fill="#f6c500"><circle cx="19.00" cy="10.00" r="1.2"/><circle cx="18.06" cy="13.50" r="1.2"/><circle cx="15.50" cy="16.06" r="1.2"/><circle cx="12.00" cy="17.00" r="1.2"/><circle cx="8.50" cy="16.06" r="1.2"/><circle cx="5.94" cy="13.50" r="1.2"/><circle cx="5.00" cy="10.00" r="1.2"/><circle cx="5.94" cy="6.50" r="1.2"/><circle cx="8.50" cy="3.94" r="1.2"/><circle cx="12.00" cy="3.00" r="1.2"/><circle cx="15.50" cy="3.94" r="1.2"/><circle cx="18.06" cy="6.50" r="1.2"/></g></svg>
                 NL
               </span>
-              <input id="apk-kenteken" name="kenteken" data-geen-rdw placeholder="AB-123-C" maxlength="8" autocomplete="off" spellcheck="false" autocapitalize="characters" required>
+              <input id="kt-apk" name="kenteken" data-geen-rdw placeholder="AB-123-C" maxlength="8" autocomplete="off" spellcheck="false" autocapitalize="characters" required>
             </div>
             <button class="knop oranje" type="submit">Check APK <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6"/></svg></button>
           </div>
           <p class="apk-check-melding" role="alert" hidden></p>
         </form>
-
-        <div class="apk-uitslag" id="apk-uitslag" aria-live="polite" hidden>
+        <div class="apk-uitslag" aria-live="polite" hidden>
           <div class="apk-status">
-            <div class="apk-status-tekst">
-              <span class="apk-status-label"></span>
-              <p class="apk-status-kop"></p>
-              <p class="apk-status-uitleg"></p>
-              <div class="apk-status-knoppen">
-                <a class="knop blauw" href="../contact/" data-afspraak data-dienst="APK" data-kenteken-van="#apk-kenteken">Plan uw APK <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6"/></svg></a>
-                <button type="button" class="link-klein apk-agenda">Zet een herinnering in uw agenda</button>
-              </div>
+            <span class="apk-status-label"></span>
+            <p class="apk-status-kop"></p>
+            <div class="apk-status-uitleg"></div>
+            <div class="apk-status-knoppen">
+              <a class="knop blauw" href="../contact/" data-afspraak data-dienst="APK" data-omschrijving="" data-kenteken-van="#kt-apk">Plan uw APK <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6"/></svg></a>
+                <button type="button" class="link-klein apk-agenda" hidden>Zet een herinnering in uw agenda</button>
             </div>
           </div>
           <div class="apk-auto">
@@ -277,25 +274,24 @@
 
         <h2>APK laten doen in Barneveld</h2>
         <p>Autoservice Barneveld is door de RDW erkend en keurt auto's van alle merken, ook elektrische auto's. Combineer de keuring gerust met een <a href="../onderhoud-reparatie/">onderhoudsbeurt</a>, dan bent u in één keer klaar. Meer weten? Lees alles over onze <a href="../apk-keuring/">APK-keuring</a>.</p>
-
-        <h2>Veelgestelde vragen over de APK</h2>
+        <h2>Veelgestelde vragen</h2>
         <div class="vragen">
-        <details class="vraag">
-          <summary>Hoe lang van tevoren kan ik mijn auto APK laten keuren?</summary>
-          <p>U kunt uw auto tot twee maanden vóór de vervaldatum laten keuren. Uw nieuwe vervaldatum wordt dan gerekend vanaf de oude datum, zodat u geen dag verliest.</p>
-        </details>
-        <details class="vraag">
-          <summary>Wat gebeurt er als mijn APK verlopen is?</summary>
-          <p>Met een verlopen APK mag u niet de weg op. De RDW controleert dit automatisch en u kunt een boete krijgen. Plan daarom zo snel mogelijk een keuring.</p>
-        </details>
-        <details class="vraag">
-          <summary>Hoe vaak moet mijn auto APK?</summary>
-          <p>Een nieuwe auto op benzine of stroom gaat voor het eerst na vier jaar naar de APK, daarna na twee jaar en vanaf acht jaar oud elk jaar. Een auto op diesel of lpg gaat na drie jaar voor het eerst en daarna elk jaar. Voor oudere auto&#x27;s en oldtimers gelden aparte regels; de APK-check toont altijd uw eigen vervaldatum.</p>
-        </details>
-        <details class="vraag">
-          <summary>Waar komen de gegevens vandaan?</summary>
-          <p>Uit de openbare voertuiggegevens van de RDW. Uw browser vraagt ze daar rechtstreeks op; wij zien en bewaren het kenteken niet.</p>
-        </details>
+          <details class="vraag">
+            <summary>Hoe lang van tevoren kan ik mijn auto APK laten keuren?</summary>
+            <p>U kunt uw auto tot twee maanden vóór de vervaldatum laten keuren. Uw nieuwe vervaldatum wordt dan gerekend vanaf de oude datum, zodat u geen dag verliest.</p>
+          </details>
+          <details class="vraag">
+            <summary>Wat gebeurt er als mijn APK verlopen is?</summary>
+            <p>Met een verlopen APK mag u niet de weg op. De RDW controleert dit automatisch en u kunt een boete krijgen. Plan daarom zo snel mogelijk een keuring.</p>
+          </details>
+          <details class="vraag">
+            <summary>Hoe vaak moet mijn auto APK?</summary>
+            <p>Een nieuwe auto op benzine of stroom gaat voor het eerst na vier jaar naar de APK, daarna na twee jaar en vanaf acht jaar oud elk jaar. Een auto op diesel of lpg gaat na drie jaar voor het eerst en daarna elk jaar. Voor oudere auto&#x27;s en oldtimers gelden aparte regels; de APK-check toont altijd uw eigen vervaldatum.</p>
+          </details>
+          <details class="vraag">
+            <summary>Waar komen de gegevens vandaan?</summary>
+            <p>Uit de openbare voertuiggegevens van de RDW. Uw browser vraagt ze daar rechtstreeks op; wij zien en bewaren het kenteken niet.</p>
+          </details>
         </div>
       </div>
       <aside class="zijkaart" aria-labelledby="zijkaart-titel">
@@ -357,7 +353,7 @@
      "name": "Hoe vaak moet mijn auto APK?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Een nieuwe auto op benzine of stroom gaat voor het eerst na vier jaar naar de APK, daarna na twee jaar en vanaf acht jaar oud elk jaar. Een auto op diesel of lpg gaat na drie jaar voor het eerst en daarna elk jaar. Voor oudere auto's en oldtimers gelden aparte regels; de APK-check toont altijd uw eigen vervaldatum."
+      "text": "Een nieuwe auto op benzine of stroom gaat voor het eerst na vier jaar naar de APK, daarna na twee jaar en vanaf acht jaar oud elk jaar. Een auto op diesel of lpg gaat na drie jaar voor het eerst en daarna elk jaar. Voor oudere auto&#x27;s en oldtimers gelden aparte regels; de APK-check toont altijd uw eigen vervaldatum."
      }
     },
     {
@@ -367,6 +363,23 @@
       "@type": "Answer",
       "text": "Uit de openbare voertuiggegevens van de RDW. Uw browser vraagt ze daar rechtstreeks op; wij zien en bewaren het kenteken niet."
      }
+    }
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://www.autoservicebarneveld.nl/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "APK-check",
+     "item": "https://www.autoservicebarneveld.nl/apk-check/"
     }
    ]
   }

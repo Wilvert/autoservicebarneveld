@@ -517,3 +517,17 @@ svg.blad { display: inline-block; flex: none; margin-top: 0; color: #2f9e5f; ver
 .apk-knop svg { flex: none; }
 @media (max-width: 900px) { .kop .wrap { gap: 12px; } .apk-knop { margin-right: 0; } }
 @media (max-width: 380px) { .apk-knop { padding: 10px 11px; font-size: 14px; gap: 6px; } .kop-logo img { width: 118px; } }
+.apk-status-uitleg { margin: 0 0 16px; font-size: 15px; }
+.apk-status-uitleg ul { margin: 6px 0 0; padding-left: 20px; }
+.apk-status-uitleg li { margin: 3px 0; }
+.apk-extra { margin-top: 20px; padding: 22px 24px; border: 1px solid var(--grijs-20); border-radius: 12px; }
+.apk-extra h3 { margin: 0 0 6px; font-size: 17px; color: var(--blauw); }
+.apk-leeg { margin: 0 0 10px; font-size: 14px; color: var(--grijs-80); }
+.apk-historie { list-style: none; margin: 0; padding: 0; }
+.apk-historie > li { padding: 12px 0; border-top: 1px solid var(--grijs-20); font-size: 14px; }
+.apk-historie > li > strong { color: var(--grijs); }
+.apk-historie ul { margin: 4px 0 0; padding-left: 18px; }
+.lijst-vink { list-style: none; padding: 0; margin: 0 0 1em; }
+.lijst-vink li { position: relative; padding: 5px 0 5px 28px; }
+.lijst-vink li::before { content: ""; position: absolute; left: 2px; top: 11px; width: 14px; height: 8px; border-left: 2.5px solid #2f9e5f; border-bottom: 2.5px solid #2f9e5f; transform: rotate(-45deg); }
+@media (max-width: 600px) { .apk-extra { padding: 18px; } }
