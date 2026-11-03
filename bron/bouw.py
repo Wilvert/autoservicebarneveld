@@ -39,7 +39,7 @@ PROFIELEN = [
 ]
 
 CSP = ("default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; "
-       "frame-src https://www.openstreetmap.org; connect-src 'self' https://formsubmit.co https://api.pdok.nl https://opendata.rdw.nl; form-action 'self' mailto: https://formsubmit.co; "
+       "frame-src https://www.openstreetmap.org; connect-src 'self' https://formsubmit.co https://api.pdok.nl https://opendata.rdw.nl https://api.open-meteo.com; form-action 'self' mailto: https://formsubmit.co; "
        "base-uri 'self'; object-src 'none'")
 
 # ------------------------------------------------------------------ iconen
@@ -1423,6 +1423,78 @@ def dashboardlampjes():
                 inhoud, vragen, None, "Diagnose", naam="Dashboardlampjes")
 
 
+def winterbanden():
+    inhoud = """        <div class="weer-meter" id="weer-meter" aria-live="polite">
+          <p class="weer-laden">De weersverwachting voor Barneveld wordt geladen…</p>
+        </div>
+
+        <h2>De 7-gradenregel</h2>
+        <p>Winterbanden zijn gemaakt van een zachter rubber dat ook bij kou soepel blijft. Daardoor hebben ze onder de 7 °C meer grip dan zomerbanden, ook op een droge weg. Zakt de temperatuur in het najaar structureel onder de 7 graden, dan is het tijd om te wisselen. Stijgt hij in het voorjaar weer structureel boven de 7 graden, dan kunnen de zomerbanden er weer onder. De meter hierboven kijkt daarvoor naar de verwachting voor de komende dagen in Barneveld.</p>
+
+        <h2>All-season banden</h2>
+        <p>Liever niet twee keer per jaar wisselen? All-season banden zijn een goed alternatief voor de meeste rijders in Nederland. Kies dan banden met het bergsymbool met sneeuwvlok (3PMSF): die zijn ook in landen met een winterbandenplicht toegestaan.</p>
+
+        <h2>Op wintersport?</h2>
+        <p>In Nederland zijn winterbanden niet verplicht. In onder meer Duitsland en Oostenrijk wel, bij winterse omstandigheden. Kijk voor de regels van uw vakantieland bij de ANWB, en houd minimaal 4 mm profiel aan.</p>
+
+        <h2>Banden laten wisselen</h2>
+        <p>Wij wisselen uw banden snel en vakkundig en controleren meteen het profiel, de spanning en eventuele schade. <a href="{r}bandenservice/">Meer over onze bandenservice</a> of bekijk onze <a href="{r}bandencheck/">bandencheck</a>.</p>"""
+    vragen = [
+        ("Wanneer moet ik winterbanden onder mijn auto zetten?", "Als de temperatuur structureel onder de 7 °C zakt, meestal ergens tussen half oktober en eind november. In het voorjaar wisselt u terug als het structureel boven de 7 °C blijft."),
+        ("Zijn winterbanden verplicht in Nederland?", "Nee. In Nederland niet, in onder meer Duitsland en Oostenrijk wel bij winterse omstandigheden."),
+        ("Hoeveel profiel moeten winterbanden hebben?", "Wettelijk minimaal 1,6 mm, maar voor winterbanden adviseren we minimaal 4 mm. Daaronder nemen de grip op sneeuw en natte wegen sterk af."),
+    ]
+    tool_pagina("winterbanden", "Winterbanden: is het al tijd om te wisselen? | Autoservice Barneveld",
+                "Is het tijd voor winterbanden? Bekijk de temperatuurverwachting voor Barneveld en de 7-gradenregel. Plus uitleg over all-season banden en wintersport.",
+                "Winterbanden: is het al tijd om te wisselen?", "dienst-banden", "Bandenmeter",
+                "Volgens de 7-gradenregel: onze meter kijkt naar de temperatuur in Barneveld voor de komende dagen.",
+                inhoud, vragen, ("Winterbandenmeter", "Ziet aan de hand van de weersverwachting voor Barneveld of het tijd is voor winterbanden of zomerbanden."),
+                "Bandenservice")
+
+
+def bandencheck():
+    inhoud = """        <form class="banden-tool" id="banden-maat" novalidate>
+          <label for="bandmaat">Bandenmaat <small>zoals op de zijkant van uw band, bijv. 205/55 R16 91V</small></label>
+          <div class="banden-rij">
+            <input class="invoer" id="bandmaat" placeholder="205/55 R16 91V" autocomplete="off" spellcheck="false">
+            <button class="knop blauw" type="submit">Uitleg</button>
+          </div>
+          <dl class="banden-uitleg" hidden></dl>
+        </form>
+
+        <form class="banden-tool" id="banden-dot" novalidate>
+          <label for="dotcode">Hoe oud is uw band? <small>de laatste 4 cijfers van de DOT-code, bijv. 2321</small></label>
+          <div class="banden-rij">
+            <input class="invoer" id="dotcode" placeholder="2321" inputmode="numeric" maxlength="4" autocomplete="off">
+            <button class="knop blauw" type="submit">Bereken</button>
+          </div>
+          <p class="banden-uitleg" hidden></p>
+        </form>
+
+        <h2>Profieldiepte</h2>
+        <p>Wettelijk moet er minimaal 1,6 mm profiel op uw banden zitten. Voor een goede grip op natte wegen adviseren we 3 mm voor zomerbanden en 4 mm voor winter- en all-season banden. In de groeven van de band zitten kleine verhogingen, de slijtage-indicatoren: zit het profiel daarop gelijk, dan is de band op.</p>
+
+        <h2>Bandenspanning</h2>
+        <p>De juiste spanning vindt u op een sticker in de deurstijl, in het tankklepje of in het instructieboekje. Controleer hem eens per maand bij koude banden. Een te lage spanning kost brandstof, slijt de band sneller en verlengt de remweg.</p>
+
+        <h2>Het bandenlabel</h2>
+        <p>Op elke nieuwe band zit een Europees label. Daarop ziet u het rolgeluid (in decibel), de grip op een natte weg en de rolweerstand, van klasse A (best) tot E. Een betere rolweerstand scheelt brandstof of, bij een elektrische auto, actieradius.</p>
+
+        <h2>Nieuwe banden nodig?</h2>
+        <p>We adviseren u graag over de juiste band voor uw auto en rijstijl, ook voor elektrische auto's. <a href="{r}bandenservice/">Meer over onze bandenservice</a>. Twijfelt u over winterbanden? Kijk op onze <a href="{r}winterbanden/">winterbandenmeter</a>.</p>"""
+    vragen = [
+        ("Hoe lees ik de bandenmaat?", "Bij 205/55 R16 91V is 205 de breedte in millimeter, 55 de hoogte van de zijwand als percentage van de breedte, R staat voor radiaalband, 16 is de velgdiameter in inch, 91 de draagkracht (615 kg per band) en V de maximumsnelheid (240 km/u)."),
+        ("Hoe oud mag een band zijn?", "Rubber veroudert, ook als u weinig rijdt. Let vanaf zes jaar extra op scheurtjes. Veel fabrikanten adviseren banden van tien jaar of ouder te vervangen, ook als er nog profiel op zit."),
+        ("Wat is de minimale profieldiepte?", "Wettelijk 1,6 mm. Wij adviseren minimaal 3 mm voor zomerbanden en 4 mm voor winter- en all-season banden."),
+    ]
+    tool_pagina("bandencheck", "Bandencheck: bandenmaat, leeftijd en profiel | Autoservice Barneveld",
+                "Wat betekent de bandenmaat op uw band, hoe oud is uw band (DOT-code) en hoeveel profiel moet erop? Gratis bandencheck met heldere uitleg.",
+                "Bandencheck: maat, leeftijd en profiel", "dienst-banden", "Gratis bandencheck",
+                "Vul de bandenmaat of DOT-code in en zie direct wat het betekent. Met uitleg over profiel, spanning en het bandenlabel.",
+                inhoud, vragen, ("Bandencheck", "Legt de bandenmaat en DOT-code van een band uit, met leeftijd, draagvermogen en maximumsnelheid."),
+                "Bandenservice")
+
+
 def sitemap_en_llms():
     paden = ["", *[d[0] + "/" for d in DIENSTEN], "apk-check/", "vervangend-vervoer/", "merken/", "werkgebied/", "veelgestelde-vragen/", "over-ons/", "contact/", "privacy/"]
     schrijf("sitemap.xml",
@@ -1482,4 +1554,6 @@ if __name__ == "__main__":
     terugroepactie_check()
     trekgewicht_check()
     dashboardlampjes()
+    winterbanden()
+    bandencheck()
     sitemap_en_llms()

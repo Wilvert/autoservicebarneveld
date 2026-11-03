@@ -385,6 +385,100 @@
     if (gevraagd) { invoer.value = kentekenNetjes(gevraagd); check(invoer.value, false); }
   });
 
+  /* ---------- Winterbandenmeter: weersverwachting Barneveld (Open-Meteo) ---------- */
+  (function () {
+    var meter = document.getElementById('weer-meter');
+    if (!meter || !window.fetch) return;
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=52.14&longitude=5.58&daily=temperature_2m_max,temperature_2m_min&timezone=Europe%2FAmsterdam&forecast_days=7')
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) {
+        var dagen = d.daily.time, max = d.daily.temperature_2m_max, min = d.daily.temperature_2m_min;
+        var gem = 0, vorst = false;
+        dagen.forEach(function (t, i) { gem += (max[i] + min[i]) / 2; if (min[i] < 0) vorst = true; });
+        gem = gem / dagen.length;
+        var maand = new Date().getMonth() + 1;
+        var najaar = maand >= 8;
+        var soort, kop, uitleg;
+        if (gem < 7) {
+          soort = 'winter';
+          kop = najaar || maand <= 2 ? 'Tijd voor winterbanden' : 'Nog even wachten met zomerbanden';
+          uitleg = 'De komende dagen is het in Barneveld gemiddeld ' + gem.toFixed(1).replace('.', ',') + ' °C, onder de 7 graden. Winter- of all-season banden geven nu de meeste grip.';
+        } else if (najaar) {
+          soort = 'zomer';
+          kop = 'Nog geen winterbanden nodig';
+          uitleg = 'Gemiddeld ' + gem.toFixed(1).replace('.', ',') + ' °C de komende dagen. Het kan nog even, maar plan uw wissel alvast: rond de 7 graden wordt het druk.';
+        } else {
+          soort = 'zomer';
+          kop = maand <= 6 ? 'Tijd voor zomerbanden' : 'Zomerbanden zijn prima';
+          uitleg = 'Gemiddeld ' + gem.toFixed(1).replace('.', ',') + ' °C de komende dagen, boven de 7 graden. Zomerbanden geven nu de meeste grip en slijten minder snel.';
+        }
+        if (vorst) uitleg += ' Let op: er wordt nachtvorst verwacht, dus kans op gladheid in de ochtend.';
+        var strook = dagen.map(function (t, i) {
+          var dg = new Date(t + 'T12:00:00').toLocaleDateString('nl-NL', { weekday: 'short' });
+          return '<li><span>' + dg + '</span><strong>' + Math.round(max[i]) + '°</strong><small>' + Math.round(min[i]) + '°</small></li>';
+        }).join('');
+        meter.className = 'weer-meter ' + soort;
+        meter.innerHTML = '<span class="weer-label">Bandenmeter Barneveld</span><p class="weer-kop"></p><p class="weer-uitleg"></p>' +
+          '<ol class="weer-dagen" aria-label="Verwachting komende 7 dagen, maximum en minimum">' + strook + '</ol>' +
+          '<div class="weer-knoppen"><a class="knop blauw" href="../contact/" data-afspraak data-dienst="Bandenservice">Plan uw bandenwissel</a>' +
+          '<small>Weersverwachting: <a href="https://open-meteo.com/">Open-Meteo</a></small></div>';
+        meter.querySelector('.weer-kop').textContent = kop;
+        meter.querySelector('.weer-uitleg').textContent = uitleg;
+      })
+      .catch(function () {
+        meter.innerHTML = '<p class="weer-laden">De weersverwachting is nu niet bereikbaar. Vuistregel: onder de 7 °C geven winterbanden de meeste grip.</p>';
+      });
+  })();
+
+  /* ---------- Bandencheck: bandenmaat en DOT-code uitleggen ---------- */
+  (function () {
+    var maatForm = document.getElementById('banden-maat');
+    var dotForm = document.getElementById('banden-dot');
+    if (!maatForm || !dotForm) return;
+    var LI = { 60: 250, 61: 257, 62: 265, 63: 272, 64: 280, 65: 290, 66: 300, 67: 307, 68: 315, 69: 325, 70: 335, 71: 345, 72: 355, 73: 365,
+      74: 375, 75: 387, 76: 400, 77: 412, 78: 425, 79: 437, 80: 450, 81: 462, 82: 475, 83: 487, 84: 500, 85: 515, 86: 530, 87: 545, 88: 560,
+      89: 580, 90: 600, 91: 615, 92: 630, 93: 650, 94: 670, 95: 690, 96: 710, 97: 730, 98: 750, 99: 775, 100: 800, 101: 825, 102: 850,
+      103: 875, 104: 900, 105: 925, 106: 950, 107: 975, 108: 1000, 109: 1030, 110: 1060, 111: 1090, 112: 1120, 113: 1150, 114: 1180,
+      115: 1215, 116: 1250, 117: 1285, 118: 1320, 119: 1360, 120: 1400 };
+    var SI = { L: 120, M: 130, N: 140, P: 150, Q: 160, R: 170, S: 180, T: 190, U: 200, H: 210, V: 240, W: 270, Y: 300 };
+    function rij(k, v) { return '<dt>' + k + '</dt><dd>' + v + '</dd>'; }
+    maatForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var uit = maatForm.querySelector('.banden-uitleg');
+      var m = maatForm.querySelector('input').value.toUpperCase().match(/(\d{3})\s*\/\s*(\d{2})\s*(Z?R)?\s*-?\s*(\d{2})(?:\s*(\d{2,3})\s*\(?([A-Z])\)?)?/);
+      uit.hidden = false;
+      if (!m) { uit.innerHTML = '<dd class="banden-fout">Dat lijkt geen bandenmaat. Typ hem zoals op de band, bijvoorbeeld 205/55 R16 91V.</dd>'; return; }
+      var h = '';
+      h += rij(m[1], 'Breedte van de band: ' + m[1] + ' mm');
+      h += rij(m[2], 'Hoogte van de zijwand: ' + m[2] + '% van de breedte (' + Math.round(m[1] * m[2] / 100) + ' mm)');
+      if (m[3]) h += rij(m[3], m[3] === 'ZR' ? 'Radiaalband, geschikt voor hoge snelheden' : 'Radiaalband (de gangbare bouwwijze)');
+      h += rij(m[4], 'Past op een velg van ' + m[4] + ' inch');
+      if (m[5]) h += rij(m[5], LI[m[5]] ? 'Draagvermogen: maximaal ' + LI[m[5]].toLocaleString('nl-NL') + ' kg per band' : 'Draagvermogen-index ' + m[5]);
+      if (m[6]) h += rij(m[6], SI[m[6]] ? 'Maximumsnelheid: ' + SI[m[6]] + ' km/u' : 'Snelheidsindex ' + m[6]);
+      uit.innerHTML = h;
+    });
+    dotForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var uit = dotForm.querySelector('.banden-uitleg');
+      var v = dotForm.querySelector('input').value.replace(/\D/g, '');
+      uit.hidden = false;
+      uit.className = 'banden-uitleg';
+      var week = +v.slice(0, 2), jaar = 2000 + +v.slice(2, 4);
+      if (v.length !== 4 || week < 1 || week > 53 || jaar > new Date().getFullYear()) {
+        uit.textContent = 'Vul de laatste 4 cijfers van de DOT-code in: eerst de week, dan het jaar. 2321 betekent week 23 van 2021.';
+        uit.classList.add('banden-fout'); return;
+      }
+      var gemaakt = new Date(jaar, 0, 1 + (week - 1) * 7);
+      var leeftijd = (new Date() - gemaakt) / (365.25 * 864e5);
+      var jr = Math.floor(leeftijd);
+      var tekst = 'Gemaakt in week ' + week + ' van ' + jaar + '. Deze band is ' + (jr < 1 ? 'nog geen jaar' : jr === 1 ? 'ruim 1 jaar' : 'ruim ' + jr + ' jaar') + ' oud. ';
+      if (leeftijd >= 10) { tekst += 'Wij adviseren deze band te vervangen, ook als er nog profiel op zit.'; uit.classList.add('banden-let-op'); }
+      else if (leeftijd >= 6) { tekst += 'Let extra op scheurtjes in de zijwand en laat hem bij twijfel nakijken.'; uit.classList.add('banden-let-op'); }
+      else tekst += 'Qua leeftijd prima; kijk vooral naar profiel en spanning.';
+      uit.textContent = tekst;
+    });
+  })();
+
   /* ---------- Afspraakvenster ---------- */
   var venster = document.getElementById('afspraak-venster');
   if (!venster || typeof venster.showModal !== 'function') return;
@@ -445,15 +539,15 @@
     });
   }
 
-  // Alle "Plan afspraak"-knoppen
-  Array.prototype.forEach.call(document.querySelectorAll('[data-afspraak]'), function (knop) {
-    knop.addEventListener('click', function (e) {
-      e.preventDefault();
-      var van = knop.getAttribute('data-kenteken-van');
-      var bron = van && document.querySelector(van);
-      open({ dienst: knop.getAttribute('data-dienst') || '', kenteken: bron && kentekenOk(bron.value) ? kentekenNetjes(bron.value) : '',
-        omschrijving: knop.getAttribute('data-omschrijving') || '' });
-    });
+  // Alle "Plan afspraak"-knoppen (ook knoppen die later op de pagina komen)
+  document.addEventListener('click', function (e) {
+    var knop = e.target.closest && e.target.closest('[data-afspraak]');
+    if (!knop) return;
+    e.preventDefault();
+    var van = knop.getAttribute('data-kenteken-van');
+    var bron = van && document.querySelector(van);
+    open({ dienst: knop.getAttribute('data-dienst') || '', kenteken: bron && kentekenOk(bron.value) ? kentekenNetjes(bron.value) : '',
+      omschrijving: knop.getAttribute('data-omschrijving') || '' });
   });
 
   venster.querySelector('.sluit').addEventListener('click', function () { venster.close(); });

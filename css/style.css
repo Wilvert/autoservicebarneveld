@@ -554,3 +554,35 @@ svg.blad { display: inline-block; flex: none; margin-top: 0; color: #2f9e5f; ver
 .lampje summary small { flex-basis: 100%; padding-left: 24px; font-weight: 400; font-size: 13px; color: var(--grijs-80); }
 .lampje p { margin: 0 0 10px 24px; font-size: 15px; }
 .lampje p:last-child { margin-bottom: 16px; }
+
+/* Winterbandenmeter */
+.weer-meter { margin: 0 0 32px; padding: 22px 24px; border-radius: 12px; border-left: 5px solid var(--blauw-60); background: #f4f8fc; }
+.weer-meter.zomer { border-color: #2f9e5f; background: #eef6f1; }
+.weer-laden { margin: 0; font-size: 15px; color: var(--grijs-80); }
+.weer-label { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--blauw); }
+.weer-meter.zomer .weer-label { color: #1f7a47; }
+.weer-kop { margin: 4px 0; font-size: 20px; font-weight: 700; color: var(--grijs); }
+.weer-uitleg { margin: 0 0 16px; font-size: 15px; }
+.weer-dagen { list-style: none; margin: 0 0 18px; padding: 0; display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+.weer-dagen li { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 2px; border-radius: 8px; background: var(--wit); font-size: 13px; }
+.weer-dagen span { color: var(--grijs-80); }
+.weer-dagen strong { font-size: 16px; color: var(--grijs); }
+.weer-dagen small { color: var(--grijs-80); }
+.weer-knoppen { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+.weer-knoppen small { font-size: 12px; color: var(--grijs-80); }
+.weer-knoppen small a { color: inherit; }
+
+/* Bandencheck */
+.banden-tool { margin: 0 0 18px; padding: 20px 22px; border: 1px solid var(--grijs-20); border-radius: 12px; background: #f4f6f9; }
+.banden-tool label { display: block; margin-bottom: 8px; font-weight: 700; color: var(--grijs); }
+.banden-tool label small { display: block; font-weight: 400; font-size: 13px; color: var(--grijs-80); }
+.banden-rij { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; }
+.banden-rij .invoer { font-size: 18px; letter-spacing: .03em; }
+.banden-uitleg { margin: 14px 0 0; font-size: 15px; }
+.banden-uitleg[hidden] { display: none; }
+dl.banden-uitleg { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 16px; }
+dl.banden-uitleg dt { font-weight: 800; color: var(--blauw); }
+dl.banden-uitleg dd { margin: 0; }
+.banden-fout { color: #a51f24; }
+p.banden-uitleg.banden-let-op { padding: 10px 12px; border-radius: 6px; background: #fdf1e9; border-left: 3px solid var(--oranje); }
+@media (max-width: 600px) { .weer-meter, .banden-tool { padding: 18px; } .weer-dagen { gap: 3px; } .weer-dagen li { font-size: 12px; } }
