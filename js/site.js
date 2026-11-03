@@ -479,6 +479,52 @@
     });
   })();
 
+  /* ---------- Onderhoudswijzer: vuistregel voor de volgende beurt ---------- */
+  (function () {
+    var form = document.getElementById('wijzer');
+    if (!form) return;
+    var uit = form.querySelector('.wijzer-uitslag');
+    var knop = uit.querySelector('[data-afspraak]');
+    function maandTekst(d) { return d.toLocaleDateString('nl-NL', { month: 'long', year: 'numeric' }); }
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var soort = form.querySelector('input[name="aandrijving"]:checked').value;
+      var km = +form.querySelector('#w-km').value;
+      var vorige = form.querySelector('input[name="vorige"]:checked').value;
+      var datum = form.querySelector('#w-datum').value;
+      var elektrisch = soort === 'elektrisch';
+      // Benzine/diesel/hybride: elk jaar of per 15.000 km; elektrisch: jaarlijkse controle
+      var maanden = elektrisch ? 12 : Math.max(6, Math.min(12, Math.round(15000 / km * 12)));
+      var volgendeSoort = elektrisch ? 'controlebeurt' : vorige === 'klein' ? 'grote beurt' : vorige === 'groot' ? 'kleine beurt' : '';
+      var regels = [], kop, label, klasse;
+      if (!datum) {
+        klasse = 'nu'; label = 'Advies';
+        kop = 'Weet u niet wanneer de laatste beurt was? Plan dan nu een beurt.';
+        regels.push('Wij kijken wat er nodig is en zetten de onderhoudsmelding goed, zodat u daarna weer precies weet waar u staat.');
+      } else {
+        var p = datum.split('-');
+        var volgende = new Date(+p[0], +p[1] - 1 + maanden, 1);
+        var nu = new Date(); nu.setDate(1); nu.setHours(0, 0, 0, 0);
+        var verschil = (volgende.getFullYear() - nu.getFullYear()) * 12 + volgende.getMonth() - nu.getMonth();
+        var wat = volgendeSoort ? 'een ' + volgendeSoort : 'uw volgende beurt';
+        if (verschil < 0) { klasse = 'verlopen'; label = 'Over tijd'; kop = 'Uw auto is waarschijnlijk toe aan ' + wat + '.'; regels.push('Volgens de vuistregel was die gepland rond ' + maandTekst(volgende) + '.'); }
+        else if (verschil <= 1) { klasse = 'nu'; label = 'Binnenkort'; kop = 'Het is bijna tijd voor ' + wat + ', rond ' + maandTekst(volgende) + '.'; }
+        else { klasse = 'geldig'; label = 'Op schema'; kop = 'Uw volgende beurt: ' + (volgendeSoort || 'kleine of grote beurt') + ', rond ' + maandTekst(volgende) + '.'; }
+        if (!elektrisch) regels.push('Of eerder, zodra u 15.000 km verder bent dan bij de vorige beurt.');
+      }
+      if (!elektrisch && !vorige) regels.push('Of het een kleine of grote beurt wordt, ziet u in het onderhoudsboekje. Bij twijfel kijken wij het voor u na.');
+      if (elektrisch) regels.push('Bij een elektrische auto kijken we vooral naar remmen, banden, ophanging, remvloeistof, airco en de 12V-accu.');
+      if (soort === 'hybride') regels.push('Een hybride heeft gewoon een verbrandingsmotor met olie en filters, dus hetzelfde ritme als benzine.');
+      uit.className = 'apk-status wijzer-uitslag ' + klasse;
+      uit.querySelector('.apk-status-label').textContent = label;
+      uit.querySelector('.apk-status-kop').textContent = kop;
+      uit.querySelector('.apk-status-uitleg').innerHTML = '<ul>' + regels.map(function (r) { var d = document.createElement('li'); d.textContent = r; return d.outerHTML; }).join('') + '</ul>';
+      knop.setAttribute('data-omschrijving', volgendeSoort && volgendeSoort !== 'controlebeurt' ? volgendeSoort.charAt(0).toUpperCase() + volgendeSoort.slice(1) : '');
+      uit.hidden = false;
+      uit.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  })();
+
   /* ---------- Afspraakvenster ---------- */
   var venster = document.getElementById('afspraak-venster');
   if (!venster || typeof venster.showModal !== 'function') return;

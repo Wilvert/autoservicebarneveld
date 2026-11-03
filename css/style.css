@@ -586,3 +586,20 @@ dl.banden-uitleg dd { margin: 0; }
 .banden-fout { color: #a51f24; }
 p.banden-uitleg.banden-let-op { padding: 10px 12px; border-radius: 6px; background: #fdf1e9; border-left: 3px solid var(--oranje); }
 @media (max-width: 600px) { .weer-meter, .banden-tool { padding: 18px; } .weer-dagen { gap: 3px; } .weer-dagen li { font-size: 12px; } }
+
+/* Onderhoudswijzer */
+.wijzer fieldset { border: 0; padding: 0; margin: 0 0 16px; min-width: 0; }
+.wijzer legend, .wijzer label[for] { display: block; margin-bottom: 8px; font-weight: 700; color: var(--grijs); }
+.wijzer label[for] small { font-weight: 400; font-size: 13px; color: var(--grijs-80); }
+.wijzer-keuzes { display: flex; flex-wrap: wrap; gap: 8px; }
+.wijzer-keuzes label { cursor: pointer; }
+.wijzer-keuzes input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.wijzer-keuzes span { display: inline-block; padding: 9px 14px; border: 1.5px solid var(--grijs-40); border-radius: 6px; background: var(--wit); font-size: 14px; font-weight: 600; }
+.wijzer-keuzes input:checked + span { border-color: var(--blauw); background: #f4f8fc; box-shadow: inset 0 0 0 1px var(--blauw); color: var(--blauw); }
+.wijzer-keuzes input:focus-visible + span { outline: 3px solid var(--oranje); outline-offset: 2px; }
+.wijzer-rij { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+.wijzer-rij .invoer { width: 100%; }
+.wijzer > .knop { margin-bottom: 4px; }
+.wijzer-uitslag { margin-top: 18px; }
+.wijzer-uitslag[hidden] { display: none; }
+@media (max-width: 600px) { .wijzer-rij { grid-template-columns: 1fr; } }

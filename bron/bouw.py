@@ -1495,6 +1495,70 @@ def bandencheck():
                 "Bandenservice")
 
 
+def onderhoudswijzer():
+    inhoud = """        <form class="banden-tool wijzer" id="wijzer" novalidate>
+          <fieldset>
+            <legend>Waar rijdt uw auto op?</legend>
+            <div class="wijzer-keuzes">
+              <label><input type="radio" name="aandrijving" value="brandstof" checked><span>Benzine of diesel</span></label>
+              <label><input type="radio" name="aandrijving" value="hybride"><span>Hybride</span></label>
+              <label><input type="radio" name="aandrijving" value="elektrisch"><span>Elektrisch</span></label>
+            </div>
+          </fieldset>
+          <div class="wijzer-rij">
+            <div>
+              <label for="w-km">Kilometers per jaar</label>
+              <select class="invoer" id="w-km">
+                <option value="8000">Minder dan 10.000</option>
+                <option value="15000" selected>10.000 tot 20.000</option>
+                <option value="25000">20.000 tot 30.000</option>
+                <option value="35000">Meer dan 30.000</option>
+              </select>
+            </div>
+            <div>
+              <label for="w-datum">Vorige beurt <small>maand en jaar</small></label>
+              <input class="invoer" id="w-datum" type="month">
+            </div>
+          </div>
+          <fieldset>
+            <legend>Wat was de vorige beurt?</legend>
+            <div class="wijzer-keuzes">
+              <label><input type="radio" name="vorige" value="klein"><span>Kleine beurt</span></label>
+              <label><input type="radio" name="vorige" value="groot"><span>Grote beurt</span></label>
+              <label><input type="radio" name="vorige" value="" checked><span>Weet ik niet</span></label>
+            </div>
+          </fieldset>
+          <button class="knop oranje" type="submit">Bekijk advies {I_PIJL}</button>
+          <div class="apk-status wijzer-uitslag" aria-live="polite" hidden>
+            <span class="apk-status-label"></span>
+            <p class="apk-status-kop"></p>
+            <div class="apk-status-uitleg"></div>
+            <div class="apk-status-knoppen"><a class="knop blauw" href="{r}contact/" data-afspraak data-dienst="Onderhoudsbeurt">Plan uw beurt {I_PIJL}</a></div>
+          </div>
+        </form>
+        <p class="apk-bron">Dit is een vuistregel. Het onderhoudsschema van uw auto (in het boekje of de app van het merk) is altijd leidend.</p>
+
+        <h2>Kleine of grote beurt: wat is het verschil?</h2>
+        <p>Bij een <strong>kleine beurt</strong> verversen we de motorolie en het oliefilter en controleren we de belangrijkste onderdelen: remmen, banden, verlichting, vloeistoffen, ophanging en uitlaat. Bij een <strong>grote beurt</strong> doen we dat ook, en vervangen we daarnaast filters zoals het luchtfilter, het interieurfilter en, afhankelijk van de auto, het brandstoffilter of de bougies. We kijken dan ook uitgebreider naar onder meer de aandrijfriemen en de remvloeistof.</p>
+
+        <h2>Hoe vaak onderhoud?</h2>
+        <p>Als vuistregel krijgt een auto op benzine of diesel elk jaar of elke 15.000 km een beurt, wat het eerst komt, afwisselend klein en groot. Rijdt u veel, dan komt u dus vaker. Een elektrische auto heeft geen olie en minder slijtende delen, maar remmen, banden, ophanging en remvloeistof vragen nog steeds aandacht; daarvoor is een jaarlijkse controlebeurt verstandig. Meer over <a href="{r}elektrische-auto/">onderhoud van elektrische auto's</a>.</p>
+
+        <h2>Uw garantie blijft geldig</h2>
+        <p>U hoeft voor onderhoud niet naar de dealer. Wordt het onderhoud volgens de voorschriften van de fabrikant uitgevoerd, dan blijft uw fabrieksgarantie geldig. <a href="{r}merken/">Lees meer</a>.</p>""".replace("{I_PIJL}", I_PIJL)
+    vragen = [
+        ("Wat is het verschil tussen een APK en een onderhoudsbeurt?", "De APK is een wettelijke keuring op veiligheid en milieu. Bij een onderhoudsbeurt houden we de auto in goede staat, zodat hij betrouwbaar blijft en slijtage op tijd wordt ontdekt. Ze laten zich goed combineren."),
+        ("Er brandt een moersleuteltje op mijn dashboard. Wat betekent dat?", "Dat is de onderhoudsmelding: volgens de auto is het tijd voor een beurt. Na het onderhoud zetten wij de melding terug. Zie ook onze uitleg over <a href=\"{r}dashboardlampjes/\">dashboardlampjes</a>."),
+        ("Wat als ik een beurt heb overgeslagen?", "Geen paniek. Plan gewoon een beurt in; wij kijken wat er nodig is om weer bij te zijn."),
+    ]
+    tool_pagina("onderhoudswijzer", "Kleine of grote beurt? Onderhoudswijzer | Autoservice Barneveld",
+                "Wanneer is uw volgende onderhoudsbeurt, en wordt het een kleine of grote beurt? Gratis onderhoudswijzer met uitleg over het verschil. Ook voor hybride en elektrisch.",
+                "Onderhoudswijzer: kleine of grote beurt?", "dienst-onderhoud", "Gratis onderhoudswijzer",
+                "Vul in wanneer uw vorige beurt was en hoeveel u rijdt, en zie wanneer de volgende beurt komt.",
+                inhoud, vragen, ("Onderhoudswijzer", "Geeft een vuistregel voor wanneer de volgende onderhoudsbeurt komt en of het een kleine of grote beurt is."),
+                "Onderhoudsbeurt")
+
+
 def sitemap_en_llms():
     paden = ["", *[d[0] + "/" for d in DIENSTEN], "apk-check/", "vervangend-vervoer/", "merken/", "werkgebied/", "veelgestelde-vragen/", "over-ons/", "contact/", "privacy/"]
     schrijf("sitemap.xml",
@@ -1556,4 +1620,5 @@ if __name__ == "__main__":
     dashboardlampjes()
     winterbanden()
     bandencheck()
+    onderhoudswijzer()
     sitemap_en_llms()
