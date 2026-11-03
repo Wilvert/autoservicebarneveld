@@ -189,8 +189,8 @@
 <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
 <link rel="preload" href="../fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../fonts/bebas-neue.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../css/style.css?v=2d54bcef">
-<script src="../js/site.js?v=0d3d582d" defer></script>
+<link rel="stylesheet" href="../css/style.css?v=47694bee">
+<script src="../js/site.js?v=50b85781" defer></script>
 </head>
 <body>
 <a class="naar-inhoud" href="#inhoud">Direct naar de inhoud</a>
@@ -237,7 +237,7 @@
         <p>Bij een APK-keuring zijn we wettelijk verplicht de uitslag aan de RDW door te geven. Facturen bewaren we zolang de fiscale bewaarplicht dat vereist.</p>
 
         <h2>Afspraak plannen via WhatsApp</h2>
-        <p>Het afspraakformulier op deze website slaat niets op en verstuurt niets zelf. Het zet uw kenteken (of merk en model), de gekozen werkzaamheden, kilometerstand, adres, e-mailadres en eventuele voorkeursdata in een WhatsApp-bericht, dat u daarna zelf verstuurt. Voor dat bericht gelden ook de voorwaarden van WhatsApp (Meta). Kiest u voor versturen per e-mail, dan gaan dezelfde gegevens via FormSubmit (formsubmit.co) als e-mail naar ons. Om uw straat en woonplaats bij uw postcode en huisnummer te vinden, vraagt het formulier die op bij de Basisregistratie Adressen via PDOK (Kadaster). Bij een ingevuld kenteken haalt het formulier het merk, model en de APK-vervaldatum op uit de openbare gegevens van de RDW. Bij beide wordt niets opgeslagen.</p>
+        <p>Het afspraakformulier op deze website slaat niets op en verstuurt niets zelf. Het zet uw kenteken (of merk en model), de gekozen werkzaamheden, eventueel uw overleggrens, kilometerstand, adres, e-mailadres en eventuele voorkeursdata in een WhatsApp-bericht, dat u daarna zelf verstuurt. Voor dat bericht gelden ook de voorwaarden van WhatsApp (Meta). Kiest u voor versturen per e-mail, dan gaan dezelfde gegevens via FormSubmit (formsubmit.co) als e-mail naar ons. Om uw straat en woonplaats bij uw postcode en huisnummer te vinden, vraagt het formulier die op bij de Basisregistratie Adressen via PDOK (Kadaster). Bij een ingevuld kenteken haalt het formulier het merk, model en de APK-vervaldatum op uit de openbare gegevens van de RDW. Bij beide wordt niets opgeslagen.</p>
 
         <h2>Deze website</h2>
         <p>Deze website gebruikt geen cookies, geen analyse- of advertentiediensten en laadt geen externe lettertypes. De website wordt gehost via GitHub Pages; GitHub kan daarbij technische gegevens zoals uw IP-adres verwerken om de site te leveren en te beveiligen. De kaart op de contactpagina wordt geladen van OpenStreetMap.</p>
@@ -330,6 +330,13 @@
         <div class="veld omschrijving">
           <label for="v-omschrijving"><span class="omschrijving-label">Opmerking</span> <small class="label-optioneel">optioneel</small></label>
           <textarea class="invoer" id="v-omschrijving" name="omschrijving" rows="2" maxlength="300" placeholder="Bijv. wanneer u de auto kunt brengen of iets wat we moeten weten"></textarea>
+        </div>
+        <div class="veld overleg">
+          <label for="v-grens">Eerst overleggen boven <small class="label-optioneel">optioneel</small></label>
+          <div class="overleg-rij">
+            <span class="euro-veld"><span aria-hidden="true">€</span><input class="invoer" id="v-grens" name="overleggrens" inputmode="numeric" autocomplete="off" placeholder="bijv. 250" maxlength="6"></span>
+            <small class="overleg-uitleg">Kost het werk meer, dan nemen we eerst contact met u op. Leeg laten? Dan overleggen we bij alles wat extra is.</small>
+          </div>
         </div>
         <div class="rij">
           <div class="veld">

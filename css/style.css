@@ -445,3 +445,11 @@ svg.blad { display: inline-block; flex: none; margin-top: 0; color: #2f9e5f; ver
 .venster .diensten-raster { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .venster .diensten-raster span { min-width: 0; padding: 9px 8px; gap: 7px; }
 @media (max-width: 720px) { .venster .diensten-raster { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Overleggrens in de planner */
+.overleg-rij { display: flex; align-items: center; gap: 12px; }
+.euro-veld { position: relative; flex: none; width: 130px; }
+.euro-veld > span { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-weight: 700; color: var(--grijs-80); pointer-events: none; }
+.euro-veld .invoer { padding-left: 32px; width: 100%; }
+.overleg-uitleg { font-size: 12px; line-height: 1.4; color: var(--grijs-80); }
+@media (max-width: 420px) { .overleg-rij { flex-direction: column; align-items: stretch; } .euro-veld { width: 100%; } }

@@ -192,6 +192,12 @@
     this.value = cijfers ? Number(cijfers).toLocaleString('nl-NL') : '';
   });
 
+  // Overleggrens: alleen cijfers
+  veld('overleggrens').addEventListener('input', function () {
+    var cijfers = this.value.replace(/\D/g, '').slice(0, 5);
+    this.value = cijfers ? Number(cijfers).toLocaleString('nl-NL') : '';
+  });
+
   // Vervangend vervoer: bij "Ja" de keuze tonen en verplicht maken
   var vervoerKeuze = venster.querySelector('.vervoer-keuze');
   var radios = vervoerKeuze.querySelectorAll('input[type="radio"]');
@@ -420,6 +426,9 @@
     var werk = gekozenDiensten();
     if (veld('omschrijving').value.trim()) {
       werk.push((omschrijvingNodig() ? 'Omschrijving: ' : 'Opmerking: ') + veld('omschrijving').value.trim().replace(/\s+/g, ' '));
+    }
+    if (veld('overleggrens').value) {
+      werk.push('Eerst overleggen als het meer kost dan: € ' + veld('overleggrens').value);
     }
     var voertuig = kentekenBlok.hidden
       ? ['Kenteken: onbekend', 'Merk en model: ' + veld('merk').value.trim() + ' ' + veld('model').value.trim()]

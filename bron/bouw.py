@@ -124,7 +124,7 @@ TEKST = {
 <p>Van remmen en ophanging tot uitlaat en elektronische storingen: onze werkplaats is uitgerust met moderne apparatuur, zodat we zowel regulier onderhoud als complexere reparaties kunnen uitvoeren. Heeft uw auto een storing? Lees meer over onze <a href="{r}diagnose/">diagnose</a>.</p>
 
 <h2>Geen verrassingen achteraf</h2>
-<p>Alle kosten worden vooraf besproken. Ontdekken we tijdens het werk iets onverwachts, dan houden we u direct op de hoogte via WhatsApp, met foto's, korte filmpjes of een duidelijke toelichting. U weet dus altijd wie er aan uw auto werkt en wat er gaat gebeuren.</p>
+<p>U geeft zelf aan tot welk bedrag we mogen doorwerken. Wordt het duurder, dan overleggen we eerst met u. Ontdekken we tijdens het werk iets onverwachts, dan houden we u direct op de hoogte via WhatsApp, met foto's, korte filmpjes of een duidelijke toelichting. U weet dus altijd wie er aan uw auto werkt en wat er gaat gebeuren.</p>
 
 <h2>Combineer met uw APK</h2>
 <p>Is uw <a href="{r}apk-keuring/">APK</a> bijna verlopen? Plan die dan tegelijk met uw onderhoudsbeurt in.</p>
@@ -321,6 +321,13 @@ def venster(r):
         <div class="veld omschrijving">
           <label for="v-omschrijving"><span class="omschrijving-label">Opmerking</span> <small class="label-optioneel">optioneel</small></label>
           <textarea class="invoer" id="v-omschrijving" name="omschrijving" rows="2" maxlength="300" placeholder="Bijv. wanneer u de auto kunt brengen of iets wat we moeten weten"></textarea>
+        </div>
+        <div class="veld overleg">
+          <label for="v-grens">Eerst overleggen boven <small class="label-optioneel">optioneel</small></label>
+          <div class="overleg-rij">
+            <span class="euro-veld"><span aria-hidden="true">€</span><input class="invoer" id="v-grens" name="overleggrens" inputmode="numeric" autocomplete="off" placeholder="bijv. 250" maxlength="6"></span>
+            <small class="overleg-uitleg">Kost het werk meer, dan nemen we eerst contact met u op. Leeg laten? Dan overleggen we bij alles wat extra is.</small>
+          </div>
         </div>
         <div class="rij">
           <div class="veld">
@@ -757,14 +764,14 @@ def over_ons():
         <p>Onze werkplaats is uitgerust met de nieuwste apparatuur en geschikt voor zowel regulier onderhoud als complexe diagnoses. Ik verzorg onderhoud en reparaties aan alle merken en modellen, inclusief het reguliere onderhoud van <a href="{r}elektrische-auto/">elektrische auto's</a>.</p>
 
         <h2>Heldere communicatie</h2>
-        <p>Transparantie staat centraal in mijn werkwijze. Alle kosten worden vooraf besproken, zodat u nooit voor verrassingen komt te staan. Ontdekken we tijdens het werk iets onverwachts? Dan houd ik u direct op de hoogte via WhatsApp, met foto's, korte filmpjes of een duidelijke toelichting.</p>
+        <p>Transparantie staat centraal in mijn werkwijze. U geeft zelf aan tot welk bedrag we mogen doorwerken; wordt het duurder, dan overleggen we eerst. Ontdekken we tijdens het werk iets onverwachts? Dan houd ik u direct op de hoogte via WhatsApp, met foto's, korte filmpjes of een duidelijke toelichting.</p>
 
         <h2>Waarom klanten kiezen voor Autoservice Barneveld</h2>
         <p>Klanten waarderen vooral de combinatie van deskundigheid, duidelijke communicatie en een nuchtere aanpak. Zo weet u zeker dat uw auto in goede handen is.</p>
 
         <ol class="stappen" aria-label="Zo werkt het">
           <li><strong>U plant een afspraak</strong><p>Online met uw kenteken via WhatsApp, of telefonisch.</p></li>
-          <li><strong>Kosten vooraf besproken</strong><p>Zo komt u nooit voor verrassingen te staan.</p></li>
+          <li><strong>U bepaalt wanneer we overleggen</strong><p>Geef bij uw afspraak aan tot welk bedrag we mogen doorwerken. Wordt het duurder, dan nemen we eerst contact met u op.</p></li>
           <li><strong>Op de hoogte via WhatsApp</strong><p>Iets onverwachts? Dan hoort u het direct.</p></li>
           <li><strong>U blijft mobiel</strong><p>Met een leenauto of leenfiets, zie <a href="{r}vervangend-vervoer/">vervangend vervoer</a>.</p></li>
         </ol>
@@ -824,7 +831,7 @@ def privacy():
         <p>Bij een APK-keuring zijn we wettelijk verplicht de uitslag aan de RDW door te geven. Facturen bewaren we zolang de fiscale bewaarplicht dat vereist.</p>
 
         <h2>Afspraak plannen via WhatsApp</h2>
-        <p>Het afspraakformulier op deze website slaat niets op en verstuurt niets zelf. Het zet uw kenteken (of merk en model), de gekozen werkzaamheden, kilometerstand, adres, e-mailadres en eventuele voorkeursdata in een WhatsApp-bericht, dat u daarna zelf verstuurt. Voor dat bericht gelden ook de voorwaarden van WhatsApp (Meta). Kiest u voor versturen per e-mail, dan gaan dezelfde gegevens via FormSubmit (formsubmit.co) als e-mail naar ons. Om uw straat en woonplaats bij uw postcode en huisnummer te vinden, vraagt het formulier die op bij de Basisregistratie Adressen via PDOK (Kadaster). Bij een ingevuld kenteken haalt het formulier het merk, model en de APK-vervaldatum op uit de openbare gegevens van de RDW. Bij beide wordt niets opgeslagen.</p>
+        <p>Het afspraakformulier op deze website slaat niets op en verstuurt niets zelf. Het zet uw kenteken (of merk en model), de gekozen werkzaamheden, eventueel uw overleggrens, kilometerstand, adres, e-mailadres en eventuele voorkeursdata in een WhatsApp-bericht, dat u daarna zelf verstuurt. Voor dat bericht gelden ook de voorwaarden van WhatsApp (Meta). Kiest u voor versturen per e-mail, dan gaan dezelfde gegevens via FormSubmit (formsubmit.co) als e-mail naar ons. Om uw straat en woonplaats bij uw postcode en huisnummer te vinden, vraagt het formulier die op bij de Basisregistratie Adressen via PDOK (Kadaster). Bij een ingevuld kenteken haalt het formulier het merk, model en de APK-vervaldatum op uit de openbare gegevens van de RDW. Bij beide wordt niets opgeslagen.</p>
 
         <h2>Deze website</h2>
         <p>Deze website gebruikt geen cookies, geen analyse- of advertentiediensten en laadt geen externe lettertypes. De website wordt gehost via GitHub Pages; GitHub kan daarbij technische gegevens zoals uw IP-adres verwerken om de site te leveren en te beveiligen. De kaart op de contactpagina wordt geladen van OpenStreetMap.</p>
