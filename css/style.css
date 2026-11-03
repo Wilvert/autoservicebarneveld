@@ -243,7 +243,7 @@ textarea { min-height: 120px; resize: vertical; }
 .andere-diensten a:hover { background: var(--blauw); border-color: var(--blauw); color: var(--wit); }
 
 /* ---------- Afspraakvenster ---------- */
-.venster { width: min(520px, calc(100% - 24px)); max-height: calc(100% - 24px); border: 0; border-radius: 14px; padding: 0; color: var(--grijs); box-shadow: 0 30px 80px #0e1c2c80; }
+.venster { width: min(680px, calc(100% - 24px)); overflow-x: hidden; max-height: calc(100% - 24px); border: 0; border-radius: 14px; padding: 0; color: var(--grijs); box-shadow: 0 30px 80px #0e1c2c80; }
 .venster::backdrop { background: #0e1c2cb3; }
 .venster-binnen { padding: 30px 30px 26px; }
 .venster h2 { font-family: var(--kop); font-weight: 400; font-size: 38px; letter-spacing: .02em; color: var(--blauw); margin: 0 40px 4px 0; }
@@ -442,5 +442,6 @@ svg.blad { display: inline-block; flex: none; margin-top: 0; color: #2f9e5f; ver
 .vertrouwen strong a:hover { text-decoration: underline; }
 .label-optioneel { margin-left: 4px; font-size: 12px; font-weight: 500; color: var(--grijs-80); }
 .omschrijving textarea { min-height: 58px; }
-.venster .diensten-raster { grid-template-columns: repeat(4, 1fr); }
-@media (max-width: 600px) { .venster .diensten-raster { grid-template-columns: 1fr 1fr; } }
+.venster .diensten-raster { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.venster .diensten-raster span { min-width: 0; padding: 9px 8px; gap: 7px; }
+@media (max-width: 720px) { .venster .diensten-raster { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
