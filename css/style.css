@@ -536,3 +536,21 @@ svg.blad { display: inline-block; flex: none; margin-top: 0; color: #2f9e5f; ver
 .check-links a { font-weight: 700; font-size: 15px; color: var(--blauw); }
 .check-links span { color: var(--grijs-80); }
 @media (max-width: 600px) { .check-links { grid-template-columns: 1fr; } }
+
+/* Dashboardlampjes */
+.lampjes-legenda { list-style: none; margin: 0 0 8px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 14px; }
+.lampjes-legenda li { display: flex; align-items: center; gap: 8px; }
+.lampjes-legenda strong { color: var(--grijs); }
+.lampje-stip { flex: none; display: inline-block; width: 12px; height: 12px; border-radius: 50%; }
+.lampje-stip.rood { background: #c3282e; }
+.lampje-stip.oranje { background: #e8902a; }
+.lampje-stip.groen { background: linear-gradient(90deg, #2f9e5f 50%, #2b5ca8 50%); }
+.lampjes { border-top: 1px solid var(--grijs-20); }
+.lampje { border-bottom: 1px solid var(--grijs-20); }
+.lampje summary { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; padding: 15px 36px 15px 0; font-weight: 700; color: var(--grijs); cursor: pointer; list-style: none; }
+.lampje summary::-webkit-details-marker { display: none; }
+.lampje summary::after { content: "+"; position: absolute; right: 6px; top: 50%; transform: translateY(-50%); font-size: 24px; font-weight: 400; color: var(--blauw); }
+.lampje[open] summary::after { content: "–"; }
+.lampje summary small { flex-basis: 100%; padding-left: 24px; font-weight: 400; font-size: 13px; color: var(--grijs-80); }
+.lampje p { margin: 0 0 10px 24px; font-size: 15px; }
+.lampje p:last-child { margin-bottom: 16px; }

@@ -1330,6 +1330,99 @@ def trekgewicht_check():
                 inhoud, vragen, ("Trekgewicht-check", "Zie met uw kenteken hoeveel uw auto geremd en ongeremd mag trekken."))
 
 
+LAMPJES = [
+    ("rood", "Rood: stoppen zodra het veilig kan", [
+        ("Oliedruk", "Een oliekannetje met een druppel.",
+         "De oliedruk is te laag. Zonder goede smering kan de motor binnen korte tijd ernstig beschadigd raken.",
+         "Stop zodra het veilig kan en zet de motor uit. Controleer het oliepeil met de peilstok. Rijd niet verder, maar bel ons of de pechhulp."),
+        ("Koelvloeistof / motortemperatuur", "Een thermometer in golven.",
+         "De motor wordt te warm, vaak door te weinig koelvloeistof of een probleem met de koeling.",
+         "Stop en laat de motor afkoelen. Open het koelvloeistofreservoir niet als de motor nog heet is. Rijd niet door met dit lampje."),
+        ("Remsysteem", "Een uitroepteken in een cirkel, soms met het woord BRAKE.",
+         "De handrem staat nog aan, of er is iets mis met de remmen, bijvoorbeeld te weinig remvloeistof.",
+         "Controleer eerst de handrem. Gaat het lampje niet uit, rijd dan niet verder en laat de remmen nakijken."),
+        ("Accu / laadstroom", "Een accu met een plus en een min.",
+         "De accu wordt niet meer opgeladen, meestal door de dynamo of een defecte V-snaar. De auto rijdt op de accu tot die leeg is.",
+         "Zet onnodige verbruikers uit (airco, verwarming, radio) en rijd rechtstreeks naar ons of naar een veilige plek. Bel ons gerust even."),
+        ("Airbag", "Een zittend poppetje met een bal ervoor.",
+         "Er is een storing in het airbagsysteem. Bij een aanrijding werken de airbags mogelijk niet.",
+         "U kunt meestal doorrijden, maar laat het snel uitlezen. Dit gaat om uw veiligheid."),
+    ]),
+    ("oranje", "Oranje: binnenkort laten nakijken", [
+        ("Motorstoring", "Een motorblokje, soms met het woord CHECK.",
+         "De motorelektronica heeft een storing opgeslagen, bijvoorbeeld van een sensor, de ontsteking of de uitlaatgasreiniging.",
+         "Brandt hij continu, laat de auto dan binnenkort uitlezen. Knippert hij, rijd dan rustig en laat hem direct nakijken: dat kan op een ernstigere storing wijzen."),
+        ("ABS", "De letters ABS in een cirkel.",
+         "Het antiblokkeersysteem werkt niet. Gewoon remmen werkt nog wel, maar bij hard remmen kunnen de wielen blokkeren.",
+         "Rijd voorzichtig, houd meer afstand en laat het binnenkort nakijken."),
+        ("Bandenspanning", "Een doorsnede van een band met een uitroepteken.",
+         "De spanning van een of meer banden is te laag, of een sensor geeft een storing.",
+         "Controleer en pomp de banden op tot de juiste spanning (zie de sticker in de deurstijl of het tankklepje). Gaat het lampje niet uit, laat het nakijken."),
+        ("ESP / tractiecontrole", "Een autootje met slingerende strepen.",
+         "Knippert hij kort tijdens het rijden, dan grijpt het systeem in omdat de auto dreigt te slippen. Dat is normaal. Blijft hij branden, dan is er een storing.",
+         "Blijft het lampje branden, rijd dan voorzichtig en laat het uitlezen."),
+        ("Voorgloeien (diesel)", "Een spiraaltje.",
+         "Bij het starten van een diesel brandt hij even: dat is normaal. Knippert of brandt hij tijdens het rijden, dan is er een storing in de motorregeling.",
+         "Laat de auto binnenkort uitlezen."),
+        ("Roetfilter (diesel)", "Een rechthoek met puntjes erin.",
+         "Het roetfilter raakt vol. Dat gebeurt vooral bij veel korte ritten.",
+         "Een stuk doorrijden op de snelweg helpt vaak om het filter schoon te branden. Gaat het lampje niet uit, laat het dan nakijken."),
+        ("AdBlue (diesel)", "Een vulopening met een druppel, soms met de tekst AdBlue.",
+         "Het AdBlue-niveau is laag.",
+         "Vul AdBlue bij. Raakt het helemaal op, dan kan de auto na het afzetten niet meer starten."),
+        ("Stuurbekrachtiging", "Een stuurtje met een uitroepteken.",
+         "Er is een storing in de stuurbekrachtiging. Sturen kan zwaarder gaan.",
+         "Rijd voorzichtig en laat het snel nakijken. Is het lampje rood, rijd dan liever niet verder."),
+        ("Onderhoud", "Een moersleuteltje, soms met het woord SERVICE.",
+         "Volgens de auto is het tijd voor een onderhoudsbeurt.",
+         "Plan een beurt in. Na het onderhoud zetten wij de melding weer terug."),
+    ]),
+    ("groen", "Groen of blauw: ter informatie", [
+        ("Grootlicht", "Een blauwe koplamp met rechte strepen.",
+         "Uw grootlicht staat aan.", "Zet het uit bij tegenliggers en voorliggers."),
+        ("Mistlicht", "Een lamp met golvende streep: groen voor, oranje achter.",
+         "Uw mistlampen staan aan.", "Mistachterlicht alleen bij zicht onder de 50 meter, anders verblindt u anderen."),
+        ("Cruise control", "Een snelheidsmeter met een pijltje.",
+         "De cruise control staat aan.", "Niets aan de hand."),
+    ]),
+]
+
+
+def dashboardlampjes():
+    blokken = []
+    for kleur, kop, lijst in LAMPJES:
+        items = "\n".join(f"""          <details class="lampje">
+            <summary><span class="lampje-stip {kleur}" aria-hidden="true"></span>{e(naam)}<small>{e(teken)}</small></summary>
+            <p><strong>Wat betekent het?</strong> {e(wat)}</p>
+            <p><strong>Wat doet u?</strong> {e(doen)}</p>
+          </details>""" for naam, teken, wat, doen in lijst)
+        blokken.append(f"""        <h2>{kop}</h2>
+        <div class="lampjes">
+{items}
+        </div>""")
+    inhoud = """        <p>Een lampje op het dashboard zegt iets over de staat van uw auto. De kleur vertelt hoe dringend het is. Hieronder leest u per lampje wat het betekent en wat u het beste kunt doen. De symbolen verschillen soms per merk; kijk bij twijfel in het instructieboekje of bel ons even.</p>
+        <ul class="lampjes-legenda">
+          <li><span class="lampje-stip rood" aria-hidden="true"></span><strong>Rood</strong> stoppen zodra het veilig kan</li>
+          <li><span class="lampje-stip oranje" aria-hidden="true"></span><strong>Oranje</strong> binnenkort laten nakijken</li>
+          <li><span class="lampje-stip groen" aria-hidden="true"></span><strong>Groen of blauw</strong> ter informatie</li>
+        </ul>
+
+""" + "\n\n".join(blokken) + """
+
+        <h2>Lampje laten uitlezen</h2>
+        <p>Brandt er een lampje en weet u niet precies wat er aan de hand is? Met onze <a href="{r}diagnose/">diagnoseapparatuur</a> lezen we de opgeslagen storing uit en zoeken we de oorzaak. Dat geldt voor alle merken, ook elektrische auto's.</p>"""
+    vragen = [
+        ("Mag ik doorrijden met een oranje lampje?", "Meestal wel, maar laat de auto binnenkort nakijken. Bij een rood lampje stopt u zodra het veilig kan."),
+        ("Het lampje is vanzelf weer uitgegaan. Moet ik iets doen?", "De storing staat vaak nog wel in het geheugen van de auto. Laat het bij de volgende gelegenheid even uitlezen, zeker als het vaker gebeurt."),
+        ("Kan ik een storing zelf wissen?", "Wissen haalt alleen het lampje weg, niet de oorzaak. Komt het lampje terug, dan is er nog iets aan de hand."),
+    ]
+    tool_pagina("dashboardlampjes", "Dashboardlampjes: wat betekent dit lampje? | Autoservice Barneveld",
+                "Wat betekent het lampje op uw dashboard? Uitleg per kleur: motorstoring, oliedruk, accu, remmen, ABS, bandenspanning, roetfilter en meer. Met wat u het beste kunt doen.",
+                "Dashboardlampjes: wat betekent dit lampje?", "dienst-diagnose", "Uitleg",
+                "Rood, oranje of groen: zo weet u wat een lampje betekent en of u nog kunt doorrijden.",
+                inhoud, vragen, None, "Diagnose", naam="Dashboardlampjes")
+
+
 def sitemap_en_llms():
     paden = ["", *[d[0] + "/" for d in DIENSTEN], "apk-check/", "vervangend-vervoer/", "merken/", "werkgebied/", "veelgestelde-vragen/", "over-ons/", "contact/", "privacy/"]
     schrijf("sitemap.xml",
@@ -1388,4 +1481,5 @@ if __name__ == "__main__":
     kentekencheck()
     terugroepactie_check()
     trekgewicht_check()
+    dashboardlampjes()
     sitemap_en_llms()
