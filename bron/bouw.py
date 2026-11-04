@@ -842,6 +842,8 @@ DIENST_VRAGEN = {
          "Bij een kleine beurt verversen we olie en oliefilter en controleren we de belangrijkste onderdelen. Bij een grote beurt vervangen we ook filters zoals het lucht- en interieurfilter. Met de <a href=\"{r}onderhoudswijzer/\">onderhoudswijzer</a> ziet u wanneer uw volgende beurt komt."),
         ("Blijft mijn fabrieksgarantie geldig?",
          "Ja. Wordt het onderhoud volgens de voorschriften van de fabrikant uitgevoerd, dan blijft uw garantie gewoon geldig. U hoeft daarvoor niet naar de dealer."),
+        ("Wanneer moet de distributieriem worden vervangen?",
+         "Dat verschilt per motor: de fabrikant schrijft een aantal kilometers of jaren voor. Lees meer over de <a href=\"{r}distributieriem/\">distributieriem</a>."),
         ("Hoor ik het als er tijdens het werk iets extra's nodig is?",
          "Ja. Valt het boven het bedrag dat u heeft opgegeven, dan overleggen we eerst met u, meestal via WhatsApp met een foto of korte toelichting."),
     ],
@@ -1265,12 +1267,16 @@ def tool_pagina(slug, title, desc, h1, foto, kicker, inleiding, inhoud, vragen=(
     graph.append({"@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": n + 1, "name": naam, "item": url} for n, (naam, url) in enumerate(stappen)]})
     schema = {"@context": "https://schema.org", "@graph": graph}
+    kruimel_html = ""
+    if kruimel:
+        delen = [f'<a href="{r}">Home</a>'] + [f'<a href="{r}{u.replace(SITE + "/", "")}">{e(n)}</a>' for n, u in kruimel] + [f'<span aria-current="page">{e(stappen[-1][0])}</span>']
+        kruimel_html = f'        <nav class="kruimel" aria-label="Kruimelpad">{" <span aria-hidden=\"true\">›</span> ".join(delen)}</nav>\n'
     main = f"""{pagina_kop(r, h1, foto, kicker, inleiding)}
 
   <section class="sectie">
     <div class="wrap artikel">
       <div class="tekst">
-{inhoud.replace("{r}", r)}
+{kruimel_html}{inhoud.replace("{r}", r)}
 {vragen_blok([(v, a.replace("{r}", r)) for v, a in vragen]) if vragen else ""}
       </div>
       {zijkaart(r, dienst)}
@@ -1731,7 +1737,7 @@ KLACHTEN = [
       ("Sleutel of startonderbreker", "Een lege batterij in de sleutel of een storing in de startonderbreker kan het starten blokkeren."),
       ("Elektrische auto: de 12V-accu", "Ook een elektrische auto heeft een kleine 12V-accu. Is die leeg, dan gaat de auto niet aan, ook al is de grote accu vol.")],
      "Met startkabels of een startbooster komt u vaak weer op gang. Gaat het daarna opnieuw mis, laat de accu en de dynamo dan testen.",
-     "We testen de accu en het laadsysteem, en lezen bij twijfel de auto uit. Lees meer over <a href=\"{r}diagnose/\">diagnose</a>."),
+     "We testen de accu en het laadsysteem, en lezen bij twijfel de auto uit. Lees meer over de <a href=\"{r}accu/\">accu</a> en over <a href=\"{r}diagnose/\">diagnose</a>."),
     ("airco-koelt-niet", "Airco koelt niet of ruikt muf", "Airco koelt niet of ruikt muf: oorzaken",
      "Koelt uw auto-airco niet meer goed, of ruikt het muf? Lees de oorzaken, zoals te weinig koudemiddel of een vervuild filter, en wat eraan te doen is.",
      "dienst-airco", "Aircoservice",
@@ -1835,6 +1841,8 @@ HANDIG = [
         ("onderhoudswijzer", "Onderhoudswijzer", "Wanneer komt uw volgende beurt, klein of groot?"),
         ("dashboardlampjes", "Dashboardlampjes", "Wat betekent dit lampje, en kunt u nog doorrijden?"),
         ("hulp", "Wat is er met mijn auto?", "Piepende remmen, een trillend stuur, rook uit de uitlaat en meer."),
+        ("distributieriem", "Distributieriem", "Wanneer moet hij worden vervangen, en waarom?"),
+        ("accu", "Accu", "Signalen van een zwakke accu en waar u op let."),
     ]),
 ]
 
@@ -1875,9 +1883,73 @@ def handig_sectie():
   </section>"""
 
 
+def distributieriem():
+    inhoud = """        <p>De distributieriem zorgt ervoor dat de kleppen en zuigers van de motor precies op elkaar afgestemd bewegen. Je ziet hem niet en je merkt meestal niets van slijtage, maar als hij breekt, kan de motor zwaar beschadigd raken. Daarom wordt hij op een vast moment preventief vervangen.</p>
+
+        <h2>Wanneer vervangen?</h2>
+        <p>Dat verschilt sterk per motor. De fabrikant schrijft een aantal kilometers of jaren voor, wat het eerst komt. Dat ligt vaak ergens tussen de 60.000 en 240.000 km, of na 4 tot 10 jaar. Ook als u weinig rijdt, veroudert het rubber. Het juiste moment staat in het onderhoudsboekje; wij zoeken het graag voor u op aan de hand van uw kenteken.</p>
+
+        <h2>Riem of ketting?</h2>
+        <p>Niet elke auto heeft een riem: veel motoren hebben een distributieketting. Die gaat meestal veel langer mee, maar kan na verloop van tijd uitrekken. Een ratelend geluid bij een koude start kan daarop wijzen.</p>
+
+        <h2>Wat wordt er vervangen?</h2>
+        <p>Meestal vervangen we de complete distributieset: de riem, de spanrol en de geleiderollen. Wordt de waterpomp door de distributieriem aangedreven, dan is het verstandig die meteen mee te vervangen, omdat hij dan toch al bereikbaar is.</p>
+
+        <h2>Weet u niet wanneer hij voor het laatst is vervangen?</h2>
+        <p>Bij een tweedehands auto is dat vaak onduidelijk. Vraag naar de facturen, of laat het ons nakijken. Bij twijfel is preventief vervangen veel goedkoper dan een motor herstellen. Ook handig bij een <a href="{r}aankoopkeuring/">aankoopkeuring</a>.</p>"""
+    vragen = [
+        ("Wat gebeurt er als de distributieriem breekt?",
+         "De motor valt direct stil. Bij veel motoren raken de kleppen en zuigers elkaar dan, wat tot zware en dure motorschade leidt."),
+        ("Kan ik zien of mijn distributieriem versleten is?",
+         "Meestal niet van buitenaf. Daarom houdt de fabrikant een vast vervangmoment aan. Wij kijken in de gegevens van uw auto wanneer dat is."),
+        ("Doen jullie dit voor alle merken?",
+         "Ja. Wij vervangen de distributieriem of -ketting bij auto's van alle merken. Plan een afspraak of bel ons voor een prijsopgave."),
+    ]
+    tool_pagina("distributieriem", "Distributieriem vervangen: wanneer en waarom | Autoservice Barneveld",
+                "Wanneer moet de distributieriem worden vervangen, wat gebeurt er als hij breekt en wat is het verschil met een ketting? Uitleg van uw garage in Barneveld.",
+                "Distributieriem vervangen: wanneer en waarom?", "dienst-onderhoud", "Uitleg",
+                "Een onderdeel dat u niet ziet, maar dat op tijd vervangen moet worden. Zo zit het.",
+                inhoud, vragen, None, "Onderhoudsbeurt", naam="Distributieriem vervangen")
+
+
+def accu():
+    inhoud = """        <p>Een accu gaat gemiddeld vier tot zes jaar mee. Kou, veel korte ritten en lang stilstaan maken hem sneller zwak. Vaak merkt u het pas op een koude ochtend, als de auto niet meer wil starten.</p>
+
+        <h2>Signalen van een zwakke accu</h2>
+        <ul class="lijst-vink">
+          <li>De startmotor draait trager dan normaal</li>
+          <li>U hoort alleen een klik als u start</li>
+          <li>De verlichting of het dashboard knippert of dimt bij het starten</li>
+          <li>Het start-stopsysteem doet het niet meer</li>
+          <li>Het accu-lampje brandt tijdens het rijden (dan kan ook de dynamo de oorzaak zijn)</li>
+        </ul>
+
+        <h2>Start-stopsysteem? Dan een speciale accu</h2>
+        <p>Auto's met een start-stopsysteem hebben een zwaardere accu nodig, meestal een AGM- of EFB-accu. Bij veel moderne auto's moet een nieuwe accu daarnaast in de elektronica worden aangemeld, zodat hij goed wordt opgeladen. Dat doen wij met onze <a href="{r}diagnose/">diagnoseapparatuur</a>.</p>
+
+        <h2>Elektrische auto</h2>
+        <p>Ook een elektrische auto heeft een kleine 12V-accu. Is die leeg, dan gaat de auto niet aan, ook al is de grote accu vol. Lees meer bij <a href="{r}hulp/auto-start-niet/">auto start niet</a>.</p>
+
+        <h2>Accu laten testen</h2>
+        <p>Twijfelt u? Wij testen de accu en het laadsysteem en vertellen u of vervangen nodig is. Dat combineert u goed met een <a href="{r}onderhoud-reparatie/">onderhoudsbeurt</a>.</p>"""
+    vragen = [
+        ("Hoe lang gaat een auto-accu mee?",
+         "Gemiddeld vier tot zes jaar. Veel korte ritten, kou en lang stilstaan verkorten de levensduur."),
+        ("Kan ik zelf een accu vervangen?",
+         "Bij oudere auto's soms wel. Bij moderne auto's met start-stop moet de nieuwe accu vaak worden aangemeld in de elektronica, anders laadt de auto hem niet goed op."),
+        ("Is het de accu of de dynamo?",
+         "Start de auto slecht maar rijdt hij verder normaal, dan is het vaak de accu. Brandt het accu-lampje tijdens het rijden, dan kan de dynamo de oorzaak zijn. Wij testen beide."),
+    ]
+    tool_pagina("accu", "Accu vervangen: signalen en levensduur | Autoservice Barneveld",
+                "Hoe lang gaat een auto-accu mee, hoe herkent u een zwakke accu en waarom heeft een auto met start-stop een speciale accu nodig? Uitleg uit Barneveld.",
+                "Accu vervangen: wanneer is het tijd?", "dienst-diagnose", "Uitleg",
+                "Hoe u een zwakke accu herkent, en waar u op let bij een nieuwe.",
+                inhoud, vragen, None, "Onderhoudsbeurt", naam="Accu vervangen")
+
+
 def sitemap_en_llms():
     paden = ["", *[d[0] + "/" for d in DIENSTEN], "aankoopkeuring/", "apk-check/", "occasion-check/", "kentekencheck/", "terugroepactie-check/", "trekgewicht-check/",
-             "winterbanden/", "bandencheck/", "onderhoudswijzer/", "dashboardlampjes/", "hulp/", *[f"hulp/{k[0]}/" for k in KLACHTEN],
+             "winterbanden/", "bandencheck/", "onderhoudswijzer/", "dashboardlampjes/", "distributieriem/", "accu/", "hulp/", *[f"hulp/{k[0]}/" for k in KLACHTEN],
              "handig/", "vervangend-vervoer/", "merken/", "werkgebied/", "veelgestelde-vragen/", "over-ons/", "contact/", "privacy/"]
     schrijf("sitemap.xml",
             '<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -1920,6 +1992,8 @@ def sitemap_en_llms():
 - [Onderhoudswijzer]({SITE}/onderhoudswijzer/): kleine of grote beurt, en wanneer.
 - [Dashboardlampjes]({SITE}/dashboardlampjes/): betekenis van storingslampjes per kleur en wat te doen.
 - [Wat is er met mijn auto?]({SITE}/hulp/): uitleg bij veelvoorkomende klachten.
+- [Distributieriem vervangen]({SITE}/distributieriem/): wanneer, waarom, riem of ketting.
+- [Accu vervangen]({SITE}/accu/): signalen, levensduur, start-stop en aanmelden.
 - [Vervangend vervoer]({SITE}/vervangend-vervoer/)
 - [Alle merken]({SITE}/merken/)
 - [Werkgebied]({SITE}/werkgebied/)
@@ -1955,5 +2029,7 @@ if __name__ == "__main__":
     hulp_overzicht()
     for k in KLACHTEN:
         klachtpagina(k)
+    distributieriem()
+    accu()
     handig()
     sitemap_en_llms()

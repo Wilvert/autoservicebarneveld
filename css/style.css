@@ -638,3 +638,5 @@ p.banden-uitleg.banden-let-op { padding: 10px 12px; border-radius: 6px; backgrou
 }
 .afspraak-voet a, .dienst .meer { display: inline-block; padding: 3px 0; }
 .apk-tip a span { font-weight: 400; font-size: 14px; }
+.kruimel { margin: -8px 0 22px; font-size: 13px; color: var(--grijs-80); }
+.kruimel a { color: var(--blauw); }

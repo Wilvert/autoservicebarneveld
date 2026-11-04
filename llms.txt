@@ -37,6 +37,8 @@
 - [Onderhoudswijzer](https://www.autoservicebarneveld.nl/onderhoudswijzer/): kleine of grote beurt, en wanneer.
 - [Dashboardlampjes](https://www.autoservicebarneveld.nl/dashboardlampjes/): betekenis van storingslampjes per kleur en wat te doen.
 - [Wat is er met mijn auto?](https://www.autoservicebarneveld.nl/hulp/): uitleg bij veelvoorkomende klachten.
+- [Distributieriem vervangen](https://www.autoservicebarneveld.nl/distributieriem/): wanneer, waarom, riem of ketting.
+- [Accu vervangen](https://www.autoservicebarneveld.nl/accu/): signalen, levensduur, start-stop en aanmelden.
 - [Vervangend vervoer](https://www.autoservicebarneveld.nl/vervangend-vervoer/)
 - [Alle merken](https://www.autoservicebarneveld.nl/merken/)
 - [Werkgebied](https://www.autoservicebarneveld.nl/werkgebied/)
