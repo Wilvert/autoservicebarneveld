@@ -1732,7 +1732,7 @@ KLACHTEN = [
      "dienst-diagnose", "Diagnose",
      "Draait de motor niet, hoort u alleen een klik of start de auto heel moeizaam? Meestal ligt het aan de accu, zeker in de winter.",
      [("Lege of oude accu", "Kou, veel korte ritten of een accu van vijf jaar of ouder: dan heeft de accu vaak niet genoeg kracht meer. De startmotor draait traag of u hoort alleen klikken."),
-      ("Dynamo", "Laadt de dynamo de accu niet op, dan is de accu na een tijdje leeg. Vaak brandt dan eerst het accu-lampje tijdens het rijden."),
+      ("Dynamo", "Laadt de dynamo de accu niet op, dan is de accu na een tijdje leeg. Vaak brandt dan eerst het acculampje tijdens het rijden."),
       ("Startmotor", "Is de accu goed maar gebeurt er niets of hoort u één klik, dan kan de startmotor defect zijn."),
       ("Sleutel of startonderbreker", "Een lege batterij in de sleutel of een storing in de startonderbreker kan het starten blokkeren."),
       ("Elektrische auto: de 12V-accu", "Ook een elektrische auto heeft een kleine 12V-accu. Is die leeg, dan gaat de auto niet aan, ook al is de grote accu vol.")],
@@ -1884,7 +1884,7 @@ def handig_sectie():
 
 
 def distributieriem():
-    inhoud = """        <p>De distributieriem zorgt ervoor dat de kleppen en zuigers van de motor precies op elkaar afgestemd bewegen. Je ziet hem niet en je merkt meestal niets van slijtage, maar als hij breekt, kan de motor zwaar beschadigd raken. Daarom wordt hij op een vast moment preventief vervangen.</p>
+    inhoud = """        <p>De distributieriem zorgt ervoor dat de kleppen en zuigers van de motor precies op elkaar afgestemd bewegen. U ziet hem niet en u merkt meestal niets van slijtage, maar als hij breekt, kan de motor zwaar beschadigd raken. Daarom wordt hij op een vast moment preventief vervangen.</p>
 
         <h2>Wanneer vervangen?</h2>
         <p>Dat verschilt sterk per motor. De fabrikant schrijft een aantal kilometers of jaren voor, wat het eerst komt. Dat ligt vaak ergens tussen de 60.000 en 240.000 km, of na 4 tot 10 jaar. Ook als u weinig rijdt, veroudert het rubber. Het juiste moment staat in het onderhoudsboekje; wij zoeken het graag voor u op aan de hand van uw kenteken.</p>
@@ -1921,7 +1921,7 @@ def accu():
           <li>U hoort alleen een klik als u start</li>
           <li>De verlichting of het dashboard knippert of dimt bij het starten</li>
           <li>Het start-stopsysteem doet het niet meer</li>
-          <li>Het accu-lampje brandt tijdens het rijden (dan kan ook de dynamo de oorzaak zijn)</li>
+          <li>Het acculampje brandt tijdens het rijden (dan kan ook de dynamo de oorzaak zijn)</li>
         </ul>
 
         <h2>Start-stopsysteem? Dan een speciale accu</h2>
@@ -1938,7 +1938,7 @@ def accu():
         ("Kan ik zelf een accu vervangen?",
          "Bij oudere auto's soms wel. Bij moderne auto's met start-stop moet de nieuwe accu vaak worden aangemeld in de elektronica, anders laadt de auto hem niet goed op."),
         ("Is het de accu of de dynamo?",
-         "Start de auto slecht maar rijdt hij verder normaal, dan is het vaak de accu. Brandt het accu-lampje tijdens het rijden, dan kan de dynamo de oorzaak zijn. Wij testen beide."),
+         "Start de auto slecht maar rijdt hij verder normaal, dan is het vaak de accu. Brandt het acculampje tijdens het rijden, dan kan de dynamo de oorzaak zijn. Wij testen beide."),
     ]
     tool_pagina("accu", "Accu vervangen: signalen en levensduur | Autoservice Barneveld",
                 "Hoe lang gaat een auto-accu mee, hoe herkent u een zwakke accu en waarom heeft een auto met start-stop een speciale accu nodig? Uitleg uit Barneveld.",
