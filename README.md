@@ -29,7 +29,9 @@ apk-check/, occasion-check/, terugroepactie-check/, trekgewicht-check/
                            Oude adressen; sturen door naar kentekencheck/ (doorsturen() in bouw.py)
 checklist-tweedehands-auto/  Checklist occasion kopen; tekst in CHECKLIST e.a. in bouw.py
 downloads/checklist-tweedehands-auto.pdf
-                           Dezelfde checklist als PDF: na bouw.py draaien `python3 bron/maak_pdf.py`
+                           Dezelfde checklist als PDF (stijl briefpapier): na bouw.py draaien `python3 bron/maak_pdf.py`
+downloads/voorbereiding-aankoopkeuring.pdf
+                           Korte lijst voor wie een aankoopkeuring plant (VOORBEREIDING in bouw.py; planner)
 winterbanden/, bandencheck/, onderhoudswijzer/, dashboardlampjes/
                            Overige checks en uitleg (weer via Open-Meteo; bandencheck = uitleg met illustraties)
 hulp/                      "Wat is er met mijn auto?" + acht klachtpagina's (KLACHTEN in bouw.py)

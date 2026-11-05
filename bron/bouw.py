@@ -340,7 +340,7 @@ def venster(r):
 {diensten_vinkjes()}
           </div>
         </fieldset>
-        <p class="checklist-tip" hidden><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="m8 9 1.5 1.5L12 8M8 15l1.5 1.5L12 14M14.5 9.5H17M14.5 15.5H17"/></g></svg><span><strong>Gratis checklist bij uw aankoopkeuring</strong> Wat u zelf kunt controleren en welke papieren u meeneemt. <a href="{r}downloads/checklist-tweedehands-auto.pdf" download>Download de checklist (PDF)</a></span></p>
+        <p class="checklist-tip" hidden><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="m8 9 1.5 1.5L12 8M8 15l1.5 1.5L12 14M14.5 9.5H17M14.5 15.5H17"/></g></svg><span><strong>Voorbereiding op uw aankoopkeuring</strong> Wat u vooraf regelt en welke papieren u meeneemt. Het technische deel doen wij. <a href="{r}downloads/voorbereiding-aankoopkeuring.pdf" download>Download de lijst (PDF)</a></span></p>
         <div class="veld omschrijving">
           <label for="v-omschrijving"><span class="omschrijving-label">Opmerking</span> <small class="label-optioneel">optioneel</small></label>
           <textarea class="invoer" id="v-omschrijving" name="omschrijving" rows="2" maxlength="300" placeholder="Bijv. wanneer u de auto kunt brengen of iets wat we moeten weten"></textarea>
@@ -418,14 +418,14 @@ def venster(r):
       <svg width="56" height="56" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M7 12.5l3.2 3L17 9"/></g></svg>
       <h2>Bijna klaar</h2>
       <p class="uitleg">WhatsApp is geopend met uw aanvraag. Druk daar op <strong>verzenden</strong>, dan nemen wij zo snel mogelijk contact op om de afspraak vast te leggen.</p>
-      <p class="checklist-klaar" hidden><a class="knop oranje" href="{r}downloads/checklist-tweedehands-auto.pdf" download>Download uw checklist (PDF)</a><small>Neem de onderhoudspapieren mee naar de aankoopkeuring.</small></p>
+      <p class="checklist-klaar" hidden><a class="knop oranje" href="{r}downloads/voorbereiding-aankoopkeuring.pdf" download>Download uw voorbereiding (PDF)</a><small>Neem de onderhoudspapieren mee naar de aankoopkeuring.</small></p>
       <p class="klein">Opent WhatsApp niet? <a class="wa-opnieuw" href="{WA_LINK}">Probeer het opnieuw</a> of bel <a href="{TEL_LINK}">{TEL}</a>.</p>
     </div>
     <div class="venster-klaar venster-klaar-mail" hidden>
       <svg width="56" height="56" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M7 12.5l3.2 3L17 9"/></g></svg>
       <h2>Aanvraag verstuurd</h2>
       <p class="uitleg">Uw aanvraag is per e-mail bij ons binnengekomen. Wij nemen zo snel mogelijk contact op om de afspraak vast te leggen.</p>
-      <p class="checklist-klaar" hidden><a class="knop oranje" href="{r}downloads/checklist-tweedehands-auto.pdf" download>Download uw checklist (PDF)</a><small>Neem de onderhoudspapieren mee naar de aankoopkeuring.</small></p>
+      <p class="checklist-klaar" hidden><a class="knop oranje" href="{r}downloads/voorbereiding-aankoopkeuring.pdf" download>Download uw voorbereiding (PDF)</a><small>Neem de onderhoudspapieren mee naar de aankoopkeuring.</small></p>
       <p class="klein">Haast? Bel <a href="{TEL_LINK}">{TEL}</a>.</p>
     </div>
   </div>
@@ -1376,7 +1376,7 @@ def aankoopkeuring():
 
         <h2>Neem de papieren mee</h2>
         <p>Hoe meer we weten, hoe beter ons advies. Neem alle onderhoudspapieren mee die er zijn: het onderhoudsboekje, facturen van onderhoud en reparaties en eerdere APK-rapporten. Zeker de factuur van de <a href="{r}distributieriem/">distributieriem</a> is goud waard.</p>
-        <p class="checklist-blok"><a href="{r}downloads/checklist-tweedehands-auto.pdf" download><strong>Gratis checklist tweedehands auto kopen (PDF)</strong><span>Wat u zelf kunt controleren, wat u meeneemt naar de keuring en waar u recht op heeft.</span></a></p>
+        <p class="checklist-blok"><a href="{r}downloads/voorbereiding-aankoopkeuring.pdf" download><strong>Voorbereiding op uw aankoopkeuring (PDF)</strong><span>Wat u vooraf regelt, zoals uw bank en de papieren. Het technische deel doen wij.</span></a></p>
 
         <h2>Twijfel over een importauto?</h2>
         <p>Komt de auto uit het buitenland en is de geschiedenis niet helemaal duidelijk? Dan vragen we bij de aankoopkeuring een uitgebreid historierapport aan van Carfax of carVertical. Daarin staan onder meer eerder geregistreerde kilometerstanden en gemelde schades, ook uit het buitenland.</p>
@@ -1881,13 +1881,23 @@ CHECKLIST = [
         "Geen trillingen, bonken, piepen of zoemen.",
         "De temperatuur blijft normaal en er gaat geen lampje branden.",
     ]),
-    ("Papieren en betalen", [
+    ("Papieren en overschrijven", [
         "Het chassisnummer (VIN) op de auto komt overeen met de kentekencard.",
         "De verkoper heeft de kentekencard en de tenaamstellingscode. Zonder kunt u niet overschrijven.",
-        "Leg de afspraken vast: prijs, kilometerstand, bekende gebreken en eventuele garantie.",
+        "Koopt u bij een bedrijf? Zoek het op in het KvK-register en lees reviews. Is het aangesloten bij een brancheorganisatie zoals BOVAG, dan staat u bij een geschil vaak sterker.",
+        "Leg de afspraken vast in een koopcontract: prijs, kilometerstand, bekende gebreken en eventuele garantie.",
         "Laat de auto direct op uw naam zetten en bewaar het bewijs van overschrijving.",
         "Zorg dat de auto verzekerd is vanaf het moment dat hij op uw naam staat.",
-        "Betaal niets vooruit voor een auto die u nog niet heeft gezien. Liever per bank dan een groot bedrag contant.",
+    ]),
+    ("Betalen via de bank", [
+        "Kijk een paar dagen van tevoren wat uw overboekingslimiet is en verhoog die zo nodig in uw bankapp. Soms duurt het even voordat een hogere limiet werkt.",
+        "Betaal niets vooruit voor een auto die u nog niet heeft gezien, ook geen aanbetaling of borg.",
+        "Betaal op het moment van overdracht: als u de auto, beide sleutels, de kentekencard en de tenaamstellingscode krijgt.",
+        "Let op de naamcontrole van uw bank. Klopt de naam niet bij het rekeningnummer of krijgt u een waarschuwing? Dan niet betalen.",
+        "Bij een bedrijf betaalt u naar een zakelijke rekening op naam van dat bedrijf, niet naar een privérekening of de rekening van iemand anders.",
+        "Zet het kenteken in de omschrijving en bewaar de bevestiging van de betaling.",
+        "Een overboeking is meestal direct en kan vaak niet worden teruggedraaid. Laat u dus niet opjagen.",
+        "Liever geen groot bedrag contant: dat is onveilig en lastig te bewijzen.",
     ]),
 ]
 
@@ -1937,6 +1947,27 @@ TE_MOOI = [
 
 CHECKLIST_PDF = "downloads/checklist-tweedehands-auto.pdf"
 
+# Korte voorbereiding voor wie een aankoopkeuring bij ons plant (planner en aankoopkeuringpagina).
+VOORBEREIDING = [
+    ("Vooraf regelen", [
+        "Doe de gratis kentekencheck op onze website: APK, terugroepactie en tellerstand.",
+        "Koopt u bij een bedrijf? Zoek het op in het KvK-register en lees een paar reviews.",
+        "Koopt u van een particulier? Vraag of hij de kentekencard en de tenaamstellingscode heeft.",
+        "Spreek met de verkoper af dat de auto bij ons langs mag komen, of kom samen.",
+        "Verhoog op tijd de overboekingslimiet bij uw bank, zodat u direct kunt betalen als u besluit te kopen.",
+        "Regel alvast uw verzekering, zodat die meteen kan ingaan.",
+    ]),
+    ("Neem mee naar de keuring", [
+        "Het onderhoudsboekje of de digitale onderhoudshistorie (een print of foto is prima)",
+        "Facturen van onderhoud en reparaties, zeker van de distributieriem",
+        "Eerdere APK-rapporten",
+        "De kentekencard en beide sleutels",
+        "De advertentie (link of schermafbeelding)",
+        "Bij een importauto: de buitenlandse papieren",
+    ]),
+]
+VOORBEREIDING_PDF = "downloads/voorbereiding-aankoopkeuring.pdf"
+
 
 def checklist_html(r, vinkjes=True):
     """De inhoud van de checklist; ook gebruikt voor de PDF."""
@@ -1982,11 +2013,13 @@ def checklist():
          "Ja, de wettelijke garantie. De auto moet doen wat u er redelijkerwijs van mag verwachten. De eerste 12 maanden na aflevering hoeft u niet te bewijzen dat een gebrek er al was."),
         ("Heb ik bedenktijd bij het kopen van een auto?",
          "Alleen als u bij een bedrijf online of op afstand koopt. Koopt u in de showroom of van een particulier, dan is er geen bedenktijd."),
+        ("Hoe betaal ik een tweedehands auto veilig?",
+         "Betaal pas bij de overdracht, via de bank en naar een rekening op naam van de verkoper. Let op de naamcontrole van uw bank en verhoog uw overboekingslimiet een paar dagen van tevoren."),
         ("Wat neem ik mee naar de aankoopkeuring?",
          "Alle onderhoudspapieren, facturen, eerdere APK-rapporten, de kentekencard, beide sleutels en de advertentie."),
     ]
     tool_pagina("checklist-tweedehands-auto", "Checklist tweedehands auto kopen (gratis PDF) | Autoservice Barneveld",
-                "Gratis checklist voor het kopen van een tweedehands auto: waar u op let bij bezichtiging en proefrit, welke papieren u nodig heeft en waar u recht op heeft.",
+                "Gratis checklist voor het kopen van een tweedehands auto: bezichtiging, proefrit, papieren, veilig betalen via de bank en waar u recht op heeft. Ook als PDF.",
                 "Checklist tweedehands auto kopen", "dienst-onderhoud", "Gratis checklist",
                 "Waar u op let bij de bezichtiging en proefrit, wat u meeneemt en waar u recht op heeft. Gratis als PDF.",
                 inhoud, vragen, None, "Aankoopkeuring", naam="Checklist tweedehands auto kopen")
