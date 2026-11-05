@@ -27,13 +27,10 @@
 
 ## Gratis checks en uitleg
 
-- [APK-check](https://www.autoservicebarneveld.nl/apk-check/): vul een kenteken in en zie tot wanneer de APK geldig is, vanaf wanneer keuren met behoud van de vervaldatum kan, en de openbare RDW-gegevens van de auto.
-- [Occasion-check](https://www.autoservicebarneveld.nl/occasion-check/): APK-datum, gemelde gebreken en adviespunten bij eerdere APK-keuringen, tellerstandoordeel, import en terugroepacties per kenteken.
-- [Kentekencheck](https://www.autoservicebarneveld.nl/kentekencheck/): openbare RDW-gegevens van een auto.
-- [Terugroepactie-check](https://www.autoservicebarneveld.nl/terugroepactie-check/): staat er een terugroepactie open?
-- [Trekgewicht-check](https://www.autoservicebarneveld.nl/trekgewicht-check/): geremd en ongeremd trekgewicht, met uitleg over rijbewijs B, code 96 en BE.
+- [Kentekencheck](https://www.autoservicebarneveld.nl/kentekencheck/): één keer een kenteken invullen en alles zien: APK-vervaldatum en vanaf wanneer keuren met behoud van datum kan, gebreken en adviespunten bij eerdere APK-keuringen, tellerstandoordeel, import, terugroepacties, trekgewicht (geremd en ongeremd) en de openbare RDW-gegevens.
+- [Checklist tweedehands auto kopen](https://www.autoservicebarneveld.nl/checklist-tweedehands-auto/): gratis checklist (ook als PDF) voor bezichtiging, proefrit en papieren, wat mee te nemen naar de aankoopkeuring, wettelijke garantie en veelvoorkomende misverstanden.
 - [Winterbandenmeter](https://www.autoservicebarneveld.nl/winterbanden/): 7-gradenregel op basis van de weersverwachting voor Barneveld.
-- [Bandencheck](https://www.autoservicebarneveld.nl/bandencheck/): bandenmaat en DOT-code uitgelegd, profieldiepte en bandenlabel.
+- [Banden uitgelegd](https://www.autoservicebarneveld.nl/bandencheck/): bandenmaat, DOT-code (leeftijd) en profieldiepte aflezen, met illustraties.
 - [Onderhoudswijzer](https://www.autoservicebarneveld.nl/onderhoudswijzer/): kleine of grote beurt, en wanneer.
 - [Dashboardlampjes](https://www.autoservicebarneveld.nl/dashboardlampjes/): betekenis van storingslampjes per kleur en wat te doen.
 - [Wat is er met mijn auto?](https://www.autoservicebarneveld.nl/hulp/): uitleg bij veelvoorkomende klachten.

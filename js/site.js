@@ -124,8 +124,10 @@
   });
 
   /* ---------- Kenteken-checks: openbare RDW-gegevens bij een kenteken ----------
-     Eén tool, verschillende pagina's (data-modus): apk, kenteken, occasion,
-     terugroep, trekgewicht. Alles gaat rechtstreeks van de browser naar de RDW. */
+     Eén keer het kenteken invullen, alles zien (data-modus="alles"): APK,
+     overzicht (terugroepactie, tellerstand, import, verzekering, trekgewicht),
+     autogegevens en gebreken bij eerdere APK-keuringen.
+     Alles gaat rechtstreeks van de browser naar de RDW. */
   Array.prototype.forEach.call(document.querySelectorAll('form.apk-check[data-modus]'), function (form) {
     if (!window.fetch) return;
     var modus = form.getAttribute('data-modus');
@@ -135,6 +137,7 @@
     var status = uitslag.querySelector('.apk-status');
     var extra = uitslag.querySelector('.apk-extra');
     var agendaKnop = uitslag.querySelector('.apk-agenda');
+    var overzicht = uitslag.querySelector('.apk-overzicht');
     var RDW = 'https://opendata.rdw.nl/resource/';
     var KLEUREN = { ZWART: '#1f2125', WIT: '#f3f4f5', GRIJS: '#8b9097', BLAUW: '#2b5ca8', ROOD: '#c3282e', GROEN: '#2f7d4f',
       GEEL: '#f0c12c', ORANJE: '#e4782c', BRUIN: '#6d4b30', BEIGE: '#d9c8a4', CREME: '#efe6cf', PAARS: '#6b3e90', ROSE: '#e8a4b7' };
@@ -213,7 +216,7 @@
       var s = apkStand(rdwDatum(a.vervaldatum_apk));
       huidig = null;
       if (agendaKnop) agendaKnop.hidden = true;
-      if (modus === 'apk') {
+      if (modus === 'apk' || modus === 'alles') {
         if (s.soort === 'onbekend') zetStatus('onbekend', 'Geen APK-datum', 'De RDW heeft geen APK-vervaldatum voor dit voertuig.', 'Mogelijk is het voertuig niet APK-plichtig. Twijfelt u? Bel of app ons gerust.');
         else if (s.soort === 'verlopen') zetStatus('verlopen', 'APK verlopen', 'Uw APK is verlopen op ' + kort(s.apk) + '.', 'Met een verlopen APK mag u niet de weg op. Plan zo snel mogelijk uw keuring, of bel ons voor een snelle afspraak.');
         else if (s.soort === 'nu') zetStatus('nu', 'U kunt nu keuren', 'Uw APK verloopt over ' + duur(s.dagen) + ', op ' + lang(s.apk) + '.', 'U kunt nu al keuren met behoud van uw vervaldatum: de nieuwe datum wordt gerekend vanaf ' + kort(s.apk) + '.');
@@ -259,7 +262,7 @@
       var rijen = [];
       function rij(k, v) { if (v) rijen.push('<dt>' + k + '</dt><dd>' + v + '</dd>'); }
       rij('Kenteken', tekst(kentekenNetjes(a.kenteken)));
-      if (modus !== 'apk') rij('APK geldig tot', s.apk ? kort(s.apk) + (s.soort === 'verlopen' ? ' <span class="apk-let-op">(verlopen)</span>' : '') : '');
+      if (modus !== 'apk' && modus !== 'alles') rij('APK geldig tot', s.apk ? kort(s.apk) + (s.soort === 'verlopen' ? ' <span class="apk-let-op">(verlopen)</span>' : '') : '');
       rij('Soort', tekst([a.voertuigsoort, a.inrichting && a.inrichting !== 'Niet geregistreerd' ? a.inrichting : ''].filter(Boolean).join(', ')));
       rij('Kleur', tekst(kleur && kleur !== 'n.v.t.' ? kleur.charAt(0).toUpperCase() + kleur.slice(1) : ''));
       rij('Brandstof', tekst(brandstof.soort.charAt(0) + brandstof.soort.slice(1).toLowerCase()));
@@ -271,8 +274,8 @@
       rij('Gewicht rijklaar', +a.massa_rijklaar ? getal(a.massa_rijklaar) + ' kg' : '');
       rij('Trekgewicht', +a.maximum_trekken_massa_geremd ? getal(a.maximum_trekken_massa_geremd) + ' kg geremd' +
         (+a.maximum_massa_trekken_ongeremd ? ', ' + getal(a.maximum_massa_trekken_ongeremd) + ' kg ongeremd' : '') : '');
-      if (modus === 'trekgewicht') rij('Max. gewicht combinatie', +a.maximum_massa_samenstelling ? getal(a.maximum_massa_samenstelling) + ' kg' : '');
-      if (modus === 'trekgewicht') rij('Max. gewicht auto', +a.toegestane_maximum_massa_voertuig ? getal(a.toegestane_maximum_massa_voertuig) + ' kg' : '');
+      if (modus === 'trekgewicht' || modus === 'alles') rij('Max. gewicht combinatie', +a.maximum_massa_samenstelling ? getal(a.maximum_massa_samenstelling) + ' kg' : '');
+      if (modus === 'trekgewicht' || modus === 'alles') rij('Max. gewicht auto', +a.toegestane_maximum_massa_voertuig ? getal(a.toegestane_maximum_massa_voertuig) + ' kg' : '');
       rij('Energielabel', tekst(a.zuinigheidsclassificatie || ''));
       rij('Tellerstand', tekst(a.tellerstandoordeel || ''));
       rij('Verzekerd (WAM)', tekst(a.wam_verzekerd || ''));
@@ -282,7 +285,26 @@
       uitslag.querySelector('.apk-gegevens dl').innerHTML = rijen.join('');
     }
 
-    // Occasion-check: gebreken die bij eerdere APK-keuringen zijn gemeld
+    // Overzicht in één oogopslag: groen = in orde, oranje = let op, grijs = ter info
+    function toonOverzicht(a) {
+      var items = [];
+      function item(soort, kop, tekstje) { items.push('<li class="' + soort + '"><strong>' + tekst(kop) + '</strong><span>' + tekst(tekstje) + '</span></li>'); }
+      if (a.openstaande_terugroepactie_indicator === 'Ja') item('let-op', 'Terugroepactie open', 'Wordt meestal gratis verholpen door een merkdealer.');
+      else if (a.openstaande_terugroepactie_indicator === 'Nee') item('goed', 'Geen terugroepactie', 'Er staat niets open bij de RDW.');
+      var teller = a.tellerstandoordeel || '';
+      if (/^logisch$/i.test(teller)) item('goed', 'Tellerstand logisch', 'De geregistreerde standen kloppen met elkaar.');
+      else if (teller) item('let-op', 'Tellerstand: ' + teller.toLowerCase(), 'Vraag om uitleg en onderhoudsfacturen.');
+      if (isImport(a)) item('info', 'Geïmporteerd', 'In Nederland sinds ' + kort(rdwDatum(a.datum_eerste_tenaamstelling_in_nederland)) + '.');
+      else if (a.datum_eerste_toelating) item('goed', 'Nederlandse auto', 'Sinds de eerste toelating in Nederland.');
+      if (a.wam_verzekerd === 'Ja') item('goed', 'Verzekerd', 'Staat als verzekerd geregistreerd.');
+      else if (a.wam_verzekerd === 'Nee') item('let-op', 'Niet verzekerd', 'Staat niet als verzekerd geregistreerd.');
+      var geremd = +a.maximum_trekken_massa_geremd, ongeremd = +a.maximum_massa_trekken_ongeremd;
+      if (geremd) item('info', 'Trekgewicht', getal(geremd) + ' kg geremd' + (ongeremd ? ', ' + getal(ongeremd) + ' kg ongeremd' : '') + '.');
+      else item('info', 'Geen trekgewicht', 'Er is geen trekgewicht geregistreerd.');
+      overzicht.innerHTML = items.join('');
+    }
+
+    // Gebreken die bij eerdere APK-keuringen zijn gemeld
     function historie(kaal) {
       return json(RDW + 'a34c-vvps.json?kenteken=' + kaal + '&$limit=200').then(function (meldingen) {
         if (!meldingen.length) return { meldingen: [], omschrijving: {} };
@@ -338,7 +360,7 @@
       Promise.all([
         json(RDW + 'm9d7-ebf2.json?kenteken=' + kaal),
         json(RDW + '8ys7-d773.json?kenteken=' + kaal).catch(function () { return []; }),
-        modus === 'occasion' ? historie(kaal).catch(function () { return null; }) : null
+        (modus === 'occasion' || modus === 'alles') ? historie(kaal).catch(function () { return null; }) : null
       ]).then(function (res) {
         var a = res[0] && res[0][0];
         if (!a) {
@@ -352,7 +374,8 @@
         });
         toonStatus(a, kentekenNetjes(kaal));
         toonAuto(a, { soort: soorten.join(' en '), kw: kw });
-        if (modus === 'occasion') toonHistorie(res[2]);
+        if (modus === 'occasion' || modus === 'alles') toonHistorie(res[2]);
+        if (overzicht) toonOverzicht(res[0][0]);
         uitslag.hidden = false;
         try { history.replaceState(null, '', '?kenteken=' + kaal); } catch (e) { /* niets */ }
         if (schuif) uitslag.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -435,55 +458,6 @@
       .catch(function () {
         meter.innerHTML = '<p class="weer-laden">De weersverwachting is nu niet bereikbaar. Vuistregel: onder de 7 °C geven winterbanden de meeste grip.</p>';
       });
-  })();
-
-  /* ---------- Bandencheck: bandenmaat en DOT-code uitleggen ---------- */
-  (function () {
-    var maatForm = document.getElementById('banden-maat');
-    var dotForm = document.getElementById('banden-dot');
-    if (!maatForm || !dotForm) return;
-    var LI = { 60: 250, 61: 257, 62: 265, 63: 272, 64: 280, 65: 290, 66: 300, 67: 307, 68: 315, 69: 325, 70: 335, 71: 345, 72: 355, 73: 365,
-      74: 375, 75: 387, 76: 400, 77: 412, 78: 425, 79: 437, 80: 450, 81: 462, 82: 475, 83: 487, 84: 500, 85: 515, 86: 530, 87: 545, 88: 560,
-      89: 580, 90: 600, 91: 615, 92: 630, 93: 650, 94: 670, 95: 690, 96: 710, 97: 730, 98: 750, 99: 775, 100: 800, 101: 825, 102: 850,
-      103: 875, 104: 900, 105: 925, 106: 950, 107: 975, 108: 1000, 109: 1030, 110: 1060, 111: 1090, 112: 1120, 113: 1150, 114: 1180,
-      115: 1215, 116: 1250, 117: 1285, 118: 1320, 119: 1360, 120: 1400 };
-    var SI = { L: 120, M: 130, N: 140, P: 150, Q: 160, R: 170, S: 180, T: 190, U: 200, H: 210, V: 240, W: 270, Y: 300 };
-    function rij(k, v) { return '<dt>' + k + '</dt><dd>' + v + '</dd>'; }
-    maatForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var uit = maatForm.querySelector('.banden-uitleg');
-      var m = maatForm.querySelector('input').value.toUpperCase().match(/(\d{3})\s*[\/\s-]\s*(\d{2})\s*[\/\s-]?\s*(Z?R)?\s*[\/-]?\s*(\d{2})(?:\s*(\d{2,3})\s*\(?([A-Z])\)?)?/);
-      uit.hidden = false;
-      if (!m) { uit.innerHTML = '<dd class="banden-fout">Dat lijkt geen bandenmaat. Typ hem zoals op de band, bijvoorbeeld 205/55 R16 91V.</dd>'; return; }
-      var h = '';
-      h += rij(m[1], 'Breedte van de band: ' + m[1] + ' mm');
-      h += rij(m[2], 'Hoogte van de zijwand: ' + m[2] + '% van de breedte (' + Math.round(m[1] * m[2] / 100) + ' mm)');
-      if (m[3]) h += rij(m[3], m[3] === 'ZR' ? 'Radiaalband, geschikt voor hoge snelheden' : 'Radiaalband (de gangbare bouwwijze)');
-      h += rij(m[4], 'Past op een velg van ' + m[4] + ' inch');
-      if (m[5]) h += rij(m[5], LI[m[5]] ? 'Draagvermogen: maximaal ' + LI[m[5]].toLocaleString('nl-NL') + ' kg per band' : 'Draagvermogen-index ' + m[5]);
-      if (m[6]) h += rij(m[6], SI[m[6]] ? 'Maximumsnelheid: ' + SI[m[6]] + ' km/u' : 'Snelheidsindex ' + m[6]);
-      uit.innerHTML = h;
-    });
-    dotForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var uit = dotForm.querySelector('.banden-uitleg');
-      var v = dotForm.querySelector('input').value.replace(/\D/g, '').slice(-4);
-      uit.hidden = false;
-      uit.className = 'banden-uitleg';
-      var week = +v.slice(0, 2), jaar = 2000 + +v.slice(2, 4);
-      if (v.length !== 4 || week < 1 || week > 53 || jaar > new Date().getFullYear()) {
-        uit.textContent = 'Vul de 4 cijfers aan het eind van de DOT-code in: eerst de week, dan het jaar. 2321 betekent week 23 van 2021.';
-        uit.classList.add('banden-fout'); return;
-      }
-      var gemaakt = new Date(jaar, 0, 1 + (week - 1) * 7);
-      var leeftijd = (new Date() - gemaakt) / (365.25 * 864e5);
-      var jr = Math.floor(leeftijd);
-      var tekst = 'Gemaakt in week ' + week + ' van ' + jaar + '. Deze band is ' + (jr < 1 ? 'nog geen jaar' : jr === 1 ? 'ruim 1 jaar' : 'ruim ' + jr + ' jaar') + ' oud. ';
-      if (leeftijd >= 10) { tekst += 'Wij adviseren deze band te vervangen, ook als er nog profiel op zit.'; uit.classList.add('banden-let-op'); }
-      else if (leeftijd >= 6) { tekst += 'Let extra op scheurtjes in de zijwand en laat hem bij twijfel nakijken.'; uit.classList.add('banden-let-op'); }
-      else tekst += 'Qua leeftijd prima; kijk vooral naar profiel en spanning.';
-      uit.textContent = tekst;
-    });
   })();
 
   /* ---------- Onderhoudswijzer: vuistregel voor de volgende beurt ---------- */
@@ -782,6 +756,11 @@
   var omschrijving = venster.querySelector('.omschrijving');
   var omschrijvingLabel = omschrijving.querySelector('.omschrijving-label');
   var omschrijvingOptioneel = omschrijving.querySelector('.label-optioneel');
+  var checklistTip = venster.querySelector('.checklist-tip');
+  function aankoop() { return gekozenDiensten().indexOf('Aankoopkeuring') !== -1; }
+  function checklistKlaar() {
+    Array.prototype.forEach.call(venster.querySelectorAll('.checklist-klaar'), function (p) { p.hidden = !aankoop(); });
+  }
   function gekozenDiensten() {
     return Array.prototype.filter.call(dienstVinkjes, function (v) { return v.checked; })
       .map(function (v) { return v.value; });
@@ -801,6 +780,7 @@
       ? 'Bijv. piepende remmen, een lampje op het dashboard of een vreemd geluid'
       : 'Bijv. wanneer u de auto kunt brengen of iets wat we moeten weten';
     veld('omschrijving').required = nodig;
+    if (checklistTip) checklistTip.hidden = !aankoop();
     controleerDiensten();
   }
   Array.prototype.forEach.call(dienstVinkjes, function (v) {
@@ -940,6 +920,7 @@
       body: JSON.stringify(data)
     }).then(function (r) { return r.json(); }).then(function (antwoord) {
       if (String(antwoord.success) !== 'true') throw new Error(antwoord.message);
+      checklistKlaar();
       stapInvullen.hidden = true;
       stapKlaarMail.hidden = false;
     }).catch(function () {
@@ -965,6 +946,7 @@
 
     var url = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(whatsappTekst(blokken));
     linkOpnieuw.href = url;
+    checklistKlaar();
     stapInvullen.hidden = true;
     stapKlaar.hidden = false;
 
@@ -1029,5 +1011,13 @@
         knop.textContent = knopTekst;
       });
     });
+  });
+}());
+
+/* ---------- Printknop (checklist) ---------- */
+(function () {
+  'use strict';
+  Array.prototype.forEach.call(document.querySelectorAll('[data-print]'), function (knop) {
+    knop.addEventListener('click', function () { window.print(); });
   });
 }());

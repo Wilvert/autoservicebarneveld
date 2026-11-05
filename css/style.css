@@ -640,3 +640,90 @@ p.banden-uitleg.banden-let-op { padding: 10px 12px; border-radius: 6px; backgrou
 .apk-tip a span { font-weight: 400; font-size: 14px; }
 .kruimel { margin: -8px 0 22px; font-size: 13px; color: var(--grijs-80); }
 .kruimel a { color: var(--blauw); }
+
+/* ---------- Kentekencheck: overzicht in één oogopslag ---------- */
+.apk-overzicht { list-style: none; margin: 16px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+.apk-overzicht:empty { display: none; }
+.apk-overzicht li { position: relative; display: flex; flex-direction: column; gap: 2px; padding: 12px 14px 12px 42px; border: 1px solid var(--grijs-20); border-radius: 10px; font-size: 13px; line-height: 1.4; }
+.apk-overzicht strong { font-size: 14px; color: var(--grijs); }
+.apk-overzicht span { color: var(--grijs-80); }
+.apk-overzicht li::before { content: "✓"; position: absolute; left: 13px; top: 12px; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 800; color: #fff; background: #2f9e5f; }
+.apk-overzicht li.let-op { border-color: #f1c6ad; background: #fdf6f1; }
+.apk-overzicht li.let-op::before { content: "!"; background: var(--oranje); }
+.apk-overzicht li.info::before { content: "i"; background: var(--blauw-60); }
+.apk-koop { margin: 18px 0 0; padding: 14px 18px; border-radius: 10px; background: #f4f6f9; font-size: 14px; }
+
+/* ---------- Checklist ---------- */
+.checklist-knoppen { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; margin: 18px 0 8px; }
+.checklist-knoppen .knop { display: inline-flex; align-items: center; gap: 8px; }
+.checklijst { list-style: none; margin: 0 0 1em; padding: 0; }
+.checklijst li { position: relative; padding: 6px 0 6px 32px; }
+.checklijst li::before { content: ""; position: absolute; left: 0; top: 9px; width: 18px; height: 18px; border: 2px solid var(--blauw-60); border-radius: 4px; background: var(--wit); }
+.rechten { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.rechten > div { padding: 18px 20px; border: 1px solid var(--grijs-20); border-radius: 12px; }
+.rechten h3 { margin: 0 0 6px; font-size: 16px; color: var(--blauw); }
+.rechten p { margin: 0; font-size: 15px; }
+.misverstanden { margin: 0; display: grid; gap: 10px; }
+.misverstanden > div { padding: 14px 18px; border-left: 4px solid var(--blauw-40); background: #f4f6f9; border-radius: 0 10px 10px 0; }
+.misverstanden dt { font-weight: 700; color: var(--grijs); }
+.misverstanden dd { margin: 2px 0 0; font-size: 15px; }
+.te-mooi { margin-top: 32px; padding: 22px 24px; border-radius: 12px; background: var(--creme); border-left: 5px solid var(--oranje); }
+.te-mooi h2 { margin-top: 0 !important; }
+.lijst-let-op { list-style: none; margin: 0; padding: 0; }
+.lijst-let-op li { position: relative; padding: 4px 0 4px 26px; }
+.lijst-let-op li::before { content: "!"; position: absolute; left: 0; top: 7px; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 800; color: #fff; background: var(--oranje); }
+.checklist-blok a { display: flex; flex-direction: column; gap: 2px; padding: 14px 18px 14px 58px; border-radius: 10px; background: #f4f6f9 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23e7814d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3v12m-5-5 5 5 5-5M5 21h14'/%3E%3C/g%3E%3C/svg%3E") 18px center / 26px no-repeat; border-left: 4px solid var(--oranje); text-decoration: none; color: var(--grijs); }
+.checklist-blok strong { color: var(--blauw); }
+.checklist-blok a:hover strong { text-decoration: underline; }
+.checklist-blok span { font-size: 14px; }
+@media (max-width: 600px) { .rechten { grid-template-columns: 1fr; } .te-mooi { padding: 18px; } }
+
+/* Planner: checklist bij aankoopkeuring */
+.checklist-tip { display: flex; gap: 12px; align-items: flex-start; margin: 0 0 14px; padding: 12px 14px; border-radius: 8px; background: var(--creme); font-size: 13px; line-height: 1.5; }
+.checklist-tip[hidden] { display: none; }
+.checklist-tip svg { flex: none; color: var(--oranje); margin-top: 1px; }
+.checklist-tip strong { display: block; color: var(--grijs); font-size: 14px; }
+.checklist-tip a { font-weight: 700; color: var(--blauw); }
+.checklist-klaar { display: flex; flex-direction: column; align-items: center; gap: 8px; margin: 18px 0; }
+.checklist-klaar[hidden] { display: none; }
+.checklist-klaar small { font-size: 13px; color: var(--grijs-80); }
+.venster .diensten-raster { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 720px) { .venster .diensten-raster { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ---------- Banden uitgelegd ---------- */
+.band-figuur { margin: 8px 0 14px; }
+.band-svg { width: 100%; height: auto; border-radius: 12px; background: #f4f6f9; font-family: var(--tekst); }
+.band-figuur figcaption { margin-top: 6px; font-size: 13px; color: var(--grijs-80); }
+.band-legenda { list-style: none; counter-reset: band; margin: 0 0 12px; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 18px; }
+.band-legenda li { counter-increment: band; position: relative; padding: 4px 0 4px 36px; font-size: 15px; }
+.band-legenda li::before { content: counter(band); position: absolute; left: 0; top: 4px; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 13px; font-weight: 800; color: #fff; background: var(--oranje); }
+.band-legenda strong { display: block; color: var(--blauw); }
+.band-leeftijd, .band-profiel { list-style: none; margin: 0 0 1em; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.band-leeftijd li, .band-profiel li { display: flex; flex-direction: column; gap: 2px; padding: 14px 16px; border-radius: 10px; border-top: 5px solid #2f9e5f; background: #eef6f1; font-size: 14px; }
+.band-leeftijd li.let-op, .band-profiel li.let-op { border-color: var(--oranje); background: #fdf1e9; }
+.band-leeftijd li.op, .band-profiel li.op { border-color: #c3282e; background: #fbecec; }
+.band-leeftijd strong, .band-profiel strong { font-size: 16px; color: var(--grijs); }
+.munt-tip { display: flex; gap: 18px; align-items: center; margin: 6px 0 1em; padding: 16px 18px; border: 1px solid var(--grijs-20); border-radius: 12px; }
+.munt-svg { flex: none; width: 72px; }
+.munt-tip p { margin: 0; font-size: 15px; }
+.munt-tip strong { display: block; color: var(--blauw); }
+@media (max-width: 600px) {
+  .band-legenda, .band-leeftijd, .band-profiel { grid-template-columns: 1fr; }
+  .munt-tip { align-items: flex-start; }
+  .munt-svg { width: 56px; }
+}
+
+/* ---------- Printen (checklist) ---------- */
+@media print {
+  .topbalk, .kop, .voet, .zijkaart, .pagina-kop .hero-foto, .checklist-knoppen, .kruimel, .vragen, dialog, .naar-inhoud { display: none !important; }
+  .pagina-kop { padding: 0 !important; background: none !important; color: #000; }
+  .pagina-kop h1 { color: var(--blauw); }
+  .pagina-kop .wrap { padding: 0 0 12px; }
+  .pagina-kop .inleiding, .pagina-kop .kicker { color: #333; }
+  .artikel { display: block; }
+  .checklijst li, .rechten > div, .misverstanden > div { break-inside: avoid; }
+  a { text-decoration: none; }
+}
+.afspraak .diensten-raster label:last-child:nth-child(odd) { grid-column: 1 / -1; }
+@media (max-width: 720px) { .venster .diensten-raster label:last-child:nth-child(odd) { grid-column: 1 / -1; } }
+@media (max-width: 480px) { .diensten-raster label:last-child:nth-child(odd) { grid-column: 1 / -1; } }

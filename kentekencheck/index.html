@@ -6,16 +6,16 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; frame-src https://www.openstreetmap.org; connect-src 'self' https://formsubmit.co https://api.pdok.nl https://opendata.rdw.nl https://api.open-meteo.com; form-action 'self' mailto: https://formsubmit.co; base-uri 'self'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="theme-color" content="#0a467f">
-<title>Kentekencheck: gratis autogegevens | Autoservice Barneveld</title>
-<meta name="description" content="Gratis kentekencheck: zie direct merk, model, bouwjaar, brandstof, vermogen, gewicht, APK-datum en tellerstand van een auto, rechtstreeks van de RDW.">
+<title>Kentekencheck: APK, historie en meer, gratis | Autoservice Barneveld</title>
+<meta name="description" content="Gratis kentekencheck: zie in één keer de APK-vervaldatum, gemelde gebreken, tellerstand, import, terugroepacties, trekgewicht en alle RDW-gegevens van een auto.">
 <link rel="canonical" href="https://www.autoservicebarneveld.nl/kentekencheck/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="nl_NL">
 <meta property="og:site_name" content="Autoservice Barneveld">
-<meta property="og:title" content="Kentekencheck: gratis autogegevens | Autoservice Barneveld">
-<meta property="og:description" content="Gratis kentekencheck: zie direct merk, model, bouwjaar, brandstof, vermogen, gewicht, APK-datum en tellerstand van een auto, rechtstreeks van de RDW.">
+<meta property="og:title" content="Kentekencheck: APK, historie en meer, gratis | Autoservice Barneveld">
+<meta property="og:description" content="Gratis kentekencheck: zie in één keer de APK-vervaldatum, gemelde gebreken, tellerstand, import, terugroepacties, trekgewicht en alle RDW-gegevens van een auto.">
 <meta property="og:url" content="https://www.autoservicebarneveld.nl/kentekencheck/">
-<meta property="og:image" content="https://www.autoservicebarneveld.nl/img/og-dienst-diagnose.jpg">
+<meta property="og:image" content="https://www.autoservicebarneveld.nl/img/og-dienst-apk.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -207,8 +207,8 @@
 <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
 <link rel="preload" href="../fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../fonts/bebas-neue.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../css/style.css?v=b2aa29f3">
-<script src="../js/site.js?v=a4c5a648" defer></script>
+<link rel="stylesheet" href="../css/style.css?v=d58fcbc9">
+<script src="../js/site.js?v=7e0fc81a" defer></script>
 </head>
 <body>
 <a class="naar-inhoud" href="#inhoud">Direct naar de inhoud</a>
@@ -233,13 +233,10 @@
     <details class="checks-menu">
       <summary>Zelf checken <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
       <ul>
-          <li><a href="../apk-check/">APK-check</a></li>
-          <li><a href="../occasion-check/">Occasion-check</a></li>
           <li><a href="../kentekencheck/">Kentekencheck</a></li>
-          <li><a href="../terugroepactie-check/">Terugroepactie-check</a></li>
-          <li><a href="../trekgewicht-check/">Trekgewicht-check</a></li>
+          <li><a href="../checklist-tweedehands-auto/">Checklist occasion kopen</a></li>
           <li><a href="../winterbanden/">Winterbandenmeter</a></li>
-          <li><a href="../bandencheck/">Bandencheck</a></li>
+          <li><a href="../bandencheck/">Banden uitgelegd</a></li>
           <li><a href="../onderhoudswijzer/">Onderhoudswijzer</a></li>
           <li><a href="../dashboardlampjes/">Dashboardlampjes</a></li>
           <li><a href="../hulp/">Wat is er met mijn auto?</a></li>
@@ -248,7 +245,7 @@
           <li class="alles"><a href="../handig/">Alles bij elkaar</a></li>
       </ul>
     </details>
-    <a class="apk-knop" href="../apk-check/"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M8.5 14l2.5 2.5 4.5-5"/></g></svg>APK-check</a>
+    <a class="apk-knop" href="../kentekencheck/" aria-current="page"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M8.5 14l2.5 2.5 4.5-5"/></g></svg>APK-check</a>
     <a class="knop blauw" href="../contact/" data-afspraak>Plan afspraak</a>
     <button class="menu-knop" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menu openen">
       <svg width="22" height="16" viewBox="0 0 22 16" aria-hidden="true"><path d="M0 1h22M0 8h22M0 15h22" stroke="currentColor" stroke-width="2.2"/></svg>
@@ -258,26 +255,26 @@
 
 <main id="inhoud">
   <section class="pagina-kop">
-    <div class="hero-foto"><img src="../img/dienst-diagnose.webp" srcset="../img/dienst-diagnose-480.webp 480w, ../img/dienst-diagnose.webp 960w" sizes="100vw" alt="" width="1848" height="1232" fetchpriority="high"></div>
+    <div class="hero-foto"><img src="../img/dienst-apk.webp" srcset="../img/dienst-apk-480.webp 480w, ../img/dienst-apk.webp 960w" sizes="100vw" alt="" width="1848" height="1232" fetchpriority="high"></div>
     <div class="wrap">
       <span class="kicker"><i aria-hidden="true"></i>Gratis kentekencheck</span>
-      <h1>Kentekencheck: alle gegevens van een auto</h1>
-      <p class="inleiding">Vul een kenteken in en zie direct de openbare gegevens van de auto, rechtstreeks van de RDW.</p>
+      <h1>Kentekencheck: alles over een auto in één keer</h1>
+      <p class="inleiding">Vul een kenteken in en zie direct de APK-datum, eerder gemelde gebreken, de tellerstand, terugroepacties, het trekgewicht en meer.</p>
     </div>
   </section>
 
   <section class="sectie">
     <div class="wrap artikel">
       <div class="tekst">
-        <form class="apk-check" data-modus="kenteken" action="./" method="get" novalidate>
-          <label for="kt-kenteken">Uw kenteken</label>
+        <form class="apk-check" data-modus="alles" action="./" method="get" novalidate>
+          <label for="kt-alles">Kenteken</label>
           <div class="apk-check-rij">
             <div class="kenteken">
               <span class="nl" aria-hidden="true">
                 <svg viewBox="0 0 24 20"><g fill="#f6c500"><circle cx="19.00" cy="10.00" r="1.2"/><circle cx="18.06" cy="13.50" r="1.2"/><circle cx="15.50" cy="16.06" r="1.2"/><circle cx="12.00" cy="17.00" r="1.2"/><circle cx="8.50" cy="16.06" r="1.2"/><circle cx="5.94" cy="13.50" r="1.2"/><circle cx="5.00" cy="10.00" r="1.2"/><circle cx="5.94" cy="6.50" r="1.2"/><circle cx="8.50" cy="3.94" r="1.2"/><circle cx="12.00" cy="3.00" r="1.2"/><circle cx="15.50" cy="3.94" r="1.2"/><circle cx="18.06" cy="6.50" r="1.2"/></g></svg>
                 NL
               </span>
-              <input id="kt-kenteken" name="kenteken" data-geen-rdw placeholder="AB-123-C" maxlength="8" autocomplete="off" spellcheck="false" autocapitalize="characters" required>
+              <input id="kt-alles" name="kenteken" data-geen-rdw placeholder="AB-123-C" maxlength="8" autocomplete="off" spellcheck="false" autocapitalize="characters" required>
             </div>
             <button class="knop oranje" type="submit">Check kenteken <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6"/></svg></button>
           </div>
@@ -289,9 +286,11 @@
             <p class="apk-status-kop"></p>
             <div class="apk-status-uitleg"></div>
             <div class="apk-status-knoppen">
-              <a class="knop blauw" href="../contact/" data-afspraak data-dienst="" data-omschrijving="" data-kenteken-van="#kt-kenteken">Plan een afspraak <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6"/></svg></a>
+              <a class="knop blauw" href="../contact/" data-afspraak data-dienst="APK" data-kenteken-van="#kt-alles">Plan uw APK <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6"/></svg></a>
+                <button type="button" class="link-klein apk-agenda" hidden>Zet een herinnering in uw agenda</button>
             </div>
           </div>
+          <ul class="apk-overzicht" aria-label="Overzicht"></ul>
           <div class="apk-auto">
             <figure class="apk-plaatje">
               <div class="apk-svg"></div>
@@ -302,24 +301,62 @@
               <dl></dl>
             </div>
           </div>
+          <div class="apk-extra"></div>
+          <p class="apk-koop">Wilt u deze auto kopen? Neem onze gratis <a href="../checklist-tweedehands-auto/">checklist</a> mee, of <a href="../aankoopkeuring/" data-afspraak data-dienst="Aankoopkeuring" data-kenteken-van="#kt-alles">plan een aankoopkeuring</a>.</p>
           <p class="apk-bron">Bron: openbare voertuiggegevens van de RDW. Aan deze gegevens kunnen geen rechten worden ontleend.</p>
         </div>
 
-        <h2>Wat ziet u bij de kentekencheck?</h2>
-        <p>De openbare gegevens die de RDW over een auto bijhoudt: merk en model, kleur, brandstof, vermogen, bouwjaar, gewicht en trekgewicht, de APK-vervaldatum, het oordeel over de tellerstand, of de auto verzekerd is en of er een terugroepactie openstaat. Handig als u uw eigen auto wilt nakijken, of een auto die u wilt kopen.</p>
-
-        <h2>Meer gratis checks</h2>
-        <ul class="check-links">
-          <li><a href="../apk-check/">APK-check</a><span>Tot wanneer is uw APK geldig?</span></li>
-          <li><a href="../occasion-check/">Occasion-check</a><span>APK-historie en gemelde gebreken</span></li>
-          <li><a href="../terugroepactie-check/">Terugroepactie-check</a><span>Staat er iets open voor uw auto?</span></li>
-          <li><a href="../trekgewicht-check/">Trekgewicht-check</a><span>Hoeveel mag uw auto trekken?</span></li>
+        <h2>Wat ziet u met de kentekencheck?</h2>
+        <p>Eén keer uw kenteken invullen is genoeg. U ziet direct alles wat de RDW openbaar over de auto bijhoudt:</p>
+        <ul class="lijst-vink">
+          <li><a href="#apk">APK-vervaldatum</a> en vanaf wanneer u kunt keuren met behoud van uw datum</li>
+          <li><a href="#historie">Gebreken en adviespunten</a> die bij eerdere APK-keuringen zijn gemeld</li>
+          <li>Het oordeel over de <a href="#historie">tellerstand</a> en of de auto is geïmporteerd</li>
+          <li>Of er een <a href="#terugroepactie">terugroepactie</a> openstaat</li>
+          <li>Het <a href="#trekgewicht">trekgewicht</a>, geremd en ongeremd</li>
+          <li>Merk, model, kleur, brandstof, vermogen, bouwjaar, gewicht en of de auto verzekerd is</li>
         </ul>
+
+        <h2 id="apk">APK-check: wanneer verloopt uw APK?</h2>
+        <p>U mag uw auto tot twee maanden vóór de vervaldatum laten keuren. De nieuwe vervaldatum wordt dan gerekend vanaf de oude, dus u verliest er geen dag mee. Verloopt uw APK bijvoorbeeld op 15 juni, dan kunt u vanaf 15 april keuren. Met één klik zet u een herinnering in uw agenda. Autoservice Barneveld is door de RDW erkend en keurt alle merken, ook elektrische auto's. Lees meer over onze <a href="../apk-keuring/">APK-keuring</a>.</p>
+
+        <h2 id="historie">Occasion-check: APK-historie en tellerstand</h2>
+        <p>Een tweedehands auto op het oog? De check laat zien welke gebreken en adviespunten keurmeesters eerder hebben gemeld, of de tellerstand logisch is en of de auto uit het buitenland komt. Zo weet u vóór de bezichtiging al waar u op moet letten. Neem ook onze gratis <a href="../checklist-tweedehands-auto/">checklist tweedehands auto kopen</a> mee, en laat de auto bij twijfel nakijken met een <a href="../aankoopkeuring/">aankoopkeuring</a>.</p>
+
+        <h2 id="terugroepactie">Terugroepactie-check</h2>
+        <p>Ontdekt een fabrikant een fout aan een type auto, bijvoorbeeld aan de remmen, de airbags of de software, dan roept hij die auto's terug. Dat wordt meestal gratis verholpen door een merkdealer. Staat er voor uw auto een actie open en heeft u geen brief gehad? Bel of app ons gerust, dan zoeken we het samen uit. Uw gewone onderhoud en APK kunt u gewoon bij ons blijven doen.</p>
+
+        <h2 id="trekgewicht">Trekgewicht-check</h2>
+        <p>Een caravan of grotere aanhanger heeft meestal eigen remmen: dan geldt het geremde trekgewicht. Een lichte aanhanger zonder remmen mag niet zwaarder zijn dan het ongeremde trekgewicht. Met rijbewijs B mag u een aanhanger tot 750 kg trekken, of een zwaardere zolang auto en aanhanger samen niet boven de 3.500 kg komen. Daarboven heeft u code 96 (tot 4.250 kg) of rijbewijs BE nodig. Kijk voor de precieze regels bij het CBR.</p>
         <h2>Veelgestelde vragen</h2>
         <div class="vragen">
           <details class="vraag">
             <summary>Is de kentekencheck gratis?</summary>
-            <p>Ja. De gegevens zijn openbaar en de check kost niets. U hoeft niets in te vullen behalve het kenteken.</p>
+            <p>Ja. De gegevens zijn openbaar en de check kost niets. U vult alleen het kenteken in en ziet direct alles op één pagina.</p>
+          </details>
+          <details class="vraag">
+            <summary>Hoe lang van tevoren kan ik mijn auto APK laten keuren?</summary>
+            <p>Tot twee maanden vóór de vervaldatum. Uw nieuwe vervaldatum wordt dan gerekend vanaf de oude datum, zodat u geen dag verliest.</p>
+          </details>
+          <details class="vraag">
+            <summary>Hoe vaak moet mijn auto APK?</summary>
+            <p>Een nieuwe auto op benzine of stroom gaat voor het eerst na vier jaar naar de APK, daarna na twee jaar en vanaf acht jaar oud elk jaar. Een auto op diesel of lpg gaat na drie jaar voor het eerst en daarna elk jaar. Voor oudere auto's en oldtimers gelden aparte regels; de kentekencheck toont altijd uw eigen vervaldatum.</p>
+          </details>
+          <details class="vraag">
+            <summary>Wat betekent het tellerstandoordeel?</summary>
+            <p>De RDW verzamelt kilometerstanden bij onder meer onderhoud en APK. Is de reeks logisch, dan staat er ‘Logisch’. Staat er ‘Onlogisch’ of ‘Geen oordeel’, vraag de verkoper dan om uitleg en om onderhoudsfacturen.</p>
+          </details>
+          <details class="vraag">
+            <summary>Zegt de kentekencheck alles over de staat van een auto?</summary>
+            <p>Nee. U ziet wat er officieel geregistreerd is. Roest, lekkages, slijtage en storingen ziet u alleen als iemand de auto echt bekijkt. Gebruik daarvoor onze <a href="../checklist-tweedehands-auto/">checklist</a> of laat een <a href="../aankoopkeuring/">aankoopkeuring</a> doen.</p>
+          </details>
+          <details class="vraag">
+            <summary>Kost een terugroepactie geld?</summary>
+            <p>Nee, een terugroepactie wordt in de regel kosteloos uitgevoerd door een dealer van het merk. Ook als u de auto tweedehands heeft gekocht: de actie hoort bij de auto, niet bij de eigenaar.</p>
+          </details>
+          <details class="vraag">
+            <summary>Wat is het verschil tussen geremd en ongeremd trekgewicht?</summary>
+            <p>Geremd geldt voor een caravan of aanhanger met eigen remmen, ongeremd voor een lichte aanhanger zonder remmen. Het gaat steeds om het gewicht van de aanhanger inclusief lading.</p>
           </details>
           <details class="vraag">
             <summary>Kan ik zien wie de eigenaar is?</summary>
@@ -334,7 +371,7 @@
       <aside class="zijkaart" aria-labelledby="zijkaart-titel">
         <h2 id="zijkaart-titel">Plan uw afspraak</h2>
         <p>Vul uw kenteken en gegevens in, dan staat uw aanvraag klaar in WhatsApp. Per e-mail kan ook.</p>
-        <a class="knop oranje" href="../contact/" data-afspraak>Plan afspraak <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6"/></svg></a>
+        <a class="knop oranje" href="../contact/" data-afspraak data-dienst="APK">Plan afspraak <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6"/></svg></a>
         <ul>
           <li>Bel <a href="tel:+31342234003">0342-234003</a></li>
           <li>App via <a href="https://wa.me/31342234003">WhatsApp</a></li>
@@ -354,7 +391,7 @@
    "url": "https://www.autoservicebarneveld.nl/kentekencheck/",
    "applicationCategory": "UtilitiesApplication",
    "operatingSystem": "Alle",
-   "description": "Zie bij een kenteken de openbare RDW-gegevens van een auto, zoals merk, model, bouwjaar, brandstof, APK-datum en tellerstandoordeel.",
+   "description": "Zie bij een kenteken de APK-vervaldatum, gebreken bij eerdere APK-keuringen, het tellerstandoordeel, import, terugroepacties, trekgewicht en de openbare RDW-gegevens.",
    "offers": {
     "@type": "Offer",
     "price": "0",
@@ -374,7 +411,55 @@
      "name": "Is de kentekencheck gratis?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Ja. De gegevens zijn openbaar en de check kost niets. U hoeft niets in te vullen behalve het kenteken."
+      "text": "Ja. De gegevens zijn openbaar en de check kost niets. U vult alleen het kenteken in en ziet direct alles op één pagina."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Hoe lang van tevoren kan ik mijn auto APK laten keuren?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Tot twee maanden vóór de vervaldatum. Uw nieuwe vervaldatum wordt dan gerekend vanaf de oude datum, zodat u geen dag verliest."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Hoe vaak moet mijn auto APK?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Een nieuwe auto op benzine of stroom gaat voor het eerst na vier jaar naar de APK, daarna na twee jaar en vanaf acht jaar oud elk jaar. Een auto op diesel of lpg gaat na drie jaar voor het eerst en daarna elk jaar. Voor oudere auto's en oldtimers gelden aparte regels; de kentekencheck toont altijd uw eigen vervaldatum."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Wat betekent het tellerstandoordeel?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "De RDW verzamelt kilometerstanden bij onder meer onderhoud en APK. Is de reeks logisch, dan staat er ‘Logisch’. Staat er ‘Onlogisch’ of ‘Geen oordeel’, vraag de verkoper dan om uitleg en om onderhoudsfacturen."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Zegt de kentekencheck alles over de staat van een auto?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nee. U ziet wat er officieel geregistreerd is. Roest, lekkages, slijtage en storingen ziet u alleen als iemand de auto echt bekijkt. Gebruik daarvoor onze checklist of laat een aankoopkeuring doen."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Kost een terugroepactie geld?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nee, een terugroepactie wordt in de regel kosteloos uitgevoerd door een dealer van het merk. Ook als u de auto tweedehands heeft gekocht: de actie hoort bij de auto, niet bij de eigenaar."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Wat is het verschil tussen geremd en ongeremd trekgewicht?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Geremd geldt voor een caravan of aanhanger met eigen remmen, ongeremd voor een lichte aanhanger zonder remmen. Het gaat steeds om het gewicht van de aanhanger inclusief lading."
      }
     },
     {
@@ -432,7 +517,7 @@
       <h2>Contact</h2>
       <ul><li><a href="tel:+31342234003">0342-234003</a></li><li><a href="https://wa.me/31342234003">WhatsApp</a></li><li><a href="mailto:contact@autoservicebarneveld.nl">contact@autoservicebarneveld.nl</a></li><li><a href="../contact/" data-afspraak>Plan afspraak</a></li></ul>
       <h2 class="voet-sub">Handig</h2>
-      <ul><li><a href="../apk-check/">APK-check</a></li><li><a href="../occasion-check/">Occasion-check</a></li><li><a href="../dashboardlampjes/">Dashboardlampjes</a></li><li><a href="../hulp/">Hulp bij klachten</a></li><li><a href="../handig/">Alle checks en uitleg</a></li></ul>
+      <ul><li><a href="../kentekencheck/">Kentekencheck</a></li><li><a href="../checklist-tweedehands-auto/">Checklist occasion kopen</a></li><li><a href="../dashboardlampjes/">Dashboardlampjes</a></li><li><a href="../hulp/">Hulp bij klachten</a></li><li><a href="../handig/">Alle checks en uitleg</a></li></ul>
     </div>
     <div>
       <h2>Diensten</h2>
@@ -479,10 +564,12 @@
             <label><input type="checkbox" name="diensten" value="Aircoservice"><span>Aircoservice</span></label>
             <label><input type="checkbox" name="diensten" value="Bandenservice"><span>Bandenservice</span></label>
             <label><input type="checkbox" name="diensten" value="Uitlijnen"><span>Uitlijnen</span></label>
+            <label><input type="checkbox" name="diensten" value="Aankoopkeuring"><span>Aankoopkeuring</span></label>
             <label><input type="checkbox" name="diensten" value="Reparatie"><span>Reparatie</span></label>
             <label><input type="checkbox" name="diensten" value="Overig"><span>Overig</span></label>
           </div>
         </fieldset>
+        <p class="checklist-tip" hidden><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="m8 9 1.5 1.5L12 8M8 15l1.5 1.5L12 14M14.5 9.5H17M14.5 15.5H17"/></g></svg><span><strong>Gratis checklist bij uw aankoopkeuring</strong> Wat u zelf kunt controleren en welke papieren u meeneemt. <a href="../downloads/checklist-tweedehands-auto.pdf" download>Download de checklist (PDF)</a></span></p>
         <div class="veld omschrijving">
           <label for="v-omschrijving"><span class="omschrijving-label">Opmerking</span> <small class="label-optioneel">optioneel</small></label>
           <textarea class="invoer" id="v-omschrijving" name="omschrijving" rows="2" maxlength="300" placeholder="Bijv. wanneer u de auto kunt brengen of iets wat we moeten weten"></textarea>
@@ -560,12 +647,14 @@
       <svg width="56" height="56" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M7 12.5l3.2 3L17 9"/></g></svg>
       <h2>Bijna klaar</h2>
       <p class="uitleg">WhatsApp is geopend met uw aanvraag. Druk daar op <strong>verzenden</strong>, dan nemen wij zo snel mogelijk contact op om de afspraak vast te leggen.</p>
+      <p class="checklist-klaar" hidden><a class="knop oranje" href="../downloads/checklist-tweedehands-auto.pdf" download>Download uw checklist (PDF)</a><small>Neem de onderhoudspapieren mee naar de aankoopkeuring.</small></p>
       <p class="klein">Opent WhatsApp niet? <a class="wa-opnieuw" href="https://wa.me/31342234003">Probeer het opnieuw</a> of bel <a href="tel:+31342234003">0342-234003</a>.</p>
     </div>
     <div class="venster-klaar venster-klaar-mail" hidden>
       <svg width="56" height="56" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M7 12.5l3.2 3L17 9"/></g></svg>
       <h2>Aanvraag verstuurd</h2>
       <p class="uitleg">Uw aanvraag is per e-mail bij ons binnengekomen. Wij nemen zo snel mogelijk contact op om de afspraak vast te leggen.</p>
+      <p class="checklist-klaar" hidden><a class="knop oranje" href="../downloads/checklist-tweedehands-auto.pdf" download>Download uw checklist (PDF)</a><small>Neem de onderhoudspapieren mee naar de aankoopkeuring.</small></p>
       <p class="klein">Haast? Bel <a href="tel:+31342234003">0342-234003</a>.</p>
     </div>
   </div>

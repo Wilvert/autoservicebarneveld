@@ -24,10 +24,14 @@ index.html                 Home (afspraakblok, diensten, waarom, over ons, vervo
 merken/, werkgebied/, veelgestelde-vragen/   Vindbaarheid: merken, plaatsen, FAQ (met FAQ-schema)
 apk-keuring/ ...           Zes dienstpagina's (met eigen vragen + Service/FAQ-schema)
 aankoopkeuring/            Dienst aankoopkeuring (met voorbehoud in kleine letters)
-apk-check/, occasion-check/, kentekencheck/, terugroepactie-check/, trekgewicht-check/
-                           Kenteken-checks op de open data van de RDW (één tool, data-modus per pagina)
+kentekencheck/             Eén kentekencheck op de open data van de RDW: APK, overzicht, gegevens, APK-historie
+apk-check/, occasion-check/, terugroepactie-check/, trekgewicht-check/
+                           Oude adressen; sturen door naar kentekencheck/ (doorsturen() in bouw.py)
+checklist-tweedehands-auto/  Checklist occasion kopen; tekst in CHECKLIST e.a. in bouw.py
+downloads/checklist-tweedehands-auto.pdf
+                           Dezelfde checklist als PDF: na bouw.py draaien `python3 bron/maak_pdf.py`
 winterbanden/, bandencheck/, onderhoudswijzer/, dashboardlampjes/
-                           Overige checks en uitleg (weer via Open-Meteo)
+                           Overige checks en uitleg (weer via Open-Meteo; bandencheck = uitleg met illustraties)
 hulp/                      "Wat is er met mijn auto?" + acht klachtpagina's (KLACHTEN in bouw.py)
 handig/                    Overzicht van alle checks (HANDIG in bouw.py; vult ook het menu "Zelf checken")
 over-ons/, vervangend-vervoer/, contact/, privacy/

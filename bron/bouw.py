@@ -95,7 +95,7 @@ DIENSTEN = [
      "Plan onderhoud"),
 ]
 # Keuzes in de planner (meerdere mogelijk). Reparatie en Overig vragen om een korte omschrijving.
-DIENST_OPTIES = ["Onderhoudsbeurt", "APK", "Diagnose", "Aircoservice", "Bandenservice", "Uitlijnen", "Reparatie", "Overig"]
+DIENST_OPTIES = ["Onderhoudsbeurt", "APK", "Diagnose", "Aircoservice", "Bandenservice", "Uitlijnen", "Aankoopkeuring", "Reparatie", "Overig"]
 # Welke plannerkeuze vooraf aangevinkt wordt vanaf een dienstpagina
 DIENST_NAAR_KEUZE = {"Onderhoud & reparatie": "Onderhoudsbeurt", "APK-keuring": "APK", "Diagnose": "Diagnose",
                      "Bandenservice & uitlijnen": "Bandenservice", "Aircoservice": "Aircoservice",
@@ -105,10 +105,10 @@ TEKST = {
 "apk-keuring": """
 <p>De APK (Algemene Periodieke Keuring) is verplicht en controleert of uw auto veilig en milieuvriendelijk genoeg is voor de weg. Autoservice Barneveld is door de RDW erkend en keurt auto's van alle merken, ook elektrische auto's. We voeren de keuring zorgvuldig uit, zodat u veilig en volgens de wettelijke eisen de weg op gaat.</p>
 
-<p class="apk-tip"><a href="{r}apk-check/"><strong>Gratis APK-check</strong><span>Zie met uw kenteken tot wanneer uw APK geldig is en vanaf wanneer u kunt keuren.</span></a></p>
+<p class="apk-tip"><a href="{r}kentekencheck/"><strong>Gratis kentekencheck</strong><span>Zie met uw kenteken tot wanneer uw APK geldig is en vanaf wanneer u kunt keuren.</span></a></p>
 
 <h2>Wanneer moet uw auto voor de APK?</h2>
-<p>De vervaldatum van uw APK ziet u direct met onze <a href="{r}apk-check/">APK-check</a>. U kunt de keuring tot twee maanden vóór die datum laten doen zonder dat u er tijd mee verliest: de nieuwe vervaldatum wordt dan gerekend vanaf de oude.</p>
+<p>De vervaldatum van uw APK ziet u direct met onze <a href="{r}kentekencheck/">kentekencheck</a>. U kunt de keuring tot twee maanden vóór die datum laten doen zonder dat u er tijd mee verliest: de nieuwe vervaldatum wordt dan gerekend vanaf de oude.</p>
 
 <h2>APK en onderhoud in één afspraak</h2>
 <p>Veel klanten combineren de APK met een kleine of grote <a href="{r}onderhoud-reparatie/">onderhoudsbeurt</a>. Dat scheelt een extra ritje naar de garage. Komt er tijdens de keuring iets naar boven dat vervangen moet worden? Valt dat boven het bedrag dat u bij uw afspraak heeft opgegeven, dan overleggen we eerst met u, eventueel met een foto of filmpje via WhatsApp.</p>
@@ -282,7 +282,7 @@ def kop(r, actief):
           <li class="alles"><a href="{r}handig/">Alles bij elkaar</a></li>
       </ul>
     </details>
-    <a class="apk-knop" href="{r}apk-check/"{' aria-current="page"' if actief == "apk-check" else ""}><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M8.5 14l2.5 2.5 4.5-5"/></g></svg>APK-check</a>
+    <a class="apk-knop" href="{r}kentekencheck/"{' aria-current="page"' if actief == "kentekencheck" else ""}><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M8.5 14l2.5 2.5 4.5-5"/></g></svg>APK-check</a>
     <a class="knop blauw" href="{r}contact/" data-afspraak>Plan afspraak</a>
     <button class="menu-knop" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menu openen">
       <svg width="22" height="16" viewBox="0 0 22 16" aria-hidden="true"><path d="M0 1h22M0 8h22M0 15h22" stroke="currentColor" stroke-width="2.2"/></svg>
@@ -340,6 +340,7 @@ def venster(r):
 {diensten_vinkjes()}
           </div>
         </fieldset>
+        <p class="checklist-tip" hidden><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="m8 9 1.5 1.5L12 8M8 15l1.5 1.5L12 14M14.5 9.5H17M14.5 15.5H17"/></g></svg><span><strong>Gratis checklist bij uw aankoopkeuring</strong> Wat u zelf kunt controleren en welke papieren u meeneemt. <a href="{r}downloads/checklist-tweedehands-auto.pdf" download>Download de checklist (PDF)</a></span></p>
         <div class="veld omschrijving">
           <label for="v-omschrijving"><span class="omschrijving-label">Opmerking</span> <small class="label-optioneel">optioneel</small></label>
           <textarea class="invoer" id="v-omschrijving" name="omschrijving" rows="2" maxlength="300" placeholder="Bijv. wanneer u de auto kunt brengen of iets wat we moeten weten"></textarea>
@@ -417,12 +418,14 @@ def venster(r):
       <svg width="56" height="56" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M7 12.5l3.2 3L17 9"/></g></svg>
       <h2>Bijna klaar</h2>
       <p class="uitleg">WhatsApp is geopend met uw aanvraag. Druk daar op <strong>verzenden</strong>, dan nemen wij zo snel mogelijk contact op om de afspraak vast te leggen.</p>
+      <p class="checklist-klaar" hidden><a class="knop oranje" href="{r}downloads/checklist-tweedehands-auto.pdf" download>Download uw checklist (PDF)</a><small>Neem de onderhoudspapieren mee naar de aankoopkeuring.</small></p>
       <p class="klein">Opent WhatsApp niet? <a class="wa-opnieuw" href="{WA_LINK}">Probeer het opnieuw</a> of bel <a href="{TEL_LINK}">{TEL}</a>.</p>
     </div>
     <div class="venster-klaar venster-klaar-mail" hidden>
       <svg width="56" height="56" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M7 12.5l3.2 3L17 9"/></g></svg>
       <h2>Aanvraag verstuurd</h2>
       <p class="uitleg">Uw aanvraag is per e-mail bij ons binnengekomen. Wij nemen zo snel mogelijk contact op om de afspraak vast te leggen.</p>
+      <p class="checklist-klaar" hidden><a class="knop oranje" href="{r}downloads/checklist-tweedehands-auto.pdf" download>Download uw checklist (PDF)</a><small>Neem de onderhoudspapieren mee naar de aankoopkeuring.</small></p>
       <p class="klein">Haast? Bel <a href="{TEL_LINK}">{TEL}</a>.</p>
     </div>
   </div>
@@ -448,7 +451,7 @@ def voet(r):
       <h2>Contact</h2>
       <ul><li><a href="{TEL_LINK}">{TEL}</a></li><li><a href="{WA_LINK}">WhatsApp</a></li><li><a href="mailto:{MAIL}">{MAIL}</a></li><li><a href="{r}contact/" data-afspraak>Plan afspraak</a></li></ul>
       <h2 class="voet-sub">Handig</h2>
-      <ul><li><a href="{r}apk-check/">APK-check</a></li><li><a href="{r}occasion-check/">Occasion-check</a></li><li><a href="{r}dashboardlampjes/">Dashboardlampjes</a></li><li><a href="{r}hulp/">Hulp bij klachten</a></li><li><a href="{r}handig/">Alle checks en uitleg</a></li></ul>
+      <ul><li><a href="{r}kentekencheck/">Kentekencheck</a></li><li><a href="{r}checklist-tweedehands-auto/">Checklist occasion kopen</a></li><li><a href="{r}dashboardlampjes/">Dashboardlampjes</a></li><li><a href="{r}hulp/">Hulp bij klachten</a></li><li><a href="{r}handig/">Alle checks en uitleg</a></li></ul>
     </div>
     <div>
       <h2>Diensten</h2>
@@ -681,7 +684,7 @@ def homepage():
 
   <section class="vertrouwen" aria-label="Waarom Autoservice Barneveld">
     <ul>
-      <li><img class="rdw-mini" src="img/rdw-erkend.webp" alt="" width="62" height="36"><span><strong>APK</strong>RDW erkend · <a href="apk-check/">check uw APK-datum</a></span></li>
+      <li><img class="rdw-mini" src="img/rdw-erkend.webp" alt="" width="62" height="36"><span><strong>APK</strong>RDW erkend · <a href="kentekencheck/">check uw APK-datum</a></span></li>
       <li><span class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M3 16V11l2-5h14l2 5v5M3 16h18M3 16v2h3v-2m12 0v2h3v-2M5 11h14"/></svg></span><span><strong><a href="merken/">Alle merken <span class="geen-breuk">(ook EV's)</span></a></strong>Onderhoud en reparatie</span></li>
       <li><span class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span><span><strong>Alles onder één dak</strong>Alle zorg voor uw auto</span></li>
       <li><span class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></g></svg></span><span><strong>Vervangend vervoer</strong>Leenauto of leenfiets</span></li>
@@ -831,7 +834,7 @@ TIPS = {
 DIENST_VRAGEN = {
     "apk-keuring": [
         ("Hoe lang van tevoren kan ik mijn auto laten keuren?",
-         "Tot twee maanden vóór de vervaldatum, zonder dat u er tijd mee verliest: de nieuwe datum wordt gerekend vanaf de oude. Uw datum ziet u met de <a href=\"{r}apk-check/\">APK-check</a>."),
+         "Tot twee maanden vóór de vervaldatum, zonder dat u er tijd mee verliest: de nieuwe datum wordt gerekend vanaf de oude. Uw datum ziet u met de <a href=\"{r}kentekencheck/\">kentekencheck</a>."),
         ("Wat gebeurt er als mijn auto wordt afgekeurd?",
          "Dan hoort u van ons welke punten hersteld moeten worden. Valt het herstel binnen het bedrag dat u bij uw afspraak heeft opgegeven, dan gaan we door; anders overleggen we eerst met u."),
         ("Moet een elektrische auto ook APK?",
@@ -857,7 +860,7 @@ DIENST_VRAGEN = {
         ("Wanneer moet ik winterbanden laten monteren?",
          "Als de temperatuur structureel onder de 7 °C zakt. Onze <a href=\"{r}winterbanden/\">winterbandenmeter</a> kijkt naar de verwachting voor Barneveld."),
         ("Hoeveel profiel moet er minimaal op mijn banden?",
-         "Wettelijk 1,6 mm. Wij adviseren minimaal 3 mm voor zomerbanden en 4 mm voor winter- en all-season banden. Zie ook de <a href=\"{r}bandencheck/\">bandencheck</a>."),
+         "Wettelijk 1,6 mm. Wij adviseren minimaal 3 mm voor zomerbanden en 4 mm voor winter- en all-season banden. Zie ook onze <a href=\"{r}bandencheck/\">uitleg over banden</a>."),
         ("Wanneer moet mijn auto worden uitgelijnd?",
          "Als de auto naar één kant trekt, het stuur scheef staat of de banden ongelijk slijten, en na een flinke klap tegen een stoeprand."),
     ],
@@ -999,7 +1002,7 @@ def privacy():
 
         <h2>Afspraak plannen via WhatsApp</h2>
         <p>Het afspraakformulier op deze website slaat niets op. Het zet uw kenteken (of merk en model), de gekozen werkzaamheden, eventueel uw overleggrens, kilometerstand, adres, e-mailadres en eventuele voorkeursdata in een WhatsApp-bericht, dat u daarna zelf verstuurt. Voor dat bericht gelden ook de voorwaarden van WhatsApp (Meta). Kiest u voor versturen per e-mail, dan gaan dezelfde gegevens via FormSubmit (formsubmit.co) als e-mail naar ons. Om uw straat en woonplaats bij uw postcode en huisnummer te vinden, vraagt het formulier die op bij de Basisregistratie Adressen via PDOK (Kadaster). Bij een ingevuld kenteken haalt het formulier het merk, model en de APK-vervaldatum op uit de openbare gegevens van de RDW. Bij beide wordt niets opgeslagen.</p>
-        <p>De kenteken-checks op deze website (zoals de <a href="{r}apk-check/">APK-check</a> en de <a href="{r}occasion-check/">occasion-check</a>) werken op dezelfde manier: uw browser vraagt de openbare voertuiggegevens rechtstreeks op bij de RDW. Wij zien en bewaren het kenteken niet. De <a href="{r}winterbanden/">winterbandenmeter</a> haalt de weersverwachting voor Barneveld op bij Open-Meteo. Daarbij gaan alleen technische gegevens mee, zoals uw IP-adres, die nodig zijn om de verwachting te leveren.</p>
+        <p>De <a href="{r}kentekencheck/">kentekencheck</a> op deze website werkt op dezelfde manier: uw browser vraagt de openbare voertuiggegevens rechtstreeks op bij de RDW. Wij zien en bewaren het kenteken niet. De <a href="{r}winterbanden/">winterbandenmeter</a> haalt de weersverwachting voor Barneveld op bij Open-Meteo. Daarbij gaan alleen technische gegevens mee, zoals uw IP-adres, die nodig zijn om de verwachting te leveren.</p>
 
         <h2>Deze website</h2>
         <p>Deze website gebruikt geen cookies, geen analyse- of advertentiediensten en laadt geen externe lettertypes. De website wordt gehost via GitHub Pages; GitHub kan daarbij technische gegevens zoals uw IP-adres verwerken om de site te leveren en te beveiligen. De kaart op de contactpagina wordt geladen van OpenStreetMap.</p>
@@ -1066,11 +1069,11 @@ VRAGEN = [
     ("Doen jullie ook elektrische auto's?",
      "Ja. Ook een elektrische auto heeft onderhoud nodig: banden, remmen, ophanging, airco en APK. Lees meer over <a href=\"{r}elektrische-auto/\">onderhoud van elektrische auto's</a>."),
     ("Wanneer verloopt mijn APK?",
-     "Dat ziet u direct met onze gratis <a href=\"{r}apk-check/\">APK-check</a>: vul uw kenteken in en u ziet de vervaldatum uit de gegevens van de RDW. U kunt de keuring tot twee maanden vóór die datum laten doen zonder dat u er tijd mee verliest."),
+     "Dat ziet u direct met onze gratis <a href=\"{r}kentekencheck/\">kentekencheck</a>: vul uw kenteken in en u ziet de vervaldatum uit de gegevens van de RDW. U kunt de keuring tot twee maanden vóór die datum laten doen zonder dat u er tijd mee verliest."),
     ("Er brandt een lampje op mijn dashboard. Kan ik doorrijden?",
      "Dat hangt af van de kleur. Bij rood is direct actie nodig, bij oranje laat u de auto binnenkort nakijken. Per lampje leest u het in onze uitleg over <a href=\"{r}dashboardlampjes/\">dashboardlampjes</a>. Twijfelt u, bel ons dan even: {tel}."),
     ("Doen jullie ook aankoopkeuringen?",
-     "Ja. Wij kijken een tweedehands auto vóór de koop onafhankelijk na en vertellen u eerlijk wat we zien. Lees meer over de <a href=\"{r}aankoopkeuring/\">aankoopkeuring</a>, of check eerst zelf de APK-historie met de <a href=\"{r}occasion-check/\">occasion-check</a>."),
+     "Ja. Wij kijken een tweedehands auto vóór de koop onafhankelijk na en vertellen u eerlijk wat we zien. Lees meer over de <a href=\"{r}aankoopkeuring/\">aankoopkeuring</a>. Zelf eerst kijken? Gebruik de <a href=\"{r}kentekencheck/\">kentekencheck</a> en onze gratis <a href=\"{r}checklist-tweedehands-auto/\">checklist tweedehands auto kopen</a>."),
     ("Hoe weet ik wat het gaat kosten?",
      "U geeft bij het plannen van uw afspraak aan tot welk bedrag we mogen doorwerken. Wordt het duurder, of komen we iets onverwachts tegen, dan overleggen we eerst met u, meestal via WhatsApp met een foto of korte toelichting."),
     ("Kan ik wachten terwijl mijn auto wordt gemaakt?",
@@ -1132,7 +1135,7 @@ def werkgebied():
         <p>Moet uw auto langer bij ons blijven? Dan rijdt u verder in een elektrische Renault 5 of een Volkswagen Caddy, of pakt u een leenfiets. Wachten kan ook, met koffie en wifi. Zie <a href="{r}vervangend-vervoer/">vervangend vervoer</a>.</p>
 
         <h2>Even zelf checken</h2>
-        <p>Met onze gratis <a href="{r}apk-check/">APK-check</a> ziet u direct tot wanneer uw APK geldig is. Meer checks en uitleg, zoals de <a href="{r}winterbanden/">winterbandenmeter</a> en de uitleg over <a href="{r}dashboardlampjes/">dashboardlampjes</a>, vindt u bij <a href="{r}handig/">handige checks</a>.</p>
+        <p>Met onze gratis <a href="{r}kentekencheck/">kentekencheck</a> ziet u direct tot wanneer uw APK geldig is. Meer checks en uitleg, zoals de <a href="{r}winterbanden/">winterbandenmeter</a> en de uitleg over <a href="{r}dashboardlampjes/">dashboardlampjes</a>, vindt u bij <a href="{r}handig/">handige checks</a>.</p>
       </div>
       {zijkaart(r)}
     </div>
@@ -1175,41 +1178,39 @@ def vragen():
         None, main))
 
 
-APK_VRAGEN = [
+KENTEKEN_VRAGEN = [
+    ("Is de kentekencheck gratis?",
+     "Ja. De gegevens zijn openbaar en de check kost niets. U vult alleen het kenteken in en ziet direct alles op één pagina."),
     ("Hoe lang van tevoren kan ik mijn auto APK laten keuren?",
-     "U kunt uw auto tot twee maanden vóór de vervaldatum laten keuren. Uw nieuwe vervaldatum wordt dan gerekend vanaf de oude datum, zodat u geen dag verliest."),
-    ("Wat gebeurt er als mijn APK verlopen is?",
-     "Met een verlopen APK mag u niet de weg op. De RDW controleert dit automatisch en u kunt een boete krijgen. Plan daarom zo snel mogelijk een keuring."),
+     "Tot twee maanden vóór de vervaldatum. Uw nieuwe vervaldatum wordt dan gerekend vanaf de oude datum, zodat u geen dag verliest."),
     ("Hoe vaak moet mijn auto APK?",
-     "Een nieuwe auto op benzine of stroom gaat voor het eerst na vier jaar naar de APK, daarna na twee jaar en vanaf acht jaar oud elk jaar. Een auto op diesel of lpg gaat na drie jaar voor het eerst en daarna elk jaar. Voor oudere auto's en oldtimers gelden aparte regels; de APK-check toont altijd uw eigen vervaldatum."),
+     "Een nieuwe auto op benzine of stroom gaat voor het eerst na vier jaar naar de APK, daarna na twee jaar en vanaf acht jaar oud elk jaar. Een auto op diesel of lpg gaat na drie jaar voor het eerst en daarna elk jaar. Voor oudere auto's en oldtimers gelden aparte regels; de kentekencheck toont altijd uw eigen vervaldatum."),
+    ("Wat betekent het tellerstandoordeel?",
+     "De RDW verzamelt kilometerstanden bij onder meer onderhoud en APK. Is de reeks logisch, dan staat er ‘Logisch’. Staat er ‘Onlogisch’ of ‘Geen oordeel’, vraag de verkoper dan om uitleg en om onderhoudsfacturen."),
+    ("Zegt de kentekencheck alles over de staat van een auto?",
+     "Nee. U ziet wat er officieel geregistreerd is. Roest, lekkages, slijtage en storingen ziet u alleen als iemand de auto echt bekijkt. Gebruik daarvoor onze <a href=\"{r}checklist-tweedehands-auto/\">checklist</a> of laat een <a href=\"{r}aankoopkeuring/\">aankoopkeuring</a> doen."),
+    ("Kost een terugroepactie geld?",
+     "Nee, een terugroepactie wordt in de regel kosteloos uitgevoerd door een dealer van het merk. Ook als u de auto tweedehands heeft gekocht: de actie hoort bij de auto, niet bij de eigenaar."),
+    ("Wat is het verschil tussen geremd en ongeremd trekgewicht?",
+     "Geremd geldt voor een caravan of aanhanger met eigen remmen, ongeremd voor een lichte aanhanger zonder remmen. Het gaat steeds om het gewicht van de aanhanger inclusief lading."),
+    ("Kan ik zien wie de eigenaar is?",
+     "Nee. De RDW deelt geen gegevens over de eigenaar of houder van een auto. Die zijn privé."),
     ("Waar komen de gegevens vandaan?",
      "Uit de openbare voertuiggegevens van de RDW. Uw browser vraagt ze daar rechtstreeks op; wij zien en bewaren het kenteken niet."),
 ]
 
 
-RDW_CTA = {
-    "apk": ("Plan uw APK", "APK", ""),
-    "occasion": ("Plan een aankoopkeuring", "Overig", "Aankoopkeuring"),
-    "kenteken": ("Plan een afspraak", "", ""),
-    "terugroep": ("Plan een afspraak", "", ""),
-    "trekgewicht": ("Plan een afspraak", "", ""),
-}
-
-
-def rdw_tool(r, modus, knop):
-    cta, dienst, oms = RDW_CTA[modus]
-    agenda = ('\n                <button type="button" class="link-klein apk-agenda" hidden>Zet een herinnering in uw agenda</button>'
-              if modus == "apk" else "")
-    extra = '\n          <div class="apk-extra"></div>' if modus == "occasion" else ""
-    return f"""        <form class="apk-check" data-modus="{modus}" action="./" method="get" novalidate>
-          <label for="kt-{modus}">Uw kenteken</label>
+def rdw_tool(r, knop="Check kenteken"):
+    """De kentekencheck: één keer het kenteken invullen, alles zien."""
+    return f"""        <form class="apk-check" data-modus="alles" action="./" method="get" novalidate>
+          <label for="kt-alles">Kenteken</label>
           <div class="apk-check-rij">
             <div class="kenteken">
               <span class="nl" aria-hidden="true">
                 {I_NL}
                 NL
               </span>
-              <input id="kt-{modus}" name="kenteken" data-geen-rdw placeholder="AB-123-C" maxlength="8" autocomplete="off" spellcheck="false" autocapitalize="characters" required>
+              <input id="kt-alles" name="kenteken" data-geen-rdw placeholder="AB-123-C" maxlength="8" autocomplete="off" spellcheck="false" autocapitalize="characters" required>
             </div>
             <button class="knop oranje" type="submit">{knop} {I_PIJL}</button>
           </div>
@@ -1221,9 +1222,11 @@ def rdw_tool(r, modus, knop):
             <p class="apk-status-kop"></p>
             <div class="apk-status-uitleg"></div>
             <div class="apk-status-knoppen">
-              <a class="knop blauw" href="{r}contact/" data-afspraak data-dienst="{dienst}" data-omschrijving="{oms}" data-kenteken-van="#kt-{modus}">{cta} {I_PIJL}</a>{agenda}
+              <a class="knop blauw" href="{r}contact/" data-afspraak data-dienst="APK" data-kenteken-van="#kt-alles">Plan uw APK {I_PIJL}</a>
+                <button type="button" class="link-klein apk-agenda" hidden>Zet een herinnering in uw agenda</button>
             </div>
-          </div>{extra}
+          </div>
+          <ul class="apk-overzicht" aria-label="Overzicht"></ul>
           <div class="apk-auto">
             <figure class="apk-plaatje">
               <div class="apk-svg"></div>
@@ -1234,6 +1237,8 @@ def rdw_tool(r, modus, knop):
               <dl></dl>
             </div>
           </div>
+          <div class="apk-extra"></div>
+          <p class="apk-koop">Wilt u deze auto kopen? Neem onze gratis <a href="{r}checklist-tweedehands-auto/">checklist</a> mee, of <a href="{r}aankoopkeuring/" data-afspraak data-dienst="Aankoopkeuring" data-kenteken-van="#kt-alles">plan een aankoopkeuring</a>.</p>
           <p class="apk-bron">Bron: openbare voertuiggegevens van de RDW. Aan deze gegevens kunnen geen rechten worden ontleend.</p>
         </div>"""
 
@@ -1288,64 +1293,63 @@ def tool_pagina(slug, title, desc, h1, foto, kicker, inleiding, inhoud, vragen=(
     schrijf(f"{slug}/index.html", pagina(r, f"{slug}/", title, desc, actief, main))
 
 
-def apk_check():
-    r = "../"
-    inhoud = rdw_tool(r, "apk", "Check APK") + """
+def kentekencheck():
+    inhoud = rdw_tool("{r}") + """
 
-        <h2>Keuren met behoud van uw APK-datum</h2>
-        <p>U mag uw auto tot twee maanden vóór de vervaldatum laten keuren. De nieuwe vervaldatum wordt dan gerekend vanaf de oude, dus u verliest er geen dag mee. Verloopt uw APK bijvoorbeeld op 15 juni, dan kunt u vanaf 15 april keuren en blijft 15 juni de basis voor uw volgende APK.</p>
-
-        <h2>APK laten doen in Barneveld</h2>
-        <p>Autoservice Barneveld is door de RDW erkend en keurt auto's van alle merken, ook elektrische auto's. Combineer de keuring gerust met een <a href="{r}onderhoud-reparatie/">onderhoudsbeurt</a>, dan bent u in één keer klaar. Meer weten? Lees alles over onze <a href="{r}apk-keuring/">APK-keuring</a>.</p>""" + meer_checks("apk-check")
-    tool_pagina("apk-check", "APK-check: wanneer verloopt mijn APK? | Autoservice Barneveld",
-                "Gratis APK-check: zie met uw kenteken direct tot wanneer uw APK geldig is en vanaf wanneer u kunt keuren met behoud van uw datum. Plus de RDW-gegevens.",
-                "APK-check: hoe lang is uw APK nog geldig?", "dienst-apk", "Gratis APK-check",
-                "Vul uw kenteken in en zie direct tot wanneer uw APK geldig is, vanaf wanneer u kunt keuren zonder tijd te verliezen, en de openbare gegevens van uw auto.",
-                inhoud, [(v, e(a)) for v, a in APK_VRAGEN],
-                ("APK-check", "Zie met uw kenteken tot wanneer uw APK geldig is en vanaf wanneer u kunt keuren met behoud van de vervaldatum."),
-                "APK", "apk-check")
-
-
-OCCASION_VRAGEN = [
-    ("Welke gegevens toont de occasion-check?",
-     "De openbare gegevens van de RDW: APK-vervaldatum, gemelde gebreken en adviespunten bij eerdere APK-keuringen, het oordeel over de tellerstand, of de auto is geïmporteerd, openstaande terugroepacties en technische gegevens zoals brandstof, vermogen en gewicht."),
-    ("Wat betekent het tellerstandoordeel?",
-     "De RDW verzamelt kilometerstanden bij onder meer onderhoud en APK. Is de reeks logisch, dan staat er ‘Logisch’. Staat er ‘Onlogisch’ of ‘Geen oordeel’, vraag de verkoper dan om uitleg en om onderhoudsfacturen."),
-    ("Zegt de check alles over de staat van de auto?",
-     "Nee. Hij laat zien wat er officieel geregistreerd is. Roest, lekkages, slijtage en storingen ziet u alleen als iemand de auto echt bekijkt. Daarvoor is een <a href=\"{r}aankoopkeuring/\">aankoopkeuring</a> bedoeld."),
-    ("Ziet de verkoper dat ik zijn kenteken check?",
-     "Nee. De gegevens zijn openbaar en uw browser vraagt ze rechtstreeks op bij de RDW. Wij zien en bewaren het kenteken ook niet."),
-]
-
-
-def occasion_check():
-    inhoud = rdw_tool("{r}", "occasion", "Check auto") + """
-
-        <h2>Een tweedehands auto kopen?</h2>
-        <p>Met deze check ziet u in een paar seconden wat er over de auto bekend is bij de RDW: tot wanneer de APK loopt, welke gebreken en adviespunten keurmeesters eerder hebben gemeld, of de tellerstand logisch is en of er een terugroepactie openstaat. Zo weet u vóór de bezichtiging al waar u op moet letten.</p>
-
-        <h2>Waar let u verder op?</h2>
+        <h2>Wat ziet u met de kentekencheck?</h2>
+        <p>Eén keer uw kenteken invullen is genoeg. U ziet direct alles wat de RDW openbaar over de auto bijhoudt:</p>
         <ul class="lijst-vink">
-          <li>Vraag naar onderhoudsfacturen of het onderhoudsboekje.</li>
-          <li>Maak een proefrit met een koude motor, ook over een stuk snelweg.</li>
-          <li>Let op storingslampjes op het dashboard, zie onze uitleg over <a href="{r}dashboardlampjes/">dashboardlampjes</a>.</li>
-          <li>Kijk onder de auto en in de motorruimte naar roest en lekkages.</li>
+          <li><a href="#apk">APK-vervaldatum</a> en vanaf wanneer u kunt keuren met behoud van uw datum</li>
+          <li><a href="#historie">Gebreken en adviespunten</a> die bij eerdere APK-keuringen zijn gemeld</li>
+          <li>Het oordeel over de <a href="#historie">tellerstand</a> en of de auto is geïmporteerd</li>
+          <li>Of er een <a href="#terugroepactie">terugroepactie</a> openstaat</li>
+          <li>Het <a href="#trekgewicht">trekgewicht</a>, geremd en ongeremd</li>
+          <li>Merk, model, kleur, brandstof, vermogen, bouwjaar, gewicht en of de auto verzekerd is</li>
         </ul>
 
-        <h2>Laat de auto even nakijken</h2>
-        <p>Twijfelt u, of wilt u gewoon zeker zijn? Breng de auto vóór de koop even langs voor een <a href="{r}aankoopkeuring/">aankoopkeuring</a>. We bekijken hem op de brug, lezen de elektronica uit en vertellen u eerlijk wat we zien. Bij een importauto met een onduidelijke geschiedenis kan dat met een uitgebreid historierapport.</p>""" + meer_checks("occasion-check")
-    tool_pagina("occasion-check", "Occasion-check: APK-historie en gebreken | Autoservice Barneveld",
-                "Gratis occasion-check: zie bij een kenteken de APK-datum, eerder gemelde gebreken, tellerstand, import en terugroepacties. Handig vóór u een occasion koopt.",
-                "Occasion-check: wat is er bekend over deze auto?", "dienst-diagnose", "Gratis occasion-check",
-                "Een tweedehands auto op het oog? Vul het kenteken in en zie de APK-historie, gemelde gebreken, het tellerstandoordeel en meer.",
-                inhoud, OCCASION_VRAGEN,
-                ("Occasion-check", "Zie bij een kenteken de APK-datum, eerder gemelde gebreken, het tellerstandoordeel, import en terugroepacties."),
-                "Overig")
+        <h2 id="apk">APK-check: wanneer verloopt uw APK?</h2>
+        <p>U mag uw auto tot twee maanden vóór de vervaldatum laten keuren. De nieuwe vervaldatum wordt dan gerekend vanaf de oude, dus u verliest er geen dag mee. Verloopt uw APK bijvoorbeeld op 15 juni, dan kunt u vanaf 15 april keuren. Met één klik zet u een herinnering in uw agenda. Autoservice Barneveld is door de RDW erkend en keurt alle merken, ook elektrische auto's. Lees meer over onze <a href="{r}apk-keuring/">APK-keuring</a>.</p>
+
+        <h2 id="historie">Occasion-check: APK-historie en tellerstand</h2>
+        <p>Een tweedehands auto op het oog? De check laat zien welke gebreken en adviespunten keurmeesters eerder hebben gemeld, of de tellerstand logisch is en of de auto uit het buitenland komt. Zo weet u vóór de bezichtiging al waar u op moet letten. Neem ook onze gratis <a href="{r}checklist-tweedehands-auto/">checklist tweedehands auto kopen</a> mee, en laat de auto bij twijfel nakijken met een <a href="{r}aankoopkeuring/">aankoopkeuring</a>.</p>
+
+        <h2 id="terugroepactie">Terugroepactie-check</h2>
+        <p>Ontdekt een fabrikant een fout aan een type auto, bijvoorbeeld aan de remmen, de airbags of de software, dan roept hij die auto's terug. Dat wordt meestal gratis verholpen door een merkdealer. Staat er voor uw auto een actie open en heeft u geen brief gehad? Bel of app ons gerust, dan zoeken we het samen uit. Uw gewone onderhoud en APK kunt u gewoon bij ons blijven doen.</p>
+
+        <h2 id="trekgewicht">Trekgewicht-check</h2>
+        <p>Een caravan of grotere aanhanger heeft meestal eigen remmen: dan geldt het geremde trekgewicht. Een lichte aanhanger zonder remmen mag niet zwaarder zijn dan het ongeremde trekgewicht. Met rijbewijs B mag u een aanhanger tot 750 kg trekken, of een zwaardere zolang auto en aanhanger samen niet boven de 3.500 kg komen. Daarboven heeft u code 96 (tot 4.250 kg) of rijbewijs BE nodig. Kijk voor de precieze regels bij het CBR.</p>"""
+    tool_pagina("kentekencheck", "Kentekencheck: APK, historie en meer, gratis | Autoservice Barneveld",
+                "Gratis kentekencheck: zie in één keer de APK-vervaldatum, gemelde gebreken, tellerstand, import, terugroepacties, trekgewicht en alle RDW-gegevens van een auto.",
+                "Kentekencheck: alles over een auto in één keer", "dienst-apk", "Gratis kentekencheck",
+                "Vul een kenteken in en zie direct de APK-datum, eerder gemelde gebreken, de tellerstand, terugroepacties, het trekgewicht en meer.",
+                inhoud, KENTEKEN_VRAGEN,
+                ("Kentekencheck", "Zie bij een kenteken de APK-vervaldatum, gebreken bij eerdere APK-keuringen, het tellerstandoordeel, import, terugroepacties, trekgewicht en de openbare RDW-gegevens."),
+                "APK", "kentekencheck")
+
+
+def doorsturen(slug, doel, anker=""):
+    """Oude adressen sturen door naar de nieuwe pagina (GitHub Pages kent geen echte redirects)."""
+    schrijf(f"{slug}/index.html", f"""<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<title>Kentekencheck | Autoservice Barneveld</title>
+<link rel="canonical" href="{SITE}/{doel}">
+<meta http-equiv="refresh" content="0; url=../{doel}{anker}">
+<script>location.replace('../{doel}' + location.search + '{anker}');</script>
+</head>
+<body>
+<p>Deze check is verhuisd naar de <a href="../{doel}{anker}">kentekencheck</a>.</p>
+</body>
+</html>
+""")
 
 
 AANKOOP_VRAGEN = [
     ("Moet de verkoper meewerken?",
      "Ja, de auto moet bij ons langs kunnen komen. Vraag de verkoper of u de auto even mag laten nakijken. Een eerlijke verkoper vindt dat meestal geen probleem; u kunt ook samen komen."),
+    ("Wat moet ik meenemen?",
+     "Alle onderhoudspapieren die er zijn: het onderhoudsboekje, facturen en eerdere APK-rapporten, plus beide sleutels en de advertentie. Alles staat op onze <a href=\"{r}checklist-tweedehands-auto/\">checklist</a>."),
     ("Wat kost een aankoopkeuring?",
      "Bel of app ons even, dan hoort u vooraf wat het kost."),
     ("Krijg ik garantie op de auto na een aankoopkeuring?",
@@ -1370,6 +1374,10 @@ def aankoopkeuring():
           <li>De openbare RDW-gegevens, zoals APK, tellerstand en terugroepacties</li>
         </ul>
 
+        <h2>Neem de papieren mee</h2>
+        <p>Hoe meer we weten, hoe beter ons advies. Neem alle onderhoudspapieren mee die er zijn: het onderhoudsboekje, facturen van onderhoud en reparaties en eerdere APK-rapporten. Zeker de factuur van de <a href="{r}distributieriem/">distributieriem</a> is goud waard.</p>
+        <p class="checklist-blok"><a href="{r}downloads/checklist-tweedehands-auto.pdf" download><strong>Gratis checklist tweedehands auto kopen (PDF)</strong><span>Wat u zelf kunt controleren, wat u meeneemt naar de keuring en waar u recht op heeft.</span></a></p>
+
         <h2>Twijfel over een importauto?</h2>
         <p>Komt de auto uit het buitenland en is de geschiedenis niet helemaal duidelijk? Dan vragen we bij de aankoopkeuring een uitgebreid historierapport aan van Carfax of carVertical. Daarin staan onder meer eerder geregistreerde kilometerstanden en gemelde schades, ook uit het buitenland.</p>
 
@@ -1377,94 +1385,14 @@ def aankoopkeuring():
         <p>Na afloop hoort u van ons wat er goed is, wat binnenkort aandacht nodig heeft en wat dat ongeveer kost. Geen verkooppraatje, gewoon een eerlijk verhaal van de monteur zelf. Elektrisch of hybride? Ook dan kijken we graag met u mee.</p>
 
         <h2>Eerst zelf even checken</h2>
-        <p>Met onze gratis <a href="{r}occasion-check/">occasion-check</a> ziet u vooraf al de APK-historie, gemelde gebreken en het tellerstandoordeel van de auto.</p>
+        <p>Met onze gratis <a href="{r}kentekencheck/">kentekencheck</a> ziet u vooraf al de APK-historie, gemelde gebreken en het tellerstandoordeel van de auto. Op de <a href="{r}checklist-tweedehands-auto/">checklist</a> staat waar u bij de bezichtiging zelf op let.</p>
 
         <p class="klein-noot">Een aankoopkeuring is een momentopname en een advies op basis van wat we op dat moment kunnen zien, uitlezen en tijdens de proefrit merken. Er kunnen geen rechten aan worden ontleend. Autoservice Barneveld is niet aansprakelijk voor gebreken die bij de keuring niet zichtbaar waren of later ontstaan of aan het licht komen. Een historierapport van Carfax of carVertical komt van een externe partij; voor de juistheid daarvan zijn wij niet verantwoordelijk.</p>"""
     tool_pagina("aankoopkeuring", "Aankoopkeuring tweedehands auto Barneveld | Autoservice Barneveld",
-                "Laat uw tweedehands auto vóór de koop onafhankelijk nakijken in Barneveld: op de brug, uitlezen en een proefrit. Bij importauto's ook een historierapport.",
+                "Laat uw tweedehands auto vóór de koop onafhankelijk nakijken in Barneveld: op de brug, uitlezen en een proefrit. Met gratis checklist om mee te nemen.",
                 "Aankoopkeuring: eerst laten nakijken, dan kopen", "dienst-onderhoud", "Dienst · alle merken",
                 "Laat een tweedehands auto vóór de koop onafhankelijk nakijken. U hoort eerlijk wat er goed is en wat aandacht nodig heeft.",
-                inhoud, AANKOOP_VRAGEN, None, "Overig", naam="Aankoopkeuring")
-
-
-CHECKS = [("apk-check", "APK-check", "Tot wanneer is uw APK geldig?"),
-          ("occasion-check", "Occasion-check", "APK-historie en gemelde gebreken"),
-          ("kentekencheck", "Kentekencheck", "Alle gegevens van een auto"),
-          ("terugroepactie-check", "Terugroepactie-check", "Staat er iets open voor uw auto?"),
-          ("trekgewicht-check", "Trekgewicht-check", "Hoeveel mag uw auto trekken?")]
-
-
-def meer_checks(huidig):
-    items = "\n".join(f'          <li><a href="{{r}}{slug}/">{naam}</a><span>{uitleg}</span></li>'
-                      for slug, naam, uitleg in CHECKS if slug != huidig)
-    return f"""
-        <h2>Meer gratis checks</h2>
-        <ul class="check-links">
-{items}
-        </ul>"""
-
-
-def kentekencheck():
-    inhoud = rdw_tool("{r}", "kenteken", "Check kenteken") + """
-
-        <h2>Wat ziet u bij de kentekencheck?</h2>
-        <p>De openbare gegevens die de RDW over een auto bijhoudt: merk en model, kleur, brandstof, vermogen, bouwjaar, gewicht en trekgewicht, de APK-vervaldatum, het oordeel over de tellerstand, of de auto verzekerd is en of er een terugroepactie openstaat. Handig als u uw eigen auto wilt nakijken, of een auto die u wilt kopen.</p>
-""" + meer_checks("kentekencheck")
-    vragen = [
-        ("Is de kentekencheck gratis?", "Ja. De gegevens zijn openbaar en de check kost niets. U hoeft niets in te vullen behalve het kenteken."),
-        ("Kan ik zien wie de eigenaar is?", "Nee. De RDW deelt geen gegevens over de eigenaar of houder van een auto. Die zijn privé."),
-        ("Waar komen de gegevens vandaan?", "Uit de openbare voertuiggegevens van de RDW. Uw browser vraagt ze daar rechtstreeks op; wij zien en bewaren het kenteken niet."),
-    ]
-    tool_pagina("kentekencheck", "Kentekencheck: gratis autogegevens | Autoservice Barneveld",
-                "Gratis kentekencheck: zie direct merk, model, bouwjaar, brandstof, vermogen, gewicht, APK-datum en tellerstand van een auto, rechtstreeks van de RDW.",
-                "Kentekencheck: alle gegevens van een auto", "dienst-diagnose", "Gratis kentekencheck",
-                "Vul een kenteken in en zie direct de openbare gegevens van de auto, rechtstreeks van de RDW.",
-                inhoud, vragen, ("Kentekencheck", "Zie bij een kenteken de openbare RDW-gegevens van een auto, zoals merk, model, bouwjaar, brandstof, APK-datum en tellerstandoordeel."))
-
-
-def terugroepactie_check():
-    inhoud = rdw_tool("{r}", "terugroep", "Check terugroepactie") + """
-
-        <h2>Wat is een terugroepactie?</h2>
-        <p>Ontdekt een fabrikant een fout aan een type auto, bijvoorbeeld aan de remmen, de airbags of de software, dan roept hij die auto's terug om de fout te verhelpen. Dat gebeurt meestal gratis, bij een merkdealer. De RDW houdt bij voor welke auto's nog een terugroepactie openstaat.</p>
-
-        <h2>Wat moet u doen?</h2>
-        <p>Meestal krijgt u als eigenaar een brief van de importeur met uitleg en een advies. Volg die op en maak een afspraak bij een dealer van uw merk. Heeft u geen brief gehad, of twijfelt u wat het betekent? Bel of app ons gerust, dan zoeken we het samen uit. Uw gewone onderhoud en APK kunt u gewoon bij ons blijven doen.</p>
-""" + meer_checks("terugroepactie-check")
-    vragen = [
-        ("Kost een terugroepactie geld?", "Nee, een terugroepactie wordt in de regel kosteloos uitgevoerd door een dealer van het merk."),
-        ("Ik heb de auto tweedehands gekocht. Geldt het dan ook?", "Ja. De terugroepactie hoort bij de auto, niet bij de eigenaar. Ook als u de auto later heeft gekocht, kunt u hem laten uitvoeren."),
-        ("Waar komen de gegevens vandaan?", "Uit de openbare voertuiggegevens van de RDW. Uw browser vraagt ze daar rechtstreeks op; wij zien en bewaren het kenteken niet."),
-    ]
-    tool_pagina("terugroepactie-check", "Terugroepactie-check op kenteken | Autoservice Barneveld",
-                "Gratis terugroepactie-check: zie met uw kenteken of er voor uw auto een terugroepactie openstaat, en wat u dan moet doen. Rechtstreeks uit de RDW-gegevens.",
-                "Terugroepactie-check: staat er iets open voor uw auto?", "dienst-onderhoud", "Gratis terugroepactie-check",
-                "Vul uw kenteken in en zie direct of er volgens de RDW een terugroepactie openstaat voor uw auto.",
-                inhoud, vragen, ("Terugroepactie-check", "Zie met uw kenteken of er volgens de RDW een terugroepactie openstaat voor uw auto."))
-
-
-def trekgewicht_check():
-    inhoud = rdw_tool("{r}", "trekgewicht", "Check trekgewicht") + """
-
-        <h2>Geremd en ongeremd</h2>
-        <p>Een caravan of grotere aanhanger heeft meestal eigen remmen: dan geldt het geremde trekgewicht. Een lichte aanhanger zonder remmen mag niet zwaarder zijn dan het ongeremde trekgewicht. Het gaat steeds om het gewicht van de aanhanger zoals u hem trekt, dus inclusief lading.</p>
-
-        <h2>Welk rijbewijs heeft u nodig?</h2>
-        <p>Met rijbewijs B mag u een aanhanger trekken met een toegestane maximummassa tot 750 kg. Is de aanhanger zwaarder, dan mogen auto en aanhanger samen niet zwaarder zijn dan 3.500 kg (toegestane maximummassa). Is de combinatie zwaarder, dan heeft u code 96 op uw rijbewijs nodig (tot 4.250 kg) of rijbewijs BE. Kijk voor de precieze regels bij het CBR.</p>
-
-        <h2>Op vakantie met de caravan?</h2>
-        <p>Laat uw auto vóór vertrek even nakijken: banden, remmen, verlichting en vloeistoffen. Dan rijdt u met een gerust hart weg. <a href="{r}onderhoud-reparatie/">Meer over onderhoud</a>.</p>
-""" + meer_checks("trekgewicht-check")
-    vragen = [
-        ("Waar staat het trekgewicht van mijn auto?", "Op het kentekenbewijs en in de gegevens van de RDW. Met deze check ziet u het direct bij uw kenteken."),
-        ("Er staat geen trekgewicht bij mijn auto. Wat nu?", "Dan is er voor deze auto geen trekgewicht geregistreerd en mag u in principe geen aanhanger trekken. Twijfelt u? Vraag het ons gerust."),
-        ("Waar komen de gegevens vandaan?", "Uit de openbare voertuiggegevens van de RDW. Uw browser vraagt ze daar rechtstreeks op; wij zien en bewaren het kenteken niet."),
-    ]
-    tool_pagina("trekgewicht-check", "Trekgewicht-check op kenteken | Autoservice Barneveld",
-                "Gratis trekgewicht-check: zie met uw kenteken hoeveel uw auto geremd en ongeremd mag trekken, plus uitleg over caravan, aanhanger en rijbewijs.",
-                "Trekgewicht-check: hoeveel mag uw auto trekken?", "dienst-banden", "Gratis trekgewicht-check",
-                "Caravan of aanhanger? Vul uw kenteken in en zie direct het geremde en ongeremde trekgewicht van uw auto.",
-                inhoud, vragen, ("Trekgewicht-check", "Zie met uw kenteken hoeveel uw auto geremd en ongeremd mag trekken."))
+                inhoud, AANKOOP_VRAGEN, None, "Aankoopkeuring", naam="Aankoopkeuring")
 
 
 LAMPJES = [
@@ -1575,7 +1503,7 @@ def winterbanden():
         <p>In Nederland zijn winterbanden niet verplicht. In onder meer Duitsland en Oostenrijk wel, bij winterse omstandigheden. Kijk voor de regels van uw vakantieland bij de ANWB, en houd minimaal 4 mm profiel aan.</p>
 
         <h2>Banden laten wisselen</h2>
-        <p>Wij wisselen uw banden snel en vakkundig en controleren meteen het profiel, de spanning en eventuele schade. <a href="{r}bandenservice/">Meer over onze bandenservice</a> of bekijk onze <a href="{r}bandencheck/">bandencheck</a>.</p>"""
+        <p>Wij wisselen uw banden snel en vakkundig en controleren meteen het profiel, de spanning en eventuele schade. <a href="{r}bandenservice/">Meer over onze bandenservice</a> of lees hoe u <a href="{r}bandencheck/">bandenmaat, leeftijd en profiel</a> zelf afleest.</p>"""
     vragen = [
         ("Wanneer moet ik winterbanden onder mijn auto zetten?", "Als de temperatuur structureel onder de 7 °C zakt, meestal ergens tussen half oktober en eind november. In het voorjaar wisselt u terug als het structureel boven de 7 °C blijft."),
         ("Zijn winterbanden verplicht in Nederland?", "Nee. In Nederland niet, in onder meer Duitsland en Oostenrijk wel bij winterse omstandigheden."),
@@ -1589,47 +1517,143 @@ def winterbanden():
                 "Bandenservice")
 
 
+def _band_svg(delen, label, labels_onder=(), hoogte=250):
+    """Een stuk band van opzij, met tekst over de zijwand. delen: (tekst, kleur, nummer) langs de boog."""
+    import math
+    cx, cy = 320, 660
+    r_buit, r_zij, r_velg, r_tekst, r_nr, r_onder = 610, 568, 430, 488, 545, 452
+    a0, a1 = -124.0, -56.0
+
+    def punt(r, a):
+        return cx + r * math.cos(math.radians(a)), cy + r * math.sin(math.radians(a))
+
+    def boog(r, van=a0 - 25, tot=a1 + 25):
+        x0, y0 = punt(r, van); x1, y1 = punt(r, tot)
+        return f"M{x0:.1f} {y0:.1f} A{r} {r} 0 0 1 {x1:.1f} {y1:.1f}"
+
+    ribbels = "".join(
+        f'<path d="M{punt(r_zij + 6, a)[0]:.1f} {punt(r_zij + 6, a)[1]:.1f} L{punt(r_buit + 4, a)[0]:.1f} {punt(r_buit + 4, a)[1]:.1f}" stroke="#17181b" stroke-width="7"/>'
+        for a in [x / 2 for x in range(-300, -60, 7)])
+    tekst = "".join(
+        f'<text font-size="{g}" font-weight="800" fill="{k}"><textPath href="#{label}-boog" startOffset="{o}%" text-anchor="middle">{t}</textPath></text>'
+        for t, k, g, o, _n in delen)
+    nummers = ""
+    for t, k, g, o, n in delen:
+        if not n:
+            continue
+        a = a0 + (a1 - a0) * o / 100
+        x, y = punt(r_nr, a)
+        nummers += (f'<circle cx="{x:.1f}" cy="{y:.1f}" r="17" fill="#e7814d"/>'
+                    f'<text x="{x:.1f}" y="{y + 7:.1f}" font-size="20" font-weight="800" fill="#fff" text-anchor="middle">{n}</text>')
+    onder = "".join(
+        f'<text font-size="21" font-weight="700" fill="#f2b48f"><textPath href="#{label}-onder" startOffset="{o}%" text-anchor="middle">{t}</textPath></text>'
+        for t, o in labels_onder)
+    return f"""<svg class="band-svg" viewBox="0 40 640 {hoogte}" role="img" aria-labelledby="{label}-titel">
+          <title id="{label}-titel">{e(" ".join(t for t, *_ in delen))}</title>
+          <defs><path id="{label}-boog" d="{boog(r_tekst, a0, a1)}"/><path id="{label}-onder" d="{boog(r_onder, a0, a1)}"/></defs>
+          <circle cx="{cx}" cy="{cy}" r="{r_buit}" fill="#26282c"/>
+          {ribbels}
+          <circle cx="{cx}" cy="{cy}" r="{r_zij}" fill="#34373c"/>
+          <circle cx="{cx}" cy="{cy}" r="{r_zij - 14}" fill="none" stroke="#2b2d31" stroke-width="3"/>
+          <circle cx="{cx}" cy="{cy}" r="{r_velg}" fill="#c9ced5"/>
+          <circle cx="{cx}" cy="{cy}" r="{r_velg - 18}" fill="#dfe3e8"/>
+          {tekst}{onder}{nummers}
+        </svg>"""
+
+
 def bandencheck():
-    inhoud = """        <form class="banden-tool" id="banden-maat" novalidate>
-          <label for="bandmaat">Bandenmaat <small>zoals op de zijkant van uw band, bijv. 205/55 R16 91V</small></label>
-          <div class="banden-rij">
-            <input class="invoer" id="bandmaat" placeholder="205/55 R16 91V" autocomplete="off" spellcheck="false">
-            <button class="knop blauw" type="submit">Bekijk uitleg</button>
-          </div>
-          <dl class="banden-uitleg" hidden></dl>
-        </form>
+    wit = "#ffffff"
+    maat_svg = _band_svg([("205", wit, 42, 9, 1), ("/", "#9aa0a8", 42, 20, 0), ("55", wit, 42, 29, 2),
+                          ("R", wit, 42, 46, 3), ("16", wit, 42, 59, 4), ("91", wit, 42, 80, 5), ("V", wit, 42, 93, 6)],
+                         "maat")
+    dot_svg = _band_svg([("DOT", "#9aa0a8", 30, 9, 0), ("XK9L", "#9aa0a8", 30, 28, 0), ("ABCD", "#9aa0a8", 30, 50, 0),
+                         ("23", "#f2b48f", 46, 73, 0), ("21", "#f2b48f", 46, 90, 0)],
+                        "dot", labels_onder=(("week", 73), ("jaar", 90)))
+    profiel_svg = """<svg class="band-svg" viewBox="0 0 640 210" role="img" aria-labelledby="profiel-titel">
+          <title id="profiel-titel">Doorsnede van het profiel met de grenzen 4 mm, 3 mm en 1,6 mm</title>
+          <path d="M20 40H70V122H114V40H200V122H244V40H330V122H374V40H420V190H20Z" fill="#34373c"/>
+          <path d="M70 122h44v-16q-22-10-44 0z" fill="#4a4e55"/>
+          <g stroke-width="3" stroke-dasharray="7 5">
+            <path d="M190 82H450" stroke="#2f9e5f"/>
+            <path d="M190 92H450" stroke="#e7814d"/>
+            <path d="M190 106H450" stroke="#c3282e"/>
+          </g>
+          <g font-size="24" font-weight="800">
+            <text x="458" y="76" fill="#2f9e5f">4 mm</text>
+            <text x="458" y="100" fill="#b4541f">3 mm</text>
+            <text x="458" y="124" fill="#a51f24">1,6 mm</text>
+          </g>
+          <path d="M92 100V150" stroke="#e7814d" stroke-width="3"/>
+          <circle cx="92" cy="96" r="5" fill="#e7814d"/>
+          <text x="40" y="178" font-size="20" font-weight="700" fill="#f2b48f">slijtage-indicator</text>
+          <text x="20" y="28" font-size="18" font-weight="600" fill="#666668">loopvlak</text>
+        </svg>"""
+    munt_svg = """<svg class="munt-svg" viewBox="0 0 120 120" aria-hidden="true">
+            <circle cx="60" cy="60" r="56" fill="#c9ced5" stroke="#9aa0a8" stroke-width="2"/>
+            <circle cx="60" cy="60" r="39" fill="#e3c26a" stroke="#c59f3e" stroke-width="2"/>
+            <text x="60" y="72" font-size="34" font-weight="800" fill="#8a6a1f" text-anchor="middle">2</text>
+            <path d="M60 4v17" stroke="#e7814d" stroke-width="4"/>
+          </svg>"""
+    inhoud = f"""        <p>Op de zijkant van elke band staat veel informatie. Hieronder ziet u in drie voorbeelden hoe u de maat, de leeftijd en het profiel zelf afleest.</p>
 
-        <form class="banden-tool" id="banden-dot" novalidate>
-          <label for="dotcode">Hoe oud is uw band? <small>de 4 cijfers aan het eind van de DOT-code op de zijkant, bijv. 2321</small></label>
-          <div class="banden-rij">
-            <input class="invoer" id="dotcode" placeholder="2321" inputmode="numeric" maxlength="24" autocomplete="off">
-            <button class="knop blauw" type="submit">Bereken</button>
-          </div>
-          <p class="banden-uitleg" hidden></p>
-        </form>
+        <h2>1. De bandenmaat aflezen</h2>
+        <figure class="band-figuur">
+          {maat_svg}
+          <figcaption>Voorbeeld: 205/55 R16 91V op de zijkant van de band</figcaption>
+        </figure>
+        <ol class="band-legenda">
+          <li><strong>205</strong> De breedte van de band in millimeter.</li>
+          <li><strong>55</strong> De hoogte van de zijwand: 55% van de breedte.</li>
+          <li><strong>R</strong> Radiaalband, de gangbare bouwwijze.</li>
+          <li><strong>16</strong> Past op een velg van 16 inch.</li>
+          <li><strong>91</strong> Draagvermogen: maximaal 615 kg per band.</li>
+          <li><strong>V</strong> Maximumsnelheid: 240 km/u. Veelvoorkomend zijn ook T (190), H (210), W (270) en Y (300).</li>
+        </ol>
+        <p>Kies bij nieuwe banden minstens het draagvermogen en de snelheid die voor uw auto zijn voorgeschreven. Twijfelt u? Wij kijken het graag voor u na.</p>
 
-        <h2>Profieldiepte</h2>
-        <p>Wettelijk moet er minimaal 1,6 mm profiel op uw banden zitten. Voor een goede grip op natte wegen adviseren we 3 mm voor zomerbanden en 4 mm voor winter- en all-season banden. In de groeven van de band zitten kleine verhogingen, de slijtage-indicatoren: zit het profiel daarop gelijk, dan is de band op.</p>
+        <h2>2. Hoe oud is uw band?</h2>
+        <figure class="band-figuur">
+          {dot_svg}
+          <figcaption>De laatste vier cijfers van de DOT-code: week 23 van 2021</figcaption>
+        </figure>
+        <p>Achter de letters DOT staat een code. Alleen de laatste vier cijfers zijn belangrijk: eerst de week, dan het jaar waarin de band is gemaakt. In het voorbeeld is dat week 23 van 2021, dus begin juni 2021. Kijk aan beide kanten van de band: soms staat de volledige code alleen aan de binnenkant.</p>
+        <ul class="band-leeftijd" aria-label="Wat de leeftijd van een band betekent">
+          <li class="goed"><strong>Tot 6 jaar</strong>Prima, let vooral op profiel en spanning.</li>
+          <li class="let-op"><strong>6 tot 10 jaar</strong>Let extra op scheurtjes in de zijwand.</li>
+          <li class="op"><strong>10 jaar en ouder</strong>Vervangen, ook als er nog profiel op zit.</li>
+        </ul>
+
+        <h2>3. Genoeg profiel?</h2>
+        <figure class="band-figuur">
+          {profiel_svg}
+          <figcaption>Doorsnede van het loopvlak, met de slijtage-indicator in de groef</figcaption>
+        </figure>
+        <ul class="band-profiel">
+          <li class="goed"><strong>4 mm</strong>Ons advies voor winter- en all-season banden.</li>
+          <li class="let-op"><strong>3 mm</strong>Ons advies voor zomerbanden. Daaronder wordt de remweg op een natte weg snel langer.</li>
+          <li class="op"><strong>1,6 mm</strong>Het wettelijke minimum. In de groeven zitten kleine verhogingen, de slijtage-indicatoren. Zit het profiel daarop gelijk, dan is de band op.</li>
+        </ul>
+        <div class="munt-tip">
+          {munt_svg}
+          <p><strong>Snel zelf meten met een 2-euromunt</strong>De zilverkleurige rand van een 2-euromunt is ongeveer 4 mm breed. Steek de munt in de groef. Valt de rand er helemaal in, dan heeft u nog zo'n 4 mm profiel of meer. Blijft een deel van de rand zichtbaar, dan is het minder.</p>
+        </div>
 
         <h2>Bandenspanning</h2>
         <p>De juiste spanning vindt u op een sticker in de deurstijl, in het tankklepje of in het instructieboekje. Controleer hem eens per maand bij koude banden. Een te lage spanning kost brandstof, slijt de band sneller en verlengt de remweg.</p>
 
-        <h2>Het bandenlabel</h2>
-        <p>Op elke nieuwe band zit een Europees label. Daarop ziet u het rolgeluid (in decibel), de grip op een natte weg en de rolweerstand, van klasse A (best) tot E. Een betere rolweerstand scheelt brandstof of, bij een elektrische auto, actieradius.</p>
-
-        <h2>Nieuwe banden nodig?</h2>
-        <p>We adviseren u graag over de juiste band voor uw auto en rijstijl, ook voor elektrische auto's. <a href="{r}bandenservice/">Meer over onze bandenservice</a>. Twijfelt u over winterbanden? Kijk op onze <a href="{r}winterbanden/">winterbandenmeter</a>.</p>"""
+        <h2>Nieuwe banden of wisselen?</h2>
+        <p>We adviseren u graag over de juiste band voor uw auto en rijstijl, ook voor elektrische auto's. <a href="{{r}}bandenservice/">Meer over onze bandenservice</a>. Al tijd voor winterbanden? Kijk op onze <a href="{{r}}winterbanden/">winterbandenmeter</a>.</p>"""
     vragen = [
         ("Hoe lees ik de bandenmaat?", "Bij 205/55 R16 91V is 205 de breedte in millimeter, 55 de hoogte van de zijwand als percentage van de breedte, R staat voor radiaalband, 16 is de velgdiameter in inch, 91 de draagkracht (615 kg per band) en V de maximumsnelheid (240 km/u)."),
+        ("Hoe zie ik hoe oud mijn band is?", "Aan de laatste vier cijfers van de DOT-code op de zijkant: eerst de week, dan het jaar. 2321 betekent week 23 van 2021."),
         ("Hoe oud mag een band zijn?", "Rubber veroudert, ook als u weinig rijdt. Let vanaf zes jaar extra op scheurtjes. Veel fabrikanten adviseren banden van tien jaar of ouder te vervangen, ook als er nog profiel op zit."),
         ("Wat is de minimale profieldiepte?", "Wettelijk 1,6 mm. Wij adviseren minimaal 3 mm voor zomerbanden en 4 mm voor winter- en all-season banden."),
     ]
-    tool_pagina("bandencheck", "Bandencheck: maat, leeftijd en profiel | Autoservice Barneveld",
-                "Wat betekent de bandenmaat op uw band, hoe oud is uw band (DOT-code) en hoeveel profiel moet erop? Gratis bandencheck met heldere uitleg.",
-                "Bandencheck: maat, leeftijd en profiel", "dienst-banden", "Gratis bandencheck",
-                "Vul de bandenmaat of DOT-code in en zie direct wat het betekent. Met uitleg over profiel, spanning en het bandenlabel.",
-                inhoud, vragen, ("Bandencheck", "Legt de bandenmaat en DOT-code van een band uit, met leeftijd, draagvermogen en maximumsnelheid."),
-                "Bandenservice")
+    tool_pagina("bandencheck", "Bandenmaat, leeftijd en profiel aflezen | Autoservice Barneveld",
+                "Zo leest u uw banden af: wat 205/55 R16 91V betekent, hoe oud uw band is aan de DOT-code en hoeveel profiel erop moet. Met duidelijke voorbeelden.",
+                "Banden aflezen: maat, leeftijd en profiel", "dienst-banden", "Banden uitgelegd",
+                "Wat betekenen de cijfers op uw band, hoe oud is hij en is er nog genoeg profiel? Drie heldere voorbeelden.",
+                inhoud, vragen, None, "Bandenservice", naam="Banden uitgelegd")
 
 
 def onderhoudswijzer():
@@ -1825,17 +1849,157 @@ def hulp_overzicht():
                 inhoud, (), None, "Reparatie", naam="Wat is er met mijn auto?")
 
 
+# ------------------------------------------------------------------ checklist tweedehands auto
+# Eén bron voor de webpagina en de PDF (bron/maak_pdf.py).
+CHECKLIST = [
+    ("Vóór de bezichtiging", [
+        "Doe de gratis kentekencheck: APK-datum, gemelde gebreken, tellerstandoordeel, import en terugroepacties.",
+        "Vergelijk de prijs met vergelijkbare auto's (bouwjaar, kilometers, uitvoering). Veel goedkoper? Wees extra alert.",
+        "Vraag of er onderhoudspapieren zijn en wanneer de distributieriem voor het laatst is vervangen.",
+        "Vraag of de auto schade heeft gehad, en of er dingen zijn die niet werken.",
+        "Spreek af bij daglicht en droog weer, en vraag of de motor koud is als u komt.",
+    ]),
+    ("Buitenkant en banden", [
+        "Kleurverschil tussen delen of ongelijke naden kan wijzen op schadeherstel.",
+        "Roest: kijk bij de wielkasten, dorpels, onderkant van de deuren en de achterklep.",
+        "Banden: genoeg profiel, gelijkmatig versleten en niet te oud (DOT-code). Ongelijke slijtage kan op uitlijning of ophanging wijzen.",
+        "Ruiten zonder barsten of sterretjes, en alle verlichting werkt.",
+    ]),
+    ("Motorruimte en interieur", [
+        "Geen lekkages of natte plekken onder de motor; olie en koelvloeistof op peil.",
+        "Een lichte, mayonaise-achtige laag onder de olievuldop is een waarschuwing.",
+        "Koude start: de motor start soepel, zonder rook, tikken of ratelen.",
+        "Na het starten gaan alle lampjes op het dashboard uit.",
+        "Slijtage van stuur, pedalen en stoel past bij de kilometerstand.",
+        "Test ramen, sloten, verwarming, airco (koelt die echt?), navigatie en beide sleutels.",
+        "Ruikt het muf, of zijn de vloermatten vochtig? Dan kan er ergens water binnenkomen.",
+    ]),
+    ("Proefrit, minstens 20 minuten", [
+        "Rij ook een stuk over de snelweg.",
+        "Koppeling en versnellingen gaan soepel; een automaat schakelt zonder schokken.",
+        "De auto rijdt rechtuit, het stuur staat recht en hij trekt niet scheef bij het remmen.",
+        "Geen trillingen, bonken, piepen of zoemen.",
+        "De temperatuur blijft normaal en er gaat geen lampje branden.",
+    ]),
+    ("Papieren en betalen", [
+        "Het chassisnummer (VIN) op de auto komt overeen met de kentekencard.",
+        "De verkoper heeft de kentekencard en de tenaamstellingscode. Zonder kunt u niet overschrijven.",
+        "Leg de afspraken vast: prijs, kilometerstand, bekende gebreken en eventuele garantie.",
+        "Laat de auto direct op uw naam zetten en bewaar het bewijs van overschrijving.",
+        "Zorg dat de auto verzekerd is vanaf het moment dat hij op uw naam staat.",
+        "Betaal niets vooruit voor een auto die u nog niet heeft gezien. Liever per bank dan een groot bedrag contant.",
+    ]),
+]
+
+MEENEMEN = [
+    "Alle onderhoudspapieren: het onderhoudsboekje, facturen en de digitale onderhoudshistorie (een print of foto is prima)",
+    "Facturen van grote reparaties en van de distributieriem",
+    "Eerdere APK-rapporten",
+    "De kentekencard",
+    "Beide sleutels",
+    "De advertentie (link of schermafbeelding), zodat we kunnen vergelijken wat er beloofd is",
+    "Bij een importauto: de buitenlandse papieren en onderhoudshistorie",
+    "Wat de verkoper heeft verteld over schades of gebreken",
+]
+
+RECHTEN = [
+    ("Koopt u bij een autobedrijf?",
+     "Dan geldt de wettelijke garantie. De auto moet doen wat u er redelijkerwijs van mag verwachten, gezien de leeftijd, de kilometerstand, de prijs en wat er is beloofd. "
+     "Gaat er binnen 12 maanden na aflevering iets mis, dan gaat de wet ervan uit dat het gebrek er al was; het bedrijf moet dan aantonen dat dat niet zo is."),
+    ("Koopt u van een particulier?",
+     "Dan heeft u minder bescherming. De verkoper mag gebreken die hij kent niet verzwijgen, maar u moet zelf goed onderzoeken wat u koopt. "
+     "Een proefrit en een aankoopkeuring zijn hier extra belangrijk."),
+]
+
+MISVERSTANDEN = [
+    ("“Ik heb altijd 14 dagen bedenktijd.”",
+     "Nee. Die geldt alleen als u bij een bedrijf online of op afstand koopt. Koopt u de auto in de showroom, dan is de koop rond zodra u tekent. Bij een particulier is er nooit bedenktijd."),
+    ("“Verkocht zoals gezien, dus geen garantie.”",
+     "Bij een autobedrijf klopt dat niet. Het bedrijf kan de wettelijke garantie tegenover u als particulier niet uitsluiten, ook niet met zo'n zin in het contract."),
+    ("“Drie maanden garantie, daarna heb ik niets meer.”",
+     "Een garantie van het bedrijf komt bovenop de wettelijke garantie, niet in plaats daarvan."),
+    ("“Hij heeft net nieuwe APK, dus hij is in orde.”",
+     "De APK toetst alleen de minimale eisen op de dag van de keuring. Het is geen onderhoudsbeurt en geen garantie."),
+    ("“Tellerstand logisch, dus de kilometers kloppen.”",
+     "Het oordeel zegt alleen dat de geregistreerde standen logisch op elkaar volgen. Wat niet geregistreerd is, bijvoorbeeld in het buitenland, ziet de RDW niet altijd."),
+    ("“Na een aankoopkeuring heb ik garantie.”",
+     "Nee. Een aankoopkeuring is een momentopname en een eerlijk advies, geen garantie."),
+]
+
+TE_MOOI = [
+    "De prijs ligt ver onder die van vergelijkbare auto's",
+    "De verkoper wil een aanbetaling of borg voordat u de auto heeft gezien",
+    "De auto staat ‘tijdelijk’ ergens anders of de verkoper zit in het buitenland",
+    "Er is haast: ‘er zijn nog drie gegadigden’",
+    "Een proefrit of keuring mag niet",
+    "Het verhaal klopt niet met de papieren",
+]
+
+CHECKLIST_PDF = "downloads/checklist-tweedehands-auto.pdf"
+
+
+def checklist_html(r, vinkjes=True):
+    """De inhoud van de checklist; ook gebruikt voor de PDF."""
+    def lijst(items, klasse="checklijst"):
+        return f'<ul class="{klasse}">\n' + "\n".join(f"          <li>{e(i)}</li>" for i in items) + "\n        </ul>"
+    delen = []
+    for kop, items in CHECKLIST:
+        delen.append(f"        <h2>{e(kop)}</h2>\n        {lijst(items)}")
+    delen.append(f"""        <h2>Neem mee naar de aankoopkeuring</h2>
+        <p>Laat u de auto door ons nakijken? Neem dan alles mee wat er is. Hoe meer we weten, hoe beter ons advies.</p>
+        {lijst(MEENEMEN)}""")
+    rechten = "\n".join(f"          <div><h3>{e(k)}</h3><p>{e(t)}</p></div>" for k, t in RECHTEN)
+    delen.append(f"""        <h2>Waar heeft u recht op?</h2>
+        <div class="rechten">
+{rechten}
+        </div>""")
+    mis = "\n".join(f"          <div><dt>{e(k)}</dt><dd>{e(t)}</dd></div>" for k, t in MISVERSTANDEN)
+    delen.append(f"""        <h2>Veelvoorkomende misverstanden</h2>
+        <dl class="misverstanden">
+{mis}
+        </dl>""")
+    delen.append(f"""        <div class="te-mooi">
+          <h2>Te mooi om waar te zijn?</h2>
+          <p><strong>Als iets te mooi lijkt om waar te zijn, is dat vaak ook zo.</strong> Wees extra voorzichtig als:</p>
+          {lijst(TE_MOOI, "lijst-let-op")}
+        </div>
+        <p class="klein-noot">Deze checklist is algemene informatie en geen juridisch advies. Twijfelt u over uw rechten? Kijk op ConsuWijzer of vraag het Juridisch Loket.</p>""")
+    return "\n\n".join(delen)
+
+
+def checklist():
+    r = "../"
+    inhoud = f"""        <p>Een tweedehands auto kopen is spannend. Met deze checklist weet u waar u op let, wat u meeneemt en waar u recht op heeft. Print hem uit of open hem op uw telefoon tijdens de bezichtiging.</p>
+        <p class="checklist-knoppen"><a class="knop oranje" href="{{r}}{CHECKLIST_PDF}" download>Download de checklist (PDF) {I_PIJL}</a><button type="button" class="link-klein" data-print>Of print deze pagina</button></p>
+
+{checklist_html(r)}
+
+        <h2>Laat de auto even nakijken</h2>
+        <p>Twijfelt u, of wilt u gewoon zeker zijn? Breng de auto vóór de koop langs voor een <a href="{{r}}aankoopkeuring/">aankoopkeuring</a>. Autoservice Barneveld is onafhankelijk: we verkopen zelf geen auto's en vertellen u eerlijk wat we zien. Vooraf al iets weten? Gebruik onze gratis <a href="{{r}}kentekencheck/">kentekencheck</a>.</p>"""
+    vragen = [
+        ("Is de checklist gratis?", "Ja. U kunt hem gratis downloaden als PDF of deze pagina printen, ook als u geen aankoopkeuring bij ons laat doen."),
+        ("Heb ik garantie als ik een occasion bij een autobedrijf koop?",
+         "Ja, de wettelijke garantie. De auto moet doen wat u er redelijkerwijs van mag verwachten. De eerste 12 maanden na aflevering hoeft u niet te bewijzen dat een gebrek er al was."),
+        ("Heb ik bedenktijd bij het kopen van een auto?",
+         "Alleen als u bij een bedrijf online of op afstand koopt. Koopt u in de showroom of van een particulier, dan is er geen bedenktijd."),
+        ("Wat neem ik mee naar de aankoopkeuring?",
+         "Alle onderhoudspapieren, facturen, eerdere APK-rapporten, de kentekencard, beide sleutels en de advertentie."),
+    ]
+    tool_pagina("checklist-tweedehands-auto", "Checklist tweedehands auto kopen (gratis PDF) | Autoservice Barneveld",
+                "Gratis checklist voor het kopen van een tweedehands auto: waar u op let bij bezichtiging en proefrit, welke papieren u nodig heeft en waar u recht op heeft.",
+                "Checklist tweedehands auto kopen", "dienst-onderhoud", "Gratis checklist",
+                "Waar u op let bij de bezichtiging en proefrit, wat u meeneemt en waar u recht op heeft. Gratis als PDF.",
+                inhoud, vragen, None, "Aankoopkeuring", naam="Checklist tweedehands auto kopen")
+
+
 HANDIG = [
-    ("Kenteken-checks", "", [
-        ("apk-check", "APK-check", "Tot wanneer is uw APK geldig, en vanaf wanneer kunt u keuren?"),
-        ("occasion-check", "Occasion-check", "APK-historie, gemelde gebreken en tellerstand van een tweedehands auto."),
-        ("kentekencheck", "Kentekencheck", "Alle openbare gegevens van een auto op een rij."),
-        ("terugroepactie-check", "Terugroepactie-check", "Staat er een terugroepactie open voor uw auto?"),
-        ("trekgewicht-check", "Trekgewicht-check", "Hoeveel mag uw auto trekken met caravan of aanhanger?"),
+    ("Uw auto", "", [
+        ("kentekencheck", "Kentekencheck", "APK-datum, gemelde gebreken, tellerstand, terugroepacties en trekgewicht in één keer."),
+        ("checklist-tweedehands-auto", "Checklist occasion kopen", "Waar u op let bij een tweedehands auto, en waar u recht op heeft. Gratis PDF."),
     ]),
     ("Banden", "", [
         ("winterbanden", "Winterbandenmeter", "Is het al tijd voor winterbanden in Barneveld?"),
-        ("bandencheck", "Bandencheck", "Bandenmaat, leeftijd en profiel uitgelegd."),
+        ("bandencheck", "Banden uitgelegd", "Bandenmaat, leeftijd en profiel aflezen, met voorbeelden."),
     ]),
     ("Onderhoud en storingen", "", [
         ("onderhoudswijzer", "Onderhoudswijzer", "Wanneer komt uw volgende beurt, klein of groot?"),
@@ -1856,15 +2020,15 @@ def handig():
     inhoud = ("        <p>Even zelf iets nakijken? Hier vindt u al onze gratis checks en uitleg op één plek. "
               "Komt u er niet uit, of wilt u het zeker weten? Bel of app ons gerust.</p>\n\n" + "\n\n".join(blokken))
     tool_pagina("handig", "Handige checks en uitleg voor uw auto | Autoservice Barneveld",
-                "Gratis APK-check, occasion-check, kentekencheck, winterbandenmeter, onderhoudswijzer en uitleg over dashboardlampjes en klachten. Van uw garage in Barneveld.",
+                "Gratis kentekencheck met APK-datum en historie, checklist voor een tweedehands auto, winterbandenmeter, onderhoudswijzer en uitleg over lampjes en klachten.",
                 "Handige checks en uitleg", "dienst-diagnose", "Handig",
                 "Gratis checks en heldere uitleg over uw auto, op één plek.",
                 inhoud, (), None, "", naam="Handige checks en uitleg")
 
 
 def handig_sectie():
-    keuze = [("apk-check", "APK-check", "Hoe lang is uw APK nog geldig?"),
-             ("occasion-check", "Occasion-check", "Wat is er bekend over een tweedehands auto?"),
+    keuze = [("kentekencheck", "Kentekencheck", "APK-datum, historie en meer in één keer"),
+             ("checklist-tweedehands-auto", "Checklist occasion kopen", "Gratis, om mee te nemen"),
              ("dashboardlampjes", "Dashboardlampjes", "Wat betekent dit lampje?"),
              ("winterbanden", "Winterbandenmeter", "Al tijd voor winterbanden?")]
     lijst = "\n".join(f'        <li><a href="{slug}/">{e(n)}</a><span>{e(u)}</span></li>' for slug, n, u in keuze)
@@ -1948,7 +2112,7 @@ def accu():
 
 
 def sitemap_en_llms():
-    paden = ["", *[d[0] + "/" for d in DIENSTEN], "aankoopkeuring/", "apk-check/", "occasion-check/", "kentekencheck/", "terugroepactie-check/", "trekgewicht-check/",
+    paden = ["", *[d[0] + "/" for d in DIENSTEN], "aankoopkeuring/", "kentekencheck/", "checklist-tweedehands-auto/",
              "winterbanden/", "bandencheck/", "onderhoudswijzer/", "dashboardlampjes/", "distributieriem/", "accu/", "hulp/", *[f"hulp/{k[0]}/" for k in KLACHTEN],
              "handig/", "vervangend-vervoer/", "merken/", "werkgebied/", "veelgestelde-vragen/", "over-ons/", "contact/", "privacy/"]
     schrijf("sitemap.xml",
@@ -1982,13 +2146,10 @@ def sitemap_en_llms():
 
 ## Gratis checks en uitleg
 
-- [APK-check]({SITE}/apk-check/): vul een kenteken in en zie tot wanneer de APK geldig is, vanaf wanneer keuren met behoud van de vervaldatum kan, en de openbare RDW-gegevens van de auto.
-- [Occasion-check]({SITE}/occasion-check/): APK-datum, gemelde gebreken en adviespunten bij eerdere APK-keuringen, tellerstandoordeel, import en terugroepacties per kenteken.
-- [Kentekencheck]({SITE}/kentekencheck/): openbare RDW-gegevens van een auto.
-- [Terugroepactie-check]({SITE}/terugroepactie-check/): staat er een terugroepactie open?
-- [Trekgewicht-check]({SITE}/trekgewicht-check/): geremd en ongeremd trekgewicht, met uitleg over rijbewijs B, code 96 en BE.
+- [Kentekencheck]({SITE}/kentekencheck/): één keer een kenteken invullen en alles zien: APK-vervaldatum en vanaf wanneer keuren met behoud van datum kan, gebreken en adviespunten bij eerdere APK-keuringen, tellerstandoordeel, import, terugroepacties, trekgewicht (geremd en ongeremd) en de openbare RDW-gegevens.
+- [Checklist tweedehands auto kopen]({SITE}/checklist-tweedehands-auto/): gratis checklist (ook als PDF) voor bezichtiging, proefrit en papieren, wat mee te nemen naar de aankoopkeuring, wettelijke garantie en veelvoorkomende misverstanden.
 - [Winterbandenmeter]({SITE}/winterbanden/): 7-gradenregel op basis van de weersverwachting voor Barneveld.
-- [Bandencheck]({SITE}/bandencheck/): bandenmaat en DOT-code uitgelegd, profieldiepte en bandenlabel.
+- [Banden uitgelegd]({SITE}/bandencheck/): bandenmaat, DOT-code (leeftijd) en profieldiepte aflezen, met illustraties.
 - [Onderhoudswijzer]({SITE}/onderhoudswijzer/): kleine of grote beurt, en wanneer.
 - [Dashboardlampjes]({SITE}/dashboardlampjes/): betekenis van storingslampjes per kleur en wat te doen.
 - [Wat is er met mijn auto?]({SITE}/hulp/): uitleg bij veelvoorkomende klachten.
@@ -2016,12 +2177,11 @@ if __name__ == "__main__":
     contact()
     privacy()
     niet_gevonden()
-    apk_check()
-    occasion_check()
     aankoopkeuring()
     kentekencheck()
-    terugroepactie_check()
-    trekgewicht_check()
+    for oud in ("apk-check", "occasion-check", "terugroepactie-check", "trekgewicht-check"):
+        doorsturen(oud, "kentekencheck/")
+    checklist()
     dashboardlampjes()
     winterbanden()
     bandencheck()
