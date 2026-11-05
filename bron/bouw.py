@@ -30,7 +30,7 @@ ADRES = "Verlengde Parallelweg 4-10"
 POSTCODE_PLAATS = "3771 LP Barneveld"
 KVK = "61874744"
 BTW = "NL005077005B42"
-TIJDEN_KORT = "Ma–vr 08:00–17:00 · za op afspraak"
+TIJDEN_KORT = "Ma–vr 08:00–17:00"
 PROFIELEN = [
     ("Google", "https://share.google/3KAll3CN6YYB3Vqca"),
     ("Facebook", "https://www.facebook.com/p/Autoservice-Barneveld-61586756678035/"),
@@ -264,7 +264,7 @@ def kop(r, actief):
 
 <div class="topbalk">
   <div class="wrap">
-    <span class="links">{TIJDEN_KORT} · zo gesloten</span>
+    <span class="links">{TIJDEN_KORT} · za en zo gesloten</span>
     <span class="rechts"><a href="{TEL_LINK}">{TEL}</a><a href="{WA_LINK}">WhatsApp</a><a class="mail" href="mailto:{MAIL}">{MAIL}</a></span>
   </div>
 </div>
@@ -445,7 +445,7 @@ def voet(r):
     </div>
     <div>
       <h2>Adres en tijden</h2>
-      <ul><li>{ADRES}</li><li>{POSTCODE_PLAATS}</li><li>Ma–vr 08:00–17:00</li><li>Za op afspraak · zo gesloten</li><li><a href="{r}contact/">Route plannen</a></li></ul>
+      <ul><li>{ADRES}</li><li>{POSTCODE_PLAATS}</li><li>Ma–vr 08:00–17:00</li><li>Za en zo gesloten</li><li><a href="{r}contact/">Route plannen</a></li></ul>
     </div>
     <div>
       <h2>Contact</h2>
@@ -798,7 +798,7 @@ def contact_sectie(r, kaart=True, titel="Neem vandaag nog contact op", h="h2"):
           <li>{I_MAIL}<span><span class="sr-only">E-mail: </span><a href="mailto:{MAIL}">{MAIL}</a></span></li>
           <li>{I_PIN}<span>{ADRES}<br>{POSTCODE_PLAATS}</span></li>
         </ul>
-        <div class="tijden-bord">{I_KLOK}<span>Maandag t/m vrijdag 08:00–17:00<br>Zaterdag op afspraak<br>Zondag gesloten</span></div>{osm}
+        <div class="tijden-bord">{I_KLOK}<span>Maandag t/m vrijdag 08:00–17:00<br>Zaterdag en zondag gesloten</span></div>{osm}
       </div>
       <form class="formulier" action="https://formsubmit.co/{MAIL}" method="post" aria-label="Contactformulier">
         <input type="hidden" name="_subject" value="Nieuw bericht via de website">
@@ -1081,7 +1081,7 @@ VRAGEN = [
     ("Wat als mijn auto langer moet blijven?",
      "Dan kunt u gebruikmaken van een elektrische Renault 5, een Volkswagen Caddy of een leenfiets. U kiest dit bij het plannen van uw afspraak. Zie <a href=\"{r}vervangend-vervoer/\">vervangend vervoer</a>."),
     ("Wat zijn jullie openingstijden?",
-     "Maandag tot en met vrijdag van 08:00 tot 17:00. Zaterdag op afspraak, zondag gesloten."),
+     "Maandag tot en met vrijdag van 08:00 tot 17:00. Op zaterdag en zondag zijn we gesloten."),
     ("Waar zitten jullie?",
      "Aan de {adres}, {postcode}. Het station ligt op vijf minuten lopen. Zie <a href=\"{r}contact/\">contact en route</a>."),
 ]
@@ -2162,7 +2162,7 @@ def sitemap_en_llms():
 - Adres: {ADRES}, {POSTCODE_PLAATS}
 - Telefoon en WhatsApp: {TEL}
 - E-mail: {MAIL}
-- Openingstijden: maandag t/m vrijdag 08:00–17:00, zaterdag op afspraak, zondag gesloten
+- Openingstijden: maandag t/m vrijdag 08:00–17:00, zaterdag en zondag gesloten
 - KvK: {KVK}
 - Btw: {BTW}
 - Werkgebied: Barneveld, Voorthuizen, Kootwijkerbroek, Terschuur, Zwartebroek, Garderen, Stroe, De Glind, Lunteren
