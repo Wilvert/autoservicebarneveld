@@ -881,10 +881,15 @@
         noot: 'Ik hoor graag welke datum u kunt bevestigen.' });
     }
     blokken.push({ kop: 'Contact', regels: [
+      'Naam: ' + naam(),
       'Adres: ' + (adres || (postcodeNet(veld('postcode').value).replace(/^(\d{4})/, '$1 ') + ', huisnummer ' + veld('huisnummer').value.trim())),
       'E-mail: ' + veld('email').value.trim()
     ] });
     return blokken;
+  }
+
+  function naam() {
+    return (veld('voornaam').value.trim() + ' ' + veld('achternaam').value.trim()).replace(/\s+/g, ' ');
   }
 
   // WhatsApp-bericht: kopjes met ▸ en *vet*, regels met •.
@@ -896,7 +901,7 @@
       b.regels.forEach(function (t) { r.push('• ' + t); });
       if (b.noot) r.push('_' + b.noot + '_');
     });
-    r.push('', 'Met vriendelijke groet');
+    r.push('', 'Met vriendelijke groet,', naam());
     return r.join('\n');
   }
 
@@ -904,7 +909,8 @@
     var knop = formulier.querySelector('[data-kanaal="mail"]');
     var data = {
       _subject: 'Afspraakaanvraag via de website' +
-        (kentekenBlok.hidden ? '' : ' - ' + kentekenNetjes(veld('kenteken').value)),
+        (kentekenBlok.hidden ? '' : ' - ' + kentekenNetjes(veld('kenteken').value)) + ' - ' + naam(),
+      name: naam(),
       _template: 'table',
       _captcha: 'false',
       email: veld('email').value.trim()

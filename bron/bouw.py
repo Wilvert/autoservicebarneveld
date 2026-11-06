@@ -354,6 +354,16 @@ def venster(r):
         </div>
         <div class="rij">
           <div class="veld">
+            <label for="v-voornaam">Voornaam</label>
+            <input class="invoer" id="v-voornaam" name="voornaam" autocomplete="given-name" maxlength="40" required>
+          </div>
+          <div class="veld">
+            <label for="v-achternaam">Achternaam</label>
+            <input class="invoer" id="v-achternaam" name="achternaam" autocomplete="family-name" maxlength="60" required>
+          </div>
+        </div>
+        <div class="rij">
+          <div class="veld">
             <label for="v-km">Kilometerstand</label>
             <input class="invoer" id="v-km" name="kilometerstand" inputmode="numeric" autocomplete="off" placeholder="bijv. 85.000" required>
             <button type="button" class="link-klein km-onbekend" aria-pressed="false">Ik weet de km-stand niet</button>
